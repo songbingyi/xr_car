@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector    : 'app-root',
-    templateUrl : './app.component.html',
-    styleUrls   : ['./app.component.css']
+  selector: 'app-index',
+  templateUrl: './index.html',
+  styleUrls: ['./index.scss']
 })
-export class AppComponent {
+export class IndexComponent {
+
     title = '轩仁车务';
     activeIndex: any = 0;
     tabs: any = [
@@ -30,7 +31,7 @@ export class AppComponent {
         {content : '<app-home></app-home>'},
         {content : 'page2'},
         {content : 'page3'}
-        ];
+    ];
 
     selected(item, index) {
         this.tabs.forEach(tab => {
@@ -39,4 +40,5 @@ export class AppComponent {
         item.selected = 'weui-bar__item_on';
         this.activeIndex = index;
     }
+
 }

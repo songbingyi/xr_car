@@ -1,0 +1,64 @@
+@import "../../assets/styles/variables";
+
+.full-with-page {
+    width:100%;
+    padding:0 12.5px;
+}
+
+.header-menu {
+    background:$bgWhite;
+    margin-top:15px;
+    h3 {
+        font-size:14px;
+        color:#000;
+        font-weight: normal;
+    }
+    height:105px;
+    ul {
+        height:90px;
+    }
+    ul {
+        padding-top:15px;
+        overflow:hidden;
+    }
+    li {
+        width:20%;
+        height:75px;
+        float: left;
+        text-align: center;
+    }
+    .header-menu-item {
+        width:50px;
+        margin:0 auto;
+        img {
+            width:50px;
+            height:50px;
+        }
+    }
+}
+
+.item-list {
+    li {
+        width:48.5714%;
+        float: left;
+        text-align: left;
+        margin-right:2.8571%;
+        margin-top:15px;
+        img {
+            width:100%;
+        }
+        h4 {
+            color:#000;
+            line-height:20px;
+            margin:5px 0 3px 0;
+            font-weight:normal;
+            font-size:14px;
+        }
+        p {
+            color:#FA9D3B;
+            line-height:20px;
+            margin:0;
+            font-size:14px;
+        }
+    }
+}

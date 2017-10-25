@@ -1,24 +1,2 @@
-<div class="page__bd" style="height: 100%;">
-    <div class="weui-tab">
-        <div class="weui-tab__panel">
-            <div *ngFor="let page of pages; index as i">
-                <span *ngIf="activeIndex === i">{{page}}</span>
-            </div>
-        </div>
-        <div class="weui-tabbar">
-            <!--<a href="javascript:;" class="weui-tabbar__item " #item (click)="selected(this)">
-                    <span style="display: inline-block;position: relative;">
-                        <img src="https://weui.io/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
-                    </span>
-                <img src="../assets/tmp/icon_tabbar.png" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">首页</p>
-            </a>-->
-            <a href="javascript:;" class="weui-tabbar__item" (click)="selected(tab, i)" ngClass="{{tab.selected}}" *ngFor="let tab of tabs; index as i;">
-                <img src="{{tab.icon}}" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">{{tab.title}}</p>
-            </a>
-        </div>
-    </div>
-</div>
+<router-outlet></router-outlet>
 

@@ -1,0 +1,66 @@
+<div class="user-page">
+    <div class="user-header">
+        <div class="user-bg">
+            <img class="avatar" src="http://via.placeholder.com/105x105" />
+            <span class="username">陕汽控股</span>
+            <span class="notification">🔔</span>
+        </div>
+        <div class="information">
+            <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" [routerLink]="['/carInfo']">车辆信息</a>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="weui-cells__title">订单信息</div>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 0]">
+                <div class="weui-cell__bd">
+                    <p>全部订单</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <span class="weui-badge">88</span>
+                </div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 1]">
+                <div class="weui-cell__bd">
+                    <p>待付款</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 2]">
+                <div class="weui-cell__bd">
+                    <p>待处理</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 3]">
+                <div class="weui-cell__bd">
+                    <p>处理中</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 4]">
+                <div class="weui-cell__bd">
+                    <p>已完成</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+    </div>
+
+    <div class="about">
+        <div class="weui-cells__title">关于我们</div>
+        <div class="weui-cells">
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
+                <div class="weui-cell__bd">
+                    <p>联系我们</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/about']">
+                <div class="weui-cell__bd">
+                    <p>关于我们</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+    </div>
+</div>
