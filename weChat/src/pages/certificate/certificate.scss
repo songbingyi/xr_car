@@ -1,0 +1,30 @@
+.scroll-page {
+    height:100%;
+    background:#FFF;
+}
+.certificate {
+    .weui-cells_checkbox {
+        .weui-cell__bd {
+            span {
+                display: inline-block;
+                width:33%;
+            }
+            .weui-icon-checked {
+                position: relative;
+                top: -2px;
+            }
+        }
+    }
+    .tab-content {
+        .weui-input {
+            text-align: right;
+            position: relative;
+            top: -2px;
+            color: #999999;
+            &::placeholder {
+                color: #999999;
+            }
+        }
+    }
+}
+

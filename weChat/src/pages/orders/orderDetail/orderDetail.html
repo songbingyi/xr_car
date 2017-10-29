@@ -1,0 +1,241 @@
+<div class="page">
+    <div class="scroll-page">
+        <span (click)="changeMode('license');">驾照</span> | <span (click)="changeMode('car');">车辆</span> | <span (click)="changeMode('cert');">营运</span>
+        <div class="order-bar">
+            <span class="left">订单号：219809170912</span>
+            <span class="right">下单时间：2017-08-06  12:43</span>
+        </div>
+        <div class="status-bar">
+            <p>订单状态：审核中…</p>
+            <p class="text-primary">原因：资料照片不清晰。</p>
+        </div>
+        <div class="confirm-order" [hidden]="mode==='car' || mode==='cert'">
+            <div class="weui-cells ">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>服务类型</p>
+                    </div>
+                    <div class="weui-cell__ft"><span>驾照审验</span></div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>驾照归属地</p>
+                    </div>
+                    <div class="weui-cell__ft">西安市</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>驾照类型</p>
+                    </div>
+                    <div class="weui-cell__ft">B照</div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>上传图片</p>
+                    </div>
+                </div>
+                <div class="images-container">
+                    <table class="table-container">
+                        <tr>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>驾照正副本</span>
+                            </td>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>人靠白墙半身照</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>身份证正面</span>
+                            </td>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>身份证反面</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>应支付</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special">
+                    <div class="weui-cell__bd">
+                        <p>支付方式</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <img src="http://via.placeholder.com/136x35"/>
+                        <p>（暂不支持其他支付方式）</p>
+                    </div>
+                </div>
+                <div class="weui-cell cell-operation">
+                    <div class="weui-cell__bd">
+                        <span> </span>
+                    </div>
+                    <div class="weui-cell__bd button-sp-area">
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment', 5]">付款</a>
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                        <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                        <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirm-order" [hidden]="mode==='car' || mode==='license'">
+            <div class="weui-cells ">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>服务类型</p>
+                    </div>
+                    <div class="weui-cell__ft"><span>营运证审验</span></div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车辆性质</p>
+                    </div>
+                    <div class="weui-cell__ft">公户</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车辆类型 </p>
+                    </div>
+                    <div class="weui-cell__ft">大型汽车</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车牌号码</p>
+                    </div>
+                    <div class="weui-cell__ft">陕A12345</div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>预约时间</p>
+                    </div>
+                    <div class="weui-cell__ft">2017年10月20日</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>检测地点</p>
+                    </div>
+                    <div class="weui-cell__ft">西安  西安新盛检测站 </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>上传图片</p>
+                    </div>
+                </div>
+                <div class="images-container">
+                    <table class="table-container">
+                        <tr>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>营运证</span>
+                            </td>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>行驶证</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>应支付</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special">
+                    <div class="weui-cell__bd">
+                        <p>支付方式</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <img src="http://via.placeholder.com/136x35"/>
+                        <p>（暂不支持其他支付方式）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confirm-order" [hidden]="mode==='cert' || mode==='license'">
+            <div class="weui-cells ">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>服务类型</p>
+                    </div>
+                    <div class="weui-cell__ft"><span>审车服务</span></div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车辆性质</p>
+                    </div>
+                    <div class="weui-cell__ft">公户</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车辆类型 </p>
+                    </div>
+                    <div class="weui-cell__ft">大型汽车</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车牌号码</p>
+                    </div>
+                    <div class="weui-cell__ft">陕A12345</div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>预约时间</p>
+                    </div>
+                    <div class="weui-cell__ft">2017年10月20日</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>检测地点</p>
+                    </div>
+                    <div class="weui-cell__ft">西安  西安新盛检测站 </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>上传图片</p>
+                    </div>
+                </div>
+                <div class="images-container">
+                    <img class="single-img" src="http://via.placeholder.com/250x150" />
+                    <!--<table class="table-container">
+                        <tr>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                            <td>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                        </tr>
+                    </table>-->
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>应支付</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special">
+                    <div class="weui-cell__bd">
+                        <p>支付方式</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <img src="http://via.placeholder.com/136x35"/>
+                        <p>（暂不支持其他支付方式）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" [routerLink]="['/payComplete', 5]">付款</a>
+</div>

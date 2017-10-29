@@ -1,0 +1,44 @@
+.pure-text-article {
+    width:100%;
+    &:after {
+        display: none;
+    }
+    .weui-media-box {
+        padding:0;
+    }
+    .weui-media-box__title {
+        font-size:14px;
+        height:30px;
+        line-height:30px;
+        color:#8A8B8F;
+    }
+    .weui-media-box_text {
+        padding:10px 20px;
+    }
+    .weui-media-box__desc {
+        color: #676767;
+        font-size: 14px;
+        line-height: 24px;
+        padding-left: 27px;
+        -webkit-line-clamp:10;
+        line-clamp:10;
+        &.with-icon {
+            padding-left:0;
+        }
+    }
+    .weui-media-box__desc-title {
+        position: relative;
+        left: 12px;
+        padding-left:15px;
+        &:before {
+            content: "";
+            height: 5px;
+            width: 5px;
+            border-radius: 50%;
+            background: #1970A6;
+            position: absolute;
+            top: 9px;
+            left: 0px;
+        }
+    }
+}

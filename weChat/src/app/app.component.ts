@@ -1,42 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+import { MessageService } from '../providers/messageService';
+import { LocalStorage } from '../providers/localStorage';
+
+// import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector    : 'app-root',
     templateUrl : './app.component.html',
     styleUrls   : ['./app.component.css']
 })
-export class AppComponent {
-    title = '轩仁车务';
-    activeIndex: any = 0;
-    tabs: any = [
-        {
-            title    : '首页',
-            selected : 'weui-bar__item_on',
-            icon     : 'assets/tmp/icon_tabbar.png'
-        },
-        {
-            title    : '站点',
-            selected : '',
-            icon     : 'assets/tmp/icon_tabbar.png'
-        },
-        {
-            title    : '我的',
-            selected : '',
-            icon     : 'assets/tmp/icon_tabbar.png'
-        }
-    ];
+export class AppComponent implements OnInit {
+    // activeTabIndex: any = 0;
 
-    pages: any = [
-        {content : '<app-home></app-home>'},
-        {content : 'page2'},
-        {content : 'page3'}
-        ];
+    constructor(private message: MessageService, private localStorage : LocalStorage, private titleService: Title) {
+        this.titleService.setTitle('轩仁车务');
+    }
 
-    selected(item, index) {
-        this.tabs.forEach(tab => {
-            tab.selected = '';
-        });
-        item.selected = 'weui-bar__item_on';
-        this.activeIndex = index;
+    // public subscription: Subscription;
+
+
+    ngOnInit(): void {
+        /*this.subscription = this.message.getMessage().subscribe(msg => {
+            this.activeTabIndex = msg.type;
+            localStorage.set('activeTabIndex', this.activeTabIndex);
+        });*/
     }
 }

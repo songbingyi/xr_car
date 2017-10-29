@@ -1,21 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector    : 'app-orders',
     templateUrl : './orders.html',
-    styleUrls   : ['./orders.scss']
+    styleUrls   : ['./orders.scss'],
+    encapsulation : ViewEncapsulation.None
 })
 export class OrdersComponent implements OnInit {
-    status : String;
+    status : string;
+    activeIndex: any;
     obj : any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
     constructor(private route : ActivatedRoute, private router : Router) {
     }
 
     ngOnInit() {
-        this.status = this.obj[this.route.snapshot.paramMap.get('status')];
-        console.log(this.status);
+        let activeIndex: string = this.route.snapshot.paramMap.get('status');
+        this.activeIndex = parseInt(activeIndex, 10);
+        this.status = this.obj[this.activeIndex];
     }
 
 }

@@ -3,24 +3,53 @@ import { NgZone, OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AqmComponent } from 'angular-qq-maps';
 
+import { RatingComponent, RatingConfig } from 'ngx-weui/rating';
+
+import { TaobaoService } from "./tb.service";
+import { Observable } from 'rxjs/Rx';
+
+import {MarkersProvider} from '../../providers/marker.http';
+
+import {MarkerModel} from "../../models/marker.model";
+
 declare const qq: any;
 
 @Component({
     selector    : 'app-map',
     templateUrl : './map.html',
-    styleUrls   : ['./map.scss']
+    styleUrls   : ['./map.scss'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [ TaobaoService, MarkersProvider ]
 })
 export class MapComponent implements OnInit {
     options: any = {};
     status: string = '';
     geoLocation : boolean = false;
 
+    items: Observable<string[]>;
+    value: string;
+
+    markers : Array<MarkerModel> = [];
+    currentMarker: MarkerModel;
+
+    errorMessage : any;
+
+    customIconsAndClassCog: RatingConfig = {
+        cls: 'rating',
+        stateOff: 'off',
+        stateOn: 'on'
+    };
+
+    rate: number = 3;
+
+    readonly: boolean = true;
+
     @ViewChild('geoPage') geoPage: ElementRef;
     @ViewChild('iframe') iframe: ElementRef;
 
     @ViewChild('map') mapComp: AqmComponent;
 
-    constructor(private el: ElementRef, private zone: NgZone) {}
+    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private markerService: MarkersProvider) {}
 
     ngAfterViewInit() {
         let doc = this.geoPage.nativeElement.contentWindow;
@@ -46,18 +75,65 @@ export class MapComponent implements OnInit {
         this.status = '加载完成';
         //添加监听事件
         qq.maps.event.addListener(this.map, 'click', (event: any) => {
+            console.log(event);
+            /*console.log(event);
             new qq.maps.Marker({
                 position: event.latLng,
                 map: this.map
-            });
+            });*/
             this.zone.run(() => {
-                this.status = `click ${+new Date}`;
+                //this.status = `click ${+new Date}`;
+                this.hiddenInfoWindow();
             });
         });
+
+        this.loadMakers();
     }
 
     ngOnInit() {
         this.bindEvent();
+    }
+
+    loadMakers() {
+        this.markerService.getMakers('marker.mock.json')
+            .subscribe(markers => {
+                this.markers = markers;
+                markers.forEach(marker=>{
+                    this.setMarker(marker);
+                })
+            },
+            error => this.errorMessage = <any>error
+        );
+    }
+
+    setMarker(marker: MarkerModel) {
+        let aMarker = new qq.maps.Marker({
+            position: new qq.maps.LatLng(marker.lat, marker.lng),
+            icon : new qq.maps.MarkerImage(marker.icon, new qq.maps.Size(40, 46), '', '', new qq.maps.Size(40, 46), ''),
+            map: this.map
+        });
+        aMarker.origin = marker;
+        this.bindClickToMaker(aMarker);
+    }
+
+
+    bindClickToMaker(marker: any) {
+        qq.maps.event.addListener(marker, 'click', (event)=>{
+            console.log(event);
+            let icon = marker.origin.icon ;// ? marker.origin.icon.replace('.png', '.big.png') : marker.origin.icon;
+            marker.setIcon(new qq.maps.MarkerImage(icon, new qq.maps.Size(65, 72)), '', '', new qq.maps.Size(30, 30), '');
+            this.showInfoWindow(marker.origin);
+        });
+    }
+
+    showInfoWindow(marker){
+        this.currentMarker = marker;
+        this.rate = marker.star;
+    }
+
+    hiddenInfoWindow() {
+        this.currentMarker = null;
+        this.rate = 0;
     }
 
     bindEvent() {
@@ -82,7 +158,32 @@ export class MapComponent implements OnInit {
     }
 
     panTo(loc) {
-        console.log(loc);
-        this.map.panTo(new qq.maps.LatLng(loc.lat, loc.lng));
+        //console.log(loc);
+        if(this.map){
+            this.map.panTo(new qq.maps.LatLng(loc.lat, loc.lng));
+        }
+    }
+
+    onSearch(term: string) {
+        this.value = term;
+        if (term) {
+            this.items = this.tbService.search(term);
+        }
+    }
+
+    onCancel() {
+        console.log('onCancel')
+    }
+
+    onClear() {
+        console.log('onCancel')
+    }
+
+    onSubmit(value: string) {
+        console.log('onSubmit', value);
+    }
+
+    onclickItem(item) {
+        console.log(item);
     }
 }

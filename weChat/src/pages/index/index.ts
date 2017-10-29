@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
+import { MessageService } from '../../providers/messageService';
+import { LocalStorage } from '../../providers/localStorage';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.html',
   styleUrls: ['./index.scss']
 })
-export class IndexComponent {
+export class IndexComponent implements OnInit {
 
-    title = '轩仁车务';
-    activeIndex: any = 0;
+    activeTabIndex: any = 0;
     tabs: any = [
         {
             title    : '首页',
@@ -27,18 +30,40 @@ export class IndexComponent {
         }
     ];
 
-    pages: any = [
-        {content : '<app-home></app-home>'},
-        {content : 'page2'},
-        {content : 'page3'}
-    ];
+    constructor(private message: MessageService, private localStorage : LocalStorage, private titleService: Title ) {
+
+    }
+
+    ngOnInit(): void {
+        let activeTabIndex: any = this.localStorage.get('activeTabIndex');
+        this.activeTabIndex = activeTabIndex ? (activeTabIndex - 0) : 0;
+        this.setSelected();
+
+    }
 
     selected(item, index) {
         this.tabs.forEach(tab => {
             tab.selected = '';
         });
         item.selected = 'weui-bar__item_on';
-        this.activeIndex = index;
+        // 调用该服务的方法，发送信息；
+        // this.message.sendImages('www.baidu.com'); // 发送图片地址
+        // this.message.sendMessage(index);
+        this.activeTabIndex = index;
+        this.localStorage.set('activeTabIndex', index);
+        this.titleService.setTitle('轩仁车务-' + item.title);
+    }
+
+    setSelected() {
+        let activeTabIndex: any = this.activeTabIndex;
+        this.tabs.forEach((tab, index) => {
+            tab.selected = '';
+            if (activeTabIndex === index ) {
+                tab.selected = 'weui-bar__item_on';
+                this.titleService.setTitle('轩仁车务-' + tab.title);
+            }
+        });
+
     }
 
 }

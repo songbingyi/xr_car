@@ -1,6 +1,71 @@
-<aqm-map #map [options]="options" (ready)="onReady($event)" style="height: 100%;"></aqm-map>
+<div class="map-container">
+    <aqm-map #map [options]="options" (ready)="onReady($event)" style="height: 100%;"></aqm-map>
+
+    <weui-searchbar (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
+
+    <div class="weui-panel" *ngIf="value">
+        <div class="weui-panel__bd" *ngIf="items | async; let items; else loading">
+            <div class="weui-cell weui-cell_access" *ngFor="let item of items">
+                <div class="weui-cell__bd weui-cell_primary" (click)="onclickItem(item);">
+                    <p>{{item}}</p>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text" *ngIf="items?.length === 0">暂无数据</div>
+        </div>
+        <ng-template #loading>
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">正在查询...</div>
+            </div>
+        </ng-template>
+        <!--<a class="weui-panel__ft" href="javascript:void(0);">
+            <div class="weui-cell weui-cell_access weui-cell_link">
+                <div class="weui-cell__bd">More</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+        </a>-->
+    </div>
+
+    <div class="information-bar" *ngIf="!currentMarker"><!-- no-data -->
+        <i class="weui-icon-info-circle"></i><span>方圆20公里共找到78个服务站，29个检测站</span>
+    </div>
+
+    <div class="info-window weui-cell-special" *ngIf="currentMarker" [ngClass]="{'review':currentMarker.type==='review'}">
+        <div class="weui-cells">
+            <div class="weui-cell special-cell">
+                <div class="weui-cell__bd">
+                    <p>
+                        <span class="text-primary">{{currentMarker.name}}</span>
+                        <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
+                    </p>
+                </div>
+                <div class="weui-cell__ft"><span class="text-warning">0.2<em>公里</em></span></div>
+            </div>
+            <div class="weui-cell" *ngIf="currentMarker.service">
+                <div class="weui-cell__bd">
+                    <p>{{currentMarker.service}}</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>{{currentMarker.address}}</p>
+                </div>
+                <div class="weui-cell__ft"><a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.lat}}&epointy={{currentMarker.lng}}&eword={{currentMarker.name}}?ref=locationCluster_tengxun">去这里</a></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>{{currentMarker.tel}}</p>
+                </div>
+                <div class="weui-cell__ft">d</div>
+            </div>
+        </div>
+    </div>
+
+    <iframe #geoPage id="geoPage" width=0 height=0 frameborder=0 allow="geolocation" style="display:none;" scrolling="no"
+            src="https://apis.map.qq.com/tools/geolocation?key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp">
+    </iframe>
+</div>
 
 
-<iframe #geoPage id="geoPage" width=0 height=0 frameborder=0 allow="geolocation" style="display:none;" scrolling="no"
-        src="https://apis.map.qq.com/tools/geolocation?key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp">
-</iframe>
+
+

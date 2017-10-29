@@ -1,3 +1,111 @@
-<p>
-  license works!
-</p>
+<div class="scroll-page">
+    <tabset (onSelect)="onTabSelect($event)">
+        <!--<tabs *ngFor="let tabs of tabs" title="{{tabs.title}}" [disabled]="tabs.disabled">{{tabs.content}}</tabs>-->
+        <tab title="审验须知">
+            <div class="weui-panel pure-text-article">
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">一.所需资料</h4>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">平台预约需要上传的资料：</p>
+                        <p class="weui-media-box__desc">驾照正本照片；</p>
+                        <p class="weui-media-box__desc">驾照副本照片；</p>
+                        <p class="weui-media-box__desc">身份证正面；</p>
+                        <p class="weui-media-box__desc">身份证反面；</p>
+                        <p class="weui-media-box__desc">人靠白墙半身照</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">审验时需要携带的资料：</p>
+                        <p class="weui-media-box__desc">驾照原件；</p>
+                        <p class="weui-media-box__desc">身份证原件</p>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">二.车辆要求</h4>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">上传相关资料到平台；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">线上缴纳费用；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">业务人员会提前联系您，请您在预约时间携带所需资料到指定地点审验；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">检测通过后，运管所盖章；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">立等取证或业务员快递给您。</p>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab title="预约" [disabled]="shouldReservation">
+            <div class="tab-content" [hidden]="showNext">
+                <div class="weui-cells__title">请选择对应信息</div>
+                <div class="weui-cells">
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>驾照归属地</p>
+                        </div>
+                        <div class="weui-cell__ft">西安市</div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>驾照类型</p>
+                        </div>
+                        <div class="weui-cell__ft">B照</div>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content" [hidden]="!showNext">
+                <div class="weui-cells__title">请上传以下照片</div>
+                <div class="images-container">
+                    <table class="table-container">
+                        <tr>
+                            <td>
+                                <span>示例图片</span>
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                            <td>
+                                <span>驾照正副本</span>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>示例图片</span>
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                            <td>
+                                <span>人靠白墙半身照</span>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>身份证正面</span>
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                            <td>
+                                <span>身份证反面</span>
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <span [hidden]="showNext">
+                <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="showNext=!showNext">下一步</a>
+            </span>
+            <div class="btn-group" [hidden]="!showNext">
+                <a href="javascript:;" class="weui-btn weui-btn_default" (click)="onShow()">上一步</a>
+                <a href="javascript:;" class="weui-btn weui-btn_primary" [routerLink]="['/confirmOrder', 1]">确认订单：<span>520</span>元</a>
+            </div>
+        </tab>
+    </tabset>
+
+    <div [hidden]="shouldReservationBox">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">填写信息</strong></div>
+            <div class="weui-dialog__bd">请先补全个人和车辆信息！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="goToUser()">补充信息</a>
+            </div>
+        </div>
+    </div>
+
+    <weui-dialog #ios [config]="config"></weui-dialog>
+
+</div>
+

@@ -1,0 +1,33 @@
+.refund-body {
+    margin-top:15px;
+    .weui-cell {
+        padding: 0 15px 0 15px;
+        font-size: 14px;
+        height: 60px;
+        line-height: 60px;
+    }
+    .weui-cell-special {
+        height: 76px;
+        line-height: 76px;
+    }
+    .weui-cell__bd {
+        font-size:15px;
+        color:#888888;
+    }
+    .weui-cell__ft {
+        span {
+            font-size:24px;
+        }
+        img {
+            line-height:normal;
+            display: block;
+            float: right;
+        }
+        p {
+            line-height: normal;
+            clear: both;
+            font-size: 11px;
+            text-align: center;
+        }
+    }
+}

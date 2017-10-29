@@ -1,3 +1,149 @@
-<p>
-  review works!
-</p>
+<div class="scroll-page">
+    <tabset (onSelect)="onTabSelect($event)">
+        <!--<tabs *ngFor="let tabs of tabs" title="{{tabs.title}}" [disabled]="tabs.disabled">{{tabs.content}}</tabs>-->
+        <tab title="审车须知">
+            <div class="weui-panel pure-text-article">
+                <div class="weui-panel__bd">
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">一.审核车辆类型</h4>
+                        <p class="weui-media-box__desc with-icon"><i class="weui-icon-success-no-circle"></i>小型汽车</p>
+                        <p class="weui-media-box__desc with-icon"><i class="weui-icon-success-no-circle"></i>中型汽车</p>
+                        <p class="weui-media-box__desc with-icon"><i class="weui-icon-success-no-circle"></i>重型汽车</p>
+                        <p class="weui-media-box__desc with-icon"><i class="weui-icon-success-no-circle"></i>挂车</p>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">二.所需资料</h4>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">公户：</p>
+                        <p class="weui-media-box__desc">1.平台上传资料：行驶证正副本照片</p>
+                        <p class="weui-media-box__desc">2.审车时携带：行驶证原件，有效期交强险副本，委托书盖公章，申请表盖公章。</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">私户：</p>
+                        <p class="weui-media-box__desc">1.平台上传资料：行驶证正副本照片</p>
+                        <p class="weui-media-box__desc">2.审车时携带：有效期交强险副本</p>
+                        <p class="tips">注：《委托书》和《申请表》<a href="#">下载</a></p>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">三.车辆要求</h4>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">同轴轮胎花纹必须一致；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">长，宽，高正负值相差不超过2cm；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">反光条，反光贴；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">牌照冒，车牌固定在车上，车牌必须干净；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">灯光值必须是7500以上（西安地区）。</p>
+                    </div>
+                    <div class="weui-media-box weui-media-box_text">
+                        <h4 class="weui-media-box__title">四.流程</h4>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">填写和上传相关资料到平台；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">线上缴纳费用（暂只支持微信支付）；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">业务人员会提前联系您，或请您在预约时间开车到检测站上线检测；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">检测通过后，运管所盖章；</p>
+                        <p class="weui-media-box__desc weui-media-box__desc-title">立等取证或业务员快递给您。</p>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab title="预约" [disabled]="shouldReservation">
+            <div class="tab-content" [hidden]="showNext">
+                <div class="weui-cells__title">一.车辆信息</div>
+                <div class="weui-cells weui-cells_checkbox">
+                    <label class="weui-cell weui-check__label" for="checkbox-{{item.id}}" *ngFor="let item of items; let index = index">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" checked="{{item.isChecked}}" [weui-checklist]="res.checkbox" name="item" [weui-value]="item.id" id="checkbox-{{item.id}}" (click)="onchange($event, item)" />
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <span>{{item.cardType}}</span><span>{{item.carType}}</span><span>{{item.cardId}}</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="weui-cells__title" [hidden]="!isBartrailer">二.附加信息</div>
+                <div class="weui-cells" [hidden]="!isBartrailer">
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>车辆选项</p>
+                        </div>
+                        <div class="weui-cell__ft">全选</div>
+                    </a>
+                </div>
+                <div class="weui-cells__title" [hidden]="!isBartrailer">三.审验材料添加</div>
+                <div class="weui-cells__title" [hidden]="isBartrailer">二.审验材料添加</div>
+                <div class="weui-cells">
+                    <a class="weui-cell weui-cell_access is-bartrailer" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>审验城市</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <span>请选择审验城市</span>
+                            <p class="text-tips">注：异地审车须加收服务费</p>
+                        </div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>审验站点</p>
+                        </div>
+                        <div class="weui-cell__ft">请选择审验站点</div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>审验时间</p>
+                        </div>
+                        <div class="weui-cell__ft">请选择审验时间</div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__bd">
+                            <p>费     用</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-warning">520</span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content" [hidden]="!showNext">
+                <div class="weui-cells__title">请上传以下照片</div>
+                <div class="images-container">
+                    <span>示例图片</span>
+                    <img class="single-img" src="http://via.placeholder.com/250x150" />
+                </div>
+                <!--<div class="images-container">
+                    <img class="single-img" src="http://via.placeholder.com/250x150" />
+                </div>-->
+                <div class="images-container one-with-two">
+                    <table class="table-container">
+                        <tr>
+                            <td class="no-border">
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>挂头行驶证</span>
+                            </td>
+                            <td class="no-border">
+                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('http://via.placeholder.com/100x100')"></div>
+                                <span>挂厢行驶证</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="td-text">
+                                <span class="text-warning">注：请上传2张照片</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <span [hidden]="showNext">
+                <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="next();">下一步</a>
+            </span>
+            <div class="btn-group" [hidden]="!showNext">
+                <a href="javascript:;" class="weui-btn weui-btn_default" (click)="onShow()">上一步</a>
+                <a href="javascript:;" class="weui-btn weui-btn_primary" [routerLink]="['/confirmOrder', 1]">确认订单：<span>520</span>元</a>
+            </div>
+        </tab>
+    </tabset>
+
+    <div [hidden]="shouldReservationBox">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">填写信息</strong></div>
+            <div class="weui-dialog__bd">请先补全个人和车辆信息！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="goToUser()">补充信息</a>
+            </div>
+        </div>
+    </div>
+</div>
+
