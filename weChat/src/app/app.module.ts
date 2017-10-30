@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 import { HttpModule, JsonpModule } from '@angular/http';
 
@@ -29,8 +30,14 @@ import { CertificateComponent } from '../pages/certificate/certificate';
 import { ReviewComponent } from '../pages/review/review';
 import { OrdersComponent } from '../pages/orders/orders';
 
+import {FocusBlurDirective} from '../directives/focus.blur';
+
 import { MessageService } from '../providers/messageService';
 import { LocalStorage } from '../providers/localStorage';
+import { CustomValidators } from '../providers/custom.validators';
+import { WXService } from '../providers/wx.service';
+
+
 import { CarListComponent } from '../pages/user/carList/carList';
 import { PaymentComponent } from '../pages/pay/payment/payment';
 import { RefundComponent } from '../pages/pay/refund/refund';
@@ -62,12 +69,15 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
         PayCompleteComponent,
         ConfirmOrderComponent,
         MailComponent,
-        OrderDetailComponent
+        OrderDetailComponent,
+
+        FocusBlurDirective
     ],
     imports      : [
         AppRoutingModule,
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
         JsonpModule,
         WeUiModule.forRoot(),
@@ -76,7 +86,7 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage],
+    providers    : [MessageService, LocalStorage, WXService, CustomValidators],
     bootstrap    : [AppComponent]
 })
 export class AppModule {

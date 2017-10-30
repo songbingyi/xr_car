@@ -13,6 +13,7 @@ import {MarkersProvider} from '../../providers/marker.http';
 import {MarkerModel} from "../../models/marker.model";
 
 declare const qq: any;
+declare const wx: any;
 
 @Component({
     selector    : 'app-map',
@@ -29,7 +30,7 @@ export class MapComponent implements OnInit {
     items: Observable<string[]>;
     value: string;
 
-    markers : Array<MarkerModel> = [];
+    markers : MarkerModel[] = [];
     currentMarker: MarkerModel;
 
     errorMessage : any;
