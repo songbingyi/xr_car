@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Rx';
 import { SkinType, InputType } from 'ngx-weui';
 import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
 import { ToastService } from 'ngx-weui/toast';
+import { PopupComponent } from 'ngx-weui/popup';
 
 @Component({
     selector    : 'app-license',
@@ -18,9 +19,27 @@ import { ToastService } from 'ngx-weui/toast';
 export class LicenseComponent implements OnInit {
 
     @ViewChild('ios') iosAS: DialogComponent;
+    @ViewChild('full') fullPopup: PopupComponent;
 
     shouldReservation: Boolean = false;
     shouldReservationBox: Boolean = true;
+    showLicenseType: Boolean = false;
+
+
+    result : any = {
+        city: '',
+        licenseType: ''
+    };
+
+    cityArray = {
+        'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
+        'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
+    };
+
+    selectedLicense: any = null;
+    itemsRadio : any[] = [
+        {id: 1, name: 'A照'}, {id: 2, name: 'B照'}, {id: 3, name: 'C照'}
+    ];
 
     private config: DialogConfig = <DialogConfig>{
         title: '返回',
@@ -60,6 +79,26 @@ export class LicenseComponent implements OnInit {
         });
 
         return false;
+    }
+
+    select(item) {
+        this.result.city = item.name;
+        this.fullPopup.close();
+    }
+
+    showLicenseTypeBox() {
+        this.showLicenseType = !this.showLicenseType;
+    }
+
+
+    selectLicenseType() {
+        this.result.licenseType = this.selectedLicense;
+        this.selectedLicense = null;
+        this.cancelTypeBox();
+    }
+
+    cancelTypeBox() {
+        this.showLicenseType = false;
     }
 
 }

@@ -8,7 +8,7 @@ import { RatingComponent, RatingConfig } from 'ngx-weui/rating';
 import { TaobaoService } from "./tb.service";
 import { Observable } from 'rxjs/Rx';
 
-import {MarkersProvider} from '../../providers/marker.http';
+import {MarkersProvider} from '../../providers/http/marker.http';
 
 import {MarkerModel} from "../../models/marker.model";
 

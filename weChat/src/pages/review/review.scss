@@ -13,6 +13,20 @@
     }
 }
 
+.review {
+    .tab-content {
+        .weui-input {
+            text-align: right;
+            position: relative;
+            top: -2px;
+            color: #999999;
+            &::placeholder {
+                color: #999999;
+            }
+        }
+    }
+}
+
 .weui-icon-success-no-circle {
     font-size: 18px;
     color: #1970A6;

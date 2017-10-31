@@ -1,5 +1,6 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
@@ -8,19 +9,19 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 
 import { WeUiModule } from 'ngx-weui';
-import {AqmModule} from 'angular-qq-maps';
-import {TabsModule} from '../components/tabs/index';
+import { AqmModule } from 'angular-qq-maps';
+import { TabsModule } from '../components/tabs/index';
 
 import { IndexComponent } from '../pages/index/index';
 
 
-import {AppComponent} from './app.component';
-import {HomeComponent} from '../pages/home/home';
-import {DetailComponent} from '../pages/product/detail/detail';
-import {MapComponent} from '../pages/map/map';
-import {UserComponent} from '../pages/user/user';
+import { AppComponent } from './app.component';
+import { HomeComponent } from '../pages/home/home';
+import { DetailComponent } from '../pages/product/detail/detail';
+import { MapComponent } from '../pages/map/map';
+import { UserComponent } from '../pages/user/user';
 
-import {AppRoutingModule} from '../routes/routes';
+import { AppRoutingModule } from '../routes/routes';
 import { UserInfoComponent } from '../pages/user/userInfo/userInfo';
 import { CarInfoComponent } from '../pages/user/carInfo/carInfo';
 import { ContactComponent } from '../pages/user/contact/contact';
@@ -47,6 +48,9 @@ import { MailComponent } from '../pages/orders/mail/mail';
 import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
 
 
+import { KeysPipe } from '../pipes/keys';
+
+
 @NgModule({
     declarations : [
         AppComponent,
@@ -71,11 +75,14 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
         MailComponent,
         OrderDetailComponent,
 
-        FocusBlurDirective
+        FocusBlurDirective,
+
+        KeysPipe
     ],
     imports      : [
         AppRoutingModule,
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,

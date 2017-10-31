@@ -5,10 +5,10 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import {MarkerModel} from '../models/marker.model';
+import {ProductsModel} from '../../models/product.model';
 
 
-import {config} from '../app/app.config';
+import {config} from '../../app/app.config';
 
 /*
  Generated class for the Events provider.
@@ -17,12 +17,12 @@ import {config} from '../app/app.config';
  for more info on providers and Angular 2 DI.
  */
 @Injectable()
-export class MarkersProvider {
+export class ProductProvider {
 
-    url = config.mock;
+    url = config.prefix;
 
     constructor(public http: Http) {
-        console.log('Hello Events Provider');
+        console.log('Hello Product Provider');
     }
 
     headers: any;
@@ -32,7 +32,7 @@ export class MarkersProvider {
         this.headers.append('X-Requested-With', 'XMLHttpRequest');
     }
 
-    getMakers(path: String): Observable<MarkerModel[]> {
+    getProducts(path: String): Observable<ProductsModel> {
         this.setHeader();
         return this.http.get(this.url + path, {
             headers: this.headers

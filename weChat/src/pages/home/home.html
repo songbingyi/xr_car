@@ -1,95 +1,99 @@
-<div class="scroll-page">
-    <div class="full-with-page header-menu">
-        <ul>
-            <li>
-                <div class="header-menu-item" [routerLink]="['/license']">
-                    <img src="http://via.placeholder.com/350x150"/>
-                    <h3>驾照</h3>
-                </div>
-            </li>
-            <li>
-                <div class="header-menu-item" [routerLink]="['/certificate']">
-                    <img src="http://via.placeholder.com/350x150"/>
-                    <h3>营运证</h3>
-                </div>
-            </li>
-            <li>
-                <div class="header-menu-item" [routerLink]="['/review']">
-                    <img src="http://via.placeholder.com/350x150"/>
-                    <h3>审车</h3>
-                </div>
-            </li>
-            <li>
-                <div class="header-menu-item">
-                    <img src="http://via.placeholder.com/350x150"/>
-                    <h3>保险</h3>
-                </div>
-            </li>
-            <li>
-                <div class="header-menu-item">
-                    <img src="http://via.placeholder.com/350x150"/>
-                    <h3>违章</h3>
-                </div>
-            </li>
-        </ul>
-    </div>
+<weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
+    <div class="home-page" #scrollMe>
+        <div class="full-with-page header-menu">
+            <ul>
+                <li>
+                    <div class="header-menu-item" [routerLink]="['/license']">
+                        <img src="http://via.placeholder.com/350x150"/>
+                        <h3>驾照</h3>
+                    </div>
+                </li>
+                <li>
+                    <div class="header-menu-item" [routerLink]="['/certificate']">
+                        <img src="http://via.placeholder.com/350x150"/>
+                        <h3>营运证</h3>
+                    </div>
+                </li>
+                <li>
+                    <div class="header-menu-item" [routerLink]="['/review']">
+                        <img src="http://via.placeholder.com/350x150"/>
+                        <h3>审车</h3>
+                    </div>
+                </li>
+                <li>
+                    <div class="header-menu-item">
+                        <img src="http://via.placeholder.com/350x150"/>
+                        <h3>保险</h3>
+                    </div>
+                </li>
+                <li>
+                    <div class="header-menu-item">
+                        <img src="http://via.placeholder.com/350x150"/>
+                        <h3>违章</h3>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <div class="full-with-page item-list">
-        <ul>
-            <li>
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-            <li style="margin-right: 0">
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-            <li style="margin-right: 0">
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-            <li>
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-            <li style="margin-right: 0">
-                <a [routerLink]="['/detail', 1]">
-                    <div class="aspect-ratio" data-ratio="1:1">
-                        <img src="http://via.placeholder.com/350x150"/>
-                    </div>
-                    <h4>轩德3系载货车</h4>
-                    <p>128-150万</p>
-                </a>
-            </li>
-        </ul>
+
+        <div class="full-with-page item-list">
+            <ul>
+                <li *ngFor="let product of products; let i of index;">
+                    <a [routerLink]="['/detail', product.id]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img [src]="product.cover"/>
+                        </div>
+                        <h4>{{product.title + ' | ' + i}}</h4>
+                        <p>{{product.price}}</p>
+                    </a>
+                </li>
+                <!--<li style="margin-right: 0">
+                    <a [routerLink]="['/detail', 1]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img src="http://via.placeholder.com/350x150"/>
+                        </div>
+                        <h4>轩德3系载货车</h4>
+                        <p>128-150万</p>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="['/detail', 1]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img src="http://via.placeholder.com/350x150"/>
+                        </div>
+                        <h4>轩德3系载货车</h4>
+                        <p>128-150万</p>
+                    </a>
+                </li>
+                <li style="margin-right: 0">
+                    <a [routerLink]="['/detail', 1]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img src="http://via.placeholder.com/350x150"/>
+                        </div>
+                        <h4>轩德3系载货车</h4>
+                        <p>128-150万</p>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="['/detail', 1]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img src="http://via.placeholder.com/350x150"/>
+                        </div>
+                        <h4>轩德3系载货车</h4>
+                        <p>128-150万</p>
+                    </a>
+                </li>
+                <li style="margin-right: 0">
+                    <a [routerLink]="['/detail', 1]">
+                        <div class="aspect-ratio" data-ratio="1:1">
+                            <img src="http://via.placeholder.com/350x150"/>
+                        </div>
+                        <h4>轩德3系载货车</h4>
+                        <p>128-150万</p>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="goTop" (click)="goTop();"></div>
     </div>
-</div>
+</weui-infiniteloader>

@@ -5,6 +5,16 @@
     padding:0 12.5px;
 }
 
+.weui-infiniteloader {
+    height: 100%!important;
+}
+
+.home-page {
+    position: static;
+    /*height:100%;
+    padding-bottom: 15px;*/
+}
+
 .header-menu {
     background:$bgWhite;
     margin-top:15px;
@@ -38,12 +48,18 @@
 }
 
 .item-list {
+    ul {
+        overflow: hidden;
+    }
     li {
         width:48.5714%;
         float: left;
         text-align: left;
         margin-right:2.8571%;
         margin-top:15px;
+        &:nth-child(2n) {
+            margin-right:0;
+        }
         img {
             width:100%;
         }
@@ -61,4 +77,14 @@
             font-size:14px;
         }
     }
+}
+
+
+.goTop {
+    position: fixed;
+    bottom:80px;
+    right:10px;
+    height:40px;
+    width:40px;
+    background: red;
 }

@@ -296,3 +296,13 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
         }
     }
 }
+
+
+.weui-picker__hd {
+    line-height: normal;
+}
+.weui-picker__bd {
+    .weui-cells {
+        width:100%;
+    }
+}
