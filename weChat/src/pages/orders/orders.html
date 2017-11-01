@@ -172,6 +172,13 @@
                     </div>
                 </a>
 
+                <div class="empty-container" *ngIf="isLoaded && hasDone.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
             </div>
         </tab>
         <tab title="待付款" [active]="activeIndex===1">
@@ -210,6 +217,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="empty-container" *ngIf="isLoaded && needPay.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
             </div>
         </tab>
         <tab title="待处理" [active]="activeIndex===2">
@@ -284,6 +299,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="empty-container" *ngIf="isLoaded && needProcess.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
             </div>
         </tab>
         <tab [active]="activeIndex===3">
@@ -325,6 +348,14 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="empty-container" *ngIf="isLoaded && processing.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
             </div>
         </tab>
         <tab title="已完成" [active]="activeIndex===4">
@@ -351,6 +382,13 @@
                             <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
                             <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
                         </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="isLoaded && hasDone.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
                     </div>
                 </div>
             </div>

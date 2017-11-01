@@ -123,7 +123,9 @@ export class MapComponent implements OnInit {
             console.log(event);
             let icon = marker.origin.icon ;// ? marker.origin.icon.replace('.png', '.big.png') : marker.origin.icon;
             marker.setIcon(new qq.maps.MarkerImage(icon, new qq.maps.Size(65, 72)), '', '', new qq.maps.Size(30, 30), '');
-            this.showInfoWindow(marker.origin);
+            this.zone.run(() => {
+                this.showInfoWindow(marker.origin);
+            });
         });
     }
 

@@ -79,6 +79,36 @@
     }
 }
 
+.empty-container {
+    position: absolute;
+    top: 135px;
+    left: 0;
+    right: 0;
+    bottom: 65px;
+    background: #FFF;
+}
+
+.empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -65px 0 0 -60px;
+    width: 120px;
+    height: 130px;
+    font-size: 14px;
+    p {
+        text-align: center;
+        color:#333333;
+        margin-top:10px;
+    }
+    img {
+        width:100px;
+        height:100px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
 
 .goTop {
     position: fixed;
@@ -86,5 +116,6 @@
     right:10px;
     height:40px;
     width:40px;
-    background: red;
+    background: url("/assets/images/icon/gotop.png") 0 0 no-repeat;
+    background-size: contain;
 }

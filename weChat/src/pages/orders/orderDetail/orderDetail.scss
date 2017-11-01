@@ -34,6 +34,7 @@
             line-height:normal;
             display: block;
             float: right;
+            margin-bottom:10px;
         }
         p {
             line-height: normal;
@@ -51,6 +52,9 @@
         padding-bottom: 10px;
         .image {
             margin-top:0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position:0 0;
         }
         span {
             margin-top: 10px;

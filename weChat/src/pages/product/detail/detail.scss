@@ -6,6 +6,16 @@
     position: relative;
     height: 100%;
     padding-bottom: 50px;
+    .weui-btn {
+        line-height: 50px;
+        img {
+            width:22px;
+            height:22px;
+            position: relative;
+            top: 5px;
+            left: -5px;
+        }
+    }
 }
 .slider {
     height:200px;
@@ -42,7 +52,8 @@
     }
 }
 
-article {
+article.full-with-page {
+    padding-bottom: 15px;
     h2 {
         font-size:20px;
         color:#000;

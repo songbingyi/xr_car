@@ -1,41 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 
-import { MessageService } from '../../providers/messageService';
-import { LocalStorage } from '../../providers/localStorage';
+import {MessageService} from '../../providers/messageService';
+import {LocalStorage} from '../../providers/localStorage';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.html',
-  styleUrls: ['./index.scss']
+    selector    : 'app-index',
+    templateUrl : './index.html',
+    styleUrls   : ['./index.scss']
 })
 export class IndexComponent implements OnInit {
 
-    activeTabIndex: any = 0;
-    tabs: any = [
+    activeTabIndex : any = 0;
+    tabs : any = [
         {
-            title    : '首页',
-            selected : 'weui-bar__item_on',
-            icon     : 'assets/tmp/icon_tabbar.png'
+            title      : '首页',
+            selected   : 'weui-bar__item_on',
+            sizeClass  : 'home',
+            icon       : '/assets/images/icon/home.png',
+            activeIcon : '/assets/images/icon/home.blue.png'
         },
         {
-            title    : '站点',
-            selected : '',
-            icon     : 'assets/tmp/icon_tabbar.png'
+            title      : '站点',
+            selected   : '',
+            sizeClass  : 'map',
+            icon       : '/assets/images/icon/map.png',
+            activeIcon : '/assets/images/icon/map.blue.png'
         },
         {
-            title    : '我的',
-            selected : '',
-            icon     : 'assets/tmp/icon_tabbar.png'
+            title      : '我的',
+            selected   : '',
+            sizeClass  : 'my',
+            icon       : '/assets/images/icon/my.png',
+            activeIcon : '/assets/images/icon/my.blue.png'
         }
     ];
 
-    constructor(private message: MessageService, private localStorage : LocalStorage, private titleService: Title ) {
+    constructor(private message : MessageService, private localStorage : LocalStorage, private titleService : Title) {
 
     }
 
-    ngOnInit(): void {
-        let activeTabIndex: any = this.localStorage.get('activeTabIndex');
+    ngOnInit() : void {
+        let activeTabIndex : any = this.localStorage.get('activeTabIndex');
         this.activeTabIndex = activeTabIndex ? (activeTabIndex - 0) : 0;
         this.setSelected();
 
@@ -55,10 +61,10 @@ export class IndexComponent implements OnInit {
     }
 
     setSelected() {
-        let activeTabIndex: any = this.activeTabIndex;
+        let activeTabIndex : any = this.activeTabIndex;
         this.tabs.forEach((tab, index) => {
             tab.selected = '';
-            if (activeTabIndex === index ) {
+            if (activeTabIndex === index) {
                 tab.selected = 'weui-bar__item_on';
                 this.titleService.setTitle('轩仁车务-' + tab.title);
             }

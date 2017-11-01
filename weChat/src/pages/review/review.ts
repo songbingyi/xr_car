@@ -24,6 +24,8 @@ export class ReviewComponent implements OnInit {
 
     showDateType: Boolean = false;
 
+    showBartrailerType: Boolean = false;
+
     private config: DialogConfig = <DialogConfig>{
         title: '返回',
         content: '离开此页面，资料将不会保存，是否离开？',
@@ -57,19 +59,36 @@ export class ReviewComponent implements OnInit {
     showNext : Boolean = false;
 
     selectedDate : string;
+    selectedBartrailer : any;
     result : any = {
         city     : '',
         station  : null,
         date     : null,
         price    : 0,
         selected : null,
-        carType  : null
+        carType  : null,
+        bartrailer : null
     };
 
     cityArray = {
         'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
         'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
     };
+
+    bartrailerTypeArray = [
+        {
+            id : 1,
+            name: '全部'
+        },
+        {
+            id : 2,
+            name: '挂头'
+        },
+        {
+            id : 3,
+            name: '挂箱'
+        }
+        ];
 
     itemsRadio : string[] = Array(10).fill('').map((v : string, idx : number) => `咸阳新盛检测站-${idx}`);
     dateRadio : string[] = Array(5).fill('').map((v : string, idx : number) => `11.${idx}`);
@@ -118,13 +137,23 @@ export class ReviewComponent implements OnInit {
         this.router.navigate(['/userInfo']);
     }
 
-    showDateTypeBox() {
-        this.showDateType = !this.showDateType;
-    }
-
     select(item) {
         this.result.city = item.name;
         this.fullPopup.close();
+    }
+
+    showBartrailerTypeBox() {
+        this.showBartrailerType = !this.showBartrailerType;
+    }
+
+    selectBartrailerType() {
+        this.result.bartrailer = this.selectedBartrailer;
+        this.selectedBartrailer = null;
+        this.cancelTypeBox();
+    }
+
+    showDateTypeBox() {
+        this.showDateType = !this.showDateType;
     }
 
     selectDateType() {
@@ -136,6 +165,8 @@ export class ReviewComponent implements OnInit {
     cancelTypeBox() {
         this.selectedDate = null;
         this.showDateType = false;
+        this.selectedBartrailer = null;
+        this.showBartrailerType = false;
     }
 
 }

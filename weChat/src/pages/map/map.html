@@ -26,7 +26,7 @@
     </div>
 
     <div class="information-bar" *ngIf="!currentMarker"><!-- no-data -->
-        <i class="weui-icon-info-circle"></i><span>方圆20公里共找到78个服务站，29个检测站</span>
+        <img src="/assets/images/icon/triangle.png" /> <span>方圆20公里共找到78个服务站，29个检测站</span>
     </div>
 
     <div class="info-window weui-cell-special" *ngIf="currentMarker" [ngClass]="{'review':currentMarker.type==='review'}">
@@ -50,13 +50,15 @@
                 <div class="weui-cell__bd">
                     <p>{{currentMarker.address}}</p>
                 </div>
-                <div class="weui-cell__ft"><a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.lat}}&epointy={{currentMarker.lng}}&eword={{currentMarker.name}}?ref=locationCluster_tengxun">去这里</a></div>
+                <div class="weui-cell__ft">
+                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.lat}}&epointy={{currentMarker.lng}}&eword={{currentMarker.name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
+                </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>{{currentMarker.tel}}</p>
                 </div>
-                <div class="weui-cell__ft">d</div>
+                <div class="weui-cell__ft"><a href="tel:15827676387"><img src="/assets/images/icon/phone.png" /></a></div>
             </div>
         </div>
     </div>

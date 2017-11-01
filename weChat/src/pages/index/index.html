@@ -13,7 +13,7 @@
         </div>
         <div class="weui-tabbar">
             <a href="javascript:;" class="weui-tabbar__item" (click)="selected(tab, i)" ngClass="{{tab.selected}}" *ngFor="let tab of tabs; index as i;">
-                <img src="{{tab.icon}}" alt="" class="weui-tabbar__icon">
+                <img [src]="tab.selected ? tab.activeIcon : tab.icon" alt="" class="weui-tabbar__icon" [ngClass]="tab.sizeClass">
                 <p class="weui-tabbar__label">{{tab.title}}</p>
             </a>
         </div>

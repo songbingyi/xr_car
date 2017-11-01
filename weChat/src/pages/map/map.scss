@@ -26,11 +26,15 @@
         position: absolute;
         bottom: 50px;
         left: 0;
-        i {
-            padding-left:10px;
+        img {
+            height: 15px;
+            width: 15px;
+            left: 10px;
+            top: 2px;
+            position: relative;
         }
         span {
-            padding-left: 10px;
+            padding-left: 20px;
         }
         &.no-data {
             background:#E64340;
@@ -83,6 +87,16 @@
                 font-size:12px;
                 font-style: normal;
             }
+        }
+    }
+    
+    .weui-cell__ft {
+        img {
+            width:25px;
+            height:25px;
+            position: relative;
+            top: 5px;
+            left: 0;
         }
     }
     

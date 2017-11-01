@@ -30,9 +30,9 @@ export class DetailComponent implements OnInit {
     };
 
     images: any[] = [
-        { url: 'http://lorempixel.com/600/600/nature/1', title: '标题1' },
-        { url: 'http://lorempixel.com/600/600/nature/2', title: '标题2' },
-        { url: 'http://lorempixel.com/600/600/nature/3', title: '标题3' }
+        { url: '/assets/images/tmp/detail.w.png', title: '标题1' },
+        { url: '/assets/images/tmp/detail.w.png', title: '标题2' },
+        { url: '/assets/images/tmp/detail.w.png', title: '标题3' }
     ];
 
     constructor(private route : ActivatedRoute, private router : Router) {
