@@ -1,0 +1,398 @@
+<div class="orders">
+    <tabset (onSelect)="onTabSelect($event)">
+        <tab [active]="activeIndex===0">
+            <span *tabHeading class="tab-set-heading">
+                全部<q class="weui-badge">99</q>
+            </span>
+            <div class="scroll-page">
+                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span></span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span class="mini-width eq-width">性质：公户</span> <span class="small-width eq-width">类型：大型汽车</span> <span class="normal-width eq-width">车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment', 5]">付款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </a>
+
+                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </a>
+
+                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-info">审核中…</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </a>
+
+                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-info">处理中…</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </a>
+
+                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>驾照审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-warning">正在退款...</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>AB证</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                        </div>
+                    </div>
+                </a>
+
+                <div class="empty-container" *ngIf="isLoaded && hasDone.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
+            </div>
+        </tab>
+        <tab title="待付款" [active]="activeIndex===1">
+            <div class="scroll-page">
+                <div class="weui-cells">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span></span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span class="mini-width eq-width">性质：公户</span> <span class="small-width eq-width">类型：大型汽车</span> <span class="normal-width eq-width">车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="isLoaded && needPay.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
+            </div>
+        </tab>
+        <tab title="待处理" [active]="activeIndex===2">
+            <div class="scroll-page">
+                <div class="weui-cells">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/refund', 1]">退款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cells">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="isLoaded && needProcess.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
+            </div>
+        </tab>
+        <tab [active]="activeIndex===3">
+            <span *tabHeading class="tab-set-heading">
+                处理中<q class="weui-badge">9</q>
+            </span>
+            <div class="scroll-page">
+                <div class="weui-cells">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>营运证审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-info">处理中…</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>时间：2017年10月20日</p>
+                        </div>
+                    </div>
+                    <div class="weui-cell no-border">
+                        <div class="weui-cell__bd">
+                            <p>地点：西安  西安新盛检测站 </p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="isLoaded && processing.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+
+            </div>
+        </tab>
+        <tab title="已完成" [active]="activeIndex===4">
+            <div class="scroll-page">
+                <div class="weui-cells">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p>驾照审验</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-warning">已完成</span></div>
+                    </div>
+                    <div class="weui-cell with-margin-top">
+                        <div class="weui-cell__bd">
+                            <p><span>AB证</span></p>
+                        </div>
+                    </div>
+                    <div class="weui-cell cell-operation">
+                        <div class="weui-cell__bd">
+                            <span>支付金额 :<strong>￥520</strong></span>
+                        </div>
+                        <div class="weui-cell__bd button-sp-area">
+                            <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                            <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="isLoaded && hasDone.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png" />
+                        <p>内容突然就没有了</p>
+                    </div>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>
+

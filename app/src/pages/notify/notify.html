@@ -1,0 +1,70 @@
+<div class="scroll-page">
+    <div class="notify">
+        <div class="weui-cell-special">
+            <div class="weui-cells__title">2017.10.15  21：45</div>
+            <div class="weui-cells">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>状态变更提醒</p>
+                    </div>
+                    <div class="weui-cell__ft"><span></span></div>
+                </div>
+                <div class="weui-cell with-margin-top">
+                    <div class="weui-cell__bd">
+                        <p>订单编号：2354123141444</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>下单时间：2017.10.15 12:34</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>业务类型：驾照服务</p>
+                    </div>
+                </div>
+                <div class="weui-cell cell-operation">
+                    <div class="weui-cell__bd">
+                        <span>状态 :<strong class="text-warning">审核已通过</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">2017.10.15  21：45</div>
+            <div class="weui-cells">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>状态变更提醒</p>
+                    </div>
+                    <div class="weui-cell__ft"><span></span></div>
+                </div>
+                <div class="weui-cell with-margin-top">
+                    <div class="weui-cell__bd">
+                        <p>订单编号：2354123141444</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>下单时间：2017.10.15 12:34</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>业务类型：驾照服务</p>
+                    </div>
+                </div>
+                <div class="weui-cell cell-operation">
+                    <div class="weui-cell__bd">
+                        <span>审验时间：<strong class="text-warning">2017.10.18</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="empty-container" *ngIf="isLoaded && notices.length===0">
+        <div class="empty">
+            <img src="/assets/images/empty.png" />
+            <p>没有消息通知</p>
+        </div>
+    </div>
+</div>

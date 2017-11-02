@@ -1,0 +1,61 @@
+.notify {
+    margin-bottom : 20px;
+    .weui-cells__title {
+        padding-left:0;
+        text-align: center;
+        font-size:14px;
+        color:#888888;
+    }
+    
+    .weui-cell-special {
+        .weui-cell {
+            height      : 34px;
+            line-height : 34px;
+        }
+        .cell-operation {
+            text-align  : left;
+            height      : 55px;
+            line-height : 55px;
+            font-size : 15px;
+        }
+        .special-cell {
+            height: 46px;
+            line-height: 46px;
+            color     : #000;
+            font-size : 15px;
+        }
+    }
+    .weui-cell {
+        color : #888888;
+    }
+    
+}
+
+.empty-container {
+    position : absolute;
+    top      : 0;
+    left     : 0;
+    right    : 0;
+    bottom   : 0;
+}
+
+.empty {
+    position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    margin    : -65px 0 0 -60px;
+    width     : 120px;
+    height    : 130px;
+    font-size : 14px;
+    p {
+        text-align : center;
+        color      : #333333;
+        margin-top : 10px;
+    }
+    img {
+        width   : 100px;
+        height  : 100px;
+        display : block;
+        margin  : 0 auto;
+    }
+}

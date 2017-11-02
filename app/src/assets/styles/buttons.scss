@@ -1,0 +1,31 @@
+.weui-btn_mini_warn {
+    border:1px solid #FA9D3B;
+    color:#FA9D3B;
+    background:#FFF;
+}
+.weui-btn_mini_primary {
+    border:1px solid #1970A6;
+    color:#1970A6;
+    background:#FFF;
+}
+.weui-btn_mini_default {
+    border:1px solid #DFDFDF;
+    color:#353535;
+    background:#F8F8F8;
+}
+.weui-btn.weui-btn_mini {
+    margin-left:10px;
+    &:after {
+        display: none;
+    }
+    &.disabled {
+        background:#DEDEDE;
+        border:1px solid #C8C8C8;
+        color:#787878;
+    }
+}
+.weui-btn_mini_placeholder {
+    border:1px solid #FFF;
+    color:#FFF;
+    background:#FFF;
+}

@@ -1,0 +1,21 @@
+<div class="page__bd" style="height: 100%;">
+    <div class="weui-tab">
+        <div class="weui-tab__panel weui-tab__body">
+            <div class="scroll-page" [hidden]="activeTabIndex === 1 || activeTabIndex === 2">
+                <app-home></app-home>
+            </div>
+            <div class="scroll-page" [hidden]="activeTabIndex === 0 || activeTabIndex === 2">
+                <app-map></app-map>
+            </div>
+            <div class="scroll-page" [hidden]="activeTabIndex === 0 || activeTabIndex === 1">
+                <app-user></app-user>
+            </div>
+        </div>
+        <div class="weui-tabbar">
+            <a href="javascript:;" class="weui-tabbar__item" (click)="selected(tab, i)" ngClass="{{tab.selected}}" *ngFor="let tab of tabs; index as i;">
+                <img [src]="tab.selected ? tab.activeIcon : tab.icon" alt="" class="weui-tabbar__icon" [ngClass]="tab.sizeClass">
+                <p class="weui-tabbar__label">{{tab.title}}</p>
+            </a>
+        </div>
+    </div>
+</div>

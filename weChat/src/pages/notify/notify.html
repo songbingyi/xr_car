@@ -1,0 +1,108 @@
+<div class="scroll-page">
+    <div class="notify">
+        <div class="weui-panel" [routerLink]="['/notifyCat', 1]">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">
+                        <span class="left">状态变更提醒</span>
+                        <span class="right">今天10:00</span>
+                    </h4>
+                    <p class="weui-media-box__desc">您有一笔代付款订单！</p>
+                    <span class="weui-badge">8</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-panel" [routerLink]="['/notifyCat', 2]">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">
+                        <span class="left">审验时间提醒</span>
+                        <span class="right">2017.10.15  21：45</span>
+                    </h4>
+                    <p class="weui-media-box__desc">您有一笔订单24小时后审验！</p>
+                    <span class="weui-badge">88</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui-panel" [routerLink]="['/notifyCat', 3]">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">
+                        <span class="left">系统消息</span>
+                        <span class="right">2017.10.15  21：45</span>
+                    </h4>
+                    <p class="weui-media-box__desc">有新的活动，快来参加吧~</p>
+                    <span class="weui-badge">888</span>
+                </div>
+            </div>
+        </div>
+        <!--<div class="weui-cell-special">
+            <div class="weui-cells__title">2017.10.15  21：45</div>
+            <div class="weui-cells">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>状态变更提醒</p>
+                    </div>
+                    <div class="weui-cell__ft"><span></span></div>
+                </div>
+                <div class="weui-cell with-margin-top">
+                    <div class="weui-cell__bd">
+                        <p>订单编号：2354123141444</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>下单时间：2017.10.15 12:34</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>业务类型：驾照服务</p>
+                    </div>
+                </div>
+                <div class="weui-cell cell-operation">
+                    <div class="weui-cell__bd">
+                        <span>状态 :<strong class="text-warning">审核已通过</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">2017.10.15  21：45</div>
+            <div class="weui-cells">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>状态变更提醒</p>
+                    </div>
+                    <div class="weui-cell__ft"><span></span></div>
+                </div>
+                <div class="weui-cell with-margin-top">
+                    <div class="weui-cell__bd">
+                        <p>订单编号：2354123141444</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>下单时间：2017.10.15 12:34</p>
+                    </div>
+                </div>
+                <div class="weui-cell no-border">
+                    <div class="weui-cell__bd">
+                        <p>业务类型：驾照服务</p>
+                    </div>
+                </div>
+                <div class="weui-cell cell-operation">
+                    <div class="weui-cell__bd">
+                        <span>审验时间：<strong class="text-warning">2017.10.18</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="empty-container" *ngIf="isLoaded && notices.length===0">
+        <div class="empty">
+            <img src="/assets/images/empty.png" />
+            <p>没有消息通知</p>
+        </div>
+    </div>
+</div>

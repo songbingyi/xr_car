@@ -1,0 +1,28 @@
+.weui-cell-special {
+    .weui-cell {
+        height:40px;
+        line-height:40px;
+    }
+    .cell-operation {
+        text-align: center;
+        height:50px;
+        line-height:50px;
+        a {
+            color: #1970A6;
+        }
+    }
+    .special-cell {
+        height:60px;
+        line-height:60px;
+        span {
+            color:#1970A6;
+            font-size:24px;
+        }
+    }
+}
+.weui-cell {
+    color:#888888;
+}
+.car-list {
+    margin-bottom:20px;
+}

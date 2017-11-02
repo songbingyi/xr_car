@@ -1,0 +1,132 @@
+.orders {
+    .scroll-page {
+        background: #EFEFF4;
+    }
+    .tabset {
+        ul.nav-tabs {
+            overflow: hidden;
+            li {
+                float: left;
+                font-size: 14px;
+                width: 20%;
+                height: 47px;
+                line-height: 47px;
+                margin: 0 auto;
+                background: #FAFAFA;
+                padding: 0 8px;
+                
+                a {
+                    display: block;
+                    width:100%;
+                    margin:0;
+                    text-align: center;
+                    height:47px;
+                    border-bottom:3px solid #FAFAFA;
+                }
+                &.active {
+                    a {
+                        border-bottom:3px solid #1970A6;
+                        color:#1970A6;
+                    }
+                    
+                }
+            }
+        }
+        .tab-content {
+            .weui-cells__title {
+                height:auto;
+                background: #FFF;
+            }
+        }
+    }
+    .weui-cells {
+        width:100%;
+        margin:15px 0 10px 0;
+        display: block;
+    }
+    
+    .weui-cell {
+        padding:0 20px;
+        font-size:14px;
+        color:#888888;
+        height: 20px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        &.with-margin-top {
+            padding-top: 10px;
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+    .special-cell {
+        height:48px;
+        line-height:48px;
+        color:#000000;
+        font-size:15px;
+        margin-bottom:0;
+    }
+    .weui-cell__bd {
+        .eq-width {
+            display: inline-block;
+        }
+        .mini-width {
+            width:80px;
+        }
+        .small-width {
+            width:110px;
+        }
+        .normal-width {
+            width:135px;
+        }
+        p {
+            position: relative;
+            top: 1px
+        }
+    }
+    
+    .cell-operation {
+        height:56px;
+        line-height:56px;
+        font-size:15px;
+        margin-bottom:0;
+        strong {
+            color:#FA9D3B;
+            font-weight:normal;
+            margin-left:10px;
+        }
+    }
+    .button-sp-area {
+        text-align: right;
+        height: 60px;
+    }
+}
+
+
+.empty-container {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -65px 0 0 -60px;
+    width: 120px;
+    height: 130px;
+    font-size: 14px;
+    p {
+        text-align: center;
+        color:#333333;
+        margin-top:10px;
+    }
+    img {
+        width:100px;
+        height:100px;
+        display: block;
+        margin: 0 auto;
+    }
+}

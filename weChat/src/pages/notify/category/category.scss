@@ -1,0 +1,23 @@
+.category {
+    .weui-cells__title {
+        text-align: center;
+    }
+    .weui-media-box__desc {
+        color: #999999;
+        font-size: 13px;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        &.system {
+            -webkit-line-clamp: 2;
+        }
+    }
+    .weui-cell__ft {
+        text-align: left;
+        padding-right: 26px;
+        margin-right: 13px;
+    }
+}

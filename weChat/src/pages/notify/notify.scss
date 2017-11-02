@@ -1,0 +1,44 @@
+.notify {
+    margin-top : 10px;
+    margin-bottom : 20px;
+    .left {
+        float: left;
+    };
+    .right {
+        float: right;
+    }
+    .weui-badge {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+.empty-container {
+    position : absolute;
+    top      : 0;
+    left     : 0;
+    right    : 0;
+    bottom   : 0;
+}
+
+.empty {
+    position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    margin    : -65px 0 0 -60px;
+    width     : 120px;
+    height    : 130px;
+    font-size : 14px;
+    p {
+        text-align : center;
+        color      : #333333;
+        margin-top : 10px;
+    }
+    img {
+        width   : 100px;
+        height  : 100px;
+        display : block;
+        margin  : 0 auto;
+    }
+}

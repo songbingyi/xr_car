@@ -1,0 +1,212 @@
+<div>
+    <div class="top-tips">
+        <p>注：最多可绑定3辆车的信息 | <a [routerLink]="['/carList']">列表</a></p>
+    </div>
+    <div class="weui-cells__title">车牌号码</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd labels">
+                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">陕<i class="icon-triangle"></i></label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="例如：567R3" [formControl]="cardId" appFocusBlur />
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">车辆信息</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">所属公司</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入公司名称" [formControl]="companyName" appFocusBlur/>
+            </div>
+        </div>
+        <!--<div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">车辆性质</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="选择车辆性质"/>
+            </div>
+        </div>-->
+        <div class="weui-cell weui-cell_access" href="javascript:;" (click)="showIdTypeBox()">
+            <div class="weui-cell__hd"><label class="weui-label">车辆性质</label></div>
+            <div class="weui-cell__bd">
+                <span class="placeholder">选择车辆性质</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+
+        <div class="weui-cell weui-cell_access" href="javascript:;" (click)="showCarTypeBox()">
+            <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
+            <div class="weui-cell__bd">
+                <span class="placeholder">选择车辆类型</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+
+        <!--<div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="选择车辆类型"/>
+            </div>
+        </div>-->
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">车架号码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入车架号码" [formControl]="cardIdv" appFocusBlur/>
+            </div>
+            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">发动机号</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入发动机号" [formControl]="cardIdx" appFocusBlur/>
+            </div>
+            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
+    </div>
+
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding">删除</a>
+
+    <div class="weui-gallery" [hidden]="!isShowImage">
+        <span class="weui-gallery__img" style="background-image: url('http://via.placeholder.com/250x150');"></span>
+        <div class="weui-gallery__opr">
+            <a href="javascript:" class="weui-gallery__del" (click)="showImage()">
+                <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="" [hidden]="!showIdType">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-picker weui-animate-slide-up">
+            <div class="weui-picker__hd">
+                <a href="javascript:;" data-action="cancel" class="weui-picker__action" (click)="cancelTypeBox()">取消</a>
+                <a href="javascript:;" data-action="select" class="weui-picker__action" (click)="selectIdType()">确定</a>
+            </div>
+            <div class="weui-picker__bd">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label" for="x1">
+                        <div class="weui-cell__bd">
+                            <p>公户</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" name="radio1" id="x1">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x2">
+                        <div class="weui-cell__bd">
+                            <p>私户</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio1" class="weui-check" id="x2">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="" [hidden]="!showCarType">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-picker weui-animate-slide-up">
+            <div class="weui-picker__hd">
+                <a href="javascript:;" data-action="cancel" class="weui-picker__action" (click)="cancelTypeBox()">取消</a>
+                <a href="javascript:;" data-action="select" class="weui-picker__action" (click)="selectCarType()">确定</a>
+            </div>
+            <div class="weui-picker__bd">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label" for="x11">
+                        <div class="weui-cell__bd">
+                            <p>挂车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" name="radio2" id="x11">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x12">
+                        <div class="weui-cell__bd">
+                            <p>重型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x12">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x13">
+                        <div class="weui-cell__bd">
+                            <p>中型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x13">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x14">
+                        <div class="weui-cell__bd">
+                            <p>小型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x14">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="province-select-panel" [hidden]="!showPanel">
+        <table>
+            <tr>
+                <td><span>京</span></td>
+                <td><span>津</span></td>
+                <td><span>翼</span></td>
+                <td><span>晋</span></td>
+                <td><span>蒙</span></td>
+                <td><span>辽</span></td>
+                <td><span>吉</span></td>
+                <td><span>黑</span></td>
+                <td><span>沪</span></td>
+                <td><span>苏</span></td>
+            </tr>
+            <tr>
+                <td><span>浙</span></td>
+                <td><span>皖</span></td>
+                <td><span>闽</span></td>
+                <td><span>赣</span></td>
+                <td><span>鲁</span></td>
+                <td><span>豫</span></td>
+                <td><span>鄂</span></td>
+                <td><span>湘</span></td>
+                <td><span>粤</span></td>
+                <td><span>桂</span></td>
+            </tr>
+            <tr>
+                <td><span>琼</span></td>
+                <td><span>渝</span></td>
+                <td><span>川</span></td>
+                <td><span>贵</span></td>
+                <td><span>云</span></td>
+                <td><span class="selected">藏</span></td>
+                <td><span>陕</span></td>
+                <td><span>甘</span></td>
+                <td><span>青</span></td>
+                <td><span>宁</span></td>
+            </tr>
+            <tr>
+                <td><span>新</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="4"><span class="return" (click)="showPanel=false">完成</span></td>
+            </tr>
+        </table>
+    </div>
+</div>

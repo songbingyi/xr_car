@@ -17,6 +17,9 @@ import {UserInfoComponent} from '../pages/user/userInfo/userInfo';
 import {CarInfoComponent} from '../pages/user/carInfo/carInfo';
 import {CarListComponent} from '../pages/user/carList/carList';
 
+import {NotifyComponent} from '../pages/notify/notify';
+import {CategoryComponent} from '../pages/notify/category/category';
+import {NotifyDetailComponent} from '../pages/notify/detail/detail';
 
 import {CertificateComponent} from '../pages/certificate/certificate';
 import {LicenseComponent} from '../pages/license/license';
@@ -51,7 +54,10 @@ const appRoutes: Routes = [
     {path : 'contact', component : ContactComponent},
     {path : 'userInfo', component : UserInfoComponent},
     {path : 'carInfo', component : CarInfoComponent},
-    {path : 'carList', component : CarListComponent}
+    {path : 'carList', component : CarListComponent},
+    {path : 'notify', component : NotifyComponent},
+    {path : 'notifyCat/:category', component : CategoryComponent},
+    {path : 'notifyDetail/:id', component : NotifyDetailComponent}
 ];
 
 @NgModule({

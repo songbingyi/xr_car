@@ -1,0 +1,45 @@
+.tabset {
+    ul.nav-tabs {
+        li {
+            float: left;
+            font-size: 14px;
+            width: 50%;
+            height: 47px;
+            line-height: 47px;
+            margin: 0 auto;
+            background: #FAFAFA;
+            padding: 0 20px;
+            
+            a {
+                display: block;
+                width:100%;
+                margin:0;
+                text-align: center;
+                height:47px;
+                border-bottom:3px solid #FAFAFA;
+            }
+            &.active {
+                a {
+                    border-bottom:3px solid #1970A6;
+                    color:#1970A6;
+                }
+                
+            }
+        }
+    }
+    .tab-content {
+        .weui-cells__title {
+            height:auto;
+            background: #FFF;
+        }
+    }
+    .tab-set-heading {
+        position: relative;
+        .weui-badge {
+            position: absolute;
+            quotes: none;
+            top: -8px;
+            right: -20px;
+        }
+    }
+}

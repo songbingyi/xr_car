@@ -14,7 +14,6 @@ import { TabsModule } from '../components/tabs/index';
 
 import { IndexComponent } from '../pages/index/index';
 
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from '../pages/home/home';
 import { DetailComponent } from '../pages/product/detail/detail';
@@ -31,13 +30,9 @@ import { CertificateComponent } from '../pages/certificate/certificate';
 import { ReviewComponent } from '../pages/review/review';
 import { OrdersComponent } from '../pages/orders/orders';
 
-import {FocusBlurDirective} from '../directives/focus.blur';
-
-import { MessageService } from '../providers/messageService';
-import { LocalStorage } from '../providers/localStorage';
-import { CustomValidators } from '../providers/custom.validators';
-import { WXService } from '../providers/wx.service';
-
+import { NotifyComponent } from '../pages/notify/notify';
+import { CategoryComponent } from '../pages/notify/category/category';
+import { NotifyDetailComponent } from '../pages/notify/detail/detail';
 
 import { CarListComponent } from '../pages/user/carList/carList';
 import { PaymentComponent } from '../pages/pay/payment/payment';
@@ -49,6 +44,14 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
 
 
 import { KeysPipe } from '../pipes/keys';
+
+import { FocusBlurDirective } from '../directives/focus.blur';
+
+import { MessageService } from '../providers/messageService';
+import { LocalStorage } from '../providers/localStorage';
+import { CustomValidators } from '../providers/custom.validators';
+import { WXService } from '../providers/wx.service';
+
 
 
 @NgModule({
@@ -77,7 +80,11 @@ import { KeysPipe } from '../pipes/keys';
 
         FocusBlurDirective,
 
-        KeysPipe
+        KeysPipe,
+
+        NotifyComponent,
+        CategoryComponent,
+        NotifyDetailComponent
     ],
     imports      : [
         AppRoutingModule,

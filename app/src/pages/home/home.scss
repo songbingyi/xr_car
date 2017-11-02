@@ -1,0 +1,121 @@
+@import "../../assets/styles/variables";
+
+.full-with-page {
+    width:100%;
+    padding:0 12.5px;
+}
+
+.weui-infiniteloader {
+    height: 100%!important;
+}
+
+.home-page {
+    position: static;
+    /*height:100%;
+    padding-bottom: 15px;*/
+}
+
+.header-menu {
+    background:$bgWhite;
+    margin-top:15px;
+    h3 {
+        font-size:14px;
+        color:#000;
+        font-weight: normal;
+    }
+    height:105px;
+    ul {
+        height:90px;
+    }
+    ul {
+        padding-top:15px;
+        overflow:hidden;
+    }
+    li {
+        width:20%;
+        height:75px;
+        float: left;
+        text-align: center;
+    }
+    .header-menu-item {
+        width:50px;
+        margin:0 auto;
+        img {
+            width:50px;
+            height:50px;
+        }
+    }
+}
+
+.item-list {
+    ul {
+        overflow: hidden;
+    }
+    li {
+        width:48.5714%;
+        float: left;
+        text-align: left;
+        margin-right:2.8571%;
+        margin-top:15px;
+        &:nth-child(2n) {
+            margin-right:0;
+        }
+        img {
+            width:100%;
+        }
+        h4 {
+            color:#000;
+            line-height:20px;
+            margin:5px 0 3px 0;
+            font-weight:normal;
+            font-size:14px;
+        }
+        p {
+            color:#FA9D3B;
+            line-height:20px;
+            margin:0;
+            font-size:14px;
+        }
+    }
+}
+
+.empty-container {
+    position: absolute;
+    top: 135px;
+    left: 0;
+    right: 0;
+    bottom: 65px;
+    background: #FFF;
+}
+
+.empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -65px 0 0 -60px;
+    width: 120px;
+    height: 130px;
+    font-size: 14px;
+    p {
+        text-align: center;
+        color:#333333;
+        margin-top:10px;
+    }
+    img {
+        width:100px;
+        height:100px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+
+.goTop {
+    position: fixed;
+    bottom:80px;
+    right:10px;
+    height:40px;
+    width:40px;
+    background: url("/assets/images/icon/gotop.png") 0 0 no-repeat;
+    background-size: contain;
+}

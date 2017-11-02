@@ -1,0 +1,19 @@
+.page {
+    background:#FFF;
+    .weui-cells__title {
+        background:#FFF;
+        height:60px;
+        line-height:60px;
+        font-size:15px;
+        color:#000000;
+    }
+    .weui-cell__bd {
+        height:60px;
+        line-height:60px;
+        border-top:none;
+    }
+    
+    .weui-cells:before {
+        display: none;
+    }
+}
