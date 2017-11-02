@@ -5,10 +5,14 @@ import {Location} from '@angular/common';
 
 import { Observable } from 'rxjs/Rx';
 
+import { CustomValidators } from '../../providers/custom.validators';
+
 import { SkinType, InputType } from 'ngx-weui';
 import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
 import { ToastService } from 'ngx-weui/toast';
 import { PopupComponent } from 'ngx-weui/popup';
+
+import { BaseProvider } from '../../providers/http/base.http';
 
 @Component({
     selector    : 'app-license',
@@ -25,21 +29,28 @@ export class LicenseComponent implements OnInit {
     shouldReservationBox: Boolean = true;
     showLicenseType: Boolean = false;
 
+    errMsg: any;
+    cities: Array<any>;
+    licenses: Array<any>;
 
     result : any = {
-        city: '',
-        licenseType: ''
+        city: {
+            valid: true
+        },
+        licenseType: {
+            valid: true
+        }
     };
 
-    cityArray = {
+    /*cityArray = {
         'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
         'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
-    };
+    };*/
 
     selectedLicense: any = null;
-    itemsRadio : any[] = [
+    /*itemsRadio : any[] = [
         {id: 1, name: 'A照'}, {id: 2, name: 'B照'}, {id: 3, name: 'C照'}
-    ];
+    ];*/
 
     private config: DialogConfig = <DialogConfig>{
         title: '返回',
@@ -50,10 +61,22 @@ export class LicenseComponent implements OnInit {
 
     showNext: Boolean = false;
 
-    constructor(private router: Router, private location: Location) {
+    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators) {
+        this.getInitData();
     }
 
     ngOnInit() {
+    }
+
+    getInitData() {
+        this.baseService.get('city.mock.json')
+            .subscribe(cities => {
+                this.cities = cities;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('license.mock.json')
+            .subscribe(licenses => {
+                this.licenses = licenses;
+            }, error => this.errMsg = <any>error);
     }
 
     onTabSelect(event) {
@@ -69,6 +92,15 @@ export class LicenseComponent implements OnInit {
         this.router.navigate(['/userInfo']);
     }
 
+    goNext() {
+        let result = this.result;
+        let map = this.customValidators.has(result);
+        if (!map.valid) {
+            return;
+        }
+        this.showNext = true;
+    }
+
     onShow(type: SkinType = 'ios', style: 1) {
         (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
             console.log('type', res);
@@ -82,7 +114,9 @@ export class LicenseComponent implements OnInit {
     }
 
     select(item) {
-        this.result.city = item.name;
+        this.result.city = item;
+        this.result.city.valid = true;
+        this.customValidators.has(this.result);
         this.fullPopup.close();
     }
 
@@ -93,6 +127,9 @@ export class LicenseComponent implements OnInit {
 
     selectLicenseType() {
         this.result.licenseType = this.selectedLicense;
+        this.result.licenseType.valid = true;
+        let result = this.customValidators.has(this.result);
+        console.log(result);
         this.selectedLicense = null;
         this.cancelTypeBox();
     }

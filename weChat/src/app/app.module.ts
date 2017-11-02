@@ -52,7 +52,7 @@ import { LocalStorage } from '../providers/localStorage';
 import { CustomValidators } from '../providers/custom.validators';
 import { WXService } from '../providers/wx.service';
 
-
+import { BaseProvider } from '../providers/http/base.http';
 
 @NgModule({
     declarations : [
@@ -100,7 +100,7 @@ import { WXService } from '../providers/wx.service';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXService, CustomValidators],
+    providers    : [MessageService, LocalStorage, WXService, CustomValidators, BaseProvider],
     bootstrap    : [AppComponent]
 })
 export class AppModule {
