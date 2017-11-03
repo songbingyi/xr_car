@@ -36,13 +36,13 @@
             <div class="tab-content" [hidden]="showNext">
                 <div class="weui-cells__title">一.车辆信息</div>
                 <div class="weui-cells weui-cells_checkbox">
-                    <label class="weui-cell weui-check__label" for="radio-{{item.id}}" *ngFor="let item of items; let index = index">
+                    <label class="weui-cell weui-check__label" for="car-{{car.id}}" *ngFor="let car of cars; index as index">
                         <div class="weui-cell__hd">
-                            <input type="radio" class="weui-check" [(ngModel)]="result.selected" [value]="item" name="item" id="radio-{{item.id}}" (change)="onchange($event, item)" />
+                            <input type="radio" class="weui-check" [(ngModel)]="result.selected" [value]="car" name="car" id="car-{{car.id}}" (change)="onchange($event, car)" />
                             <i class="weui-icon-checked"></i>
                         </div>
                         <div class="weui-cell__bd">
-                            <span>{{item.cardType}}</span><span>{{item.carType}}</span><span>{{item.cardId}}</span>
+                            <span>{{car.cardType}}</span><span>{{car.carType}}</span><span>{{car.cardId}}</span>
                         </div>
                     </label>
                 </div>
@@ -52,22 +52,22 @@
                         <div class="weui-cell__bd">
                             <p>审验城市</p>
                         </div>
-                        <div class="weui-cell__ft">{{result.city || '请选择审验城市'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.name || '请选择审验城市'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
                         <div class="weui-cell__bd">
                             <p>审验站点</p>
                         </div>
-                        <div class="weui-cell__ft">
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.station.valid}">
                             <!--请选择审验站点-->
-                            <weui-picker placeholder="请选择审验站点" required [groups]="itemsRadio" [(ngModel)]="result.station" name="item"></weui-picker>
+                            <weui-picker placeholder="请选择审验站点" [groups]="stations" [(ngModel)]="stationId" name="station" (change)="onStationChanged()"></weui-picker>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
                         <div class="weui-cell__bd">
                             <p>审验时间</p>
                         </div>
-                        <div class="weui-cell__ft">{{result.date || '请选择审验时间'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">{{result.date.date || '请选择审验时间'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
                         <div class="weui-cell__bd">
@@ -107,7 +107,7 @@
             </div>
 
             <span [hidden]="showNext">
-                <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="next();">下一步</a>
+                <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="goNext()">下一步</a>
             </span>
             <div class="btn-group" [hidden]="!showNext">
                 <a href="javascript:;" class="weui-btn weui-btn_default" (click)="onShow()">上一步</a>
@@ -136,24 +136,15 @@
             </div>
             <div class="weui-picker__bd">
                 <div class="weui-cells weui-cells_radio">
-                    <label class="weui-cell weui-check__label" for="x-{{index}}" *ngFor="let item of dateRadio;let index of index">
+                    <label class="weui-cell weui-check__label" for="date-{{date.id}}" *ngFor="let date of dates; index as index">
                         <div class="weui-cell__bd">
-                            <p>{{item}}</p>
+                            <p>{{date.date}}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" [(ngModel)]="selectedDate" [value]="item" name="date" id="x-{{index}}">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedDate" [value]="date" name="date" id="date-{{date.id}}">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <!--<label class="weui-cell weui-check__label" for="x2">
-                        <div class="weui-cell__bd">
-                            <p>11.2</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <input type="radio" name="radio1" class="weui-check" id="x2">
-                            <span class="weui-icon-checked"></span>
-                        </div>
-                    </label>-->
                 </div>
             </div>
         </div>
@@ -173,14 +164,14 @@
     <weui-dialog #ios [config]="config"></weui-dialog>
 
     <weui-popup #full [config]="{is_full: true}">
-        <div *ngFor="let key of cityArray | keys ">
+        <div *ngFor="let key of cities | keys ">
             <div class="weui-cells__title">{{key}}</div>
             <div class="weui-cells">
-                <div class="weui-cell" (click)="select(item)" *ngFor="let item of cityArray[key]">
+                <div class="weui-cell" (click)="select(city)" *ngFor="let city of cities[key]">
                     <div class="weui-cell__bd">
-                        <p>{{item.name}}</p>
+                        <p>{{city.name}}</p>
                     </div>
-                    <div class="weui-cell__ft">{{item.tel}}</div>
+                    <div class="weui-cell__ft">{{city.tel}}</div>
                 </div>
             </div>
         </div>

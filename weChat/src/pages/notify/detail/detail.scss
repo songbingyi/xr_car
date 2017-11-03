@@ -1,0 +1,24 @@
+.notify-detail {
+    margin-top:15px;
+    margin-bottom:20px;
+    .weui-article {
+        padding: 20px 15px;
+        font-size: 14px;
+        background: #FFF;
+        margin: 10px 0 20px 0;
+        color:#494949;
+        section {
+            margin-bottom: 0;
+            line-height: 24px;
+        }
+    }
+    .weui-cell {
+        color:#888888;
+    }
+    .header-cell {
+        height:44px;
+        line-height:44px;
+        font-size : 15px;
+        color:#000000;
+    }
+}

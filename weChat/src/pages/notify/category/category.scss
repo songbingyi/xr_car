@@ -1,6 +1,30 @@
-.category {
+.notify-category {
+    padding-bottom:20px;
+    background: #EFEFF4;
+    .weui-panel:first-child  {
+        margin-top:0;
+    }
+    .weui-panel__hd {
+        color : #000000;
+        font-size:15px;
+        padding:14px 15px 12px 15px;
+    }
+    .weui-panel__bd {
+        height: 100px;
+        .weui-media-box {
+            padding: 10px 15px;
+            p {
+                font-size: 14px;
+                line-height:20px;
+            }
+        }
+    }
+    .weui-cell_access .weui-panel__bd {
+        height:60px;
+    }
     .weui-cells__title {
         text-align: center;
+        color:#888888;
     }
     .weui-media-box__desc {
         color: #999999;
@@ -19,5 +43,13 @@
         text-align: left;
         padding-right: 26px;
         margin-right: 13px;
+    }
+    
+    .weui-badge {
+        position: absolute;
+        bottom: 18px;
+        right: 15px;
+        height: 12px;
+        width: 12px;
     }
 }

@@ -5,13 +5,12 @@ import {Location} from '@angular/common';
 
 import { Observable } from 'rxjs/Rx';
 
-import { CustomValidators } from '../../providers/custom.validators';
-
 import { SkinType, InputType } from 'ngx-weui';
 import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
 import { ToastService } from 'ngx-weui/toast';
 import { PopupComponent } from 'ngx-weui/popup';
 
+import { CustomValidators } from '../../providers/custom.validators';
 import { BaseProvider } from '../../providers/http/base.http';
 
 @Component({
@@ -94,7 +93,7 @@ export class LicenseComponent implements OnInit {
 
     goNext() {
         let result = this.result;
-        let map = this.customValidators.has(result);
+        let map = this.customValidators.isValid(result);
         if (!map.valid) {
             return;
         }
@@ -116,7 +115,7 @@ export class LicenseComponent implements OnInit {
     select(item) {
         this.result.city = item;
         this.result.city.valid = true;
-        this.customValidators.has(this.result);
+        this.customValidators.isValid(this.result);
         this.fullPopup.close();
     }
 
@@ -128,8 +127,7 @@ export class LicenseComponent implements OnInit {
     selectLicenseType() {
         this.result.licenseType = this.selectedLicense;
         this.result.licenseType.valid = true;
-        let result = this.customValidators.has(this.result);
-        console.log(result);
+        this.customValidators.isValid(this.result);
         this.selectedLicense = null;
         this.cancelTypeBox();
     }

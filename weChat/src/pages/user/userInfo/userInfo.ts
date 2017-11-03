@@ -62,6 +62,7 @@ export class UserInfoComponent implements OnInit {
         }else{
             this.errorMsg = '';
         }
+        console.log(this.userInfoForm.value);
     }
 
     update() {
@@ -70,15 +71,9 @@ export class UserInfoComponent implements OnInit {
         }else{
             this.errorMsg = '';
         }
+        console.log(this.updateForm.value);
     }
 
     ngOnInit() {
-    }
-
-    focus(ev) {
-        console.log(ev.target.addClass('active'));
-    }
-    blur(ev) {
-        console.log(ev.target.removeClass('active'));
     }
 }

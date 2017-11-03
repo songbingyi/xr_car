@@ -9,8 +9,28 @@
     }
     .weui-badge {
         position: absolute;
-        bottom: 15px;
+        bottom: 10px;
         right: 15px;
+    }
+    .weui-media-box {
+        padding:0 15px;
+    }
+    .weui-media-box__title {
+        color: #888888;
+        font-size: 14px;
+        line-height: 26px;
+        padding: 9px 0 4px 0;
+        margin-bottom: 0;
+        .h4 {
+            font-size:18px;
+            color:#000000;
+        }
+    }
+    .weui-media-box__desc {
+        font-size:13px;
+        color:#9B9B9B;
+        line-height:20px;
+        padding-bottom:9px;
     }
 }
 

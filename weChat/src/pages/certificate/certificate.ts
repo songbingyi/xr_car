@@ -6,6 +6,9 @@ import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
 
 import { PopupComponent } from 'ngx-weui/popup';
 
+import { CustomValidators } from '../../providers/custom.validators';
+import { BaseProvider } from '../../providers/http/base.http';
+
 @Component({
     selector      : 'app-certificate',
     templateUrl   : './certificate.html',
@@ -22,6 +25,10 @@ export class CertificateComponent implements OnInit {
 
     showDateType: Boolean = false;
 
+    showNext : Boolean = false;
+
+    selectedDate : string;
+
     private config: DialogConfig = <DialogConfig>{
         title: '返回',
         content: '离开此页面，资料将不会保存，是否离开？',
@@ -29,74 +36,78 @@ export class CertificateComponent implements OnInit {
         confirm: '否'
     };
 
-    items : Array<any> = [
-        {
-            id        : 1,
-            cardType  : '公户',
-            carType   : '大型汽车',
-            cardId    : '陕A·76243',
-            isChecked : false
-        }, {
-            id        : 2,
-            cardType  : '公户',
-            carType   : '大型汽车',
-            cardId    : '陕A·76243',
-            isChecked : false
-        },
-        {
-            id        : 3,
-            cardType  : '公户',
-            carType   : '大型汽车',
-            cardId    : '陕A·76243',
-            isChecked : false
-        }
-    ];
+    errMsg: any;
+    cities: Array<any>;
+    stations: Array<any> = [[{label: '', value: ''}]];
+    dates: Array<any>;
+    cars: Array<any>;
 
-    showNext : Boolean = false;
+    stationId: 0;
 
-    selectedDate : string;
     result : any = {
-        city     : '',
-        station  : null,
-        date     : null,
-        price    : 0,
-        selected : null
+        city     : {
+            valid: true
+        },
+        station  : {
+            valid: true
+        },
+        date     : {
+            valid: true
+        },
+        car : {
+            valid: true
+        }
     };
 
-    cityArray = {
-        'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
-        'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
-    };
-
-    itemsRadio : string[] = Array(10).fill('').map((v : string, idx : number) => `咸阳新盛检测站-${idx}`);
-    dateRadio : string[] = Array(5).fill('').map((v : string, idx : number) => `11.${idx}`);
-
-
-    constructor(private router : Router) {
-        // this.res.checkbox = [this.items[0]];
-    }
-
-    onSave() {
-        console.log('请求数据：' + JSON.stringify(this.result));
+    constructor(private router : Router, private baseService: BaseProvider, private customValidators: CustomValidators) {
+        this.getInitData();
     }
 
     ngOnInit() {
     }
 
-    onchange($event, item) {
-        // console.log($event, item);
-        // let checkbox = this.res.checkbox;
-        // let length = checkbox.length;
-        // this.res.checkbox = item; // checkbox.slice([length - 1], 1);
-        // item.isChecked = true;
-        console.log(this.result.selected);
+    getInitData() {
+        this.baseService.get('cars.mock.json')
+            .subscribe(cars => {
+                this.cars = cars;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('city.mock.json')
+            .subscribe(cities => {
+                this.cities = cities;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('marker.mock.json')
+            .subscribe(stations => {
+                this.rebuildStation(stations);
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('date.mock.json')
+            .subscribe(dates => {
+                this.dates = dates;
+            }, error => this.errMsg = <any>error);
+    }
 
-        // console.log(this.items);
-        return false;
+    rebuildStation(stations) {
+        let result = [];
+        stations.forEach(station => {
+            station.label = station.name;
+            station.value = station.id;
+            result.push(station);
+        });
+        this.stations =  [result];
+    }
+
+    filterStation() {
+        console.log('stationId' + this.stationId);
+        let id = this.stationId;
+        let stations = this.stations[0];
+        let len = stations.length;
+        for (let i = 0; i < len; i ++) {
+            if (stations[i].id === id) {
+                return stations[i];
+            }
+        }
     }
 
     onTabSelect(event) {
-        console.log(event);
         if (event === false) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
@@ -106,7 +117,7 @@ export class CertificateComponent implements OnInit {
 
     onShow(type: SkinType = 'ios', style: 1) {
         (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
-            console.log('type', res);
+            // console.log('type', res);
             if (!res.value) {
                 // this.location.back();
                 this.showNext = !this.showNext;
@@ -116,26 +127,48 @@ export class CertificateComponent implements OnInit {
         return false;
     }
 
-    next() {
-        this.showNext = !this.showNext;
-        this.onSave();
-    }
-
     goToUser() {
         this.router.navigate(['/userInfo']);
+    }
+
+    goNext() {
+        let result = this.result;
+        let map = this.customValidators.isValid(result);
+        if (!map.valid) {
+            return;
+        }
+        console.log(this.result);
+        this.showNext = true;
+    }
+
+    onStationChanged() {
+        this.result.station = this.filterStation();
+        this.result.station.valid = true;
+        this.customValidators.isValid(this.result);
+    }
+
+    onchange($event, item) {
+        this.result.car = item;
+        this.result.car.valid = true;
+        this.customValidators.isValid(this.result);
+        return false;
+    }
+
+    select(item) {
+        this.result.city = item;
+        this.result.city.valid = true;
+        this.customValidators.isValid(this.result);
+        this.fullPopup.close();
     }
 
     showDateTypeBox() {
         this.showDateType = !this.showDateType;
     }
 
-    select(item) {
-        this.result.city = item.name;
-        this.fullPopup.close();
-    }
-
     selectDateType() {
         this.result.date = this.selectedDate;
+        this.result.date.valid = true;
+        this.customValidators.isValid(this.result);
         this.selectedDate = null;
         this.cancelTypeBox();
     }

@@ -6,6 +6,9 @@ import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
 
 import { PopupComponent } from 'ngx-weui/popup';
 
+import { CustomValidators } from '../../providers/custom.validators';
+import { BaseProvider } from '../../providers/http/base.http';
+
 @Component({
   selector: 'app-review',
   templateUrl: './review.html',
@@ -33,82 +36,89 @@ export class ReviewComponent implements OnInit {
         confirm: '否'
     };
 
-    items : Array<any> = [
-        {
-            id : 1,
-            cardType : '公户',
-            carType  : '大型汽车',
-            cardId   : '陕A·76243',
-            isChecked : false
-        }, {
-            id : 2,
-            cardType : '公户',
-            carType  : '大型汽车',
-            cardId   : '陕A·76243',
-            isChecked : false
-        },
-        {
-            id : 3,
-            cardType : '公户',
-            carType  : '挂车',
-            cardId   : '陕A·76243',
-            isChecked : false
-        }
-    ];
-
     showNext : Boolean = false;
 
     selectedDate : string;
     selectedBartrailer : any;
+
+
+    errMsg: any;
+    cities: Array<any>;
+    stations: Array<any> = [[{label: '', value: ''}]];
+    dates: Array<any>;
+    cars: Array<any>;
+    bartrailerType: Array<any>;
+
+    stationId: 0;
+
     result : any = {
-        city     : '',
-        station  : null,
-        date     : null,
-        price    : 0,
-        selected : null,
-        carType  : null,
-        bartrailer : null
-    };
-
-    cityArray = {
-        'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
-        'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
-    };
-
-    bartrailerTypeArray = [
-        {
-            id : 1,
-            name: '全部'
+        city     : {
+            valid: true
         },
-        {
-            id : 2,
-            name: '挂头'
+        station  : {
+            valid: true
         },
-        {
-            id : 3,
-            name: '挂箱'
+        date     : {
+            valid: true
+        },
+        car : {
+            valid: true
         }
-        ];
+    };
 
-    itemsRadio : string[] = Array(10).fill('').map((v : string, idx : number) => `咸阳新盛检测站-${idx}`);
-    dateRadio : string[] = Array(5).fill('').map((v : string, idx : number) => `11.${idx}`);
-
-    constructor(private router: Router) {}
-
-    ngOnInit() {}
-
-    onSave() {
-        console.log('请求数据：' + JSON.stringify(this.result));
+    constructor(private router : Router, private baseService: BaseProvider, private customValidators: CustomValidators) {
+        this.getInitData();
     }
 
-    onchange($event, item) {
-        console.log(this.result.selected);
-        this.isBartrailer = item.carType === '挂车';
-        return false;
+    ngOnInit() {
+    }
+
+    getInitData() {
+        this.baseService.get('cars.mock.json')
+            .subscribe(cars => {
+                this.cars = cars;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('city.mock.json')
+            .subscribe(cities => {
+                this.cities = cities;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('marker.mock.json')
+            .subscribe(stations => {
+                this.rebuildStation(stations);
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('date.mock.json')
+            .subscribe(dates => {
+                this.dates = dates;
+            }, error => this.errMsg = <any>error);
+        this.baseService.get('bartrailer.type.mock.json')
+            .subscribe(bartrailerType => {
+                this.bartrailerType = bartrailerType;
+            }, error => this.errMsg = <any>error);
+    }
+
+    rebuildStation(stations) {
+        let result = [];
+        stations.forEach(station => {
+            station.label = station.name;
+            station.value = station.id;
+            result.push(station);
+        });
+        this.stations =  [result];
+    }
+
+    filterStation() {
+        let id = this.stationId;
+        let stations = this.stations[0];
+        let len = stations.length;
+        for (let i = 0; i < len; i ++) {
+            if (stations[i].id === id) {
+                return stations[i];
+            }
+        }
     }
 
     onTabSelect(event) {
-        console.log(event);
+        // console.log(event);
         if (event === false) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
@@ -118,7 +128,7 @@ export class ReviewComponent implements OnInit {
 
     onShow(type: SkinType = 'ios', style: 1) {
         (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
-            console.log('type', res);
+            // console.log('type', res);
             if (!res.value) {
                 // this.location.back();
                 this.showNext = !this.showNext;
@@ -128,17 +138,45 @@ export class ReviewComponent implements OnInit {
         return false;
     }
 
-    next() {
-        this.showNext = !this.showNext;
-        this.onSave();
-    }
-
     goToUser() {
         this.router.navigate(['/userInfo']);
     }
 
+    goNext() {
+        let result = this.result;
+        let map = this.customValidators.isValid(result);
+        if (!map.valid) {
+            return;
+        }
+        console.log(this.result);
+        this.showNext = true;
+    }
+
+    onStationChanged() {
+        this.result.station = this.filterStation();
+        this.result.station.valid = true;
+        this.customValidators.isValid(this.result);
+    }
+
+    onchange($event, item) {
+        this.isBartrailer = item.carType === 3;
+        if (this.isBartrailer) {
+            this.result.bartrailer = {
+                valid : true
+            };
+        }else {
+            delete this.result.bartrailer;
+        }
+        this.result.car = item;
+        this.result.car.valid = true;
+        this.customValidators.isValid(this.result);
+        return false;
+    }
+
     select(item) {
-        this.result.city = item.name;
+        this.result.city = item;
+        this.result.city.valid = true;
+        this.customValidators.isValid(this.result);
         this.fullPopup.close();
     }
 
@@ -148,6 +186,8 @@ export class ReviewComponent implements OnInit {
 
     selectBartrailerType() {
         this.result.bartrailer = this.selectedBartrailer;
+        this.result.bartrailer.valid = true;
+        this.customValidators.isValid(this.result);
         this.selectedBartrailer = null;
         this.cancelTypeBox();
     }
@@ -168,5 +208,7 @@ export class ReviewComponent implements OnInit {
         this.selectedBartrailer = null;
         this.showBartrailerType = false;
     }
+
+
 
 }

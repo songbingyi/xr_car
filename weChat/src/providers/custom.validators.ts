@@ -19,12 +19,12 @@ export class CustomValidators {
         return parseInt(value, 10) === (value - 0) ? null : {isNumber : true};
     }
 
-    public has(map: any) {
+    public isValid(map: any) {
         let result = true;
 
         for (let key in map) {
             if (map.hasOwnProperty(key) && key !== 'valid') {
-                map[key].valid = !!map[key].id;
+                map[key].valid = map[key].id >= 0;
                 if (!map[key].valid) {
                     result = false;
                 }
