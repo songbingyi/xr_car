@@ -10,7 +10,7 @@
         "star"       : 3,
         "lat"        : 34.341468,
         "lng"        : 108.942175,
-        "icon"       : "/assets/images/marker/service.png"
+        "icon"       : "/assets/images/marker/service.s.png"
     },
     {
         "id"         : 2,
@@ -22,6 +22,6 @@
         "star"       : 3,
         "lat"        : 34.341168,
         "lng"        : 108.948175,
-        "icon"       : "/assets/images/marker/review.png"
+        "icon"       : "/assets/images/marker/review.s.png"
     }
 ]

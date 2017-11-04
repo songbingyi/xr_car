@@ -13,7 +13,7 @@ import { PopupComponent } from 'ngx-weui/popup';
 import { CustomValidators } from '../../providers/custom.validators';
 import { BaseProvider } from '../../providers/http/base.http';
 
-import { WXService } from '../../providers/wx.service';
+import { WXSDKService } from '../../providers/wx.sdk.service';
 
 @Component({
     selector    : 'app-license',
@@ -63,8 +63,8 @@ export class LicenseComponent implements OnInit {
 
     wx: any;
 
-    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXService, private zone: NgZone) {
-        this.wx = this.wxService.config({});
+    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXSDKService, private zone: NgZone) {
+        this.wx = this.wxService.init();
         this.getInitData();
     }
 

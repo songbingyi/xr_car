@@ -50,7 +50,8 @@ import { FocusBlurDirective } from '../directives/focus.blur';
 import { MessageService } from '../providers/messageService';
 import { LocalStorage } from '../providers/localStorage';
 import { CustomValidators } from '../providers/custom.validators';
-import { WXService } from '../providers/wx.service';
+// import { WXService } from '../providers/wx.service';
+import { WXSDKService } from '../providers/wx.sdk.service';
 
 import { BaseProvider } from '../providers/http/base.http';
 import { RedirectComponent } from '../pages/redirect/redirect';
@@ -102,7 +103,7 @@ import { RedirectComponent } from '../pages/redirect/redirect';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXService, CustomValidators, BaseProvider],
+    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider],
     bootstrap    : [AppComponent]
 })
 export class AppModule {

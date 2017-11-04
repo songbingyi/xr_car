@@ -12,8 +12,9 @@ import {MarkersProvider} from '../../providers/http/marker.http';
 
 import {MarkerModel} from "../../models/marker.model";
 
+import { WXSDKService } from '../../providers/wx.sdk.service';
+
 declare const qq: any;
-declare const wx: any;
 
 @Component({
     selector    : 'app-map',
@@ -45,48 +46,68 @@ export class MapComponent implements OnInit {
 
     readonly: boolean = true;
 
-    @ViewChild('geoPage') geoPage: ElementRef;
-    @ViewChild('iframe') iframe: ElementRef;
+    // Map
+    latitude: number;
+    longitude: number;
+
+    // Maker size
+    normalSize: any;
+    biggerSize: any;
+    currentMapMarker: any;
 
     @ViewChild('map') mapComp: AqmComponent;
 
-    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private markerService: MarkersProvider) {}
+    wxs: any;
 
-    ngAfterViewInit() {
-        let doc = this.geoPage.nativeElement.contentWindow;
-        //为防止定位组件在message事件监听前已经触发定位成功事件，在此处显示请求一次位置信息
-        doc.postMessage('getLocation', '*');
+    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private markerService: MarkersProvider, private wxService: WXSDKService) {
+        this.wxs = this.wxService.init();
+        this.wxs.then(res=>{
+            this.getLocation();
+        });
+    }
 
-        //设置6s超时，防止定位组件长时间获取位置信息未响应
-        setTimeout(function() {
-            if(!this.geoLocation) {
-                //主动与前端定位组件通信（可选），获取粗糙的IP定位结果
-                doc.postMessage('getLocation.robust', '*');
+    ngAfterViewInit() {}
+
+    getLocation() {
+        this.wxService.onGetLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: (res) => {
+                this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                // let speed = res.speed; // 速度，以米/每秒计
+                // let accuracy = res.accuracy; // 位置精度
+                this.zone.run(() => {
+                    this.panTo({
+                        lat: this.latitude,
+                        lng: this.longitude
+                    });
+                });
             }
-        }, 6000);
+        });
     }
 
     private map: any;
     onReady(mapNative: any) {
+        let latitude = this.latitude || 34.341568;
+        let longitude = this.longitude || 108.940175;
+
         mapNative.setOptions({
             zoom: 12,
-            center: new qq.maps.LatLng(39.916527, 116.397128)
+            center: new qq.maps.LatLng(latitude, longitude)
         });
+
         this.map = mapNative;
-        this.status = '加载完成';
+
         //添加监听事件
         qq.maps.event.addListener(this.map, 'click', (event: any) => {
-            // console.log(event);
-            /*console.log(event);
-            new qq.maps.Marker({
-                position: event.latLng,
-                map: this.map
-            });*/
             this.zone.run(() => {
-                //this.status = `click ${+new Date}`;
                 this.hiddenInfoWindow();
+                this.restoreMakerSize();
             });
         });
+
+        this.normalSize = new qq.maps.Size(40, 46);
+        this.biggerSize = new qq.maps.Size(65, 72);
 
         this.loadMakers();
     }
@@ -110,7 +131,7 @@ export class MapComponent implements OnInit {
     setMarker(marker: MarkerModel) {
         let aMarker = new qq.maps.Marker({
             position: new qq.maps.LatLng(marker.lat, marker.lng),
-            icon : new qq.maps.MarkerImage(marker.icon, new qq.maps.Size(40, 46), '', '', new qq.maps.Size(40, 46), ''),
+            icon : new qq.maps.MarkerImage(marker.icon, this.normalSize, '', '', this.normalSize, ''),
             map: this.map
         });
         aMarker.origin = marker;
@@ -120,13 +141,23 @@ export class MapComponent implements OnInit {
 
     bindClickToMaker(marker: any) {
         qq.maps.event.addListener(marker, 'click', (event)=>{
-            // console.log(event);
-            let icon = marker.origin.icon ;// ? marker.origin.icon.replace('.png', '.big.png') : marker.origin.icon;
-            marker.setIcon(new qq.maps.MarkerImage(icon, new qq.maps.Size(65, 72)), '', '', new qq.maps.Size(30, 30), '');
+            let icon = marker.origin.icon.replace('.s.png', '.l.png');
+            this.restoreMakerSize(marker);
+            marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
             this.zone.run(() => {
                 this.showInfoWindow(marker.origin);
             });
         });
+    }
+
+    restoreMakerSize(mapMarker?) {
+        let currentMapMarker = this.currentMapMarker;
+        let icon = '';
+        if (currentMapMarker) {
+            icon = currentMapMarker.origin.icon;
+            currentMapMarker.setIcon(new qq.maps.MarkerImage(icon, this.normalSize), '', '', this.normalSize, '');
+        }
+        this.currentMapMarker = mapMarker;
     }
 
     showInfoWindow(marker){
@@ -139,29 +170,9 @@ export class MapComponent implements OnInit {
         this.rate = 0;
     }
 
-    bindEvent() {
-        window.addEventListener('message', (event) => {
-            // 接收位置信息
-            let loc = event.data;
-            if(loc  && loc.module == 'geolocation') { //定位成功,防止其他应用也会向该页面post信息，需判断module是否为'geolocation'
-                var markUrl = 'https://apis.map.qq.com/tools/poimarker' + '?marker=coord:' + loc.lat + ',' + loc.lng + ';title:我的位置;addr:' + (loc.addr || loc.city) + '&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp';
-                //给位置展示组件赋值
-                //document.getElementById('markPage').src = markUrl;
-                this.geoLocation = true;
-                this.panTo(loc);
-            } else { //定位组件在定位失败后，也会触发message, event.data为null
-                //alert('定位失败');
-                this.geoLocation = false;
-            }
-            /*let loc = event.data;
-            if (loc.lat && loc.lng) {
-                this.panTo(loc);
-            }*/
-        }, false);
-    }
+    bindEvent() {}
 
     panTo(loc) {
-        //console.log(loc);
         if(this.map){
             this.map.panTo(new qq.maps.LatLng(loc.lat, loc.lng));
         }

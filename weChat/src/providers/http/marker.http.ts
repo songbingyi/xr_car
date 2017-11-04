@@ -11,7 +11,7 @@ import {MarkerModel} from '../../models/marker.model';
 import {config} from '../../app/app.config';
 
 /*
- Generated class for the Events provider.
+ Generated class for the Markers provider.
 
  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
  for more info on providers and Angular 2 DI.
@@ -22,7 +22,7 @@ export class MarkersProvider {
     url = config.prefix;
 
     constructor(public http: Http) {
-        console.log('Hello Events Provider');
+        console.log('Hello Markers Provider');
     }
 
     headers: any;

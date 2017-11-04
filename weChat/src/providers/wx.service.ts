@@ -22,11 +22,13 @@ export class WXService {
     config(shareData: any): Promise<boolean> {
         this.share = shareData;
         return new Promise((resolve, reject) => {
-            this.wxService.get().then((res) => {
+            // this.wxService.get().then((res) => {
+                console.log('jweixin.js 加载成功');
+                /*
                 if (!res) {
                     reject('jweixin.js 加载失败');
                     return;
-                }
+                }*/
 
                 wx.ready(() => {
                     this._onMenuShareTimeline()
@@ -44,14 +46,14 @@ export class WXService {
 
                 this.http
                     .get('http://localhost:9020/api/wechatPay/accessToken?u=' + encodeURIComponent(location.href.split('#')[0]))
-                    .map(res => { return res.json(); })
+                    .map( response => { let a = response; return response.json(); } )
                     .catch((error: Response | any) => {
                         console.log('无法获取签名数据');
                         reject('无法获取签名数据');
-                        return Observable.throw('error');
+                        return Observable.throw(error);
                     })
-                    .subscribe((res) => {
-                        let wxConfig: any = res;
+                    .subscribe((response) => {
+                        let wxConfig: any = response;
                         // wxConfig.debug = true;
                         wxConfig.jsApiList = [
                             // 所有要调用的 API 都要加到这个列表中
@@ -77,7 +79,7 @@ export class WXService {
                         */
                         wx.config(wxConfig);
                     });
-            });
+            // });
         });
     }
 
@@ -115,4 +117,11 @@ export class WXService {
         wx.uploadImage(params);
         return this;
     }
+
+    onGetLocation(params) {
+        wx.getLocation(params);
+        return this;
+    }
+
+
 }

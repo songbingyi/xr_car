@@ -27,25 +27,13 @@ export class HomeComponent implements OnInit {
     @ViewChild(InfiniteLoaderComponent) il;
     @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-    constructor(private wxService : WXService, private productService : ProductProvider) {
+    constructor(private productService : ProductProvider) {
     }
 
     status : string;
 
     ngOnInit() {
         this.loadProducts();
-        this.configWX();
-    }
-
-    configWX() {
-        this.wxService.config({
-            title : '新标题'
-        }).then(() => {
-            // 其它操作，可以确保注册成功以后才有效
-            this.status = '注册成功';
-        }).catch((err : string) => {
-            this.status = `注册失败，原因：${err}`;
-        });
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
