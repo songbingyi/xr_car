@@ -34,4 +34,23 @@ export class CustomValidators {
         map.valid = result;
         return map;
     }
+
+    public isUploaded(map: any) {
+        for (let key in map) {
+            if (map.hasOwnProperty(key) && !map[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public anyUploaded(map: any) {
+        let anyUploaded = false;
+        for (let key in map) {
+            if (map.hasOwnProperty(key) && map[key]) {
+                anyUploaded = true;
+            }
+        }
+        return anyUploaded;
+    }
 }

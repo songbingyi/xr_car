@@ -309,10 +309,7 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
 
 .weui-cell__ft.error {
     color:#E64340;
-    .weui-input {
+    .for-station {
         color:#E64340;
-        &::placeholder {
-            color:#E64340;
-        }
     }
 }

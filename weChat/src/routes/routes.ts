@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-
 // import {PageNotFoundComponent} from './not-found.component';
 import {IndexComponent} from '../pages/index/index';
 
@@ -35,7 +34,11 @@ import {PaymentComponent} from '../pages/pay/payment/payment';
 import {RefundComponent} from '../pages/pay/refund/refund';
 import {PayCompleteComponent} from '../pages/pay/payComplete/payComplete';
 
+
+import { RedirectComponent } from '../pages/redirect/redirect';
+
 const appRoutes: Routes = [
+    {path : 'wx', component : RedirectComponent},
     {path : '', component : IndexComponent},
     {path : 'certificate', component : CertificateComponent},
     {path : 'license', component : LicenseComponent},

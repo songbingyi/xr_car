@@ -81,9 +81,8 @@
                         <div class="weui-cell__bd">
                             <p>审验站点</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.station.valid}">
-                            <!--请选择审验站点-->
-                            <weui-picker placeholder="请选择审验站点" required [groups]="stations" [(ngModel)]="stationId" name="station" (change)="onStationChanged()"></weui-picker>
+                        <div class="weui-cell__ft station-name" [ngClass]="{'error':!result.station.valid}" (click)="showStation()">
+                            <span class="for-station">{{result.station.name || '请选择审验站点'}}</span>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
@@ -109,17 +108,17 @@
                     <img class="single-img" src="/assets/images/tmp/shenche.png" />
                 </div>
                 <!--<div class="images-container">
-                    <img class="single-img" src="http://via.placeholder.com/250x150" />
+                    <img class="single-img" [src]="{{uploaded.a || '/assets/images/icon/uploader.png'}}" />
                 </div>-->
                 <div class="images-container one-with-two">
                     <table class="table-container">
                         <tr>
                             <td class="no-border">
-                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" style="background-image:url('/assets/images/icon/uploader.png')"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [ngStyle]="{'background-image':'url(' + (uploaded.a || '/assets/images/icon/uploader.png') + ')'}" (click)="choose('a')"></div>
                                 <span>挂头行驶证</span>
                             </td>
                             <td class="no-border">
-                                <div class="image aspect-ratio" data-ratio="1:1" style="background-image:url('/assets/images/icon/uploader.png')"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [ngStyle]="{'background-image':'url(' + (uploaded.b || '/assets/images/icon/uploader.png') + ')'}" (click)="choose('b')"></div>
                                 <span>挂厢行驶证</span>
                             </td>
                         </tr>
@@ -136,8 +135,8 @@
                 <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="goNext()">下一步</a>
             </span>
             <div class="btn-group" [hidden]="!showNext">
-                <a href="javascript:;" class="weui-btn weui-btn_default" (click)="onShow()">上一步</a>
-                <a href="javascript:;" class="weui-btn weui-btn_primary" [routerLink]="['/confirmOrder', 1]">确认订单：<span>520</span>元</a>
+                <a href="javascript:;" class="weui-btn weui-btn_default" (click)="goPrev()">上一步</a>
+                <a href="javascript:;" class="weui-btn weui-btn_primary" (click)="confirmOrder();">确认订单：<span>520</span>元</a>
             </div>
         </tab>
     </tabset>
@@ -214,5 +213,10 @@
             </div>
         </div>
     </weui-popup>
+
+    <div class="error-bar" [hidden]="!errMsg">
+        <p>{{errMsg}}</p>
+    </div>
+
 </div>
 

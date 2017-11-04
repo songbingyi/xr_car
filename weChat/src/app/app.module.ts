@@ -53,6 +53,7 @@ import { CustomValidators } from '../providers/custom.validators';
 import { WXService } from '../providers/wx.service';
 
 import { BaseProvider } from '../providers/http/base.http';
+import { RedirectComponent } from '../pages/redirect/redirect';
 
 @NgModule({
     declarations : [
@@ -84,7 +85,8 @@ import { BaseProvider } from '../providers/http/base.http';
 
         NotifyComponent,
         CategoryComponent,
-        NotifyDetailComponent
+        NotifyDetailComponent,
+        RedirectComponent
     ],
     imports      : [
         AppRoutingModule,

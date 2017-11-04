@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ViewChild, NgZone} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import {Location} from '@angular/common';
@@ -12,6 +12,8 @@ import { PopupComponent } from 'ngx-weui/popup';
 
 import { CustomValidators } from '../../providers/custom.validators';
 import { BaseProvider } from '../../providers/http/base.http';
+
+import { WXService } from '../../providers/wx.service';
 
 @Component({
     selector    : 'app-license',
@@ -41,15 +43,14 @@ export class LicenseComponent implements OnInit {
         }
     };
 
-    /*cityArray = {
-        'A' : [{name: '西安', tel: '029'}, {name: '咸阳', tel: '022'}, {name: '宝鸡', tel: '023'}],
-        'B' : [{name: '汉中', tel: '026'}, {name: '安康', tel: '028'}, {name: '商洛', tel: '027'}]
-    };*/
+    uploaded: any = {
+        a: null,
+        b: null,
+        c: null,
+        d: null
+    };
 
     selectedLicense: any = null;
-    /*itemsRadio : any[] = [
-        {id: 1, name: 'A照'}, {id: 2, name: 'B照'}, {id: 3, name: 'C照'}
-    ];*/
 
     private config: DialogConfig = <DialogConfig>{
         title: '返回',
@@ -60,11 +61,23 @@ export class LicenseComponent implements OnInit {
 
     showNext: Boolean = false;
 
-    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators) {
+    wx: any;
+
+    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXService, private zone: NgZone) {
+        this.wx = this.wxService.config({});
         this.getInitData();
     }
 
     ngOnInit() {
+    }
+
+    initUploaded() {
+        this.uploaded = {
+            a: null,
+            b: null,
+            c: null,
+            d: null
+        };
     }
 
     getInitData() {
@@ -79,7 +92,7 @@ export class LicenseComponent implements OnInit {
     }
 
     onTabSelect(event) {
-        console.log(event);
+        // console.log(event);
         if (event === false) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
@@ -97,18 +110,23 @@ export class LicenseComponent implements OnInit {
         if (!map.valid) {
             return;
         }
+        this.initUploaded();
         this.showNext = true;
     }
 
-    onShow(type: SkinType = 'ios', style: 1) {
-        (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
-            console.log('type', res);
-            if (!res.value) {
-                // this.location.back();
-                this.showNext = !this.showNext;
-            }
-        });
-
+    goPrev(type: SkinType = 'ios', style: 1) {
+        if (this.customValidators.anyUploaded(this.uploaded)) {
+            (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
+                console.log('type', res);
+                if (!res.value) {
+                    this.errMsg = '';
+                    this.showNext = !this.showNext;
+                }
+            });
+        } else {
+            this.errMsg = '';
+            this.showNext = !this.showNext;
+        }
         return false;
     }
 
@@ -134,6 +152,41 @@ export class LicenseComponent implements OnInit {
 
     cancelTypeBox() {
         this.showLicenseType = false;
+    }
+
+    choose(type) {
+        this.errMsg = '';
+        this.wxService.onChooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: (res) => {
+                let localId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                this.upload(localId, type);
+            }
+        });
+    }
+
+    upload(localId, type) {
+        this.wxService.onUploadImage({
+            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: (res) => {
+                this.zone.run(() => {
+                    let serverId = res.serverId; // 返回图片的服务器端ID
+                    this.uploaded[type] = localId;
+                });
+            }
+        });
+    }
+
+    confirmOrder() {
+        if (this.customValidators.isUploaded(this.uploaded)) {
+            this.router.navigate(['/confirmOrder', 1]);
+        } else {
+            this.errMsg = '请按照要求上传图片！';
+            return false;
+        }
     }
 
 }

@@ -21,4 +21,8 @@ export class OrdersComponent implements OnInit {
         this.status = this.obj[this.activeIndex];
     }
 
+    onTabSelect() {
+
+    }
+
 }

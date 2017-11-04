@@ -1,8 +1,8 @@
 .scroll-page {
     height:100%;
-    background:#FFF;
 }
 .certificate {
+    background:#FFF;
     .weui-cells_checkbox {
         .weui-cell__bd {
             span {
@@ -16,15 +16,25 @@
         }
     }
     .tab-content {
-        .weui-input {
+        .station-name {
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .for-station {
             text-align: right;
             position: relative;
             top: -2px;
             color: #999999;
-            background: url("/assets/images/icon/location.png") 25px center no-repeat;
+            background: url("/assets/images/icon/location.png") left center no-repeat;
             background-size: contain;
-            &::placeholder {
-                color: #999999;
+            padding-left: 20px;
+        }
+    
+        .weui-cell__ft.error {
+            .for-station {
+                color:#E64340;
             }
         }
     }

@@ -76,7 +76,7 @@ export class MapComponent implements OnInit {
         this.status = '加载完成';
         //添加监听事件
         qq.maps.event.addListener(this.map, 'click', (event: any) => {
-            console.log(event);
+            // console.log(event);
             /*console.log(event);
             new qq.maps.Marker({
                 position: event.latLng,
@@ -120,7 +120,7 @@ export class MapComponent implements OnInit {
 
     bindClickToMaker(marker: any) {
         qq.maps.event.addListener(marker, 'click', (event)=>{
-            console.log(event);
+            // console.log(event);
             let icon = marker.origin.icon ;// ? marker.origin.icon.replace('.png', '.big.png') : marker.origin.icon;
             marker.setIcon(new qq.maps.MarkerImage(icon, new qq.maps.Size(65, 72)), '', '', new qq.maps.Size(30, 30), '');
             this.zone.run(() => {
