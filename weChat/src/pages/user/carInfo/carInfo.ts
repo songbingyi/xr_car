@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import {Validators, FormGroup, FormControl, FormBuilder} from '@angular/forms';
 
-import { CustomValidators } from '../../../providers/custom.validators';
+import {CustomValidators} from '../../../providers/custom.validators';
+
+import {BaseProvider} from '../../../providers/http/base.http';
 
 @Component({
     selector    : 'app-car-info',
@@ -10,55 +12,108 @@ import { CustomValidators } from '../../../providers/custom.validators';
 })
 export class CarInfoComponent implements OnInit {
 
-    showPanel: Boolean = false;
-    isShowImage: Boolean = false;
+    showPanel : Boolean = false;
+    isShowImage : Boolean = false;
 
-    showIdType: Boolean = false;
-    showCarType: Boolean = false;
+    showIdType : Boolean = false;
+    showCarType : Boolean = false;
 
+    errMsg : any;
+
+    provinces : Array<any>;
+    groupedProvince : Array<any>;
+    selectedProvince : any;
+
+    rowLength : any = 10; // 每行几个省
 
     cardId = new FormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(6)
     ]);
-    companyName   = new FormControl('', [
+    companyName = new FormControl('', [
         Validators.required,
         this.customValidators.eq(18)
     ]);
-    phone    = new FormControl('', [
+    phone = new FormControl('', [
         Validators.required,
         this.customValidators.eq(11),
         this.customValidators.isNumber
     ]);
-    vcode    = new FormControl('', [
+    vcode = new FormControl('', [
         Validators.required,
         this.customValidators.eq(6)
     ]);
 
-    cardIdv    = new FormControl('', [
+    cardIdv = new FormControl('', [
         Validators.required,
         this.customValidators.eq(11),
         this.customValidators.isNumber
     ]);
-    cardIdx    = new FormControl('', [
+    cardIdx = new FormControl('', [
         Validators.required,
         this.customValidators.eq(6)
     ]);
 
 
-    userInfoForm: FormGroup = this.builder.group({
-        cardId: this.cardId,
-        companyName: this.companyName,
-        phone : this.phone,
-        vcode : this.vcode,
-        cardIdv : this.cardIdv,
-        cardIdx : this.cardIdx
+    userInfoForm : FormGroup = this.builder.group({
+        cardId      : this.cardId,
+        companyName : this.companyName,
+        phone       : this.phone,
+        vcode       : this.vcode,
+        cardIdv     : this.cardIdv,
+        cardIdx     : this.cardIdx
     });
 
-    constructor(private builder: FormBuilder, private customValidators: CustomValidators) {}
+    result = {
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        e: '',
+        f: '',
+        g: ''
+    };
+
+    constructor(private builder : FormBuilder, private customValidators : CustomValidators, private baseService : BaseProvider) {
+        this.getInitData();
+    }
 
     ngOnInit() {
+    }
+
+    getInitData() {
+        this.baseService.get('province.mock.json')
+            .subscribe(provinces => {
+                this.provinces = provinces;
+                this.selectedProvince = provinces[0];
+                this.selectedProvince.selected = true;
+                this.result.a = this.selectedProvince;
+                this.groupProvince();
+            }, error => this.errMsg = <any>error);
+    }
+
+    groupProvince() {
+        let groups = [];
+        let provinces = this.provinces;
+        let colLength = Math.ceil(provinces.length / this.rowLength);
+
+        for (let i = 0; i < colLength; i++) {
+            groups.push(provinces.slice((i * this.rowLength), (i + 1) * this.rowLength));
+        }
+
+        this.groupedProvince = groups;
+    }
+
+    selected(province) {
+        this.selectedProvince.selected = false;
+        province.selected = true;
+        this.selectedProvince = province;
+    }
+
+    confirmSelect() {
+        this.result.a = this.selectedProvince;
+        this.showPanel = false;
     }
 
     showImage() {
@@ -86,12 +141,14 @@ export class CarInfoComponent implements OnInit {
         this.showCarType = false;
     }
 
-    onItemChange(data: any) {
+    onItemChange(data : any) {
         console.log('onItemChange', data);
     }
-    onItemGroupChange(data: any) {
+
+    onItemGroupChange(data : any) {
         console.log('onItemGroupChange', data);
     }
+
     onItemCancel() {
         console.log('onItemCancel');
     }

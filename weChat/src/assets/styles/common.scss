@@ -240,9 +240,17 @@ input::placeholder {
     top: 16px;
 }
 
+.weui-picker__bd {
+    height: auto;
+    width: 100%;
+}
+.weui-picker__group {
+    height:238px;
+}
+
 .province-select-panel {
     width: 100%;
-    height: 225px;
+    height: 226px;
     background: url('~assets/images/panel.bg.png') 0 0 no-repeat;
     position: absolute;
     bottom: 0;
@@ -259,19 +267,33 @@ input::placeholder {
                 width:90%;
                 background:#FFFFFF;
                 box-shadow: 0 1px RGBA(0,0,0, 0.35);
-                margin: 5px auto;
+                margin: 6px auto;
                 border-radius: 5px;
             }
             .selected {
                 background: #1970A6;
                 color:#FFF;
             }
-            .return {
-                width:88px;
-                background: #1970A6;
-                color:#FFF;
-                margin-right: 3%;
-            }
+        }
+    }
+    .confirm-btn {
+        position: absolute;
+        right: 4px;
+        bottom: 14px;
+        width: 88px;
+        height: 42px;
+        .return {
+            width:88px;
+            font-size:20px;
+            display: block;
+            height:42px;
+            line-height:42px;
+            background: #1970A6;
+            color:#FFF;
+            box-shadow: 0 1px RGBA(0,0,0, 0.35);
+            margin: 6px auto;
+            border-radius: 5px;
+            text-align: center;
         }
     }
 }

@@ -6,7 +6,7 @@
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__hd labels">
-                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">陕<i class="icon-triangle"></i></label>
+                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a?.name}}<i class="icon-triangle"></i></label>
             </div>
             <div class="weui-cell__bd">
                 <input class="weui-input" type="text" placeholder="例如：567R3" [formControl]="cardId" appFocusBlur />
@@ -162,9 +162,11 @@
 
     <div class="province-select-panel" [hidden]="!showPanel">
         <table>
-            <tr>
-                <td><span>京</span></td>
-                <td><span>津</span></td>
+            <tr *ngFor="let groups of groupedProvince; index as index">
+                <td *ngFor="let province of groups;">
+                    <span (click)="selected(province)" [ngClass]="{'selected': province.selected}">{{province.name}}</span>
+                </td>
+                <!--<td><span>津</span></td>
                 <td><span>翼</span></td>
                 <td><span>晋</span></td>
                 <td><span>蒙</span></td>
@@ -172,9 +174,9 @@
                 <td><span>吉</span></td>
                 <td><span>黑</span></td>
                 <td><span>沪</span></td>
-                <td><span>苏</span></td>
+                <td><span>苏</span></td>-->
             </tr>
-            <tr>
+            <!--<tr>
                 <td><span>浙</span></td>
                 <td><span>皖</span></td>
                 <td><span>闽</span></td>
@@ -205,8 +207,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="4"><span class="return" (click)="showPanel=false">完成</span></td>
-            </tr>
+                <td colspan="4"></td>
+            </tr>-->
         </table>
+        <div class="confirm-btn"><span class="return" (click)="confirmSelect()">完成</span></div>
     </div>
 </div>
