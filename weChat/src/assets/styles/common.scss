@@ -240,6 +240,10 @@ input::placeholder {
     top: 16px;
 }
 
+.weui-mask.weui-animate-fade-in {
+    opacity: 1;
+    visibility: visible;
+}
 .weui-picker__bd {
     height: auto;
     width: 100%;
