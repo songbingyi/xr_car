@@ -46,7 +46,7 @@ export class BaseProvider {
         let url = '';
         // let url = config.production ? (this.url + apiBase[name]) : (this.url + name + '.mock.json');
         if (config.production) {
-            url = this.url + apiBase[name] + this.access_token;
+            url = this.url + apiBase[name] + '?access_token=' + this.access_token;
         } else {
             url = this.url + name + '.mock.json';
         }
