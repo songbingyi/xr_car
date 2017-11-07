@@ -7,6 +7,8 @@ import 'rxjs/add/operator/map';
 
 import {config} from '../../app/app.config';
 
+import {apiBase} from '../../providers/api.config';
+
 /*
  Generated class for the Events provider.
 
@@ -17,6 +19,7 @@ import {config} from '../../app/app.config';
 export class BaseProvider {
 
     url = config.prefix;
+    access_token = 'SASMAL36SKLASKLAMSJKA980D';
 
     constructor(public http: Http) {
         console.log('Hello Events Provider');
@@ -29,13 +32,26 @@ export class BaseProvider {
         this.headers.append('X-Requested-With', 'XMLHttpRequest');
     }
 
-    get(path: String): Observable<any> {
+    get(name: any): Observable<any> {
+        let url = this.getApi(name);
         this.setHeader();
-        return this.http.get(this.url + path, {
+        return this.http.get(url, {
             headers: this.headers
         })
             .map(this.extractData)
             .catch(this.handleError);
+    }
+
+    getApi(name) {
+        let url = '';
+        // let url = config.production ? (this.url + apiBase[name]) : (this.url + name + '.mock.json');
+        if (config.production) {
+            url = this.url + apiBase[name] + this.access_token;
+        } else {
+            url = this.url + name + '.mock.json';
+        }
+
+        return url;
     }
 
     private extractData(res: Response) {

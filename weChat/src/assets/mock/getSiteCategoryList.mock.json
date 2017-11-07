@@ -1,0 +1,17 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : [
+        {
+            "site_category_id"  : 1,
+            "site_category_name": "服务站"
+        },
+        {
+            "site_category_id"  : 2,
+            "site_category_name": "监测站"
+        }
+    ]
+}

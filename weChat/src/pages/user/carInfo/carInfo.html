@@ -2,6 +2,7 @@
     <div class="top-tips">
         <p>注：最多可绑定3辆车的信息 | <a [routerLink]="['/carList']">列表</a></p>
     </div>
+    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMsg}">
     <div class="weui-cells__title">车牌号码</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
@@ -9,7 +10,7 @@
                 <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a?.name}}<i class="icon-triangle"></i></label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="例如：567R3" [formControl]="cardId" appFocusBlur />
+                <input class="weui-input" type="text" [formControl]="cardId"  placeholder="{{cardId.invalid && (cardId.dirty || errorMsg) ? '请填写车牌号码！' : '例如：567R3'}}" appFocusBlur />
             </div>
         </div>
     </div>
@@ -65,8 +66,9 @@
             <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
         </div>
     </div>
+    </form>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':carInfoForm.invalid&&carInfoForm.dirty}" (click)="save()">确定</a>
     <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding">删除</a>
 
     <div class="weui-gallery" [hidden]="!isShowImage">
@@ -212,4 +214,9 @@
         </table>
         <div class="confirm-btn"><span class="return" (click)="confirmSelect()">完成</span></div>
     </div>
+
+    <div class="error-bar" [hidden]="!errorMsg">
+        <span>{{errorMsg}}</span>
+    </div>
+
 </div>

@@ -35,13 +35,13 @@
                         <div class="weui-cell__bd">
                             <p>驾照归属地</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.name || '请选择审验城市'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.region_name || '请选择审验城市'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showLicenseTypeBox()">
                         <div class="weui-cell__bd">
                             <p>驾照类型</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.licenseType.valid}">{{result.licenseType.name || '请选择驾照类型'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.licenseType.valid}">{{result.licenseType.driving_license_type_name || '请选择驾照类型'}}</div>
                     </a>
                 </div>
             </div>
@@ -114,12 +114,12 @@
             </div>
             <div class="weui-picker__bd">
                 <div class="weui-cells weui-cells_radio">
-                    <label class="weui-cell weui-check__label" for="license-{{license.id}}" *ngFor="let license of licenses; index as index">
+                    <label class="weui-cell weui-check__label" for="license-{{license.driving_license_type_id}}" *ngFor="let license of licenses; index as index">
                         <div class="weui-cell__bd">
-                            <p>{{license.name}}</p>
+                            <p>{{license.driving_license_type_name}}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" [(ngModel)]="selectedLicense" [value]="license" name="license" id="license-{{license.id}}">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedLicense" [value]="license" name="license" id="license-{{license.driving_license_type_id}}">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
@@ -136,16 +136,16 @@
             <div class="weui-cells">
                 <div class="weui-cell" (click)="select(city)" *ngFor="let city of cities[key]">
                     <div class="weui-cell__bd">
-                        <p>{{city.name}}</p>
+                        <p>{{city.region_name}}</p>
                     </div>
-                    <div class="weui-cell__ft">{{city.tel}}</div>
+                    <div class="weui-cell__ft">{{city.area_code}}</div>
                 </div>
             </div>
         </div>
     </weui-popup>
 
-    <div class="error-bar" [hidden]="!errMsg">
-        <p>{{errMsg}}</p>
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
     </div>
 
 </div>

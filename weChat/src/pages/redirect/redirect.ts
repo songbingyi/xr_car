@@ -10,7 +10,7 @@ import {config} from '../../app/app.config';
     styleUrls   : ['./redirect.scss']
 })
 export class RedirectComponent implements OnInit {
-    URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + encodeURIComponent(config.weixin + 'pay/') + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+    URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + encodeURIComponent(config.url + 'pay/') + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
     constructor() {
         // location.go(this.URL);

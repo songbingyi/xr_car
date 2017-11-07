@@ -1,0 +1,133 @@
+{
+    "status"   : {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"     : [
+        {
+            "province_code_id"  : 1,
+            "province_code_name": "京"
+        },
+        {
+            "province_code_id"  : 2,
+            "province_code_name": "津"
+        },
+        {
+            "province_code_id"  : 3,
+            "province_code_name": "翼"
+        },
+        {
+            "province_code_id"  : 4,
+            "province_code_name": "晋"
+        },
+        {
+            "province_code_id"  : 5,
+            "province_code_name": "蒙"
+        },
+        {
+            "province_code_id"  : 6,
+            "province_code_name": "辽"
+        },
+        {
+            "province_code_id"  : 7,
+            "province_code_name": "吉"
+        },
+        {
+            "province_code_id"  : 8,
+            "province_code_name": "黑"
+        },
+        {
+            "province_code_id"  : 9,
+            "province_code_name": "沪"
+        },
+        {
+            "province_code_id"  : 10,
+            "province_code_name": "苏"
+        },
+        {
+            "province_code_id"  : 11,
+            "province_code_name": "浙"
+        },
+        {
+            "province_code_id"  : 12,
+            "province_code_name": "皖"
+        },
+        {
+            "province_code_id"  : 13,
+            "province_code_name": "闽"
+        },
+        {
+            "province_code_id"  : 14,
+            "province_code_name": "赣"
+        },
+        {
+            "province_code_id"  : 15,
+            "province_code_name": "鲁"
+        },
+        {
+            "province_code_id"  : 16,
+            "province_code_name": "豫"
+        },
+        {
+            "province_code_id"  : 17,
+            "province_code_name": "鄂"
+        },
+        {
+            "province_code_id"  : 18,
+            "province_code_name": "湘"
+        },
+        {
+            "province_code_id"  : 19,
+            "province_code_name": "粤"
+        },
+        {
+            "province_code_id"  : 20,
+            "province_code_name": "桂"
+        },
+        {
+            "province_code_id"  : 21,
+            "province_code_name": "琼"
+        },
+        {
+            "province_code_id"  : 22,
+            "province_code_name": "渝"
+        },
+        {
+            "province_code_id"  : 23,
+            "province_code_name": "川"
+        },
+        {
+            "province_code_id"  : 24,
+            "province_code_name": "贵"
+        },
+        {
+            "province_code_id"  : 25,
+            "province_code_name": "云"
+        },
+        {
+            "province_code_id"  : 26,
+            "province_code_name": "藏"
+        },
+        {
+            "province_code_id"  : 27,
+            "province_code_name": "陕"
+        },
+        {
+            "province_code_id"  : 28,
+            "province_code_name": "甘"
+        },
+        {
+            "province_code_id"  : 29,
+            "province_code_name": "青"
+        },
+        {
+            "province_code_id"  : 30,
+            "province_code_name": "宁"
+        },
+        {
+            "province_code_id"  : 31,
+            "province_code_name": "新"
+        }
+    ]
+}

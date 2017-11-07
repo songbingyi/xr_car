@@ -13,6 +13,7 @@ import {MarkersProvider} from '../../providers/http/marker.http';
 import {MarkerModel} from "../../models/marker.model";
 
 import { WXSDKService } from '../../providers/wx.sdk.service';
+import {BaseProvider} from "../../providers/http/base.http";
 
 declare const qq: any;
 
@@ -21,7 +22,7 @@ declare const qq: any;
     templateUrl : './map.html',
     styleUrls   : ['./map.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ TaobaoService, MarkersProvider ]
+    providers: [ TaobaoService, BaseProvider ]
 })
 export class MapComponent implements OnInit {
     options: any = {};
@@ -31,8 +32,8 @@ export class MapComponent implements OnInit {
     items: Observable<string[]>;
     value: string;
 
-    markers : MarkerModel[] = [];
-    currentMarker: MarkerModel;
+    markers : any = [];
+    currentMarker: any;
 
     errorMessage : any;
 
@@ -59,7 +60,7 @@ export class MapComponent implements OnInit {
 
     wxs: any;
 
-    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private markerService: MarkersProvider, private wxService: WXSDKService) {
+    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private baseProvider: BaseProvider, private wxService: WXSDKService) {
         this.wxs = this.wxService.init();
         this.wxs.then(res=>{
             this.getLocation();
@@ -106,6 +107,13 @@ export class MapComponent implements OnInit {
             });
         });
 
+        //添加监听事件
+        qq.maps.event.addListener(this.map, 'dragend', (event: any) => {
+            this.zone.run(() => {
+                console.log(this.map.getCenter());
+            });
+        });
+
         this.normalSize = new qq.maps.Size(40, 46);
         this.biggerSize = new qq.maps.Size(65, 72);
 
@@ -117,20 +125,24 @@ export class MapComponent implements OnInit {
     }
 
     loadMakers() {
-        this.markerService.getMakers('marker.mock.json')
+        this.baseProvider.get('getSiteList')
             .subscribe(markers => {
-                this.markers = markers;
-                markers.forEach(marker=>{
-                    this.setMarker(marker);
-                })
+                if (markers.status.succeed) {
+                    this.markers = markers.data;
+                    this.markers.forEach(marker=>{
+                        this.setMarker(marker);
+                    })
+                } else {
+                    this.errorMessage = markers.status.error_desc;
+                }
             },
             error => this.errorMessage = <any>error
         );
     }
 
-    setMarker(marker: MarkerModel) {
+    setMarker(marker: any) {
         let aMarker = new qq.maps.Marker({
-            position: new qq.maps.LatLng(marker.lat, marker.lng),
+            position: new qq.maps.LatLng(marker.latitude_num, marker.longitude_num),
             icon : new qq.maps.MarkerImage(marker.icon, this.normalSize, '', '', this.normalSize, ''),
             map: this.map
         });
@@ -162,7 +174,7 @@ export class MapComponent implements OnInit {
 
     showInfoWindow(marker){
         this.currentMarker = marker;
-        this.rate = marker.star;
+        this.rate = marker.rank_score;
     }
 
     hiddenInfoWindow() {
@@ -199,5 +211,11 @@ export class MapComponent implements OnInit {
 
     onclickItem(item) {
         console.log(item);
+    }
+
+    ngOnDestroy(): void {
+        ['click'].forEach(eventName => {
+            qq.maps.event.clearListeners(this.map, eventName);
+        });
     }
 }

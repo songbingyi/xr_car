@@ -1,0 +1,104 @@
+{
+    "status" : {
+        "succeed": 1,
+        "error_code" : "",
+        "error_desc": ""
+    },
+    "paginated" : {
+        "total" : 40,
+        "count" : 10,
+        "more"  : 0
+    },
+    "data"  : [
+        {
+            "product_id"   : 1,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-1",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 2,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-2",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 3,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-3",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 4,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-4",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 5,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-5",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 6,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-6",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 7,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-7",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 8,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-8",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 9,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-9",
+            "price_description": "128-150万"
+        },
+        {
+            "product_id"   : 10,
+            "product_image": {
+                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "source" : "http://oss.xrtruck.com/1.png"
+            },
+            "product_name": "轩德3系载货车-10",
+            "price_description": "128-150万"
+        }
+    ]
+}

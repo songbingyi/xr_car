@@ -34,31 +34,31 @@
             <div class="weui-cell special-cell">
                 <div class="weui-cell__bd">
                     <p>
-                        <span class="text-primary">{{currentMarker.name}}</span>
+                        <span class="text-primary">{{currentMarker.site_name}}</span>
                         <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
                     </p>
                 </div>
-                <div class="weui-cell__ft"><span class="text-warning">0.2<em>公里</em></span></div>
+                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{distance_format}}</span></div>
             </div>
             <div class="weui-cell" *ngIf="currentMarker.service">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.service}}</p>
+                    <p>{{currentMarker.service_description}}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.address}}</p>
+                    <p>{{currentMarker.site_address}}</p>
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.lat}}&epointy={{currentMarker.lng}}&eword={{currentMarker.name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
+                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.latitude_num}}&epointy={{currentMarker.longitude_num}}&eword={{currentMarker.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.tel}}</p>
+                    <p>{{currentMarker.telephone}}{{currentMarker.mobile}}</p>
                 </div>
-                <div class="weui-cell__ft"><a href="tel:15827676387"><img src="/assets/images/icon/phone.png" /></a></div>
+                <div class="weui-cell__ft"><a href="{{'tel:' + currentMarker.mobile}}"><img src="/assets/images/icon/phone.png" /></a></div>
             </div>
         </div>
     </div>

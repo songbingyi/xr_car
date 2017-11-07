@@ -18,7 +18,7 @@ export class CarInfoComponent implements OnInit {
     showIdType : Boolean = false;
     showCarType : Boolean = false;
 
-    errMsg : any;
+    errorMsg : any;
 
     provinces : Array<any>;
     groupedProvince : Array<any>;
@@ -56,7 +56,7 @@ export class CarInfoComponent implements OnInit {
     ]);
 
 
-    userInfoForm : FormGroup = this.builder.group({
+    carInfoForm : FormGroup = this.builder.group({
         cardId      : this.cardId,
         companyName : this.companyName,
         phone       : this.phone,
@@ -83,14 +83,14 @@ export class CarInfoComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('province.mock.json')
+        this.baseService.get('getProvinceCodeList.mock.json')
             .subscribe(provinces => {
                 this.provinces = provinces;
                 this.selectedProvince = provinces[0];
                 this.selectedProvince.selected = true;
                 this.result.a = this.selectedProvince;
                 this.groupProvince();
-            }, error => this.errMsg = <any>error);
+            }, error => this.errorMsg = <any>error);
     }
 
     groupProvince() {
@@ -139,6 +139,15 @@ export class CarInfoComponent implements OnInit {
     cancelTypeBox() {
         this.showIdType = false;
         this.showCarType = false;
+    }
+
+    save() {
+        if (this.carInfoForm.invalid) {
+            this.errorMsg = '请修改红色错误信息后再提交!';
+        }else{
+            this.errorMsg = '';
+        }
+        console.log(this.carInfoForm.value);
     }
 
     onItemChange(data : any) {

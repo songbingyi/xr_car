@@ -16,6 +16,7 @@ import {config} from '../../app/app.config';
  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
  for more info on providers and Angular 2 DI.
  */
+console.log(config);
 @Injectable()
 export class ProductProvider {
 

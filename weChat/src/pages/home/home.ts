@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
 import {WXService} from '../../providers/wx.service';
 
-import {ProductProvider} from '../../providers/http/product.http';
+import {BaseProvider} from '../../providers/http/base.http';
 
 import {ProductsModel} from '../../models/product.model';
 import {ProductModel} from '../../models/product.model';
@@ -15,19 +15,19 @@ import {Observable} from 'rxjs/Rx';
     selector    : 'app-home',
     templateUrl : './home.html',
     styleUrls   : ['./home.scss'],
-    providers   : [ProductProvider]
+    providers   : [BaseProvider]
 })
 export class HomeComponent implements OnInit {
 
-    products : ProductModel[] = [];
+    products : any = [];
     errorMessage : any;
-    isLoading: Boolean = false;
-    isLoaded: Boolean = false;
+    isLoading : Boolean = false;
+    isLoaded : Boolean = false;
 
     @ViewChild(InfiniteLoaderComponent) il;
-    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+    @ViewChild('scrollMe') private myScrollContainer : ElementRef;
 
-    constructor(private productService : ProductProvider) {
+    constructor(private baseProvider : BaseProvider) {
     }
 
     status : string;
@@ -37,28 +37,31 @@ export class HomeComponent implements OnInit {
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
-        this.productService.getProducts('product.mock.json').subscribe(products => {
-                this.products = this.products.concat(products.row);
+        this.baseProvider.get('getCarProductList').subscribe(products => {
+                if (products.status.succeed) {
+                    this.products = this.products.concat(products.data);
 
-                this.isLoading = false;
-                this.isLoaded  = true;
+                    this.isLoading = false;
+                    this.isLoaded = true;
 
-                if ((products.total <= this.products.length) && !!callbackDone) {
-                    return callbackDone();
+                    if ((!products.paginated.more) && !!callbackDone) {
+                        return callbackDone();
+                    }
+
+                    if (callbackOnce) {
+                        callbackOnce();
+                    }
+                } else {
+                    this.errorMessage = products.status.error_desc;
                 }
-
-                if (callbackOnce) {
-                    callbackOnce();
-                }
-
             },
             error => this.errorMessage = <any>error
         );
     }
 
-    onLoadMore(comp: InfiniteLoaderComponent) {
+    onLoadMore(comp : InfiniteLoaderComponent) {
         if (this.isLoading) {
-            return ;
+            return;
         }
         this.isLoading = true;
         this.loadProducts(() => {
@@ -70,10 +73,11 @@ export class HomeComponent implements OnInit {
     }
 
     goTop() {
-        console.log(this.myScrollContainer.nativeElement.scrollTop);
+        // console.log(this.myScrollContainer.nativeElement.scrollTop);
         try {
             this.myScrollContainer.nativeElement.scrollIntoView(); // this.myScrollContainer.nativeElement.scrollHeight;
-        } catch (err) { }
+        } catch (err) {
+        }
     }
 
 }

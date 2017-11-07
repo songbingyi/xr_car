@@ -30,7 +30,7 @@ export class LicenseComponent implements OnInit {
     shouldReservationBox: Boolean = true;
     showLicenseType: Boolean = false;
 
-    errMsg: any;
+    errorMessage: any;
     cities: Array<any>;
     licenses: Array<any>;
 
@@ -81,14 +81,22 @@ export class LicenseComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('city.mock.json')
+        this.baseService.get('getOpenRegionList')
             .subscribe(cities => {
-                this.cities = cities;
-            }, error => this.errMsg = <any>error);
-        this.baseService.get('license.mock.json')
+                if (cities.status.succeed) {
+                    this.cities = this.groupRegionByPrefix(cities.data);
+                } else {
+                    this.errorMessage = cities.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+        this.baseService.get('getDrivingLicenseTypeList')
             .subscribe(licenses => {
-                this.licenses = licenses;
-            }, error => this.errMsg = <any>error);
+                if (licenses.status.succeed) {
+                    this.licenses = licenses.data;
+                } else {
+                    this.errorMessage = licenses.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
     }
 
     onTabSelect(event) {
@@ -119,12 +127,12 @@ export class LicenseComponent implements OnInit {
             (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
                 console.log('type', res);
                 if (!res.value) {
-                    this.errMsg = '';
+                    this.errorMessage = '';
                     this.showNext = !this.showNext;
                 }
             });
         } else {
-            this.errMsg = '';
+            this.errorMessage = '';
             this.showNext = !this.showNext;
         }
         return false;
@@ -155,7 +163,7 @@ export class LicenseComponent implements OnInit {
     }
 
     choose(type) {
-        this.errMsg = '';
+        this.errorMessage = '';
         this.wxService.onChooseImage({
             count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -184,9 +192,22 @@ export class LicenseComponent implements OnInit {
         if (this.customValidators.isUploaded(this.uploaded)) {
             this.router.navigate(['/confirmOrder', 1]);
         } else {
-            this.errMsg = '请按照要求上传图片！';
+            this.errorMessage = '请按照要求上传图片！';
             return false;
         }
+    }
+
+    groupRegionByPrefix(regions): any {
+        let tmp = {};
+        regions.forEach(region => {
+            if (tmp[region.prefix_name]) {
+                tmp[region.prefix_name].push(region);
+            } else {
+                tmp[region.prefix_name] = [];
+                tmp[region.prefix_name].push(region);
+            }
+        });
+        return tmp;
     }
 
 }

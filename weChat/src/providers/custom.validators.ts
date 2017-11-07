@@ -24,7 +24,7 @@ export class CustomValidators {
 
         for (let key in map) {
             if (map.hasOwnProperty(key) && key !== 'valid') {
-                map[key].valid = map[key].id >= 0;
+                map[key].valid = Object.keys(map).length > 1;
                 if (!map[key].valid) {
                     result = false;
                 }

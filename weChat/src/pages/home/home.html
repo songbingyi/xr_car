@@ -39,12 +39,12 @@
         <div class="full-with-page item-list">
             <ul *ngIf="isLoaded && products.length">
                 <li *ngFor="let product of products; index as index;">
-                    <a [routerLink]="['/detail', product.id]">
+                    <a [routerLink]="['/detail', product.product_id]">
                         <div class="aspect-ratio" data-ratio="1:1">
-                            <img [src]="product.cover"/>
+                            <img [src]="product.product_image.thumb"/>
                         </div>
-                        <h4>{{product.title + '-' + index}}</h4>
-                        <p>{{product.price}}</p>
+                        <h4>{{product.product_name}}</h4>
+                        <p>{{product.price_description}}</p>
                     </a>
                 </li>
             </ul>
