@@ -39,7 +39,7 @@ export class CertificateComponent implements OnInit {
         confirm: '否'
     };
 
-    errMsg: any;
+    errorMessage: any;
     cities: Array<any>;
     stations: Array<any> = [[{label: '', value: ''}]];
     dates: Array<any>;
@@ -85,29 +85,40 @@ export class CertificateComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('cars.mock.json')
+        this.baseService.get('cars')
             .subscribe(cars => {
                 this.cars = cars;
-            }, error => this.errMsg = <any>error);
-        this.baseService.get('city.mock.json')
+            }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('getOpenRegionList')
             .subscribe(cities => {
-                this.cities = cities;
-            }, error => this.errMsg = <any>error);
-        this.baseService.get('marker.mock.json')
+                if (cities.status.succeed) {
+                    this.cities = this.groupRegionByPrefix(cities.data);
+                } else {
+                    this.errorMessage = cities.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('getSiteList')
             .subscribe(stations => {
-                this.rebuildStation(stations);
-            }, error => this.errMsg = <any>error);
-        this.baseService.get('date.mock.json')
+                if (stations.status.succeed) {
+                    this.rebuildStation(stations.data);
+                } else {
+                    this.errorMessage = stations.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('date')
             .subscribe(dates => {
                 this.dates = dates;
-            }, error => this.errMsg = <any>error);
+            }, error => this.errorMessage = <any>error);
     }
 
     rebuildStation(stations) {
         let result = [];
         stations.forEach(station => {
-            station.label = station.name;
-            station.value = station.id;
+            station.label = station.site_name;
+            station.value = station.site_id;
             result.push(station);
         });
         this.stations =  [result];
@@ -146,7 +157,7 @@ export class CertificateComponent implements OnInit {
     }*/
 
     validators(result) {
-        this.errMsg = '';
+        this.errorMessage = '';
         return this.customValidators.isValid( result || this.result);
     }
 
@@ -166,10 +177,10 @@ export class CertificateComponent implements OnInit {
         let result = this.result;
         let map = this.validators(result);
         if (!map.valid) {
-            this.errMsg = '所有信息为必填！';
+            this.errorMessage = '所有信息为必填！';
             return;
         }
-        this.errMsg = '';
+        this.errorMessage = '';
         this.initUploaded();
         this.showNext = true;
     }
@@ -179,12 +190,12 @@ export class CertificateComponent implements OnInit {
             (<DialogComponent>this[`${type}AS`]).show().subscribe((res : any) => {
                 // console.log('type', res);
                 if (!res.value) {
-                    this.errMsg = '';
+                    this.errorMessage = '';
                     this.showNext = !this.showNext;
                 }
             });
         } else {
-            this.errMsg = '';
+            this.errorMessage = '';
             this.showNext = !this.showNext;
         }
 
@@ -223,7 +234,7 @@ export class CertificateComponent implements OnInit {
     }
 
     choose(type) {
-        this.errMsg = '';
+        this.errorMessage = '';
         this.wxService.onChooseImage({
             count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -252,9 +263,22 @@ export class CertificateComponent implements OnInit {
         if (this.customValidators.isUploaded(this.uploaded)) {
             this.router.navigate(['/confirmOrder', 1]);
         } else {
-            this.errMsg = '请按照要求上传图片！';
+            this.errorMessage = '请按照要求上传图片！';
             return false;
         }
+    }
+
+    groupRegionByPrefix(regions): any {
+        let tmp = {};
+        regions.forEach(region => {
+            if (tmp[region.prefix_name]) {
+                tmp[region.prefix_name].push(region);
+            } else {
+                tmp[region.prefix_name] = [];
+                tmp[region.prefix_name].push(region);
+            }
+        });
+        return tmp;
     }
 
 }

@@ -61,7 +61,7 @@
                             <p>车辆选项</p>
                         </div>
                         <div class="weui-cell__ft" [ngClass]="{'error':result.bartrailer && !result.bartrailer.valid}">
-                            {{result.bartrailer?.name || '请选择车辆选项'}}
+                            {{result.bartrailer?.car_type_name || '请选择车辆选项'}}
                         </div>
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                             <p>审验城市</p>
                         </div>
                         <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">
-                            <span>{{result.city.name || '请选择审验城市'}}</span>
+                            <span>{{result.city.region_name || '请选择审验城市'}}</span>
                             <p class="text-tips">注：异地审车须加收服务费</p>
                         </div>
                     </a>
@@ -82,7 +82,7 @@
                             <p>审验站点</p>
                         </div>
                         <div class="weui-cell__ft station-name" [ngClass]="{'error':!result.station.valid}" (click)="showStation()">
-                            <span class="for-station">{{result.station.name || '请选择审验站点'}}</span>
+                            <span class="for-station">{{result.station.site_name || '请选择审验站点'}}</span>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
@@ -184,12 +184,12 @@
             </div>
             <div class="weui-picker__bd">
                 <div class="weui-cells weui-cells_radio">
-                    <label class="weui-cell weui-check__label" for="bartrailer-{{bartrailer.id}}" *ngFor="let bartrailer of bartrailerType; index as index">
+                    <label class="weui-cell weui-check__label" for="bartrailer-{{bartrailer.car_type_id}}" *ngFor="let bartrailer of bartrailerType; index as index">
                         <div class="weui-cell__bd">
-                            <p>{{bartrailer.name}}</p>
+                            <p>{{bartrailer.car_type_name}}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" [(ngModel)]="selectedBartrailer" [value]="bartrailer" name="bartrailer" id="bartrailer-{{bartrailer.id}}">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedBartrailer" [value]="bartrailer" name="bartrailer" id="bartrailer-{{bartrailer.car_type_id}}">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
@@ -206,9 +206,9 @@
             <div class="weui-cells">
                 <div class="weui-cell" (click)="select(city)" *ngFor="let city of cities[key]">
                     <div class="weui-cell__bd">
-                        <p>{{city.name}}</p>
+                        <p>{{city.region_name}}</p>
                     </div>
-                    <div class="weui-cell__ft">{{city.tel}}</div>
+                    <div class="weui-cell__ft">{{city.area_code}}</div>
                 </div>
             </div>
         </div>

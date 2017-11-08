@@ -10,19 +10,19 @@
         "price_description" :"128-150万",
         "product_image_list" : [
             {
-                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "thumb" : "/assets/images/tmp/1.jpg",
                 "source" : "http://oss.xrtruck.com/1.png"
             },
             {
-                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "thumb" : "/assets/images/tmp/2.jpg",
                 "source" : "http://oss.xrtruck.com/1.png"
             },
             {
-                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "thumb" : "/assets/images/tmp/3.jpg",
                 "source" : "http://oss.xrtruck.com/1.png"
             },
             {
-                "thumb" : "http://oss.xrtruck.com/1.png?w/100/h/100",
+                "thumb" : "/assets/images/tmp/4.jpg",
                 "source" : "http://oss.xrtruck.com/1.png"
             }
         ],

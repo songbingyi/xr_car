@@ -52,14 +52,14 @@
                         <div class="weui-cell__bd">
                             <p>审验城市</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.name || '请选择审验城市'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.region_name || '请选择审验城市'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
                         <div class="weui-cell__bd">
                             <p>审验站点</p>
                         </div>
                         <div class="weui-cell__ft station-name" [ngClass]="{'error':!result.station.valid}" (click)="showStation()">
-                            <span class="for-station">{{result.station.name || '请选择审验站点'}}</span>
+                            <span class="for-station">{{result.station.site_name || '请选择审验站点'}}</span>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
@@ -168,16 +168,16 @@
             <div class="weui-cells">
                 <div class="weui-cell" (click)="select(city)" *ngFor="let city of cities[key]">
                     <div class="weui-cell__bd">
-                        <p>{{city.name}}</p>
+                        <p>{{city.region_name}}</p>
                     </div>
-                    <div class="weui-cell__ft">{{city.tel}}</div>
+                    <div class="weui-cell__ft">{{city.area_code}}</div>
                 </div>
             </div>
         </div>
     </weui-popup>
 
-    <div class="error-bar" [hidden]="!errMsg">
-        <p>{{errMsg}}</p>
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
     </div>
 
 </div>

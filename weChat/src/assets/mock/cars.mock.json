@@ -1,0 +1,20 @@
+[
+    {
+        "id"       : 1,
+        "cardType" : 1,
+        "carType"  : 1,
+        "cardId"   : "陕A·76243"
+    },
+    {
+        "id"       : 2,
+        "cardType" : 1,
+        "carType"  : 2,
+        "cardId"   : "陕A·76243"
+    },
+    {
+        "id"       : 3,
+        "cardType" : 0,
+        "carType"  : 3,
+        "cardId"   : "陕A·76243"
+    }
+]
