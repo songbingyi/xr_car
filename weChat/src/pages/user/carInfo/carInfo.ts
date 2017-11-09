@@ -5,6 +5,8 @@ import {CustomValidators} from '../../../providers/custom.validators';
 
 import {BaseProvider} from '../../../providers/http/base.http';
 
+import { errorCode } from '../../../assets/data/error.code';
+
 @Component({
     selector    : 'app-car-info',
     templateUrl : './carInfo.html',
@@ -18,11 +20,15 @@ export class CarInfoComponent implements OnInit {
     showIdType : Boolean = false;
     showCarType : Boolean = false;
 
-    errorMsg : any;
+    errorMessage : any;
+
+    carProperties: any = [];
 
     provinces : Array<any>;
     groupedProvince : Array<any>;
     selectedProvince : any;
+
+    selectedCarProperty: any;
 
     rowLength : any = 10; // 每行几个省
 
@@ -66,13 +72,27 @@ export class CarInfoComponent implements OnInit {
     });
 
     result = {
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        e: '',
-        f: '',
-        g: ''
+        a: {
+            valid: true
+        },
+        b: {
+            valid: true
+        },
+        c: {
+            valid: true
+        },
+        d: {
+            valid: true
+        },
+        e: {
+            valid: true
+        },
+        f: {
+            valid: true
+        },
+        g: {
+            valid: true
+        }
     };
 
     constructor(private builder : FormBuilder, private customValidators : CustomValidators, private baseService : BaseProvider) {
@@ -83,14 +103,33 @@ export class CarInfoComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('getProvinceCodeList.mock.json')
+        this.baseService.get('getProvinceCodeList')
             .subscribe(provinces => {
-                this.provinces = provinces;
-                this.selectedProvince = provinces[0];
-                this.selectedProvince.selected = true;
-                this.result.a = this.selectedProvince;
-                this.groupProvince();
-            }, error => this.errorMsg = <any>error);
+                if (provinces.status.succeed) {
+                    this.provinces = provinces.data;
+                    this.selectedProvince = this.provinces[0];
+                    this.selectedProvince.selected = true;
+                    this.result.a = this.selectedProvince;
+                    this.groupProvince();
+                } else {
+                    // this.errorMessage = errorCode[provinces.status.error_code];
+                    this.errorMessage = provinces.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('getCarPropertyList')
+            .subscribe(carProperties => {
+                if (carProperties.status.succeed) {
+                    this.carProperties = carProperties.data;
+                } else {
+                    this.errorMessage = carProperties.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    validators(result) {
+        this.errorMessage = '';
+        return this.customValidators.isValid(result || this.result);
     }
 
     groupProvince() {
@@ -129,6 +168,10 @@ export class CarInfoComponent implements OnInit {
     }
 
     selectIdType() {
+        this.result.d = this.selectedCarProperty;
+        this.result.d.valid = true;
+        this.validators(this.result);
+        this.selectedCarProperty = null;
         this.cancelTypeBox();
     }
 
@@ -142,12 +185,13 @@ export class CarInfoComponent implements OnInit {
     }
 
     save() {
-        if (this.carInfoForm.invalid) {
-            this.errorMsg = '请修改红色错误信息后再提交!';
-        }else{
-            this.errorMsg = '';
+        let result = this.result;
+        let map = this.validators(result);
+        if (!map.valid || this.carInfoForm.invalid) {
+            this.errorMessage = '所有信息为必填！';
+            return;
         }
-        console.log(this.carInfoForm.value);
+        this.errorMessage = '';
     }
 
     onItemChange(data : any) {

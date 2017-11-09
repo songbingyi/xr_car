@@ -321,6 +321,9 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
             }
         }
     }
+    .placeholder.error {
+        color:#E64340;
+    }
 }
 
 

@@ -2,12 +2,12 @@
     <div class="top-tips">
         <p>注：最多可绑定3辆车的信息 | <a [routerLink]="['/carList']">列表</a></p>
     </div>
-    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMsg}">
+    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMessage}">
     <div class="weui-cells__title">车牌号码</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__hd labels">
-                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a?.name}}<i class="icon-triangle"></i></label>
+                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a.province_code_name}}<i class="icon-triangle"></i></label>
             </div>
             <div class="weui-cell__bd">
                 <input class="weui-input" type="text" [formControl]="cardId"  placeholder="{{cardId.invalid && (cardId.dirty || errorMsg) ? '请填写车牌号码！' : '例如：567R3'}}" appFocusBlur />
@@ -32,7 +32,7 @@
         <div class="weui-cell weui-cell_access" href="javascript:;" (click)="showIdTypeBox()">
             <div class="weui-cell__hd"><label class="weui-label">车辆性质</label></div>
             <div class="weui-cell__bd">
-                <span class="placeholder">选择车辆性质</span>
+                <span class="placeholder" [ngClass]="{'error':!result.d.valid}">{{result.d.car_property_name || '选择车辆性质'}}</span>
             </div>
             <div class="weui-cell__ft"></div>
         </div>
@@ -40,7 +40,7 @@
         <div class="weui-cell weui-cell_access" href="javascript:;" (click)="showCarTypeBox()">
             <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
             <div class="weui-cell__bd">
-                <span class="placeholder">选择车辆类型</span>
+                <span class="placeholder" [ngClass]="{'error':!result.e.valid}">{{result.e.car_property_name || '选择车辆类型'}}</span>
             </div>
             <div class="weui-cell__ft"></div>
         </div>
@@ -89,16 +89,16 @@
             </div>
             <div class="weui-picker__bd">
                 <div class="weui-cells weui-cells_radio">
-                    <label class="weui-cell weui-check__label" for="x1">
+                    <label class="weui-cell weui-check__label" for="carProperty-{{carProperty.car_property_id}}" *ngFor="let carProperty of carProperties; index as index">
                         <div class="weui-cell__bd">
-                            <p>公户</p>
+                            <p>{{carProperty.car_property_name}}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" name="radio1" id="x1">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedCarProperty" [value]="carProperty" name="carProperty" id="carProperty-{{carProperty.car_property_id}}">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <label class="weui-cell weui-check__label" for="x2">
+                    <!--<label class="weui-cell weui-check__label" for="x2">
                         <div class="weui-cell__bd">
                             <p>私户</p>
                         </div>
@@ -106,7 +106,7 @@
                             <input type="radio" name="radio1" class="weui-check" id="x2">
                             <span class="weui-icon-checked"></span>
                         </div>
-                    </label>
+                    </label>-->
                 </div>
             </div>
         </div>
@@ -166,7 +166,7 @@
         <table>
             <tr *ngFor="let groups of groupedProvince; index as index">
                 <td *ngFor="let province of groups;">
-                    <span (click)="selected(province)" [ngClass]="{'selected': province.selected}">{{province.name}}</span>
+                    <span (click)="selected(province)" [ngClass]="{'selected': province.selected}">{{province.province_code_name}}</span>
                 </td>
                 <!--<td><span>津</span></td>
                 <td><span>翼</span></td>
@@ -215,8 +215,8 @@
         <div class="confirm-btn"><span class="return" (click)="confirmSelect()">完成</span></div>
     </div>
 
-    <div class="error-bar" [hidden]="!errorMsg">
-        <span>{{errorMsg}}</span>
+    <div class="error-bar" [hidden]="!errorMessage">
+        <span>{{errorMessage}}</span>
     </div>
 
 </div>
