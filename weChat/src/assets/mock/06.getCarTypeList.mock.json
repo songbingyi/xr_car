@@ -1,0 +1,27 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "car_type_list": [
+            {
+                "car_type_id"  : "1",
+                "car_type_name": "重型车辆"
+            },
+            {
+                "car_type_id"  : "2",
+                "car_type_name": "中型车辆"
+            },
+            {
+                "car_type_id"  : "3",
+                "car_type_name": "小型车辆"
+            },
+            {
+                "car_type_id"  : "4",
+                "car_type_name": "挂车"
+            }
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "car_product_info": {
+            "product_id"         : "1",
+            "product_name"       : "轩德3系载货车-1",
+            "price_description"  : "128-150万",
+            "product_image_list" : [
+                {
+                    "thumb" : "/assets/images/tmp/1.jpg",
+                    "source": "http://oss.xrtruck.com/1.png"
+                },
+                {
+                    "thumb" : "/assets/images/tmp/2.jpg",
+                    "source": "http://oss.xrtruck.com/1.png"
+                },
+                {
+                    "thumb" : "/assets/images/tmp/3.jpg",
+                    "source": "http://oss.xrtruck.com/1.png"
+                },
+                {
+                    "thumb" : "/assets/images/tmp/4.jpg",
+                    "source": "http://oss.xrtruck.com/1.png"
+                }
+            ],
+            "product_description": "<p>这是一段产品特点的描述文字</p><p>这是一段产品特点的描述文字</p><img src='/assets/images/tmp/detail.content.png'><h5 class='sub-header'>产品细节</h5><ul><li><span>这是一条产品细节</span></li><li><span>这是一条产品细节</span></li><li><span>这是一条产品细节</span></li><li><span>这是一条产品细节</span></li><li><span>这是一条产品细节</span></li><li><span>这是一条产品细节</span></li></ul>"
+        }
+    }
+}

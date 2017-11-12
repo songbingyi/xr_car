@@ -1,0 +1,41 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_type_list": [
+            {
+                "service_type_id" : "1",
+                "service_type_key" : "license",
+                "service_type_name" : "驾照",
+                "service_type_status" : 1
+            },
+            {
+                "service_type_id" : "1",
+                "service_type_key" : "certificate",
+                "service_type_name" : "营运证",
+                "service_type_status" : 1
+            },
+            {
+                "service_type_id" : "1",
+                "service_type_key" : "review",
+                "service_type_name" : "审车",
+                "service_type_status" : 1
+            },
+            {
+                "service_type_id" : "1",
+                "service_type_key" : "insurance",
+                "service_type_name" : "保险",
+                "service_type_status" : 2
+            },
+            {
+                "service_type_id" : "1",
+                "service_type_key" : "violate",
+                "service_type_name" : "违章",
+                "service_type_status" : 2
+            }
+        ]
+    }
+}

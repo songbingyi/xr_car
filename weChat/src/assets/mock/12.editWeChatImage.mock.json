@@ -1,0 +1,13 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "image_info": {
+            "thumb": "",
+            "source": ""
+        }
+    }
+}

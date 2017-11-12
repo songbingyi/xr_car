@@ -84,7 +84,7 @@ export class LicenseComponent implements OnInit {
         this.baseService.get('getOpenRegionList')
             .subscribe(cities => {
                 if (cities.status.succeed) {
-                    this.cities = this.groupRegionByPrefix(cities.data);
+                    this.cities = this.groupRegionByPrefix(cities.data.region_list);
                 } else {
                     this.errorMessage = cities.status.error_desc;
                 }
@@ -92,7 +92,7 @@ export class LicenseComponent implements OnInit {
         this.baseService.get('getDrivingLicenseTypeList')
             .subscribe(licenses => {
                 if (licenses.status.succeed) {
-                    this.licenses = licenses.data;
+                    this.licenses = licenses.data.driving_license_type_list;
                 } else {
                     this.errorMessage = licenses.status.error_desc;
                 }
@@ -208,6 +208,10 @@ export class LicenseComponent implements OnInit {
             }
         });
         return tmp;
+    }
+
+    goToAnchor(location: string): void {
+        window.location.hash = location;
     }
 
 }

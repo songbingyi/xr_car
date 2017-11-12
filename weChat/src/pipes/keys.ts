@@ -9,6 +9,7 @@ export class KeysPipe implements PipeTransform {
                 keys.push(key);
             }
         }
+        keys.sort();
         return keys;
     }
 }

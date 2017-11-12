@@ -23,12 +23,14 @@ export class CarInfoComponent implements OnInit {
     errorMessage : any;
 
     carProperties: any = [];
+    carTypes     : any = [];
 
     provinces : Array<any>;
     groupedProvince : Array<any>;
     selectedProvince : any;
 
     selectedCarProperty: any;
+    selectedCarType: any;
 
     rowLength : any = 10; // 每行几个省
 
@@ -106,13 +108,12 @@ export class CarInfoComponent implements OnInit {
         this.baseService.get('getProvinceCodeList')
             .subscribe(provinces => {
                 if (provinces.status.succeed) {
-                    this.provinces = provinces.data;
+                    this.provinces = provinces.data.province_code_list;
                     this.selectedProvince = this.provinces[0];
                     this.selectedProvince.selected = true;
                     this.result.a = this.selectedProvince;
                     this.groupProvince();
                 } else {
-                    // this.errorMessage = errorCode[provinces.status.error_code];
                     this.errorMessage = provinces.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
@@ -120,9 +121,18 @@ export class CarInfoComponent implements OnInit {
         this.baseService.get('getCarPropertyList')
             .subscribe(carProperties => {
                 if (carProperties.status.succeed) {
-                    this.carProperties = carProperties.data;
+                    this.carProperties = carProperties.data.car_property_list;
                 } else {
                     this.errorMessage = carProperties.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('getCarTypeList')
+            .subscribe(carTypes => {
+                if (carTypes.status.succeed) {
+                    this.carTypes = carTypes.data.car_type_list;
+                } else {
+                    this.errorMessage = carTypes.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -176,6 +186,10 @@ export class CarInfoComponent implements OnInit {
     }
 
     selectCarType() {
+        this.result.e = this.selectedCarType;
+        this.result.e.valid = true;
+        this.validators(this.result);
+        this.selectedCarType = null;
         this.cancelTypeBox();
     }
 

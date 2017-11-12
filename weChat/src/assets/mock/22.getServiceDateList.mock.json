@@ -1,0 +1,31 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_date_list": [
+            {
+                "service_date_id": 1,
+                "service_date"   : "2017/11/01"
+            },
+            {
+                "service_date_id": 2,
+                "service_date"   : "2017/11/02"
+            },
+            {
+                "service_date_id": 3,
+                "service_date"   : "2017/11/03"
+            },
+            {
+                "service_date_id": 4,
+                "service_date"   : "2017/11/04"
+            },
+            {
+                "service_date_id": 5,
+                "service_date"   : "2017/11/05"
+            }
+        ]
+    }
+}

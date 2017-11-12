@@ -130,7 +130,7 @@
 
     <weui-dialog #ios [config]="config"></weui-dialog>
 
-    <weui-popup #full [config]="{is_full: true}">
+    <weui-popup #full [config]="{is_full: true}" class="weui-popup-region">
         <div *ngFor="let key of cities | keys ">
             <div class="weui-cells__title">{{key}}</div>
             <div class="weui-cells">
@@ -141,6 +141,9 @@
                     <div class="weui-cell__ft">{{city.area_code}}</div>
                 </div>
             </div>
+        </div>
+        <div class="shortcut">
+            <a *ngFor="let key of cities | keys" (click)="goToAnchor(key)">{{key}}</a>
         </div>
     </weui-popup>
 

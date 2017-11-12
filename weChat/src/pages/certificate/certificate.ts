@@ -85,15 +85,19 @@ export class CertificateComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('cars')
+        this.baseService.get('getMemberCarList')
             .subscribe(cars => {
-                this.cars = cars;
+                if (cars.status.succeed) {
+                    this.cars = cars.data.member_car_list;
+                } else {
+                    this.errorMessage = cars.status.error_desc;
+                }
             }, error => this.errorMessage = <any>error);
 
         this.baseService.get('getOpenRegionList')
             .subscribe(cities => {
                 if (cities.status.succeed) {
-                    this.cities = this.groupRegionByPrefix(cities.data);
+                    this.cities = this.groupRegionByPrefix(cities.data.region_list);
                 } else {
                     this.errorMessage = cities.status.error_desc;
                 }
@@ -102,15 +106,19 @@ export class CertificateComponent implements OnInit {
         this.baseService.get('getSiteList')
             .subscribe(stations => {
                 if (stations.status.succeed) {
-                    this.rebuildStation(stations.data);
+                    this.rebuildStation(stations.data.site_list);
                 } else {
                     this.errorMessage = stations.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('date')
+        this.baseService.get('getServiceDateList')
             .subscribe(dates => {
-                this.dates = dates;
+                if (dates.status.succeed) {
+                    this.dates = dates.data.service_date_list;
+                } else {
+                    this.errorMessage = dates.status.error_desc;
+                }
             }, error => this.errorMessage = <any>error);
     }
 
@@ -279,6 +287,10 @@ export class CertificateComponent implements OnInit {
             }
         });
         return tmp;
+    }
+
+    goToAnchor(location: string): void {
+        window.location.hash = location;
     }
 
 }

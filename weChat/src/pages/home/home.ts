@@ -24,22 +24,32 @@ export class HomeComponent implements OnInit {
     isLoading : Boolean = false;
     isLoaded : Boolean = false;
 
+    serviceTypes: any = [];
+
     @ViewChild(InfiniteLoaderComponent) il;
     @ViewChild('scrollMe') private myScrollContainer : ElementRef;
 
-    constructor(private baseProvider : BaseProvider) {
+    constructor(private baseService: BaseProvider) {
     }
 
     status : string;
 
     ngOnInit() {
+        this.baseService.get('getServiceTypeList')
+            .subscribe(serviceTypes => {
+                if (serviceTypes.status.succeed) {
+                    this.serviceTypes = serviceTypes.data.service_type_list;
+                } else {
+                    this.errorMessage = serviceTypes.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
         this.loadProducts();
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
-        this.baseProvider.get('getCarProductList').subscribe(products => {
+        this.baseService.get('getCarProductList').subscribe(products => {
                 if (products.status.succeed) {
-                    this.products = this.products.concat(products.data);
+                    this.products = this.products.concat(products.data.car_product_list);
 
                     this.isLoading = false;
                     this.isLoaded = true;

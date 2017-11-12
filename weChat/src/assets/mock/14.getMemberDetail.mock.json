@@ -1,0 +1,25 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "member_info"     : {
+            "member_id"  : "",
+            "member_name": "",
+            "icon_image" : {
+                "thumb" : "",
+                "source": ""
+            },
+            "real_name"  : "",
+            "id_number"  : "",
+            "mobile"     : ""
+        },
+        "member_auth_info": {
+            "member_auth_status"  : "",
+            "identity_auth_status": "",
+            "car_auth_status"     : ""
+        }
+    }
+}

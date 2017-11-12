@@ -1,0 +1,83 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "member_car_list": [
+            {
+                "car_id" : "1",
+                "province_code_info" : {
+                    "province_code_id" : "1",
+                    "province_code_name" : "陕"
+                },
+                "plate_no" : "A33345",
+                "company_info" : {
+                    "company_id" : "2",
+                    "company_name" : "陕西阳光热力有限公司"
+                },
+                "car_property_info" : {
+                    "car_property_id" : "1",
+                    "car_property_name" : "公户"
+                },
+                "car_type_info" : {
+                    "car_type_id" : "1",
+                    "car_type_name" : "大型车辆"
+                },
+                "vin_no" : "VIN123456789",
+                "engine_no" : "ENG124567788",
+                "is_modify" : 1,
+                "is_delete" : 1
+            },
+            {
+                "car_id" : "2",
+                "province_code_info" : {
+                    "province_code_id" : "1",
+                    "province_code_name" : "陕"
+                },
+                "plate_no" : "A87231",
+                "company_info" : {
+                    "company_id" : "2",
+                    "company_name" : "陕西阳光热力有限公司"
+                },
+                "car_property_info" : {
+                    "car_property_id" : "1",
+                    "car_property_name" : "公户"
+                },
+                "car_type_info" : {
+                    "car_type_id" : "2",
+                    "car_type_name" : "小型车辆"
+                },
+                "vin_no" : "VIN123456789",
+                "engine_no" : "ENG124567788",
+                "is_modify" : 1,
+                "is_delete" : 1
+            },
+            {
+                "car_id" : "3",
+                "province_code_info" : {
+                    "province_code_id" : "1",
+                    "province_code_name" : "陕"
+                },
+                "plate_no" : "A24512",
+                "company_info" : {
+                    "company_id" : "2",
+                    "company_name" : "陕西阳光热力有限公司"
+                },
+                "car_property_info" : {
+                    "car_property_id" : "1",
+                    "car_property_name" : "公户"
+                },
+                "car_type_info" : {
+                    "car_type_id" : "3",
+                    "car_type_name" : "挂车"
+                },
+                "vin_no" : "VIN123456789",
+                "engine_no" : "ENG124567788",
+                "is_modify" : 1,
+                "is_delete" : 1
+            }
+        ]
+    }
+}

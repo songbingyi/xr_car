@@ -2,13 +2,13 @@
     <div class="home-page" #scrollMe>
         <div class="full-with-page header-menu">
             <ul>
-                <li>
-                    <div class="header-menu-item" [routerLink]="['/license']">
-                        <img src="/assets/images/menu/license.png"/>
-                        <h3>驾照</h3>
+                <li *ngFor="let serviceType of serviceTypes; index as index">
+                    <div class="header-menu-item" [routerLink]="['/' + serviceType.service_type_key]" *ngIf="serviceType.service_type_status">
+                        <img [src]="'/assets/images/menu/' + serviceType.service_type_key + (serviceType.service_type_status === 2 ? '.grey.png' : '.png')"/>
+                        <h3>{{serviceType.service_type_name}}</h3>
                     </div>
                 </li>
-                <li>
+                <!--<li>
                     <div class="header-menu-item" [routerLink]="['/certificate']">
                         <img src="/assets/images/menu/certificate.png"/>
                         <h3>营运证</h3>
@@ -31,7 +31,7 @@
                         <img src="/assets/images/menu/violate.grey.png"/>
                         <h3>违章</h3>
                     </div>
-                </li>
+                </li>-->
             </ul>
         </div>
 

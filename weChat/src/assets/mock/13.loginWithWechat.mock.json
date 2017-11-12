@@ -1,0 +1,11 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "member_id": "",
+        "token"    : ""
+    }
+}

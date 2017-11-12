@@ -128,8 +128,18 @@ export class MapComponent implements OnInit {
         this.baseProvider.get('getSiteList')
             .subscribe(markers => {
                 if (markers.status.succeed) {
-                    this.markers = markers.data;
+                    this.markers = markers.data.site_list;
                     this.markers.forEach(marker=>{
+                        // 服务站
+                        if (marker.site_category_info.site_category_id === "1") {
+                            marker.icon = '/assets/images/marker/service.s.png';
+                            marker.type = 'service';
+                        }
+                        // 监测站
+                        if (marker.site_category_info.site_category_id === "2") {
+                            marker.icon = '/assets/images/marker/review.s.png';
+                            marker.type = 'review';
+                        }
                         this.setMarker(marker);
                     })
                 } else {

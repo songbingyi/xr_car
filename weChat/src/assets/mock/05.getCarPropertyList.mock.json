@@ -1,0 +1,19 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "car_property_list": [
+            {
+                "car_property_id"  : "1",
+                "car_property_name": "公户"
+            },
+            {
+                "car_property_id"  : "2",
+                "car_property_name": "私户"
+            }
+        ]
+    }
+}

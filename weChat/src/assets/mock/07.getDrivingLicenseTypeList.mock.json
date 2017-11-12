@@ -1,0 +1,23 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "driving_license_type_list": [
+            {
+                "driving_license_type_id"  : "1",
+                "driving_license_type_name": "A照"
+            },
+            {
+                "driving_license_type_id"  : "2",
+                "driving_license_type_name": "B照"
+            },
+            {
+                "driving_license_type_id"  : "3",
+                "driving_license_type_name": "C照"
+            }
+        ]
+    }
+}

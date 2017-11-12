@@ -1,0 +1,35 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "region_list": [
+            {
+                "region_id"  : "1",
+                "region_name": "西安",
+                "area_code"  : "029",
+                "prefix_name": "X"
+            },
+            {
+                "region_id"  : "2",
+                "region_name": "咸阳",
+                "area_code"  : "029",
+                "prefix_name": "X"
+            },
+            {
+                "region_id"  : "3",
+                "region_name": "宝鸡",
+                "area_code"  : "028",
+                "prefix_name": "B"
+            },
+            {
+                "region_id"  : "4",
+                "region_name": "宝安",
+                "area_code"  : "0304",
+                "prefix_name": "B"
+            }
+        ]
+    }
+}

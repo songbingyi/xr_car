@@ -40,7 +40,7 @@
         <div class="weui-cell weui-cell_access" href="javascript:;" (click)="showCarTypeBox()">
             <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
             <div class="weui-cell__bd">
-                <span class="placeholder" [ngClass]="{'error':!result.e.valid}">{{result.e.car_property_name || '选择车辆类型'}}</span>
+                <span class="placeholder" [ngClass]="{'error':!result.e.valid}">{{result.e.car_type_name || '选择车辆类型'}}</span>
             </div>
             <div class="weui-cell__ft"></div>
         </div>
@@ -98,15 +98,6 @@
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <!--<label class="weui-cell weui-check__label" for="x2">
-                        <div class="weui-cell__bd">
-                            <p>私户</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                            <input type="radio" name="radio1" class="weui-check" id="x2">
-                            <span class="weui-icon-checked"></span>
-                        </div>
-                    </label>-->
                 </div>
             </div>
         </div>
@@ -121,16 +112,16 @@
             </div>
             <div class="weui-picker__bd">
                 <div class="weui-cells weui-cells_radio">
-                    <label class="weui-cell weui-check__label" for="x11">
+                    <label class="weui-cell weui-check__label" for="carType-{{carType.car_type_id}}" *ngFor="let carType of carTypes; index as index">
                         <div class="weui-cell__bd">
-                            <p>挂车</p>
+                            <p>{{carType.car_type_name}}</p>
                         </div>
                         <div class="weui-cell__ft">
-                            <input type="radio" class="weui-check" name="radio2" id="x11">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedCarType" [value]="carType" name="carType" id="carType-{{carType.car_type_id}}">
                             <span class="weui-icon-checked"></span>
                         </div>
                     </label>
-                    <label class="weui-cell weui-check__label" for="x12">
+                    <!--<label class="weui-cell weui-check__label" for="x12">
                         <div class="weui-cell__bd">
                             <p>重型汽车</p>
                         </div>
@@ -156,7 +147,7 @@
                             <input type="radio" name="radio2" class="weui-check" id="x14">
                             <span class="weui-icon-checked"></span>
                         </div>
-                    </label>
+                    </label>-->
                 </div>
             </div>
         </div>
