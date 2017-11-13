@@ -8,6 +8,7 @@ let mockBase : IDictionary<string> = {
     'getProvinceCodeList'       : '04.getProvinceCodeList.mock.json',
     'getCarPropertyList'        : '05.getCarPropertyList.mock.json',
     'getCarTypeList'            : '06.getCarTypeList.mock.json',
+    'getCarTypeListAlter'       : '06.01.getCarTypeList.mock.json',
     'getDrivingLicenseTypeList' : '07.getDrivingLicenseTypeList.mock.json',
     'getOpenRegionList'         : '08.getOpenRegionList.mock.json',
     'getSiteList'               : '09.getSiteList.mock.json',
@@ -24,7 +25,7 @@ let mockBase : IDictionary<string> = {
     'addMemberCar'              : '20.addMemberCar.mock.json',
     'editMemberCar'             : '21.editMemberCar.mock.json',
     'getServiceDateList'        : '22.getServiceDateList.mock.json',
-    'date'                      : '22.getServiceDateList.mock.json'
+    'getPrice'                  : 'getPrice.mock.json'
 };
 
 export {mockBase};

@@ -89,7 +89,7 @@
             </span>
             <div class="btn-group" [hidden]="!showNext">
                 <a href="javascript:;" class="weui-btn weui-btn_default" (click)="goPrev()">上一步</a>
-                <a href="javascript:;" class="weui-btn weui-btn_primary" (click)="confirmOrder();">确认订单：<span>520</span>元</a>
+                <a href="javascript:;" class="weui-btn weui-btn_primary" (click)="confirmOrder();">确认订单：<span>{{price}}</span>元</a>
             </div>
         </tab>
     </tabset>

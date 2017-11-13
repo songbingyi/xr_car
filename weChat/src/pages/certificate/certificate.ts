@@ -44,6 +44,7 @@ export class CertificateComponent implements OnInit {
     stations: Array<any> = [[{label: '', value: ''}]];
     dates: Array<any>;
     cars: Array<any>;
+    price : Number = 0;
 
     // stationId: 0;
 
@@ -122,6 +123,17 @@ export class CertificateComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
+    getPriceData() {
+        this.baseService.get('getPrice')
+            .subscribe(price => {
+                if (price.status.succeed) {
+                    this.price = price.data.price;
+                } else {
+                    this.errorMessage = price.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
     rebuildStation(stations) {
         let result = [];
         stations.forEach(station => {
@@ -166,7 +178,13 @@ export class CertificateComponent implements OnInit {
 
     validators(result) {
         this.errorMessage = '';
-        return this.customValidators.isValid( result || this.result);
+        let map = this.customValidators.isValid(result || this.result);
+        if (map.valid) {
+            this.getPriceData();
+        } else {
+            this.price = 0;
+        }
+        return map;
     }
 
     onTabSelect(event) {

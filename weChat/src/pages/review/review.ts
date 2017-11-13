@@ -51,6 +51,7 @@ export class ReviewComponent implements OnInit {
     dates : Array<any>;
     cars : Array<any>;
     bartrailerType : Array<any>;
+    price : Number = 0;
 
     // stationId: 0;
 
@@ -142,6 +143,26 @@ export class ReviewComponent implements OnInit {
                     this.errorMessage = bartrailerType.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+
+        this.baseService.get('getCarTypeListAlter')
+            .subscribe(bartrailerType => {
+                if (bartrailerType.status.succeed) {
+                    this.bartrailerType = bartrailerType.data.car_type_list;
+                } else {
+                    this.errorMessage = bartrailerType.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    getPriceData() {
+        this.baseService.get('getPrice')
+            .subscribe(price => {
+                if (price.status.succeed) {
+                    this.price = price.data.price;
+                } else {
+                    this.errorMessage = price.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
     }
 
     rebuildStation(stations) {
@@ -187,11 +208,16 @@ export class ReviewComponent implements OnInit {
 
     validators(result) {
         this.errorMessage = '';
-        return this.customValidators.isValid(result || this.result);
+        let map = this.customValidators.isValid(result || this.result);
+        if (map.valid) {
+            this.getPriceData();
+        } else {
+            this.price = 0;
+        }
+        return map;
     }
 
     onTabSelect(event) {
-        // console.log(event);
         if (event === false) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
@@ -233,7 +259,7 @@ export class ReviewComponent implements OnInit {
     }
 
     onchange($event, item) {
-        this.isBartrailer = item.carType === 3;
+        this.isBartrailer = !!item.car_type_info.has_child;
         if (this.isBartrailer) {
             this.result.bartrailer = {
                 valid : true

@@ -22,6 +22,7 @@
                     "car_property_name" : "公户"
                 },
                 "car_type_info" : {
+                    "has_child"   : 0,
                     "car_type_id" : "1",
                     "car_type_name" : "大型车辆"
                 },
@@ -46,6 +47,7 @@
                     "car_property_name" : "公户"
                 },
                 "car_type_info" : {
+                    "has_child"   : 0,
                     "car_type_id" : "2",
                     "car_type_name" : "小型车辆"
                 },
@@ -70,6 +72,7 @@
                     "car_property_name" : "公户"
                 },
                 "car_type_info" : {
+                    "has_child"   : 1,
                     "car_type_id" : "3",
                     "car_type_name" : "挂车"
                 },

@@ -1,0 +1,23 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "car_type_list": [
+            {
+                "car_type_id"  : "1",
+                "car_type_name": "全部"
+            },
+            {
+                "car_type_id"  : "2",
+                "car_type_name": "挂头"
+            },
+            {
+                "car_type_id"  : "3",
+                "car_type_name": "挂箱"
+            }
+        ]
+    }
+}

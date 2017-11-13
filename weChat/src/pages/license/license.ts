@@ -33,6 +33,7 @@ export class LicenseComponent implements OnInit {
     errorMessage: any;
     cities: Array<any>;
     licenses: Array<any>;
+    price : Number = 0;
 
     result : any = {
         city: {
@@ -99,6 +100,28 @@ export class LicenseComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
+    getPriceData() {
+        this.baseService.get('getPrice')
+            .subscribe(price => {
+                if (price.status.succeed) {
+                    this.price = price.data.price;
+                } else {
+                    this.errorMessage = price.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    validators(result) {
+        this.errorMessage = '';
+        let map = this.customValidators.isValid(result || this.result);
+        if (map.valid) {
+            this.getPriceData();
+        } else {
+            this.price = 0;
+        }
+        return map;
+    }
+
     onTabSelect(event) {
         // console.log(event);
         if (event === false) {
@@ -114,7 +137,7 @@ export class LicenseComponent implements OnInit {
 
     goNext() {
         let result = this.result;
-        let map = this.customValidators.isValid(result);
+        let map = this.validators(result);
         if (!map.valid) {
             return;
         }
@@ -141,7 +164,7 @@ export class LicenseComponent implements OnInit {
     select(item) {
         this.result.city = item;
         this.result.city.valid = true;
-        this.customValidators.isValid(this.result);
+        this.validators(this.result);
         this.fullPopup.close();
     }
 
@@ -153,7 +176,7 @@ export class LicenseComponent implements OnInit {
     selectLicenseType() {
         this.result.licenseType = this.selectedLicense;
         this.result.licenseType.valid = true;
-        this.customValidators.isValid(this.result);
+        this.validators(this.result);
         this.selectedLicense = null;
         this.cancelTypeBox();
     }
