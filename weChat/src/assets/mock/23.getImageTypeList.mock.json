@@ -1,0 +1,36 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "image_type_list": [
+            {
+                "image_type_id": "1",
+                "image_type_key"   : "a",
+                "image_type_name" : "身份证正面"
+             },
+            {
+                "image_type_id": "2",
+                "image_type_key"   : "b",
+                "image_type_name" : "身份证反面"
+            },
+            {
+                "image_type_id": "3",
+                "image_type_key"   : "c",
+                "image_type_name" : "驾照"
+            },
+            {
+                "image_type_id": "4",
+                "image_type_key"   : "d",
+                "image_type_name" : "行驶证"
+            },
+            {
+                "image_type_id": "5",
+                "image_type_key"   : "e",
+                "image_type_name" : "运营证"
+            }
+        ]
+    }
+}

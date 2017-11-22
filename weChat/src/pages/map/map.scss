@@ -148,3 +148,19 @@
     }
 }
 
+.show-phone-list {
+    .weui-cell {
+        line-height:60px;
+        height:60px;
+        font-size:18px;
+    }
+    .no-border {
+        &:after {
+            border: none;
+        }
+    }
+    .weui-dialog__bd {
+        padding:0;
+    }
+}
+

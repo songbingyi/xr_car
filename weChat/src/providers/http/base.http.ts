@@ -62,11 +62,10 @@ export class BaseProvider {
         let path = this.getApi(name);
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
-
         return this.http.post(url, {
             route          : path,
             token          : this.access_token,
-            jsonText       : data,
+            jsonText       : JSON.stringify(data),
             device_type    : '',
             device_version : '',
             version_code   : '',
@@ -79,9 +78,9 @@ export class BaseProvider {
     getApi(name) {
         let url = '';
         if (config.production) {
-            url = this.url + apiBase[name];
+            url = apiBase[name];
         } else {
-            url = this.url + mockBase[name];
+            url = mockBase[name];
         }
         return url;
     }

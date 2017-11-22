@@ -1,0 +1,10 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_order_id": "1"
+    }
+}

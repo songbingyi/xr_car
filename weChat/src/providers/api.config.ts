@@ -23,7 +23,10 @@ let apiBase : IDictionary<string> = {
     'getCarInfo'                : 'car/member_car/getCarInfo',
     'addMemberCar'              : 'car/member_car/addMemberCar',
     'editMemberCar'             : 'car/member_car/editMemberCar',
-    'getServiceDateList'        : 'service/service_date/getServiceDateList'
+    'getServiceDateList'        : 'service/service_date/getServiceDateList',
+
+    'getMemberDashboard'        : 'member/member/getMemberDashboard',
+    'getServiceProductInfo'     : 'service_product/service_product/getServiceProductInfo'
 };
 
 export {apiBase};

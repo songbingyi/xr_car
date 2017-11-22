@@ -1,0 +1,15 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_product_info": {
+            "service_product_id":"1",
+            "service_product_name":"服务名称",
+            "service_product_entity_id":"1",
+            "price":500
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "payment_code_list": {
+            "payment_code_id":"1",
+            "payment_code_name":"微信支付",
+            "payment_code_description":"微信支付"
+        }
+    }
+}

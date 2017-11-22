@@ -70,7 +70,7 @@ export class DetailComponent implements OnInit {
     }*/
 
     loadProduct(id) {
-        this.baseProvider.get('getCarProductDetail'/*, {'product_id': id}*/).subscribe(product => {
+        this.baseProvider.post('getCarProductDetail', {'product_id': id}).subscribe(product => {
                 if (product.status.succeed) {
                     this.product = product.data.car_product_info;
                     this.getImagesList(this.product.product_image_list);

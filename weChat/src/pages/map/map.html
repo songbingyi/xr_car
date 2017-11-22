@@ -4,13 +4,13 @@
     <weui-searchbar (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 
     <div class="weui-panel" *ngIf="value">
-        <div class="weui-panel__bd" *ngIf="items | async; let items; else loading">
-            <div class="weui-cell weui-cell_access" *ngFor="let item of items">
+        <div class="weui-panel__bd" *ngIf="searchMarkers.length; let items; else loading">
+            <div class="weui-cell weui-cell_access" *ngFor="let item of searchMarkers">
                 <div class="weui-cell__bd weui-cell_primary" (click)="onclickItem(item);">
-                    <p>{{item}}</p>
+                    <p>{{item.site_name}}</p>
                 </div>
             </div>
-            <div class="weui-media-box weui-media-box_text" *ngIf="items?.length === 0">暂无数据</div>
+            <div class="weui-media-box weui-media-box_text" *ngIf="searchMarkers?.length === 0">暂无数据</div>
         </div>
         <ng-template #loading>
             <div class="weui-panel__bd">
@@ -56,9 +56,36 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.telephone}}{{currentMarker.mobile}}</p>
+                    <p>{{currentMarker.telephone}}{{currentMarker.telephone?'、':''}}{{currentMarker.mobile}}</p>
                 </div>
-                <div class="weui-cell__ft"><a href="{{'tel:' + currentMarker.mobile}}"><img src="/assets/images/icon/phone.png" /></a></div>
+                <div class="weui-cell__ft" *ngIf="currentMarker.mobile&&currentMarker.telephone"><a (click)="showPhoneList()"><img src="/assets/images/icon/phone.png" /></a></div>
+                <div class="weui-cell__ft" *ngIf="(!currentMarker.mobile&&currentMarker.telephone) || (currentMarker.mobile&&!currentMarker.telephone)"><a href="{{'tel:' + (currentMarker.mobile || currentMarker.telephone)}}"><img src="/assets/images/icon/phone.png" /></a></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="show-phone-list" [hidden]="!isShowPhoneList">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd">
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <p><a href="{{'tel:' + currentMarker?.telephone}}">{{currentMarker?.telephone}}</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-cells no-border">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <p><a href="{{'tel:' + currentMarker?.mobile}}">{{currentMarker?.mobile}}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="hiddenPhoneList()">取消</a>
             </div>
         </div>
     </div>

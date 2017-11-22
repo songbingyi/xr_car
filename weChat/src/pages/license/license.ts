@@ -35,6 +35,8 @@ export class LicenseComponent implements OnInit {
     licenses: Array<any>;
     price : Number = 0;
 
+    memberDetail: any;
+
     result : any = {
         city: {
             valid: true
@@ -67,6 +69,7 @@ export class LicenseComponent implements OnInit {
     constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXSDKService, private zone: NgZone) {
         this.wx = this.wxService.init();
         this.getInitData();
+        this.getCarAndMemberInfo();
     }
 
     ngOnInit() {
@@ -82,7 +85,7 @@ export class LicenseComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('getOpenRegionList')
+        this.baseService.post('getOpenRegionList', {})
             .subscribe(cities => {
                 if (cities.status.succeed) {
                     this.cities = this.groupRegionByPrefix(cities.data.region_list);
@@ -90,7 +93,7 @@ export class LicenseComponent implements OnInit {
                     this.errorMessage = cities.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
-        this.baseService.get('getDrivingLicenseTypeList')
+        this.baseService.post('getDrivingLicenseTypeList', {})
             .subscribe(licenses => {
                 if (licenses.status.succeed) {
                     this.licenses = licenses.data.driving_license_type_list;
@@ -101,12 +104,55 @@ export class LicenseComponent implements OnInit {
     }
 
     getPriceData() {
-        this.baseService.get('getPrice')
+        this.baseService.post('getServiceProductInfo', {
+            'member_id': '1',
+            'submit_service_product_info' : {
+                'service_type_info' : {
+                    'service_type_id' : '1',
+                    'service_type_key' : 'a'
+                },
+                'region_info' : {
+                    'region_id' : this.result.city.region_id,
+                    'region_name' : this.result.city.region_name
+                },
+                'driving_license_type_info' : {
+                    'driving_license_type_id' : this.result.licenseType.driving_license_type_id,
+                    'driving_license_type_name' : this.result.licenseType.driving_license_type_name
+                },
+                'member_car_info' : {
+                    'car_id' : '1',
+                    'province_code_info' : 'A87653',
+                    'plate_no' : 'Vin23243423424'
+                },
+                'site_info' : {
+                    'site_id' : '1',
+                    'site_name' : '西安鑫盛监测站'
+                },
+                'service_date' : {
+                    'service_date_id' : '1',
+                    'service_date' : '2017/10/22'
+                },
+            }
+        })
             .subscribe(price => {
                 if (price.status.succeed) {
-                    this.price = price.data.price;
+                    this.price = price.data.service_product_info.price;
                 } else {
                     this.errorMessage = price.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    getCarAndMemberInfo() {
+        this.baseService.post('getMemberDetail', {
+            'member_id' : '1'
+        })
+            .subscribe(memberDetail => {
+                if (memberDetail.status.succeed) {
+                    this.memberDetail = memberDetail.data;
+                    this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
+                } else {
+                    this.errorMessage = memberDetail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -124,7 +170,7 @@ export class LicenseComponent implements OnInit {
 
     onTabSelect(event) {
         // console.log(event);
-        if (event === false) {
+        if (this.shouldReservationBox === false) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
         }
@@ -132,7 +178,12 @@ export class LicenseComponent implements OnInit {
     }
 
     goToUser() {
-        this.router.navigate(['/userInfo']);
+        if (this.memberDetail.member_auth_info.identity_auth_status) {
+            this.router.navigate(['/userInfo']);
+        }
+        if (this.memberDetail.member_auth_info.car_auth_status) {
+            this.router.navigate(['/carInfo']);
+        }
     }
 
     goNext() {

@@ -25,6 +25,8 @@ let mockBase : IDictionary<string> = {
     'addMemberCar'              : '20.addMemberCar.mock.json',
     'editMemberCar'             : '21.editMemberCar.mock.json',
     'getServiceDateList'        : '22.getServiceDateList.mock.json',
+    'getMemberDashboard'        : '24.getMemberDashboard.mock.json',
+    'getServiceProductInfo'     : '25.getServiceProductInfo.mock.json',
     'getPrice'                  : 'getPrice.mock.json'
 };
 

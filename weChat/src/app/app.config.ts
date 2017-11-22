@@ -7,7 +7,8 @@ let config = {
     salt_key : 'xr_car_client_519fee838e0b5dec',
     appid    : 'wx43ae5b56a4d2cfc3',
     url      : 'http://localhost:4200/',
-    prefix   : './assets/mock/',
+    // prefix   : './assets/mock/',
+    prefix   : 'http://localhost:3100/api/mock/',
     production : production
 };
 

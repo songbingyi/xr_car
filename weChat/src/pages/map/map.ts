@@ -5,15 +5,15 @@ import { AqmComponent } from 'angular-qq-maps';
 
 import { RatingComponent, RatingConfig } from 'ngx-weui/rating';
 
-import { TaobaoService } from "./tb.service";
+import { TaobaoService } from './tb.service';
 import { Observable } from 'rxjs/Rx';
 
 import {MarkersProvider} from '../../providers/http/marker.http';
 
-import {MarkerModel} from "../../models/marker.model";
+import {MarkerModel} from '../../models/marker.model';
 
 import { WXSDKService } from '../../providers/wx.sdk.service';
-import {BaseProvider} from "../../providers/http/base.http";
+import {BaseProvider} from '../../providers/http/base.http';
 
 declare const qq: any;
 
@@ -32,8 +32,11 @@ export class MapComponent implements OnInit {
     items: Observable<string[]>;
     value: string;
 
+    searchMarkers: any = [];
     markers : any = [];
     currentMarker: any;
+
+    isShowPhoneList: boolean = false;
 
     errorMessage : any;
 
@@ -117,17 +120,42 @@ export class MapComponent implements OnInit {
         this.normalSize = new qq.maps.Size(40, 46);
         this.biggerSize = new qq.maps.Size(65, 72);
 
-        this.loadMakers();
+        this.loadMakers({
+            latitude : latitude,
+            longitude : longitude
+        });
     }
 
     ngOnInit() {
         this.bindEvent();
     }
 
-    loadMakers() {
-        this.baseProvider.get('getSiteList')
+    loadMakers(options, type?) {
+        return this.baseProvider.post('getSiteList', {"filter_info" : {
+            "site_name" : options.name || '',
+            "region_id" : "",
+            "site_category_id" : "",
+            "longitude_num" : options.latitude || this.latitude || 34.341568,
+            "latitude_num" : options.longitude || this.longitude || 108.94075
+        }})
             .subscribe(markers => {
                 if (markers.status.succeed) {
+                    if(type){
+                        this.searchMarkers = markers.data.site_list;
+                        this.searchMarkers.forEach(marker=>{
+                            // 服务站
+                            if (marker.site_category_info.site_category_id === "1") {
+                                marker.icon = '/assets/images/marker/service.s.png';
+                                marker.type = 'service';
+                            }
+                            // 监测站
+                            if (marker.site_category_info.site_category_id === "2") {
+                                marker.icon = '/assets/images/marker/review.s.png';
+                                marker.type = 'review';
+                            }
+                            this.setMarker(marker);
+                        });
+                    }
                     this.markers = markers.data.site_list;
                     this.markers.forEach(marker=>{
                         // 服务站
@@ -141,7 +169,7 @@ export class MapComponent implements OnInit {
                             marker.type = 'review';
                         }
                         this.setMarker(marker);
-                    })
+                    });
                 } else {
                     this.errorMessage = markers.status.error_desc;
                 }
@@ -182,6 +210,16 @@ export class MapComponent implements OnInit {
         this.currentMapMarker = mapMarker;
     }
 
+    getSideById(id) {
+        let marker: any = {};
+        this.markers.forEach( m=>{
+            if (m.site_id === id) {
+                marker = m;
+            }
+        });
+        return marker;
+    }
+
     showInfoWindow(marker){
         this.currentMarker = marker;
         this.rate = marker.rank_score;
@@ -203,8 +241,18 @@ export class MapComponent implements OnInit {
     onSearch(term: string) {
         this.value = term;
         if (term) {
-            this.items = this.tbService.search(term);
+            this.loadMakers({
+                name : term
+            }, 'search');
         }
+    }
+
+    showPhoneList() {
+        this.isShowPhoneList = true;
+    }
+
+    hiddenPhoneList() {
+        this.isShowPhoneList = false;
     }
 
     onCancel() {
@@ -220,6 +268,15 @@ export class MapComponent implements OnInit {
     }
 
     onclickItem(item) {
+        let marker = this.getSideById(item.site_id);
+        this.setMarker(item);
+        this.panTo({
+            lat: marker.latitude_num,
+            lng: marker.longitude_num
+        });
+        this.restoreMakerSize(marker);
+        this.searchMarkers = [];
+        this.value = '';
         console.log(item);
     }
 

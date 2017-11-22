@@ -1,0 +1,31 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "member_info": {
+            "member_id"  : "",
+            "member_name": "",
+            "icon_image" : {
+                "thumb" : "",
+                "source": ""
+            },
+            "real_name"  : "",
+            "id_number"  : "",
+            "mobile"     : ""
+        },
+        "message_dashboard_info": {
+            "new_message_count": 10
+        },
+        "service_order_dashboard_info": {
+            "order_total_count": 5,
+            "order_obligation_count"   : 2,
+            "order_pending_count"   : 0,
+            "order_process_count"   : 2,
+            "order_finish_count"   : 2
+        }
+
+    }
+}

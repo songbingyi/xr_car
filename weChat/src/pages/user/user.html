@@ -1,9 +1,12 @@
 <div class="user-page">
     <div class="user-header">
         <div class="user-bg">
-            <img class="avatar" src="/assets/images/user/avatar.default.png" />
+            <img class="avatar" src="" [src]="member.member_info?.icon_image?.thumb || '/assets/images/user/avatar.default.png'"/>
             <span class="username">陕汽控股</span>
-            <a class="notification" [routerLink]="['/notify']"><img class="belle" src="/assets/images/icon/belle.png" /></a>
+            <a class="notification" [routerLink]="['/notify']">
+                <img class="belle" src="/assets/images/icon/belle.png" />
+                <span class="weui-badge" *ngIf="member.message_dashboard_info.new_message_count">{{member.message_dashboard_info.new_message_count}}</span>
+            </a>
         </div>
         <div class="information">
             <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" [routerLink]="['/carInfo']">车辆信息</a>
@@ -18,30 +21,38 @@
                     <p>全部订单</p>
                 </div>
                 <div class="weui-cell__ft">
-                    <span class="weui-badge">88</span>
+                    <span class="weui-badge" *ngIf="member.service_order_dashboard_info.order_total_count">{{member.service_order_dashboard_info.order_total_count}}</span>
                 </div>
             </a>
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 1]">
                 <div class="weui-cell__bd">
                     <p>待付款</p>
                 </div>
-                <div class="weui-cell__ft"></div>
+                <div class="weui-cell__ft">
+                    <span class="weui-badge" *ngIf="member.service_order_dashboard_info.order_obligation_count">{{member.service_order_dashboard_info.order_obligation_count}}</span>
+                </div>
             </a>
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 2]">
                 <div class="weui-cell__bd">
                     <p>待处理</p>
                 </div>
-                <div class="weui-cell__ft"></div>
+                <div class="weui-cell__ft">
+                    <span class="weui-badge" *ngIf="member.service_order_dashboard_info.order_pending_count">{{member.service_order_dashboard_info.order_pending_count}}</span>
+                </div>
             </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 3]">
                 <div class="weui-cell__bd">
                     <p>处理中</p>
                 </div>
-                <div class="weui-cell__ft"></div>
+                <div class="weui-cell__ft">
+                    <span class="weui-badge" *ngIf="member.service_order_dashboard_info.order_process_count">{{member.service_order_dashboard_info.order_process_count}}</span>
+                </div>
             </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 4]">
                 <div class="weui-cell__bd">
                     <p>已完成</p>
                 </div>
-                <div class="weui-cell__ft"></div>
+                <div class="weui-cell__ft">
+                    <span class="weui-badge" *ngIf="member.service_order_dashboard_info.order_finish_count">{{member.service_order_dashboard_info.order_finish_count}}</span>
+                </div>
             </a>
         </div>
     </div>

@@ -18,7 +18,10 @@ import {Observable} from 'rxjs/Rx';
     providers   : [BaseProvider]
 })
 export class HomeComponent implements OnInit {
-
+    pagination= {
+        page : 1,
+        count: 10
+    };
     products : any = [];
     errorMessage : any;
     isLoading : Boolean = false;
@@ -34,8 +37,10 @@ export class HomeComponent implements OnInit {
 
     status : string;
 
+
+
     ngOnInit() {
-        this.baseService.get('getServiceTypeList')
+        this.baseService.post('getServiceTypeList', {})
             .subscribe(serviceTypes => {
                 if (serviceTypes.status.succeed) {
                     this.serviceTypes = serviceTypes.data.service_type_list;
@@ -47,7 +52,7 @@ export class HomeComponent implements OnInit {
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
-        this.baseService.get('getCarProductList').subscribe(products => {
+        this.baseService.post('getCarProductList', this.pagination).subscribe(products => {
                 if (products.status.succeed) {
                     this.products = this.products.concat(products.data.car_product_list);
 
@@ -74,6 +79,7 @@ export class HomeComponent implements OnInit {
             return;
         }
         this.isLoading = true;
+        this.pagination.page ++ ;
         this.loadProducts(() => {
             comp.setFinished();
         }, () => {

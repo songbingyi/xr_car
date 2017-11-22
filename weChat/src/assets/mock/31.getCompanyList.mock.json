@@ -1,0 +1,38 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "company_list": [
+            {
+                "company_id":"1",
+                "company_name":"公司名称1",
+                "region_info":{
+                    "region_id" : "1",
+                    "region_name" : "陕西咸阳"
+                },
+                "address":"陕西咸阳",
+                "telephone":"18768767686",
+                "fax":""
+            },
+            {
+                "company_id":"2",
+                "company_name":"公司名称2",
+                "region_info":{
+                    "region_id" : "2",
+                    "region_name" : "陕西西安"
+                },
+                "address":"陕西咸阳",
+                "telephone":"18768767686",
+                "fax":""
+            }
+        ],
+        "paginated" : {
+            "total" : 30,
+            "count" : 10,
+            "more" : 1
+        }
+    }
+}

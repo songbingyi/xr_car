@@ -1,0 +1,13 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "company_info": {
+            "company_id":"1",
+            "company_name":"公司名称1"
+        }
+    }
+}
