@@ -4,9 +4,8 @@
             注：姓名要与行驶证车主一致，否则无法绑定车辆；姓名和身份证号填写后不可修改！
         </p>
     </div>
-    <a (click)="hasPhone=!hasPhone">是否有手机</a>
     <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMsg}">
-        <div class="weui-cells weui-cells_form" [hidden]="hasPhone">
+        <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
                 <div class="weui-cell__bd">
@@ -21,8 +20,8 @@
             </div>
         </div>
 
-        <div class="weui-cells__title-empty" [hidden]="hasPhone"></div>
-        <div class="weui-cells weui-cells_form" [hidden]="hasPhone">
+        <div class="weui-cells__title-empty" [hidden]="identityAuthStatus"></div>
+        <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
             <div class="weui-cell weui-cell_vcode">
                 <div class="weui-cell__hd">
                     <label class="weui-label">手机</label>
@@ -31,7 +30,8 @@
                     <input class="weui-input" type="number" [formControl]="phone" placeholder="{{phone.invalid && (phone.dirty || errorMsg) ? '请填写手机号！' : '请输入手机号码'}}" appFocusBlur />
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="javascript:;" class="weui-vcode-btn">获取验证码</a>
+                    <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
+                    <a href="javascript:;" class="weui-vcode-btn disabled" [hidden]="!timing">{{timeOut}}秒后重新获取</a>
                 </div>
             </div>
             <div class="weui-cell">
@@ -43,33 +43,33 @@
         </div>
     </form>
 
-    <div class="has-phone weui-cell-special" [hidden]="!hasPhone">
-        <div class="weui-cells__title-empty"></div>
+    <div class="has-phone weui-cell-special" [hidden]="!identityAuthStatus || isModifying">
+        <!--<div class="weui-cells__title-empty"></div>-->
         <div class="weui-cells">
             <div class="weui-cell special-cell">
                 <div class="weui-cell__bd">
                     <p>姓名</p>
                 </div>
-                <div class="weui-cell__ft"><span>张三</span></div>
+                <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>身份账号</p>
                 </div>
-                <div class="weui-cell__ft">610234765428364323</div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>手机号码</p>
                 </div>
-                <div class="weui-cell__ft">18627836756</div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
             </div>
         </div>
     </div>
 
-    <div class="modify-phone">
+    <div class="modify-phone" [hidden]="!isModifying">
         <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':errorMsg}">
-            <div class="weui-cells__title-empty"></div>
+            <!--<div class="weui-cells__title-empty"></div>-->
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_vcode">
                     <div class="weui-cell__hd">
@@ -79,7 +79,8 @@
                         <input class="weui-input" type="number" [formControl]="updatePhone" placeholder="{{updatePhone.invalid && (updatePhone.dirty || errorMsg) ? '请填写手机号！' : '请输入手机号码'}}">
                     </div>
                     <div class="weui-cell__ft">
-                        <a href="javascript:;" class="weui-vcode-btn">获取验证码</a>
+                        <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
+                        <a href="javascript:;" class="weui-vcode-btn disabled" [hidden]="!timing">{{timeOut}}秒后重新获取</a>
                     </div>
                 </div>
                 <div class="weui-cell">
@@ -92,10 +93,11 @@
         </form>
     </div>
 
-    <div class="error-bar" [hidden]="!errorMsg">
-        <span>{{errorMsg}}</span>
+    <div class="error-bar" [hidden]="!errorMessage">
+        <span>{{errorMessage}}</span>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty}" [hidden]="hasPhone" (click)="save()">确定</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty}" [hidden]="!hasPhone" (click)="update()">修改手机号</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty}" [hidden]="identityAuthStatus" (click)="save()">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改手机号</a>
 </div>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormGroup, FormControl, FormBuilder} from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import {CustomValidators} from '../../../providers/custom.validators';
 
@@ -97,15 +98,16 @@ export class CarInfoComponent implements OnInit {
         }
     };
 
-    constructor(private builder : FormBuilder, private customValidators : CustomValidators, private baseService : BaseProvider) {
+    constructor(private route : ActivatedRoute, private router: Router, private builder : FormBuilder, private customValidators : CustomValidators, private baseService : BaseProvider) {
         this.getInitData();
+        this.getCarDetail();
     }
 
     ngOnInit() {
     }
 
     getInitData() {
-        this.baseService.get('getProvinceCodeList')
+        this.baseService.post('getProvinceCodeList', {})
             .subscribe(provinces => {
                 if (provinces.status.succeed) {
                     this.provinces = provinces.data.province_code_list;
@@ -118,7 +120,7 @@ export class CarInfoComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('getCarPropertyList')
+        this.baseService.post('getCarPropertyList', {})
             .subscribe(carProperties => {
                 if (carProperties.status.succeed) {
                     this.carProperties = carProperties.data.car_property_list;
@@ -127,7 +129,7 @@ export class CarInfoComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('getCarTypeList')
+        this.baseService.post('getCarTypeList', {})
             .subscribe(carTypes => {
                 if (carTypes.status.succeed) {
                     this.carTypes = carTypes.data.car_type_list;
@@ -140,6 +142,24 @@ export class CarInfoComponent implements OnInit {
     validators(result) {
         this.errorMessage = '';
         return this.customValidators.isValid(result || this.result);
+    }
+
+    getCarDetail() {
+        this.route.data
+            .subscribe((data) => {
+            console.log(data);
+                if (data.car_id) {
+                    this.setCarDetail(data);
+                }
+            });
+        let item = this.route.snapshot.paramMap.get('item');
+        /*if (item) {
+            this.setCarDetail(item);
+        }*/
+    }
+
+    setCarDetail(item) {
+        console.log(item);
     }
 
     groupProvince() {

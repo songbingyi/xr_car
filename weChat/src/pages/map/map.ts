@@ -35,6 +35,10 @@ export class MapComponent implements OnInit {
     searchMarkers: any = [];
     markers : any = [];
     currentMarker: any;
+    mapMarkers:any = [];
+
+    serviceNumber : number = 0;
+    reviewNumber : number = 0;
 
     isShowPhoneList: boolean = false;
 
@@ -63,7 +67,7 @@ export class MapComponent implements OnInit {
 
     wxs: any;
 
-    constructor(private el: ElementRef, private zone: NgZone, private tbService: TaobaoService, private baseProvider: BaseProvider, private wxService: WXSDKService) {
+    constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
         this.wxs = this.wxService.init();
         this.wxs.then(res=>{
             this.getLocation();
@@ -139,6 +143,8 @@ export class MapComponent implements OnInit {
             "latitude_num" : options.longitude || this.longitude || 108.94075
         }})
             .subscribe(markers => {
+                    this.serviceNumber = 0;
+                    this.reviewNumber = 0;
                 if (markers.status.succeed) {
                     if(type){
                         this.searchMarkers = markers.data.site_list;
@@ -153,7 +159,7 @@ export class MapComponent implements OnInit {
                                 marker.icon = '/assets/images/marker/review.s.png';
                                 marker.type = 'review';
                             }
-                            this.setMarker(marker);
+                            // this.setMarker(marker);
                         });
                     }
                     this.markers = markers.data.site_list;
@@ -162,11 +168,13 @@ export class MapComponent implements OnInit {
                         if (marker.site_category_info.site_category_id === "1") {
                             marker.icon = '/assets/images/marker/service.s.png';
                             marker.type = 'service';
+                            this.serviceNumber ++ ;
                         }
                         // 监测站
                         if (marker.site_category_info.site_category_id === "2") {
                             marker.icon = '/assets/images/marker/review.s.png';
                             marker.type = 'review';
+                            this.reviewNumber ++ ;
                         }
                         this.setMarker(marker);
                     });
@@ -185,18 +193,28 @@ export class MapComponent implements OnInit {
             map: this.map
         });
         aMarker.origin = marker;
+        this.mapMarkers.push(aMarker);
         this.bindClickToMaker(aMarker);
     }
 
 
     bindClickToMaker(marker: any) {
         qq.maps.event.addListener(marker, 'click', (event)=>{
-            let icon = marker.origin.icon.replace('.s.png', '.l.png');
             this.restoreMakerSize(marker);
-            marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
+            this.showMarker(marker);
+            /*marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
             this.zone.run(() => {
                 this.showInfoWindow(marker.origin);
-            });
+            });*/
+        });
+    }
+
+    showMarker(marker) {
+        let icon = marker.origin.icon.replace('.s.png', '.l.png');
+        marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
+        marker.setZIndex(9);
+        this.zone.run(() => {
+            this.showInfoWindow(marker.origin);
         });
     }
 
@@ -206,14 +224,15 @@ export class MapComponent implements OnInit {
         if (currentMapMarker) {
             icon = currentMapMarker.origin.icon;
             currentMapMarker.setIcon(new qq.maps.MarkerImage(icon, this.normalSize), '', '', this.normalSize, '');
+            currentMapMarker.setZIndex(0);
         }
         this.currentMapMarker = mapMarker;
     }
 
-    getSideById(id) {
+    getSiteMarkerById(id) {
         let marker: any = {};
-        this.markers.forEach( m=>{
-            if (m.site_id === id) {
+        this.mapMarkers.forEach( m=>{
+            if (m.origin.site_id === id) {
                 marker = m;
             }
         });
@@ -268,16 +287,15 @@ export class MapComponent implements OnInit {
     }
 
     onclickItem(item) {
-        let marker = this.getSideById(item.site_id);
-        this.setMarker(item);
+        let marker = this.getSiteMarkerById(item.site_id);
         this.panTo({
-            lat: marker.latitude_num,
-            lng: marker.longitude_num
+            lat: marker.origin.latitude_num,
+            lng: marker.origin.longitude_num
         });
         this.restoreMakerSize(marker);
+        this.showMarker(marker);
         this.searchMarkers = [];
         this.value = '';
-        console.log(item);
     }
 
     ngOnDestroy(): void {

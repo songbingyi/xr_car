@@ -1,7 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, NgZone} from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
+import { LocalStorage } from '../../../providers/localStorage';
+import { Md5 } from '../../../providers/md5/md5';
+
 import { CustomValidators } from '../../../providers/custom.validators';
+import { BaseProvider } from '../../../providers/http/base.http';
+
 
 @Component({
     selector    : 'app-user-info',
@@ -10,7 +15,15 @@ import { CustomValidators } from '../../../providers/custom.validators';
 })
 export class UserInfoComponent implements OnInit {
     hasPhone : Boolean = false;
-    errorMsg: String;
+    isModifying: Boolean = false;
+    verifyCode: any;
+
+    timeOut = 60;
+    timing: Boolean = false;
+
+    errorMessage: any;
+    memberDetail: any;
+    identityAuthStatus: Boolean = true;
 
     username = new FormControl('', [
         Validators.required,
@@ -41,7 +54,6 @@ export class UserInfoComponent implements OnInit {
         this.customValidators.eq(6)
     ]);
 
-
     userInfoForm: FormGroup = this.builder.group({
         username: this.username,
         userId: this.userId,
@@ -54,24 +66,122 @@ export class UserInfoComponent implements OnInit {
         vcode : this.updateVcode
     });
 
-    constructor(private builder: FormBuilder, private customValidators: CustomValidators) { }
+    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone) {
+        this.getCarAndMemberInfo();
+    }
+
+    getCarAndMemberInfo() {
+        this.baseService.post('getMemberDetail', {
+            'member_id' : '1'
+        })
+            .subscribe(memberDetail => {
+                if (memberDetail.status.succeed) {
+                    this.memberDetail = memberDetail.data;
+                    this.identityAuthStatus = !!this.memberDetail.member_auth_info.identity_auth_status;
+                } else {
+                    this.errorMessage = memberDetail.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
 
     save() {
         if (this.userInfoForm.invalid) {
-            this.errorMsg = '请修改红色错误信息后再提交';
-        }else{
-            this.errorMsg = '';
+            this.errorMessage = '请修改红色错误信息后再提交';
+            return ;
+        } else {
+            this.errorMessage = '';
         }
         console.log(this.userInfoForm.value);
+        this.baseService.post('editMemberInfo', {
+            'member_id' : '1',
+            'mobile' : this.userInfoForm.value.phone,
+            'real_name'  : this.userInfoForm.value.username,
+            'id_number'  : this.userInfoForm.value.userId,
+            'verify_code' : this.userInfoForm.value.vcode
+        })
+            .subscribe(verifyCode => {
+                if (verifyCode.status.succeed) {
+                    this.verifyCode = verifyCode.data;
+                    this.timeOut = 60;
+                    this.timing = true;
+                    this.timeLeft();
+                } else {
+                    this.errorMessage = verifyCode.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
     }
 
     update() {
         if (this.updateForm.invalid) {
-            this.errorMsg = '请修改红色错误信息后再提交';
-        }else{
-            this.errorMsg = '';
+            this.errorMessage = '请修改红色错误信息后再提交';
+            return ;
+        } else {
+            this.errorMessage = '';
         }
         console.log(this.updateForm.value);
+        this.baseService.post('editMemberInfo', {
+            'member_id' : '1',
+            'mobile' : this.updateForm.value.phone,
+            'verify_code' : this.updateForm.value.vcode
+        })
+            .subscribe(verifyCode => {
+                if (verifyCode.status.succeed) {
+                    this.verifyCode = verifyCode.data;
+                    this.timeOut = 60;
+                    this.timing = true;
+                    this.timeLeft();
+                } else {
+                    this.errorMessage = verifyCode.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    getVCode() {
+        let phone = this.userInfoForm.value.phone;
+
+        if (this.isModifying) {
+            phone = this.updateForm.value.phone;
+        }
+
+        if (!phone) {
+            this.errorMessage = '手机号码为必填项！';
+            return ;
+        } else {
+            this.errorMessage = '';
+        }
+        this.baseService.post('getVerifyCode', {
+            'mobile' : phone,
+            'code' : Md5.hashStr(this.localStorage.get('s') + phone)
+        })
+            .subscribe(verifyCode => {
+                if (verifyCode.status.succeed) {
+                    this.verifyCode = verifyCode.data;
+                    this.timeOut = 60;
+                    this.timing = true;
+                    this.timeLeft();
+                } else {
+                    this.errorMessage = verifyCode.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    timeLeft() {
+        /*this.zone.run(() => {
+            if (this.timeOut > 0) {
+                this.timeOut --;
+                this.timing = true;
+                setTimeout(() => { this.timeLeft(); }, 1000);
+            } else {
+                this.timing = false;
+            }
+        });*/
+        if (this.timeOut > 0) {
+            this.timeOut --;
+            this.timing = true;
+            setTimeout(() => { this.timeLeft(); }, 1000);
+        } else {
+            this.timing = false;
+        }
     }
 
     ngOnInit() {

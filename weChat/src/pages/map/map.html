@@ -25,8 +25,11 @@
         </a>-->
     </div>
 
-    <div class="information-bar" *ngIf="!currentMarker"><!-- no-data -->
-        <img src="/assets/images/icon/triangle.png" /> <span>方圆20公里共找到78个服务站，29个检测站</span>
+    <div class="information-bar" *ngIf="!currentMarker && markers.length>0">
+        <img src="/assets/images/icon/triangle.png" /> <span>方圆20公里共找到{{serviceNumber?(serviceNumber+'个服务站，'):''}}{{reviewNumber?(reviewNumber+'个检测站'):''}}</span>
+    </div>
+    <div class="information-bar no-data" *ngIf="markers.length===0">
+        <img src="/assets/images/icon/triangle.png" /> <span>暂无数据</span>
     </div>
 
     <div class="info-window weui-cell-special" *ngIf="currentMarker" [ngClass]="{'review':currentMarker.type==='review'}">

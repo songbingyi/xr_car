@@ -18,3 +18,14 @@
         padding-right:0;
     }
 }
+
+.modify-mobile {
+    margin-top:75px;
+}
+
+.weui-vcode-btn[hidden] {
+    display: none;
+}
+.weui-vcode-btn.disabled{
+    color:#bcc2c5;
+}

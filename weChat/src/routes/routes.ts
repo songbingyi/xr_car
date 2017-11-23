@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     {path : 'about', component : AboutComponent},
     {path : 'contact', component : ContactComponent},
     {path : 'userInfo', component : UserInfoComponent},
-    {path : 'carInfo', component : CarInfoComponent},
+    {path : 'carInfo', component : CarInfoComponent, data: {}},
     {path : 'carList', component : CarListComponent},
     {path : 'notify', component : NotifyComponent},
     {path : 'notifyCat/:category', component : CategoryComponent},
