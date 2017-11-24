@@ -11,6 +11,8 @@ import {apiBase} from '../api.config';
 import {mockBase} from '../mock.config';
 import {detachProjectedView} from '@angular/core/src/view/view_attach';
 
+import { AuthService } from '../auth.service';
+
 /*
  Generated class for the Events provider.
 
@@ -21,10 +23,11 @@ import {detachProjectedView} from '@angular/core/src/view/view_attach';
 export class BaseProvider {
 
     url = config.prefix;
-    access_token = 'SASMAL36SKLASKLAMSJKA980D';
+    access_token = '';
 
-    constructor(public http : Http) {
+    constructor(public http : Http, private authService: AuthService) {
         console.log('Hello Base Provider');
+        this.access_token = this.authService.getAccessToken();
     }
 
     headers : any;
@@ -57,15 +60,24 @@ export class BaseProvider {
             .catch(this.handleError);
     }
 
+    setMemberId(data) {
+        let member_id = this.authService.getMemberId();
+        if (member_id) {
+            data.member_id = member_id;
+        }
+        return data;
+    }
+
     post(name : any, data : any) {
         let url = config.prefix + '?access_token=' + this.access_token;
         let path = this.getApi(name);
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
+
         return this.http.post(url, {
             route          : path,
             token          : this.access_token,
-            jsonText       : JSON.stringify(data),
+            jsonText       : JSON.stringify(this.setMemberId(data)),
             device_type    : '',
             device_version : '',
             version_code   : '',

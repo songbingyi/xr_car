@@ -4,6 +4,8 @@ import {RouterModule, Routes} from '@angular/router';
 // import {PageNotFoundComponent} from './not-found.component';
 import {IndexComponent} from '../pages/index/index';
 
+import { AuthGuard } from '../providers/auth-guard.service';
+
 
 import {AppComponent} from '../app/app.component';
 import {HomeComponent} from '../pages/home/home';
@@ -36,31 +38,33 @@ import {PayCompleteComponent} from '../pages/pay/payComplete/payComplete';
 
 
 import { RedirectComponent } from '../pages/redirect/redirect';
+import { LoginComponent } from '../pages/login/login';
 
 const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
+    {path : 'login', component : LoginComponent},
     {path : '', component : IndexComponent},
-    {path : 'certificate', component : CertificateComponent},
-    {path : 'license', component : LicenseComponent},
-    {path : 'review', component : ReviewComponent},
+    {path : 'certificate', component : CertificateComponent, canActivate: [AuthGuard]},
+    {path : 'license', component : LicenseComponent, canActivate: [AuthGuard]},
+    {path : 'review', component : ReviewComponent, canActivate: [AuthGuard]},
     {path : 'detail/:id', component : DetailComponent},
     {path : 'maps', component : MapComponent},
-    {path : 'user', component : UserComponent},
-    {path : 'orders/:status', component : OrdersComponent},
-    {path : 'orderDetail/:id', component : OrderDetailComponent},
-    {path : 'confirmOrder/:id', component : ConfirmOrderComponent},
-    {path : 'mail', component : MailComponent},
-    {path : 'payment/:id', component : PaymentComponent},
-    {path : 'refund/:id', component : RefundComponent},
-    {path : 'payComplete/:id', component : PayCompleteComponent},
-    {path : 'about', component : AboutComponent},
-    {path : 'contact', component : ContactComponent},
-    {path : 'userInfo', component : UserInfoComponent},
-    {path : 'carInfo', component : CarInfoComponent},
-    {path : 'carList', component : CarListComponent},
-    {path : 'notify', component : NotifyComponent},
-    {path : 'notifyCat/:category', component : CategoryComponent},
-    {path : 'notifyDetail/:id', component : NotifyDetailComponent}
+    {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
+    {path : 'orders/:status', component : OrdersComponent, canActivate: [AuthGuard]},
+    {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},
+    {path : 'confirmOrder/:id', component : ConfirmOrderComponent, canActivate: [AuthGuard]},
+    {path : 'mail', component : MailComponent, canActivate: [AuthGuard]},
+    {path : 'payment/:id', component : PaymentComponent, canActivate: [AuthGuard]},
+    {path : 'refund/:id', component : RefundComponent, canActivate: [AuthGuard]},
+    {path : 'payComplete/:id', component : PayCompleteComponent, canActivate: [AuthGuard]},
+    {path : 'about', component : AboutComponent, canActivate: [AuthGuard]},
+    {path : 'contact', component : ContactComponent, canActivate: [AuthGuard]},
+    {path : 'userInfo', component : UserInfoComponent, canActivate: [AuthGuard]},
+    {path : 'carInfo', component : CarInfoComponent, canActivate: [AuthGuard]},
+    {path : 'carList', component : CarListComponent, canActivate: [AuthGuard]},
+    {path : 'notify', component : NotifyComponent, canActivate: [AuthGuard]},
+    {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},
+    {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

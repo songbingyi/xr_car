@@ -86,7 +86,7 @@ export class CertificateComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.get('getMemberCarList')
+        this.baseService.post('getMemberCarList', {})
             .subscribe(cars => {
                 if (cars.status.succeed) {
                     this.cars = cars.data.member_car_list;
@@ -95,7 +95,7 @@ export class CertificateComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('getOpenRegionList')
+        this.baseService.post('getOpenRegionList', {})
             .subscribe(cities => {
                 if (cities.status.succeed) {
                     this.cities = this.groupRegionByPrefix(cities.data.region_list);
@@ -104,7 +104,7 @@ export class CertificateComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('getSiteList')
+        this.baseService.post('getSiteList', {})
             .subscribe(stations => {
                 if (stations.status.succeed) {
                     this.rebuildStation(stations.data.site_list);
@@ -113,7 +113,7 @@ export class CertificateComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.get('getServiceDateList')
+        this.baseService.post('getServiceDateList', {})
             .subscribe(dates => {
                 if (dates.status.succeed) {
                     this.dates = dates.data.service_date_list;
@@ -124,7 +124,7 @@ export class CertificateComponent implements OnInit {
     }
 
     getPriceData() {
-        this.baseService.get('getPrice')
+        this.baseService.post('getPrice', {})
             .subscribe(price => {
                 if (price.status.succeed) {
                     this.price = price.data.price;

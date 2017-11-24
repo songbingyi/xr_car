@@ -52,9 +52,12 @@ import { LocalStorage } from '../providers/localStorage';
 import { CustomValidators } from '../providers/custom.validators';
 // import { WXService } from '../providers/wx.service';
 import { WXSDKService } from '../providers/wx.sdk.service';
+import { AuthService } from '../providers/auth.service';
+import { AuthGuard } from '../providers/auth-guard.service';
 
 import { BaseProvider } from '../providers/http/base.http';
 import { RedirectComponent } from '../pages/redirect/redirect';
+import { LoginComponent } from '../pages/login/login';
 
 @NgModule({
     declarations : [
@@ -87,7 +90,8 @@ import { RedirectComponent } from '../pages/redirect/redirect';
         NotifyComponent,
         CategoryComponent,
         NotifyDetailComponent,
-        RedirectComponent
+        RedirectComponent,
+        LoginComponent
     ],
     imports      : [
         AppRoutingModule,
@@ -103,7 +107,7 @@ import { RedirectComponent } from '../pages/redirect/redirect';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider],
+    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService],
     bootstrap    : [AppComponent]
 })
 export class AppModule {
