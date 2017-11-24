@@ -300,7 +300,9 @@ export class MapComponent implements OnInit {
 
     ngOnDestroy(): void {
         ['click'].forEach(eventName => {
-            qq.maps.event.clearListeners(this.map, eventName);
+            if (qq && qq.maps && qq.maps.event) {
+                qq.maps.event.clearListeners(this.map, eventName);
+            }
         });
     }
 }

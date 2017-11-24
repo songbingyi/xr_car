@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import {BaseProvider} from '../../../providers/http/base.http';
+import {LocalStorage} from '../../../providers/localStorage';
 
 @Component({
     selector    : 'app-carlist',
@@ -15,7 +16,7 @@ export class CarListComponent implements OnInit {
     carList : any = [];
     carListIndex : string[] = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 
-    constructor(private router: Router, private baseService : BaseProvider) {
+    constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage) {
         this.getInitData();
     }
 
@@ -29,6 +30,11 @@ export class CarListComponent implements OnInit {
             .subscribe(carList => {
                 if (carList.status.succeed) {
                     this.carList = carList.data.member_car_list;
+                    this.carList.forEach(car => {
+                        let plateNo = car.plate_no;
+                        let prefix = plateNo.slice(0, 1);
+                        car.plate_no_formatted = plateNo.replace(prefix, (prefix + '·'));
+                    });
                 } else {
                     this.errorMessage = carList.status.error_desc;
                 }
@@ -37,7 +43,8 @@ export class CarListComponent implements OnInit {
 
     modify(item) {
         // this.operation(2, item);
-        this.router.navigate(['/carInfo', item]);
+        this.localStorage.setObject('carInfo', item);
+        this.router.navigate(['/carInfo']);
     }
 
     delete(item) {

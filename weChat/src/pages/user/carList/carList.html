@@ -6,7 +6,7 @@
                 <div class="weui-cell__bd">
                     <p>车牌号</p>
                 </div>
-                <div class="weui-cell__ft"><span>{{item.province_code_info.province_code_name}}{{item.plate_no}}</span></div>
+                <div class="weui-cell__ft"><span>{{item.province_code_info.province_code_name}}{{item.plate_no_formatted}}</span></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -97,6 +97,6 @@
         </div>
     </div>-->
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">添加车辆</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [hidden]="carList.length===3">添加车辆</a>
 
 </div>
