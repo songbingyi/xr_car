@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotifyComponent implements OnInit {
 
+    isLoaded: boolean;
+    notices : any[];
+
   constructor() { }
 
   ngOnInit() {

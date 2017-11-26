@@ -6,8 +6,8 @@
     },
     "data"  : {
         "image_info": {
-            "thumb": "",
-            "source": ""
+            "thumb": "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+            "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
         }
     }
 }

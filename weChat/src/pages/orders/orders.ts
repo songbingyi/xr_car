@@ -11,6 +11,13 @@ import 'rxjs/add/operator/switchMap';
 export class OrdersComponent implements OnInit {
     status : string;
     activeIndex: any;
+    isLoaded: boolean;
+    hasDone: any;
+    needProcess: any;
+    processing: any;
+    needPay: any;
+
+
     obj : any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
     constructor(private route : ActivatedRoute, private router : Router) {
     }

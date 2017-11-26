@@ -4,7 +4,7 @@
             <span>轩仁车务</span>
         </div>
         <div class="total-amount">
-            ￥520.00
+            ￥{{order?.total}}
         </div>
     </div>
     <div>
@@ -13,19 +13,19 @@
                 <div class="weui-cell__bd">
                     <p>收款方</p>
                 </div>
-                <div class="weui-cell__ft">本安衍升科技</div>
+                <div class="weui-cell__ft">衍升互联</div>
             </div>
         </div>
     </div>
 
-    <button weui-button [weui-type]="'default'" (click)="onShow('success')">成功提示</button>
-    <button weui-button [weui-type]="'default'" (click)="onShow('loading')">Loading Toast</button>
+    <!--<button weui-button [weui-type]="'default'" (click)="onShow('success')">成功提示</button>
+    <button weui-button [weui-type]="'default'" (click)="onShow('loading')">Loading Toast</button>-->
 
     <!--将对话框组件放在底部-->
     <weui-toast #success></weui-toast>
-    <weui-toast #loading [type]="'loading'"></weui-toast>
+    <weui-toast #loading [type]="'loading'" [text]="'处理中'"></weui-toast>
 
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" [routerLink]="['/payComplete', 5]">立即支付</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder()">立即支付</a>
 
 
 </div>

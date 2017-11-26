@@ -8,6 +8,7 @@ let apiBase : IDictionary<string> = {
     'getProvinceCodeList'       : 'base/province_code/getProvinceCodeList',
     'getCarPropertyList'        : 'base/car_property/getCarPropertyList',
     'getCarTypeList'            : 'base/car_type/getCarTypeList',
+    'getCarTypeListAlter'       : 'base/car_type/getCarTypeList', // 最终需要删掉
     'getDrivingLicenseTypeList' : 'base/driving_license_type/getDrivingLicenseTypeList',
     'getOpenRegionList'         : 'base/region/getOpenRegionList',
     'getSiteList'               : 'site/site/getSiteList',
@@ -24,9 +25,14 @@ let apiBase : IDictionary<string> = {
     'addMemberCar'              : 'car/member_car/addMemberCar',
     'editMemberCar'             : 'car/member_car/editMemberCar',
     'getServiceDateList'        : 'service/service_date/getServiceDateList',
-
+    'getImageTypeList'          : 'base/image_type/getImageTypeList',
     'getMemberDashboard'        : 'member/member/getMemberDashboard',
-    'getServiceProductInfo'     : 'service_product/service_product/getServiceProductInfo'
+    'getServiceProductInfo'     : 'service_product/service_product/getServiceProductInfo',
+    'getPaymentCodeList'        : 'base/payment_code/getPaymentCodeList',
+    'addServiceOrder'           : 'service_order/service_order/addServiceOrder',
+    'getServiceOrderDetail'     : 'service_order/service_order/getServiceOrderDetail',
+    'getCompanyList'            : 'company/company/getCompanyList',
+    'addCompany'                : 'company/company/addCompany'
 };
 
 export {apiBase};

@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
             'member_id' : '1'
         })
             .subscribe(member => {
-                    if (member.status.succeed) {
+                    if (member.status.succeed === '1') {
                         this.member = member.data;
                     } else {
                         this.errorMessage = member.status.error_desc;

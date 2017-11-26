@@ -1,93 +1,100 @@
 import {Component, OnInit, ViewEncapsulation, ViewChild, NgZone} from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {Router, Route, ActivatedRoute, ParamMap} from '@angular/router';
 
 import {Location} from '@angular/common';
 
-import { Observable } from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 
-import { SkinType, InputType } from 'ngx-weui';
-import { DialogService, DialogConfig, DialogComponent } from 'ngx-weui/dialog';
-import { ToastService } from 'ngx-weui/toast';
-import { PopupComponent } from 'ngx-weui/popup';
+import {SkinType, InputType} from 'ngx-weui';
+import {DialogService, DialogConfig, DialogComponent} from 'ngx-weui/dialog';
+import {ToastService} from 'ngx-weui/toast';
+import {PopupComponent} from 'ngx-weui/popup';
 
-import { CustomValidators } from '../../providers/custom.validators';
-import { BaseProvider } from '../../providers/http/base.http';
+import {CustomValidators} from '../../providers/custom.validators';
+import {BaseProvider} from '../../providers/http/base.http';
 
-import { WXSDKService } from '../../providers/wx.sdk.service';
+import {WXSDKService} from '../../providers/wx.sdk.service';
+import {ImageTypeList} from '../../providers/imageType.service';
+import {LocalStorage} from '../../providers/localStorage';
 
 @Component({
-    selector    : 'app-license',
-    templateUrl : './license.html',
-    styleUrls   : ['./license.scss'],
+    selector      : 'app-license',
+    templateUrl   : './license.html',
+    styleUrls     : ['./license.scss'],
     encapsulation : ViewEncapsulation.None
 })
 export class LicenseComponent implements OnInit {
 
-    @ViewChild('ios') iosAS: DialogComponent;
-    @ViewChild('full') fullPopup: PopupComponent;
+    @ViewChild('ios') iosAS : DialogComponent;
+    @ViewChild('full') fullPopup : PopupComponent;
 
-    shouldReservation: Boolean = false;
-    shouldReservationBox: Boolean = true;
-    showLicenseType: Boolean = false;
+    shouldReservation : Boolean = true;
+    shouldReservationBox : Boolean = true;
+    showLicenseType : Boolean = false;
 
-    errorMessage: any;
-    cities: Array<any>;
-    licenses: Array<any>;
+    errorMessage : any;
+    cities : Array<any>;
+    licenses : Array<any>;
     price : Number = 0;
 
-    memberDetail: any;
+    memberDetail : any;
+    service_product_info : any;
 
     result : any = {
-        city: {
-            valid: true
+        city        : {
+            valid : true
         },
-        licenseType: {
-            valid: true
+        licenseType : {
+            valid : true
         }
     };
 
-    uploaded: any = {
-        a: null,
-        b: null,
-        c: null,
-        d: null
+    uploaded : any = {
+        a : null,
+        b : null,
+        c : null,
+        d : null
     };
 
-    selectedLicense: any = null;
+    selectedLicense : any = null;
+    serviceType: any;
 
-    private config: DialogConfig = <DialogConfig>{
-        title: '返回',
-        content: '离开此页面，资料将不会保存，是否离开？',
-        cancel: '是',
-        confirm: '否'
+    config : DialogConfig = <DialogConfig>{
+        title   : '返回',
+        content : '离开此页面，资料将不会保存，是否离开？',
+        cancel  : '是',
+        confirm : '否'
     };
 
-    showNext: Boolean = false;
+    showNext : Boolean = false;
 
-    wx: any;
+    wx : any;
 
-    constructor(private router: Router, private location: Location, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXSDKService, private zone: NgZone) {
+    constructor(private route : ActivatedRoute, private router : Router, private location : Location, private baseService : BaseProvider, private customValidators : CustomValidators, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private localStorage: LocalStorage) {
         this.wx = this.wxService.init();
         this.getInitData();
         this.getCarAndMemberInfo();
+        this.imageTypeService.init();
     }
 
     ngOnInit() {
+        let service_type_key = this.route.snapshot.url[0].path;
+        this.serviceType = this.localStorage.getObject(service_type_key);
     }
 
     initUploaded() {
         this.uploaded = {
-            a: null,
-            b: null,
-            c: null,
-            d: null
+            a : null,
+            b : null,
+            c : null,
+            d : null
         };
     }
 
     getInitData() {
         this.baseService.post('getOpenRegionList', {})
             .subscribe(cities => {
-                if (cities.status.succeed) {
+                if (cities.status.succeed === '1') {
                     this.cities = this.groupRegionByPrefix(cities.data.region_list);
                 } else {
                     this.errorMessage = cities.status.error_desc;
@@ -95,7 +102,7 @@ export class LicenseComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
         this.baseService.post('getDrivingLicenseTypeList', {})
             .subscribe(licenses => {
-                if (licenses.status.succeed) {
+                if (licenses.status.succeed === '1') {
                     this.licenses = licenses.data.driving_license_type_list;
                 } else {
                     this.errorMessage = licenses.status.error_desc;
@@ -105,37 +112,41 @@ export class LicenseComponent implements OnInit {
 
     getPriceData() {
         this.baseService.post('getServiceProductInfo', {
-            'member_id': '1',
             'submit_service_product_info' : {
-                'service_type_info' : {
-                    'service_type_id' : '1',
-                    'service_type_key' : 'a'
+                'service_type_info'         : {
+                    'service_type_id'  : this.serviceType.service_type_id,
+                    'service_type_key' : this.serviceType.service_type_key
                 },
-                'region_info' : {
-                    'region_id' : this.result.city.region_id,
+                'region_info'               : {
+                    'region_id'   : this.result.city.region_id,
                     'region_name' : this.result.city.region_name
                 },
                 'driving_license_type_info' : {
-                    'driving_license_type_id' : this.result.licenseType.driving_license_type_id,
+                    'driving_license_type_id'   : this.result.licenseType.driving_license_type_id,
                     'driving_license_type_name' : this.result.licenseType.driving_license_type_name
                 },
-                'member_car_info' : {
-                    'car_id' : '1',
-                    'province_code_info' : 'A87653',
-                    'plate_no' : 'Vin23243423424'
+                // 以下三个数据，在 驾照 中不存在
+                'member_car_info'           : {
+                    'car_id'             : '',
+                    'province_code_info' : {
+                        'province_code_id' : '',
+                        'province_code_name' : ''
+                    },
+                    'plate_no'           : ''
                 },
-                'site_info' : {
-                    'site_id' : '1',
-                    'site_name' : '西安鑫盛监测站'
+                'site_info'                 : {
+                    'site_id'   : '',
+                    'site_name' : ''
                 },
-                'service_date' : {
-                    'service_date_id' : '1',
-                    'service_date' : '2017/10/22'
-                },
+                'service_date'              : {
+                    'service_date_id' : '',
+                    'service_date'    : ''
+                }
             }
         })
             .subscribe(price => {
-                if (price.status.succeed) {
+                if (price.status.succeed === '1') {
+                    this.service_product_info = price.data.service_product_info;
                     this.price = price.data.service_product_info.price;
                 } else {
                     this.errorMessage = price.status.error_desc;
@@ -148,13 +159,96 @@ export class LicenseComponent implements OnInit {
             'member_id' : '1'
         })
             .subscribe(memberDetail => {
-                if (memberDetail.status.succeed) {
+                if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
+                    this.shouldReservation = !this.memberDetail.member_auth_info.member_auth_status;
+                    // this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    uploadImage(wechat_server_id, type) {
+        this.baseService.post('editWeChatImage', {
+            'wechat_server_id' : wechat_server_id,
+            'image_type'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+        })
+            .subscribe(image_info => {
+                if (image_info.status.succeed === '1') {
+                    this.uploaded[type] = image_info.data.image_info.thumb;
+                } else {
+                    this.errorMessage = image_info.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    confirmOrder() {
+        if (this.customValidators.isUploaded(this.uploaded)) {
+            this.baseService.post('addServiceOrder', {
+                'submit_service_order_info' : {
+                    'service_product_info'                    : {
+                        'service_product_id'        : this.service_product_info.service_product_id,
+                        'service_product_name'      : this.service_product_info.service_product_name,
+                        'service_product_entity_id' : this.service_product_info.service_product_entity_id,
+                        'price'                     : this.service_product_info.price
+                    },
+                    'service_order_product_image_upload_list' : this.getUploadedData(),
+                    'service_type_info'                       : {
+                        'service_type_id'  : this.serviceType.service_type_id,
+                        'service_type_key' : this.serviceType.service_type_key
+                    },
+                    'region_info'                             : {
+                        'region_id'   : this.result.city.region_id,
+                        'region_name' : this.result.city.region_name
+                    },
+                    'driving_license_type_info'               : {
+                        'driving_license_type_id'   : this.result.licenseType.driving_license_type_id,
+                        'driving_license_type_name' : this.result.licenseType.driving_license_type_name
+                    },
+                    // 以下三个数据，在 驾照 中不存在
+                    'member_car_info'                         : {
+                        'car_id'             : '',
+                        'province_code_info' : {
+                            'province_code_id'   : '',
+                            'province_code_name' : ''
+                        },
+                        'plate_no'           : ''
+                    },
+                    'site_info'                               : {
+                        'site_id'   : '',
+                        'site_name' : ''
+                    },
+                    'service_date'                            : {
+                        'service_date_id' : '',
+                        'service_date'    : ''
+                    }
+                }
+            })
+                .subscribe(orderResult => {
+                    if (orderResult.status.succeed === '1') {
+                        this.router.navigate(['/confirmOrder', orderResult.data.service_order_id]);
+                    }
+                }, error => this.errorMessage = <any>error);
+        } else {
+            this.errorMessage = '请按照要求上传图片！';
+            return false;
+        }
+    }
+
+    getUploadedData() {
+        let uploaded = this.uploaded;
+        let tmp = [];
+        let image : any = {};
+        let keys = Object.keys(uploaded);
+        let image_type_id = this.imageTypeService.getTypeByKey('car_service_type_image').image_type_id;
+        keys.forEach(key => {
+            let upload = uploaded[key];
+            image.image_type_id = image_type_id;
+            image.image_url = upload;
+            tmp.push(image);
+        });
+        return tmp;
     }
 
     validators(result) {
@@ -169,8 +263,7 @@ export class LicenseComponent implements OnInit {
     }
 
     onTabSelect(event) {
-        // console.log(event);
-        if (this.shouldReservationBox === false) {
+        if (event === false && this.shouldReservationBox) {
             this.shouldReservationBox = false;
             console.log('需要填写信息！');
         }
@@ -178,10 +271,11 @@ export class LicenseComponent implements OnInit {
     }
 
     goToUser() {
-        if (this.memberDetail.member_auth_info.identity_auth_status) {
+        if (!this.memberDetail.member_auth_info.identity_auth_status) {
             this.router.navigate(['/userInfo']);
+            return;
         }
-        if (this.memberDetail.member_auth_info.car_auth_status) {
+        if (!this.memberDetail.member_auth_info.car_auth_status) {
             this.router.navigate(['/carInfo']);
         }
     }
@@ -196,9 +290,9 @@ export class LicenseComponent implements OnInit {
         this.showNext = true;
     }
 
-    goPrev(type: SkinType = 'ios', style: 1) {
+    goPrev(type : SkinType = 'ios', style : 1) {
         if (this.customValidators.anyUploaded(this.uploaded)) {
-            (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
+            (<DialogComponent>this[`${type}AS`]).show().subscribe((res : any) => {
                 console.log('type', res);
                 if (!res.value) {
                     this.errorMessage = '';
@@ -239,10 +333,10 @@ export class LicenseComponent implements OnInit {
     choose(type) {
         this.errorMessage = '';
         this.wxService.onChooseImage({
-            count: 1, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: (res) => {
+            count      : 1, // 默认9
+            sizeType   : ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType : ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success    : (res) => {
                 let localId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                 this.upload(localId, type);
             }
@@ -251,27 +345,18 @@ export class LicenseComponent implements OnInit {
 
     upload(localId, type) {
         this.wxService.onUploadImage({
-            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
-            isShowProgressTips: 1, // 默认为1，显示进度提示
-            success: (res) => {
+            localId            : localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips : 1, // 默认为1，显示进度提示
+            success            : (res) => {
                 this.zone.run(() => {
                     let serverId = res.serverId; // 返回图片的服务器端ID
-                    this.uploaded[type] = localId;
+                    this.uploadImage(serverId, type);
                 });
             }
         });
     }
 
-    confirmOrder() {
-        if (this.customValidators.isUploaded(this.uploaded)) {
-            this.router.navigate(['/confirmOrder', 1]);
-        } else {
-            this.errorMessage = '请按照要求上传图片！';
-            return false;
-        }
-    }
-
-    groupRegionByPrefix(regions): any {
+    groupRegionByPrefix(regions) : any {
         let tmp = {};
         regions.forEach(region => {
             if (tmp[region.prefix_name]) {
@@ -284,7 +369,7 @@ export class LicenseComponent implements OnInit {
         return tmp;
     }
 
-    goToAnchor(location: string): void {
+    goToAnchor(location : string) : void {
         window.location.hash = location;
     }
 

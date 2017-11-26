@@ -6,29 +6,35 @@
     },
     "data"  : {
         "service_order_info": {
-            "service_order_id" : "1",
-            "service_order_no" : "234",
-            "service_order_date": "2017/09/21",
+            "service_order_id"          : "1",
+            "service_order_no"          : "234",
+            "service_order_date"        : "2017/09/21",
             "service_order_status_info" : {
-                "service_order_status_id" : "1",
-                "service_order_status_name" : "服务订单状态",
-                "is_pay" : 0,
-                "is_edit" : 0,
-                "is_delete" : 0,
-                "is_return" : 0
+                "service_order_status_id"  : "1",
+                "service_order_status_name": "服务订单状态",
+                "is_pay"                   : 0,
+                "is_edit"                  : 0,
+                "is_delete"                : 0,
+                "is_return"                : 0
             },
-            "service_order_comment" : "附加评论",
-            "total": "530",
+            "service_order_comment"     : "附加评论",
+            "total"                     : "530",
             "service_order_product_info": {
-                "service_product_info": {
-                    "service_product_id" : "1",
-                    "service_product_name" : "西安服务商品",
-                    "service_product_entity_id" : "1"
+                "service_product_info"            : {
+                    "service_product_id"       : "1",
+                    "service_product_name"     : "西安服务商品",
+                    "service_product_entity_id": "1"
                 },
-                "service_order_product_image_list" : {
-                    "thumb" : ""
-                    "source" : ""
-                }
+                "service_order_product_image_list": [
+                    {
+                        "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                        "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                    },
+                    {
+                        "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                        "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                    }
+                ]
             }
         }
     }

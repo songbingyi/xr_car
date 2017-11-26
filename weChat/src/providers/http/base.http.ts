@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -27,14 +27,14 @@ export class BaseProvider {
 
     constructor(public http : Http, private authService: AuthService) {
         console.log('Hello Base Provider');
-        this.access_token = this.authService.getAccessToken();
+        this.access_token = this.authService.getToken();
     }
 
     headers : any;
 
     defaultHeader : any = {
-        'X-Requested-With' : 'XMLHttpRequest',
-        'Content-Type'     : 'application/json'
+         'X-Requested-With' : 'XMLHttpRequest',
+         'Content-Type'     : 'application/x-www-form-urlencoded'
     };
 
     private getHeaders(object = this.defaultHeader) {
@@ -52,7 +52,7 @@ export class BaseProvider {
     }
 
     get(name : any) : Observable<any> {
-        let url = this.getApi(name);
+        let url = apiBase[name];
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
         return this.http.get(url, options)
@@ -68,26 +68,36 @@ export class BaseProvider {
         return data;
     }
 
-    post(name : any, data : any) {
+    setSearchParams(path, data) {
+        let urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('route', path);
+        urlSearchParams.append('token', this.access_token);
+        urlSearchParams.append('jsonText', JSON.stringify(this.setMemberId(data)));
+        urlSearchParams.append('device_type', '40');
+        urlSearchParams.append('device_version', '1.0');
+        urlSearchParams.append('version_code', '1');
+        urlSearchParams.append('channel', '');
+        return urlSearchParams;
+    }
+
+    post(name : any, data : any, isTest?) {
         let url = config.prefix + '?access_token=' + this.access_token;
-        let path = this.getApi(name);
+        let path = apiBase[name];
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
 
-        return this.http.post(url, {
-            route          : path,
-            token          : this.access_token,
-            jsonText       : JSON.stringify(this.setMemberId(data)),
-            device_type    : '',
-            device_version : '',
-            version_code   : '',
-            channel        : '',
-        }, options)
+        let urlSearchParams = this.setSearchParams(path, data);
+
+        if (isTest) {
+            url = 'http://218.244.158.175/xr_car_server/api_client/index.php' + '?access_token=' + this.access_token;
+        }
+
+        return this.http.post(url, urlSearchParams, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    getApi(name) {
+    /*getApi(name) {
         let url = '';
         if (config.production) {
             url = apiBase[name];
@@ -95,10 +105,16 @@ export class BaseProvider {
             url = mockBase[name];
         }
         return url;
-    }
+    }*/
 
     private extractData(res : Response) {
         let body = res.json();
+        // console.log(body);
+        // 整体判断是否登录信息过期。
+        if (body.status.error_code === '0002') {
+            this.authService.redirect();
+            return {};
+        }
         return body || {};
     }
 
@@ -111,7 +127,7 @@ export class BaseProvider {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
+        // console.error(errMsg);
         return Observable.throw(errMsg);
     }
 

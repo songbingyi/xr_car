@@ -3,6 +3,7 @@ import {Title} from '@angular/platform-browser';
 
 import {MessageService} from '../../providers/messageService';
 import {LocalStorage} from '../../providers/localStorage';
+import {AuthService} from '../../providers/auth.service';
 
 @Component({
     selector    : 'app-index',
@@ -36,7 +37,7 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    constructor(private message : MessageService, private localStorage : LocalStorage, private titleService : Title) {
+    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService) {
 
     }
 
@@ -44,7 +45,7 @@ export class IndexComponent implements OnInit {
         let activeTabIndex : any = this.localStorage.get('activeTabIndex');
         this.activeTabIndex = activeTabIndex ? (activeTabIndex - 0) : 0;
         this.setSelected();
-
+        this.isLoggedIn(this.activeTabIndex);
     }
 
     selected(item, index) {
@@ -56,6 +57,7 @@ export class IndexComponent implements OnInit {
         // this.message.sendImages('www.baidu.com'); // 发送图片地址
         // this.message.sendMessage(index);
         this.activeTabIndex = index;
+        this.isLoggedIn(this.activeTabIndex);
         this.localStorage.set('activeTabIndex', index);
         this.titleService.setTitle('轩仁车务-' + item.title);
     }
@@ -70,6 +72,15 @@ export class IndexComponent implements OnInit {
             }
         });
 
+    }
+
+    isLoggedIn(index) {
+        if (index === 2) {
+            if (!this.authService.isLoggedIn()) {
+                this.localStorage.remove('activeTabIndex');
+                this.authService.redirect();
+            }
+        }
     }
 
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild } from '@angular/router';
 
 import {LocalStorage} from './localStorage';
@@ -8,18 +9,40 @@ import {config} from '../app/app.config';
 @Injectable()
 export class AuthService {
     member_id: any = '1';
-    accessToken: any = 'SASMAL36SKLASKLAMSJKA980D';
+    token: any = 'SASMAL36SKLASKLAMSJKA980D';
 
-    constructor(private localStorage: LocalStorage, private router: Router) {}
+    constructor(private localStorage: LocalStorage, private router: Router, private location: Location) {}
 
-    checkLogin() {
-        let isLoggedIn = !!this.getSession();
+    checkLogin(isJustCheck?) {
+        let isLoggedIn = this.isLoggedIn();
         if ( !isLoggedIn ) {
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + encodeURIComponent(config.url + 'login/') + '&response_type=code&scope=snsapi_userinfo&state=' + config.salt_key + '#wechat_redirect';
+            this.redirect();
             return false;
         }
-
+        if (isJustCheck) {
+            return true;
+        }
+        let session = this.getSession();
+        if (session) {
+            let member_id = session.split('__')[1];
+            let token     = session.split('__')[0];
+            if (!this.member_id && member_id) {
+                this.member_id = member_id;
+            }
+            if (!this.token && token) {
+                this.token = token;
+            }
+        }
         return true;
+    }
+
+    isLoggedIn() {
+        return !!this.getSession();
+    }
+
+    redirect() {
+        let path = window.location.href;
+        window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + encodeURIComponent(config.url + 'login/') + '&response_type=code&scope=snsapi_userinfo&state=' + encodeURIComponent(path) + '#wechat_redirect';
     }
 
     setMemberId(id) {
@@ -30,20 +53,22 @@ export class AuthService {
         return this.member_id;
     }
 
-    setAccessToken(token) {
-        this.accessToken = token;
+    setToken(token) {
+        this.token = token;
     }
 
-    getAccessToken() {
-        return this.accessToken;
+    getToken() {
+        return this.token;
     }
 
     getSession() {
-        return true; // this.localStorage.get('sessionId');
+        return this.localStorage.get('sessionId');
     }
 
     setSession(sessionId) {
-        this.localStorage.set('sessionId', sessionId);
+        if (sessionId) {
+            this.localStorage.set('sessionId', sessionId);
+        }
     }
 
 }

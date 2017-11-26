@@ -1,6 +1,6 @@
 <div class="page">
     <div class="scroll-page">
-        <span (click)="changeMode('license');">驾照</span> | <span (click)="changeMode('car');">车辆</span> | <span (click)="changeMode('cert');">营运</span>
+        <!--<span (click)="changeMode('license');">驾照</span> | <span (click)="changeMode('car');">车辆</span> | <span (click)="changeMode('cert');">营运</span>-->
         <div class="confirm-order" [hidden]="mode==='car' || mode==='cert'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
@@ -54,7 +54,7 @@
                     <div class="weui-cell__bd">
                         <p>应支付</p>
                     </div>
-                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥{{order?.total}}</span></div>
                 </div>
                 <div class="weui-cell weui-cell-special">
                     <div class="weui-cell__bd">
@@ -129,7 +129,7 @@
                     <div class="weui-cell__bd">
                         <p>应支付</p>
                     </div>
-                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥{{order?.total}}</span></div>
                 </div>
                 <div class="weui-cell weui-cell-special">
                     <div class="weui-cell__bd">
@@ -203,7 +203,7 @@
                     <div class="weui-cell__bd">
                         <p>应支付</p>
                     </div>
-                    <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                    <div class="weui-cell__ft"><span class="text-warning">￥{{order?.total}}</span></div>
                 </div>
                 <div class="weui-cell weui-cell-special">
                     <div class="weui-cell__bd">
@@ -218,5 +218,5 @@
         </div>
 
     </div>
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" [routerLink]="['/payComplete', 5]">付款</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder()">付款</a>
 </div>

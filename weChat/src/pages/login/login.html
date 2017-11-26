@@ -1,3 +1,10 @@
-<p>
-  login works!
-</p>
+<div class="login">
+    <div id="loadingToast">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content" [hidden]="isLoggedFailed">登录中，请稍后...</p>
+            <p class="weui-toast__content" [hidden]="!isLoggedFailed">登录失败，<a (click)="goHome()">回首页</a></p>
+        </div>
+    </div>
+</div>

@@ -14,16 +14,16 @@ import { BaseProvider } from '../../../providers/http/base.http';
     styleUrls   : ['./userInfo.scss']
 })
 export class UserInfoComponent implements OnInit {
-    hasPhone : Boolean = false;
-    isModifying: Boolean = false;
+    hasPhone : boolean = false;
+    isModifying: boolean = false;
     verifyCode: any;
 
     timeOut = 60;
-    timing: Boolean = false;
+    timing: boolean = false;
 
     errorMessage: any;
     memberDetail: any;
-    identityAuthStatus: Boolean = true;
+    identityAuthStatus: boolean = true;
 
     username = new FormControl('', [
         Validators.required,

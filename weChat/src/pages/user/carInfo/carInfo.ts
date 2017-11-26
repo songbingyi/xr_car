@@ -255,6 +255,10 @@ export class CarInfoComponent implements OnInit {
         // console.log(obj);
         this.result[name].value = obj.value;
         this.validators(this.result);
+
+        if ( name === 'b') {
+            this.hasCar();
+        }
     }
 
     filterData(result) {
@@ -378,6 +382,24 @@ export class CarInfoComponent implements OnInit {
                     this.errorMessage = carList.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    hasCar() {
+        let cardId = this.carInfoForm.value.cardId;
+        console.log(cardId);
+        /*if (cardId && cardId.length === 6) {
+            this.baseService.post('getMemberCarDetail', {
+                'car_id' : item.car_id
+                }
+            })
+                .subscribe(carList => {
+                    if (carList.status.succeed) {
+                        this.carList = carList.data.member_car_list;
+                    } else {
+                        this.errorMessage = carList.status.error_desc;
+                    }
+                }, error => this.errorMessage = <any>error);
+        }*/
     }
 
     onItemChange(data : any) {

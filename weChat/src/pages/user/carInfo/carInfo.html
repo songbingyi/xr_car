@@ -10,7 +10,7 @@
                 <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a.province_code_name}}<i class="icon-triangle"></i></label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" [formControl]="cardId" (blur)="setItem('b', cardId)" placeholder="{{cardId.invalid && (cardId.dirty || errorMsg) ? '请填写车牌号码！' : '例如：A567R3'}}" appFocusBlur />
+                <input class="weui-input" type="text" [formControl]="cardId" (blur)="setItem('b', cardId)" placeholder="{{cardId.invalid && (cardId.dirty || errorMessage) ? '请填写车牌号码！' : '例如：A567R3'}}" appFocusBlur />
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">所属公司</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入公司名称" [formControl]="companyName"  (blur)="setItem('c', companyName)"appFocusBlur/>
+                <input class="weui-input" type="text" placeholder="请输入公司名称" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
             </div>
         </div>
         <!--<div class="weui-cell">

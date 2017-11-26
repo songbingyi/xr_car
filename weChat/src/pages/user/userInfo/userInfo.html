@@ -4,18 +4,18 @@
             注：姓名要与行驶证车主一致，否则无法绑定车辆；姓名和身份证号填写后不可修改！
         </p>
     </div>
-    <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMsg}">
+    <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMessage}">
         <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMsg) ? '请填写姓名！' : '与身份证姓名一致'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写姓名！' : '与身份证姓名一致'}}" appFocusBlur />
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="userId" placeholder="{{userId.invalid && (userId.dirty || errorMsg) ? '请填写身份证号！' : '与填写姓名的身份证号码一致'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="userId" placeholder="{{userId.invalid && (userId.dirty || errorMessage) ? '请填写身份证号！' : '与填写姓名的身份证号码一致'}}" appFocusBlur />
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                     <label class="weui-label">手机</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" [formControl]="phone" placeholder="{{phone.invalid && (phone.dirty || errorMsg) ? '请填写手机号！' : '请输入手机号码'}}" appFocusBlur />
+                    <input class="weui-input" type="number" [formControl]="phone" placeholder="{{phone.invalid && (phone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}" appFocusBlur />
                 </div>
                 <div class="weui-cell__ft">
                     <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
@@ -37,7 +37,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="vcode" placeholder="{{vcode.invalid && (vcode.dirty || errorMsg) ? '请填写验证码！' : '请输入验证码'}}" appFocusBlur />
+                    <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="vcode" placeholder="{{vcode.invalid && (vcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}" appFocusBlur />
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="modify-phone" [hidden]="!isModifying">
-        <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':errorMsg}">
+        <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':errorMessage}">
             <!--<div class="weui-cells__title-empty"></div>-->
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_vcode">
@@ -76,7 +76,7 @@
                         <label class="weui-label">手机</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" [formControl]="updatePhone" placeholder="{{updatePhone.invalid && (updatePhone.dirty || errorMsg) ? '请填写手机号！' : '请输入手机号码'}}">
+                        <input class="weui-input" type="number" [formControl]="updatePhone" placeholder="{{updatePhone.invalid && (updatePhone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}">
                     </div>
                     <div class="weui-cell__ft">
                         <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
@@ -86,7 +86,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMsg) ? '请填写验证码！' : '请输入验证码'}}"/>
+                        <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}"/>
                     </div>
                 </div>
             </div>
