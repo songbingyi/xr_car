@@ -107,7 +107,7 @@
                     <img class="single-img" src="/assets/images/tmp/shenche.png" />
                 </div>
                 <div class="images-container" *ngIf="!selectedAllBartrailer">
-                    <img class="single-img" [src]="(uploaded.a || '/assets/images/icon/uploader.png')" />
+                    <img class="single-img" [src]="(uploaded.a || '/assets/images/icon/uploader.png')" (click)="choose('a')"/>
                 </div>
                 <div class="images-container one-with-two" *ngIf="selectedAllBartrailer">
                     <table class="table-container">

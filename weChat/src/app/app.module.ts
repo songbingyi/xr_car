@@ -55,6 +55,7 @@ import { WXSDKService } from '../providers/wx.sdk.service';
 import { AuthService } from '../providers/auth.service';
 import { AuthGuard } from '../providers/auth-guard.service';
 import { ImageTypeList } from '../providers/imageType.service';
+import { PaymentTypeList } from '../providers/paymentType.service';
 
 import { BaseProvider } from '../providers/http/base.http';
 import { RedirectComponent } from '../pages/redirect/redirect';
@@ -108,7 +109,7 @@ import { LoginComponent } from '../pages/login/login';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList],
+    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList, PaymentTypeList],
     bootstrap    : [AppComponent]
 })
 export class AppModule {

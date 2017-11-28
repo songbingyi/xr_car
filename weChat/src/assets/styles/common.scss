@@ -372,3 +372,25 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
         color:#999999;
     }
 }
+
+.weui-pagination {
+    margin-bottom:20px;
+    .weui-pagination__item {
+        margin-top: 10px;
+    }
+    .weui-pagination__next {
+        a {
+            margin-right:10px;
+            margin-left:0;
+        }
+    }
+    .weui-btn {
+        border: 1px solid #1970A6;
+        color: #1970A6;
+        background: #FFF;
+        &.weui-btn_plain-disabled {
+            border : 1px solid rgba(0, 0, 0, 0.2);
+            color  : rgba(0, 0, 0, 0.2);
+        }
+    }
+}

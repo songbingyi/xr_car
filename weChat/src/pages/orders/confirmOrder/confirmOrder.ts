@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import {BaseProvider} from '../../../providers/http/base.http';
+import {PaymentTypeList} from '../../../providers/paymentType.service';
 
 
 @Component({
@@ -16,12 +17,15 @@ export class ConfirmOrderComponent implements OnInit {
     order: any;
     errorMessage: any;
     isLoaded: Boolean = false;
+    isSinglePaymentType: boolean;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider) {}
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private paymentTypeService: PaymentTypeList) {}
 
     ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');
         this.loadOrder(id);
+        this.paymentTypeService.init();
+        // this.isSinglePaymentType = this.paymentTypeService.getPaymentLength() === 1;
     }
 
     loadOrder(id) {

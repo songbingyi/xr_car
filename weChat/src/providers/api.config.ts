@@ -40,7 +40,10 @@ let apiBase : IDictionary<string> = {
     'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',
     'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
     'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
-    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList'
+    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',
+
+
+    'payWithWechat' : 'base/tools/payWithWechat' // need deleted
 };
 
 export {apiBase};

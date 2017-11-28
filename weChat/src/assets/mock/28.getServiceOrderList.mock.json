@@ -21,6 +21,14 @@
                     "is_delete" : 0,
                     "is_return" : 0
                 },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
+                },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,
                 "payment_code_info" : {
@@ -67,6 +75,14 @@
                     "is_delete" : 0,
                     "is_return" : 0
                 },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
+                },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,
                 "payment_code_info" : {
@@ -112,6 +128,14 @@
                     "is_edit" : 0,
                     "is_delete" : 0,
                     "is_return" : 0
+                },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
                 },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,
@@ -163,6 +187,14 @@
                     "is_delete" : 0,
                     "is_return" : 0
                 },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
+                },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,
                 "payment_code_info" : {
@@ -209,6 +241,14 @@
                     "is_delete" : 0,
                     "is_return" : 0
                 },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
+                },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,
                 "payment_code_info" : {
@@ -254,6 +294,14 @@
                     "is_edit" : 0,
                     "is_delete" : 0,
                     "is_return" : 0
+                },
+                "service_product_info" : {
+                    "service_type": {
+                        "service_type_id" : "1",
+                        "service_type_key" : "service_driving_license",
+                        "service_type_name" : "驾照",
+                        "service_type_status" : 1
+                    }
                 },
                 "service_order_comment" : "服务订单备注",
                 "total" : 580,

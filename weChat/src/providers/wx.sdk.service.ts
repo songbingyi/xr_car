@@ -11,12 +11,16 @@ declare const wx : any;
 @Injectable()
 export class WXSDKService {
 
+    isWeChatPayReady: Boolean = false;
+
     constructor(private http : Http) {}
 
     init() {
+        this.checkJsApi();
         return new Promise((resolve, reject) => {
 
             wx.ready(() => {
+                wx.hideAllNonBaseMenuItem();
                 resolve();
             });
 
@@ -62,6 +66,24 @@ export class WXSDKService {
                     */
                     wx.config(wxConfig);
                 });
+        });
+    }
+
+    checkJsApi() {
+        let self = this;
+        wx.checkJsApi({
+            jsApiList: ['chooseWXPay'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            success  : (res) => {
+                // alert(JSON.stringify(res));
+                if (res.checkResult.chooseWXPay) {
+                    self.isWeChatPayReady = true;
+                } else {
+                    // alert("微信版本过低，请升级最新版本微信。");
+                    self.isWeChatPayReady = false;
+                }
+                // 以键值对的形式返回，可用的api值true，不可用为false
+                // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+            }
         });
     }
 
