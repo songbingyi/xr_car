@@ -28,9 +28,11 @@ export class ReviewComponent implements OnInit {
     shouldReservation : Boolean = false;
     shouldReservationBox : Boolean = true;
 
-    isBartrailer : Boolean = false;
+    isBartrailer : Boolean = false; // 是否是挂车类型
 
     showDateType : Boolean = false;
+
+     selectedAllBartrailer: boolean = null; // 是否全选了所有挂车的挂箱和挂头 true，还是只选了一个 false
 
     showBartrailerType : Boolean = false;
     serviceType: any;
@@ -320,10 +322,12 @@ export class ReviewComponent implements OnInit {
         let uploaded = this.uploaded;
         let tmp = [];
         let image : any = {};
-        let keys = Object.keys(uploaded);
+        let sort_order = 0;
+        let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('car_service_type_image').image_type_id;
         keys.forEach(key => {
             let upload = uploaded[key];
+            image.sort_order = sort_order++;
             image.image_type_id = image_type_id;
             image.image_url = upload;
             tmp.push(image);
@@ -367,12 +371,13 @@ export class ReviewComponent implements OnInit {
             this.errorMessage = '所有信息为必填！';
             return;
         }
+        this.selectedAllBartrailer = this.result.bartrailer ? this.result.bartrailer.car_type_id === '1' : false;
         this.errorMessage = '';
         this.initUploaded();
         this.showNext = true;
     }
 
-    goPrev(type : SkinType = 'ios', style : 1) {
+    goPrev(type : SkinType = 'ios', style? : 1) {
         if (this.customValidators.anyUploaded(this.uploaded)) {
             (<DialogComponent>this[`${type}AS`]).show().subscribe((res : any) => {
                 // console.log('type', res);

@@ -29,7 +29,11 @@
                 "vin_no" : "VIN123456789",
                 "engine_no" : "ENG124567788",
                 "is_modify" : 1,
-                "is_delete" : 1
+                "is_delete" : 1,
+                "region_info" : {
+                    "region_id" : "1",
+                    "region_name" : "西安"
+                }
             },
             {
                 "car_id" : "2",
@@ -54,7 +58,11 @@
                 "vin_no" : "VIN123456789",
                 "engine_no" : "ENG124567788",
                 "is_modify" : 1,
-                "is_delete" : 1
+                "is_delete" : 1,
+                "region_info" : {
+                    "region_id" : "9",
+                    "region_name" : "广东"
+                }
             },
             {
                 "car_id" : "3",
@@ -79,7 +87,11 @@
                 "vin_no" : "VIN123456789",
                 "engine_no" : "ENG124567788",
                 "is_modify" : 1,
-                "is_delete" : 1
+                "is_delete" : 1,
+                "region_info" : {
+                    "region_id" : "9",
+                    "region_name" : "广东"
+                }
             }
         ]
     }

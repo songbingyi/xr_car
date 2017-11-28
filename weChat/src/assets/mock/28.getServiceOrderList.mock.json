@@ -1,0 +1,291 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_order_list": [
+            {
+                "service_order_id" : "1",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source" : "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            },
+            {
+                "service_order_id" : "2",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source" : "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            },
+            {
+                "service_order_id" : "3",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        },
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            },
+            {
+                "service_order_id" : "4",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source" : "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            },
+            {
+                "service_order_id" : "5",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source" : "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            },
+            {
+                "service_order_id" : "6",
+                "service_order_no" : "2376273826",
+                "service_order_date" : "2017/10/22 14:23:28",
+                "service_order_finish_date" : "2017/10/29 14:23:28",
+                "service_order_return_apply_date" : "",
+                "service_order_return_finish_date" : "",
+                "service_order_status_info" : {
+                    "service_order_status_id" : "1",
+                    "service_order_status_name" : "已完成",
+                    "is_pay" : 1,
+                    "is_edit" : 0,
+                    "is_delete" : 0,
+                    "is_return" : 0
+                },
+                "service_order_comment" : "服务订单备注",
+                "total" : 580,
+                "payment_code_info" : {
+                    "payment_code_id" : "1",
+                    "payment_code_name" : "微信支付",
+                    "payment_code_description" : "微信支付-公众号支付"
+                },
+                "service_order_product_info" : {
+                    "service_product_info" : {
+                        "service_product_id" : "1",
+                        "service_product_name" : "审车",
+                        "service_product_entity_id" : "1"
+                    },
+                    "service_order_product_image_list" : [
+                        {
+                            "thumb" : "http://wx.lex-mung.com/assets/images/user/user.bg.png",
+                            "source" : "http://wx.lex-mung.com/assets/images/user/user.bg.png"
+                        }
+                    ],
+                    "service_order_product_extend_list" : [
+                        {
+                            "service_product_spec_type_info" : {
+                                "service_product_spec_type_id" : "1",
+                                "service_product_spec_type_key" : "service_audit_car",
+                                "service_product_spec_type_name" : "审车-西安"
+                            },
+                            "service_order_product_extend_value" : "非异地"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

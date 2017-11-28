@@ -30,9 +30,17 @@ let mockBase : IDictionary<string> = {
     'getServiceProductInfo'     : '25.getServiceProductInfo.mock.json',
     'getPaymentCodeList'        : '26.getPaymentCodeList.mock.json',
     'addServiceOrder'           : '27.addServiceOrder.mock.json',
+    'getServiceOrderList'       : '28.getServiceOrderList.mock.json',
     'getServiceOrderDetail'     : '29.getServiceOrderDetail.mock.json',
+    'editServiceOrder'          : '30.editServiceOrder.mock.json',
     'getCompanyList'            : '31.getCompanyList.mock.json',
-    'addCompany'                : '32.addCompany.mock.json'
+    'addCompany'                : '32.addCompany.mock.json',
+    'getServiceProductSpecType' : '33.getServiceProductSpecType.mock.json',
+    'operatorServiceOrder'      : '34.operatorServiceOrder.mock.json',
+    'getMemberMessageDashboard' : '35.getMemberMessageDashboard.mock.json',
+    'getMemberMessageList'      : '36.getMemberMessageList.mock.json',
+    'getMemberMessageDetail'    : '37.getMemberMessageDetail.mock.json',
+    'getMemberMessageTypeList'  : '38.getMemberMessageTypeList.mock.json'
 };
 
 export {mockBase};

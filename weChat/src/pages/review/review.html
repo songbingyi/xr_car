@@ -67,13 +67,13 @@
                 <div class="weui-cells__title" [hidden]="!isBartrailer">三.审验材料添加</div>
                 <div class="weui-cells__title" [hidden]="isBartrailer">二.审验材料添加</div>
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access is-bartrailer" href="javascript:;" (click)="fullPopup.show()">
+                    <a class="weui-cell weui-cell_access" [ngClass]="{'is-off-site':result.car.region_info && result.car.region_info.region_id && result.city.region_id && result.car.region_info.region_id !== result.city.region_id}" href="javascript:;" (click)="fullPopup.show()">
                         <div class="weui-cell__bd">
                             <p>审验城市</p>
                         </div>
                         <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">
                             <span>{{result.city.region_name || '请选择审验城市'}}</span>
-                            <p class="text-tips">注：异地审车须加收服务费</p>
+                            <p class="text-tips" *ngIf="result.car.region_info && result.car.region_info.region_id && result.city.region_id && result.car.region_info.region_id !== result.city.region_id">注：异地审车须加收服务费</p>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
@@ -106,10 +106,10 @@
                     <span>示例图片</span>
                     <img class="single-img" src="/assets/images/tmp/shenche.png" />
                 </div>
-                <!--<div class="images-container">
-                    <img class="single-img" [src]="{{uploaded.a || '/assets/images/icon/uploader.png'}}" />
-                </div>-->
-                <div class="images-container one-with-two">
+                <div class="images-container" *ngIf="!selectedAllBartrailer">
+                    <img class="single-img" [src]="(uploaded.a || '/assets/images/icon/uploader.png')" />
+                </div>
+                <div class="images-container one-with-two" *ngIf="selectedAllBartrailer">
                     <table class="table-container">
                         <tr>
                             <td class="no-border">

@@ -7,10 +7,10 @@
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__hd labels">
-                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanel=!showPanel">{{result.a.province_code_name}}<i class="icon-triangle"></i></label>
+                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanelBox()">{{result.a.province_code_name}}<i class="icon-triangle"></i></label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" [formControl]="cardId" (blur)="setItem('b', cardId)" placeholder="{{cardId.invalid && (cardId.dirty || errorMessage) ? '请填写车牌号码！' : '例如：A567R3'}}" appFocusBlur />
+                <input class="weui-input" type="text" [formControl]="cardId" (blur)="setItem('b', cardId)" (input)="hasCar($event.target.value)" placeholder="{{cardId.invalid && (cardId.dirty || errorMessage) ? '请填写车牌号码！' : '例如：A567R3'}}" appFocusBlur />
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">所属公司</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入公司名称" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
+                <input class="weui-input" type="text" placeholder="请输入公司名称" [attr.disabled]="hasCarInfo?.car_id ? '' : null" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
             </div>
         </div>
         <!--<div class="weui-cell">
@@ -54,14 +54,14 @@
         <div class="weui-cell weui-cell_access">
             <div class="weui-cell__hd"><label class="weui-label">车架号码</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入车架号码" [formControl]="cardIdv" (blur)="setItem('f', cardIdv)" appFocusBlur/>
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.car_id ? '' : null" placeholder="请输入车架号码" [formControl]="cardIdv" (blur)="setItem('f', cardIdv)" appFocusBlur/>
             </div>
             <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
         </div>
         <div class="weui-cell weui-cell_access">
             <div class="weui-cell__hd"><label class="weui-label">发动机号</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入发动机号" [formControl]="cardIdx" (blur)="setItem('g', cardIdx)" appFocusBlur/>
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.car_id ? '' : null" placeholder="请输入发动机号" [formControl]="cardIdx" (blur)="setItem('g', cardIdx)" appFocusBlur/>
             </div>
             <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
         </div>

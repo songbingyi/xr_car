@@ -8,7 +8,7 @@ let apiBase : IDictionary<string> = {
     'getProvinceCodeList'       : 'base/province_code/getProvinceCodeList',
     'getCarPropertyList'        : 'base/car_property/getCarPropertyList',
     'getCarTypeList'            : 'base/car_type/getCarTypeList',
-    'getCarTypeListAlter'       : 'base/car_type/getCarTypeList', // 最终需要删掉
+    'getCarTypeListAlter'       : 'base/car_type/getCarTypeListAlter', // 最终需要删掉
     'getDrivingLicenseTypeList' : 'base/driving_license_type/getDrivingLicenseTypeList',
     'getOpenRegionList'         : 'base/region/getOpenRegionList',
     'getSiteList'               : 'site/site/getSiteList',
@@ -30,9 +30,17 @@ let apiBase : IDictionary<string> = {
     'getServiceProductInfo'     : 'service_product/service_product/getServiceProductInfo',
     'getPaymentCodeList'        : 'base/payment_code/getPaymentCodeList',
     'addServiceOrder'           : 'service_order/service_order/addServiceOrder',
+    'getServiceOrderList'       : 'service_order/service_order/getServiceOrderList',
     'getServiceOrderDetail'     : 'service_order/service_order/getServiceOrderDetail',
+    'editServiceOrder'          : 'service_order/service_order/editServiceOrder',
     'getCompanyList'            : 'company/company/getCompanyList',
-    'addCompany'                : 'company/company/addCompany'
+    'addCompany'                : 'company/company/addCompany',
+    'getServiceProductSpecType' : 'base/service_product_spec_type/getServiceProductSpecType',
+    'operatorServiceOrder'      : 'service_order/service_order/operatorServiceOrder',
+    'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',
+    'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
+    'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
+    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList'
 };
 
 export {apiBase};

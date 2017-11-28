@@ -1,0 +1,13 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "payment_order_info": {
+            "payment_order_param":"支付参数",
+            "payment_order_url":"支付参数URL"
+        }
+    }
+}

@@ -12,10 +12,13 @@ export class OrdersComponent implements OnInit {
     status : string;
     activeIndex: any;
     isLoaded: boolean;
-    hasDone: any;
-    needProcess: any;
-    processing: any;
-    needPay: any;
+
+    all: any = [];
+    needPay: any = [];
+    needProcess: any = [];
+    processing: any = [];
+    hasDone: any = [];
+
 
 
     obj : any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
@@ -28,7 +31,7 @@ export class OrdersComponent implements OnInit {
         this.status = this.obj[this.activeIndex];
     }
 
-    onTabSelect() {
+    onTabSelect(event) {
 
     }
 

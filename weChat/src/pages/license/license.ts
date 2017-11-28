@@ -240,10 +240,12 @@ export class LicenseComponent implements OnInit {
         let uploaded = this.uploaded;
         let tmp = [];
         let image : any = {};
-        let keys = Object.keys(uploaded);
+        let sort_order = 0;
+        let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('car_service_type_image').image_type_id;
         keys.forEach(key => {
             let upload = uploaded[key];
+            image.sort_order = sort_order++;
             image.image_type_id = image_type_id;
             image.image_url = upload;
             tmp.push(image);
@@ -290,7 +292,7 @@ export class LicenseComponent implements OnInit {
         this.showNext = true;
     }
 
-    goPrev(type : SkinType = 'ios', style : 1) {
+    goPrev(type : SkinType = 'ios', style? : 1) {
         if (this.customValidators.anyUploaded(this.uploaded)) {
             (<DialogComponent>this[`${type}AS`]).show().subscribe((res : any) => {
                 console.log('type', res);

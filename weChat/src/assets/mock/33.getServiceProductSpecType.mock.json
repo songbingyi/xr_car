@@ -1,0 +1,21 @@
+{
+    "status": {
+        "succeed"   : 1,
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "service_product_spec_type_list": [
+            {
+                "service_product_spec_type_id":"1",
+                "service_product_spec_type_key":"KEY1",
+                "service_product_spec_type_name":"服务商品规格类型名称1"
+            },
+            {
+                "service_product_spec_type_id":"2",
+                "service_product_spec_type_key":"KEY2",
+                "service_product_spec_type_name":"服务商品规格类型名称2"
+            }
+        ]
+    }
+}

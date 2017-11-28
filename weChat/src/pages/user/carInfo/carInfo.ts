@@ -42,6 +42,8 @@ export class CarInfoComponent implements OnInit {
     company_id: string;
     car_id: string;
 
+    hasCarInfo: any = {}; // 通过车牌号获取到已经存在的车辆信息
+
     cardId = new FormControl('', [
         Validators.required,
         this.customValidators.eq(6)
@@ -146,47 +148,47 @@ export class CarInfoComponent implements OnInit {
     }
 
     setCarDetail(item) {
-        this.car_id = item.car_id;
-        this.company_id = item.company_info.company_id;
+        this.car_id = item ? item.car_id : '';
+        this.company_id = item ? item.company_info.company_id : '';
 
         this.carInfoForm.setValue({
-            cardId: item.plate_no,
-            companyName: item.company_info.company_name,
-            cardIdv: item.vin_no,
-            cardIdx: item.engine_no
+            cardId: item ? item.plate_no : '',
+            companyName: item ? item.company_info.company_name : '',
+            cardIdv: item ? item.vin_no : '',
+            cardIdx: item ? item.engine_no : ''
         });
 
         this.result = {
             a: {
-                province_code_id : item.province_code_info.province_code_id,
-                province_code_name : item.province_code_info.province_code_name,
+                province_code_id : item ? item.province_code_info.province_code_id : '',
+                province_code_name : item ? item.province_code_info.province_code_name : '',
                 selected : true,
                 valid: true
             },
             b: {
-                value : item.plate_no,
+                value : item ? item.plate_no : '',
                 valid: true
             },
             c: {
-                value : item.company_info.company_name,
+                value : item ? item.company_info.company_name : '',
                 valid: true
             },
             d: {
-                car_property_id : item.car_property_info.car_property_id,
-                car_property_name : item.car_property_info.car_property_name,
+                car_property_id : item ? item.car_property_info.car_property_id : '',
+                car_property_name : item ? item.car_property_info.car_property_name : '',
                 valid: true
             },
             e: {
-                car_type_id : item.car_type_info.car_type_id,
-                car_type_name : item.car_type_info.car_type_name,
+                car_type_id : item ? item.car_type_info.car_type_id : '',
+                car_type_name : item ? item.car_type_info.car_type_name : '',
                 valid: true
             },
             f: {
-                value : item.vin_no,
+                value : item ? item.vin_no: '',
                 valid: true
             },
             g: {
-                value : item.engine_no,
+                value : item ? item.engine_no : '',
                 valid: true
             }
         };
@@ -211,6 +213,7 @@ export class CarInfoComponent implements OnInit {
         this.selectedProvince.selected = false;
         province.selected = true;
         this.selectedProvince = province;
+        this.hasCar(this.result.b.value);
     }
 
     confirmSelect() {
@@ -223,11 +226,15 @@ export class CarInfoComponent implements OnInit {
     }
 
     showIdTypeBox() {
-        this.showIdType = !this.showIdType;
+        if ( !this.hasCarInfo.car_id ) {
+            this.showIdType = !this.showIdType;
+        }
     }
 
     showCarTypeBox() {
-        this.showCarType = !this.showCarType;
+        if ( !this.hasCarInfo.car_id ) {
+            this.showCarType = !this.showCarType;
+        }
     }
 
     selectIdType() {
@@ -252,13 +259,8 @@ export class CarInfoComponent implements OnInit {
     }
 
     setItem(name, obj) {
-        // console.log(obj);
         this.result[name].value = obj.value;
         this.validators(this.result);
-
-        if ( name === 'b') {
-            this.hasCar();
-        }
     }
 
     filterData(result) {
@@ -384,23 +386,39 @@ export class CarInfoComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
-    hasCar() {
-        let cardId = this.carInfoForm.value.cardId;
+    hasCar(cardId?) {
         console.log(cardId);
-        /*if (cardId && cardId.length === 6) {
-            this.baseService.post('getMemberCarDetail', {
-                'car_id' : item.car_id
-                }
+        if (cardId && cardId.length === 6) {
+            this.baseService.post('getCarInfo', {
+                'province_code_id' : this.result.a.province_code_id,
+                'plate_no' : cardId
             })
-                .subscribe(carList => {
-                    if (carList.status.succeed) {
-                        this.carList = carList.data.member_car_list;
+                .subscribe(hasCarInfo => {
+                    if (hasCarInfo.status.succeed) {
+                        if (hasCarInfo.data.car_info.car_id) {
+                            this.hasCarInfo = hasCarInfo.data.car_info;
+                            this.setCarDetail(this.hasCarInfo);
+                        } else {
+                            this.hasCarInfo = {};
+                            this.setCarDetail(null);
+                        }
                     } else {
-                        this.errorMessage = carList.status.error_desc;
+                        this.errorMessage = hasCarInfo.status.error_desc;
                     }
                 }, error => this.errorMessage = <any>error);
-        }*/
+        } else {
+            this.hasCarInfo = {};
+            // this.setCarDetail(null);
+        }
     }
+
+    showPanelBox() {
+        /*if ( !this.hasCarInfo.car_id ) {
+            this.showPanel = !this.showPanel;
+        }*/
+        this.showPanel = !this.showPanel;
+    }
+
 
     onItemChange(data : any) {
         console.log('onItemChange', data);
