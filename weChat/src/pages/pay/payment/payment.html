@@ -22,10 +22,13 @@
     <button weui-button [weui-type]="'default'" (click)="onShow('loading')">Loading Toast</button>-->
 
     <!--将对话框组件放在底部-->
-    <weui-toast #success></weui-toast>
-    <weui-toast #loading [type]="'loading'" [text]="'处理中'"></weui-toast>
+    <weui-toast #success [time]="'0'"></weui-toast>
+    <weui-toast #loading [type]="'loading'" [text]="'处理中'" [time]="'0'"></weui-toast>
 
     <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder()">立即支付</a>
 
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
 
 </div>

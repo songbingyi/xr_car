@@ -21,7 +21,7 @@ export class WXSDKService {
 
             wx.ready(() => {
                 wx.hideAllNonBaseMenuItem();
-                resolve();
+                resolve(wx);
             });
 
             wx.error(() => {
@@ -29,7 +29,9 @@ export class WXSDKService {
                 reject('config 注册失败');
             });
 
-            this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + encodeURIComponent(location.href.split('#')[0]))
+            let url = encodeURIComponent(location.href.split('#')[0]);
+            // console.log(url);
+            this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)
                 .map(response => {
                     let a = response;
                     return response.json();
@@ -81,6 +83,7 @@ export class WXSDKService {
                     // alert("微信版本过低，请升级最新版本微信。");
                     self.isWeChatPayReady = false;
                 }
+                console.log(self.isWeChatPayReady);
                 // 以键值对的形式返回，可用的api值true，不可用为false
                 // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
             }
@@ -99,6 +102,11 @@ export class WXSDKService {
 
     onGetLocation(params) {
         wx.getLocation(params);
+        return this;
+    }
+
+    onChooseWXPay(params) {
+        wx.chooseWXPay(params);
         return this;
     }
 

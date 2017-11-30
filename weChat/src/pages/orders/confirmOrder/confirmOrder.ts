@@ -45,7 +45,7 @@ export class ConfirmOrderComponent implements OnInit {
 
     payOrder() {
         let service_order_id = this.order.service_order_id;
-        window.location.href = window.location.protocol + '//' + window.location.host + '/payment/' + service_order_id;
+        window.location.href = window.location.protocol + '//' + window.location.host + '/payment/?oid=' + service_order_id;
     }
 
     changeMode(type) {

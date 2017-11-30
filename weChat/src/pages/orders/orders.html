@@ -6,7 +6,7 @@
             </span>
             <div class="scroll-page">
                 <div *ngFor="let item of all.lists; let index = index" >
-                    <a class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
                         <div class="weui-cell special-cell">
                             <div class="weui-cell__bd">
                                 <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
@@ -33,15 +33,15 @@
                                 <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                             </div>
                             <div class="weui-cell__bd button-sp-area">
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment', 5]">付款</a>
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment']" [queryParams]="{ oid: 9 }">付款</a>
                                 <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
                                 <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
                                 <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
                         <div class="weui-cell special-cell">
                             <div class="weui-cell__bd">
                                 <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
@@ -68,15 +68,15 @@
                                 <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                             </div>
                             <div class="weui-cell__bd button-sp-area">
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment', 5]">付款</a>
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment']" [queryParams]="{ oid: 9 }">付款</a>
                                 <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
                                 <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
                                 <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
                             </div>
                         </div>
-                    </a>
+                    </div>
 
-                    <a class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
                         <div class="weui-cell special-cell">
                             <div class="weui-cell__bd">
                                 <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
@@ -93,13 +93,13 @@
                                 <span>支付金额 :<strong>￥520</strong></span>
                             </div>
                             <div class="weui-cell__bd button-sp-area">
-                                <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                            <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
                                 <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
                                 <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
                                 <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
                             </div>
                         </div>
-                    </a>
+                    </div>
 
 
                 </div>

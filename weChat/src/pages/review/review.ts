@@ -309,7 +309,7 @@ export class ReviewComponent implements OnInit {
             })
                 .subscribe(orderResult => {
                     if (orderResult.status.succeed === '1') {
-                        this.router.navigate(['/confirmOrder', orderResult.data.service_order_id]);
+                        this.router.navigate(['/confirmOrder'], { queryParams: { oid: orderResult.data.service_order_id } });
                     }
                 }, error => this.errorMessage = <any>error);
         } else {

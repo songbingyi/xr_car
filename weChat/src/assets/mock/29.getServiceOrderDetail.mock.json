@@ -1,37 +1,35 @@
 {
     "status": {
-        "succeed"   : 1,
-        "error_code": "",
-        "error_desc": ""
+        "succeed": "1"
     },
-    "data"  : {
+    "data": {
         "service_order_info": {
-            "service_order_id"          : "1",
-            "service_order_no"          : "2376273826",
-            "service_order_date"        : "2017/10/22 14:23:28",
-            "service_order_finish_date" : "2017/10/29 14:23:28",
-            "service_order_return_apply_date" : "",
-            "service_order_return_finish_date" : "",
-            "service_order_status_info" : {
-                "service_order_status_id"  : "1",
-                "service_order_status_name": "服务订单状态",
-                "is_pay"                   : 1,
-                "is_edit"                  : 0,
-                "is_delete"                : 0,
-                "is_return"                : 0
+            "service_order_id": "1",
+            "service_order_no": "SOOXGX4UEVHM46",
+            "service_order_date": "2017-11-30 20:37:05",
+            "service_order_finish_date": "",
+            "service_order_return_apply_date": "",
+            "service_order_return_finish_date": "",
+            "service_order_status_info": {
+                "service_order_status_id": "10",
+                "service_order_status_name": "待付款",
+                "is_pay": "1",
+                "is_edit": "0",
+                "is_delete": "1",
+                "is_return": "0"
             },
-            "service_order_comment"     : "附加评论",
-            "total"                     : "530",
-            "payment_code_info" : {
-                "payment_code_id" : "1",
-                "payment_code_name" : "微信支付",
-                "payment_code_description" : "微信支付-公众号支付"
+            "service_order_comment": "",
+            "total": "403",
+            "payment_code_info": {
+                "payment_code_id": "1",
+                "payment_code_name": "wechat-weixinpay",
+                "payment_code_description": "wechat-微信支付"
             },
             "service_order_product_info": {
-                "service_product_info"            : {
-                    "service_product_id"       : "1",
-                    "service_product_name"     : "西安服务商品",
-                    "service_product_entity_id": "1"
+                "service_product_info": {
+                    "service_product_id": "2",
+                    "service_product_name": "营运证",
+                    "service_product_entity_id": "9"
                 },
                 "service_order_product_image_list": [
                     {
@@ -43,14 +41,30 @@
                         "source": "http://wx.lex-mung.com/assets/images/user/user.bg.png"
                     }
                 ],
-                "service_order_product_extend_list" : [
+                "service_order_product_extend_list": [
                     {
-                        "service_product_spec_type_info" : {
-                            "service_product_spec_type_id" : "1",
-                            "service_product_spec_type_key" : "service_audit_car",
-                            "service_product_spec_type_name" : "审车-西安"
+                        "service_product_spec_type_info": {
+                            "service_product_spec_type_id": "3",
+                            "service_product_spec_type_key": "car_type",
+                            "service_product_spec_type_name": "车辆类型"
                         },
-                        "service_order_product_extend_value" : "非异地"
+                        "service_order_product_extend_value": "小型汽车"
+                    },
+                    {
+                        "service_product_spec_type_info": {
+                            "service_product_spec_type_id": "1",
+                            "service_product_spec_type_key": "region",
+                            "service_product_spec_type_name": "地区"
+                        },
+                        "service_order_product_extend_value": "北京市"
+                    },
+                    {
+                        "service_product_spec_type_info": {
+                            "service_product_spec_type_id": "4",
+                            "service_product_spec_type_key": "site",
+                            "service_product_spec_type_name": "网点"
+                        },
+                        "service_order_product_extend_value": "测试检测站-001"
                     }
                 ]
             }
