@@ -38,7 +38,8 @@ export class OrderDetailComponent implements OnInit {
     }
 
     payOrder(service_order_id) {
-        window.location.href = window.location.protocol + '//' + window.location.host + '/payment/?oid=' + service_order_id;
+        this.router.navigate(['/confirmOrder', service_order_id]);
+        // window.location.href = window.location.protocol + '//' + window.location.host + '/payment/?oid=' + service_order_id;
     }
 
 
@@ -85,5 +86,20 @@ export class OrderDetailComponent implements OnInit {
     changeMode(type) {
         this.mode = type;
     }
+
+    getServiceProductSpecTypeInfoByKey(key) {
+        let detail = this.detail;
+        let productSpecTypes = (detail && detail.service_order_product_info) ? detail.service_order_product_info.service_order_product_extend_list : [];
+        let length = productSpecTypes.length;
+        for ( let i = 0; i < length; i++) {
+            let productSpecType = productSpecTypes[i];
+            if (productSpecType.service_product_spec_type_info.service_product_spec_type_key === key) {
+                return productSpecType || {};
+            }
+        }
+        return {};
+    }
+
+
 
 }

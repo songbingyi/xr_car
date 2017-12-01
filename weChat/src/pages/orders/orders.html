@@ -5,103 +5,112 @@
                 全部<q class="weui-badge" *ngIf="all.lists.length">{{all.lists.length}}</q>
             </span>
             <div class="scroll-page">
-                <div *ngFor="let item of all.lists; let index = index" >
-                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
-                        <div class="weui-cell special-cell">
-                            <div class="weui-cell__bd">
-                                <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
+                <div *ngIf="all.isLoaded && all.lists.length">
+                    <div *ngFor="let item of all.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
                             </div>
-                            <div class="weui-cell__ft"><span></span></div>
-                        </div>
-                        <div class="weui-cell with-margin-top">
-                            <div class="weui-cell__bd">
-                                <p><span class="mini-width eq-width">性质：公户</span> <span class="small-width eq-width">类型：大型汽车</span> <span class="normal-width eq-width">车牌号：陕A12543</span></p>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span>{{getServiceProductSpecTypeInfoByKey('driving_license_type', item).service_order_product_extend_value}}</span></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="weui-cell no-border">
-                            <div class="weui-cell__bd">
-                                <p>时间：2017年10月20日 | {{item.service_order_date}}</p>
-                            </div>
-                        </div>
-                        <div class="weui-cell no-border">
-                            <div class="weui-cell__bd">
-                                <p>地点：西安  西安新盛检测站 </p>
-                            </div>
-                        </div>
-                        <div class="weui-cell cell-operation">
-                            <div class="weui-cell__bd">
-                                <span>支付金额 :<strong>￥{{item.total}}</strong></span>
-                            </div>
-                            <div class="weui-cell__bd button-sp-area">
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment']" [queryParams]="{ oid: 9 }">付款</a>
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                </div>
                             </div>
                         </div>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
-                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
-                        <div class="weui-cell special-cell">
-                            <div class="weui-cell__bd">
-                                <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
-                            </div>
-                            <div class="weui-cell__ft"><span></span></div>
-                        </div>
-                        <div class="weui-cell with-margin-top">
-                            <div class="weui-cell__bd">
-                                <p><span class="mini-width eq-width">性质：公户</span> <span class="small-width eq-width">类型：大型汽车</span> <span class="normal-width eq-width">车牌号：陕A12543</span></p>
-                            </div>
-                        </div>
-                        <div class="weui-cell no-border">
-                            <div class="weui-cell__bd">
-                                <p>时间：2017年10月20日 | {{item.service_order_date}}</p>
-                            </div>
-                        </div>
-                        <div class="weui-cell no-border">
-                            <div class="weui-cell__bd">
-                                <p>地点：西安  西安新盛检测站 </p>
-                            </div>
-                        </div>
-                        <div class="weui-cell cell-operation">
-                            <div class="weui-cell__bd">
-                                <span>支付金额 :<strong>￥{{item.total}}</strong></span>
-                            </div>
-                            <div class="weui-cell__bd button-sp-area">
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/payment']" [queryParams]="{ oid: 9 }">付款</a>
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="weui-cells" [routerLink]="['/orderDetail', 1]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
-                        <div class="weui-cell special-cell">
-                            <div class="weui-cell__bd">
-                                <p>{{item.service_order_product_info.service_product_info.service_product_name}}</p>
-                            </div>
-                            <div class="weui-cell__ft"><span class="text-warning">正在退款...</span></div>
-                        </div>
-                        <div class="weui-cell with-margin-top">
-                            <div class="weui-cell__bd">
-                                <p><span>AB证</span></p>
-                            </div>
-                        </div>
-                        <div class="weui-cell cell-operation">
-                            <div class="weui-cell__bd">
-                                <span>支付金额 :<strong>￥520</strong></span>
-                            </div>
-                            <div class="weui-cell__bd button-sp-area">
-                            <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
 
 
@@ -237,14 +246,14 @@
                     </div>
                 </a>-->
 
-                <div class="empty-container" *ngIf="hasDone.isLoaded && hasDone.length===0">
+                <div class="empty-container" *ngIf="all.isLoaded && all.lists.length===0">
                     <div class="empty">
-                        <img src="/assets/images/empty.png" />
+                        <img src="/assets/images/empty.png"/>
                         <p>内容突然就没有了</p>
                     </div>
                 </div>
 
-                <weui-pagination [current]="all.pagination.page" [total]="all.pagination.total" (change)="change($event, 0)"></weui-pagination>
+                <weui-pagination [current]="all.pagination.page" [total]="all.pagination.total" (change)="change($event, 0)" *ngIf="all.isLoaded && all.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -253,49 +262,122 @@
                 待付款<q class="weui-badge" *ngIf="needPay.lists.length">{{needPay.lists.length}}</q>
             </span>
             <div class="scroll-page">
-                <div class="weui-cells">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
+                <div *ngIf="needPay.isLoaded && needPay.lists.length">
+                    <div *ngFor="let item of needPay.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span>{{getServiceProductSpecTypeInfoByKey('driving_license_type', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft"><span></span></div>
-                    </div>
-                    <div class="weui-cell with-margin-top">
-                        <div class="weui-cell__bd">
-                            <p><span class="mini-width eq-width">性质：公户</span> <span class="small-width eq-width">类型：大型汽车</span> <span class="normal-width eq-width">车牌号：陕A12543</span></p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>支付金额 :<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
-                        </div>
+
                     </div>
                 </div>
 
-                <div class="empty-container" *ngIf="needPay.isLoaded && needPay.length===0">
+                <div class="empty-container" *ngIf="needPay.isLoaded && needPay.lists.length===0">
                     <div class="empty">
-                        <img src="/assets/images/empty.png" />
+                        <img src="/assets/images/empty.png"/>
                         <p>内容突然就没有了</p>
                     </div>
                 </div>
 
-                <weui-pagination [current]="needPay.pagination.page" [total]="needPay.pagination.total" (change)="change($event, 1)"></weui-pagination>
+                <weui-pagination [current]="needPay.pagination.page" [total]="needPay.pagination.total" (change)="change($event, 1)" *ngIf="needPay.isLoaded && needPay.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -304,85 +386,122 @@
                 待处理<q class="weui-badge" *ngIf="needProcess.lists.length">{{needProcess.lists.length}}</q>
             </span>
             <div class="scroll-page">
-                <div class="weui-cells">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
+                <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
+                    <div *ngFor="let item of needProcess.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span>{{getServiceProductSpecTypeInfoByKey('driving_license_type', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
-                    </div>
-                    <div class="weui-cell with-margin-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>支付金额 :<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/refund', 1]">退款</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
-                        </div>
-                    </div>
-                </div>
-                <div class="weui-cells">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
-                        </div>
-                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
-                    </div>
-                    <div class="weui-cell with-margin-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>支付金额 :<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
-                        </div>
+
                     </div>
                 </div>
 
-                <div class="empty-container" *ngIf="needProcess.isLoaded && needProcess.length===0">
+                <div class="empty-container" *ngIf="needProcess.isLoaded && needProcess.lists.length===0">
                     <div class="empty">
-                        <img src="/assets/images/empty.png" />
+                        <img src="/assets/images/empty.png"/>
                         <p>内容突然就没有了</p>
                     </div>
                 </div>
 
-                <weui-pagination [current]="needProcess.pagination.page" [total]="needProcess.pagination.total" (change)="change($event, 2)"></weui-pagination>
+                <weui-pagination [current]="needProcess.pagination.page" [total]="needProcess.pagination.total" (change)="change($event, 2)" *ngIf="needProcess.isLoaded && needProcess.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -391,49 +510,122 @@
                 处理中<q class="weui-badge" *ngIf="processing.lists.length">{{processing.lists.length}}</q>
             </span>
             <div class="scroll-page">
-                <div class="weui-cells">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
+                <div *ngIf="processing.isLoaded && processing.lists.length">
+                    <div *ngFor="let item of processing.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span>{{getServiceProductSpecTypeInfoByKey('driving_license_type', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft"><span class="text-info">处理中…</span></div>
-                    </div>
-                    <div class="weui-cell with-margin-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>支付金额 :<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
-                        </div>
+
                     </div>
                 </div>
 
-                <div class="empty-container" *ngIf="processing.isLoaded && processing.length===0">
+                <div class="empty-container" *ngIf="processing.isLoaded && processing.lists.length===0">
                     <div class="empty">
-                        <img src="/assets/images/empty.png" />
+                        <img src="/assets/images/empty.png"/>
                         <p>内容突然就没有了</p>
                     </div>
                 </div>
 
-                <weui-pagination [current]="processing.pagination.page" [total]="processing.pagination.total" (change)="change($event, 3)"></weui-pagination>
+                <weui-pagination [current]="processing.pagination.page" [total]="processing.pagination.total" (change)="change($event, 3)" *ngIf="processing.isLoaded && processing.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -442,39 +634,122 @@
                 已完成<q class="weui-badge" *ngIf="hasDone.lists.length">{{hasDone.lists.length}}</q>
             </span>
             <div class="scroll-page">
-                <div class="weui-cells">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>驾照审验</p>
+                <div *ngIf="processing.isLoaded && processing.lists.length">
+                    <div *ngFor="let item of processing.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_driving_license'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span>{{getServiceProductSpecTypeInfoByKey('driving_license_type', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
+                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
+                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                        <div class="weui-cell__ft"><span class="text-warning">已完成</span></div>
-                    </div>
-                    <div class="weui-cell with-margin-top">
-                        <div class="weui-cell__bd">
-                            <p><span>AB证</span></p>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>支付金额 :<strong>￥520</strong></span>
+
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item.service_product_info.service_type.service_type_key === 'service_audit_car'">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
+                                </div>
+                                <div class="weui-cell__ft"><span></span></div>
+                            </div>
+                            <div class="weui-cell with-margin-top">
+                                <div class="weui-cell__bd">
+                                    <p><span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span> <span class="small-width eq-width">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span> <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value}}</span></p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>时间：{{item?.service_order_return_apply_date}}</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>
+                                        地点：
+                                        {{getServiceProductSpecTypeInfoByKey('region', item).service_order_product_extend_value}}
+                                        {{getServiceProductSpecTypeInfoByKey('site', item).service_order_product_extend_value}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="weui-cell cell-operation">
+                                <div class="weui-cell__bd">
+                                    <span>支付金额 :<strong>￥{{item.total}}</strong></span>
+                                </div>
+                                <div class="weui-cell__bd button-sp-area">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
+                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                </div>
+                            </div>
                         </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
-                        </div>
+
                     </div>
                 </div>
 
-                <div class="empty-container" *ngIf="hasDone.isLoaded && hasDone.length===0">
+                <div class="empty-container" *ngIf="hasDone.isLoaded && hasDone.lists.length===0">
                     <div class="empty">
-                        <img src="/assets/images/empty.png" />
+                        <img src="/assets/images/empty.png"/>
                         <p>内容突然就没有了</p>
                     </div>
                 </div>
 
-                <weui-pagination [current]="hasDone.pagination.page" [total]="hasDone.pagination.total" (change)="change($event, 4)"></weui-pagination>
+                <weui-pagination [current]="hasDone.pagination.page" [total]="hasDone.pagination.total" (change)="change($event, 4)" *ngIf="hasDone.isLoaded && hasDone.lists.length"></weui-pagination>
 
             </div>
         </tab>
