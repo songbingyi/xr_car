@@ -4,19 +4,24 @@
     <weui-searchbar (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 
     <div class="weui-panel" *ngIf="value">
-        <div class="weui-panel__bd" *ngIf="searchMarkers.length; let items; else loading">
-            <div class="weui-cell weui-cell_access" *ngFor="let item of searchMarkers">
-                <div class="weui-cell__bd weui-cell_primary" (click)="onclickItem(item);">
-                    <p>{{item.site_name}}</p>
+        <div class="weui-panel__bd">
+            <div *ngIf="!loading">
+                <div class="weui-cell weui-cell_access" *ngFor="let item of searchMarkers">
+                    <div class="weui-cell__bd weui-cell_primary" (click)="onclickItem(item);">
+                        <p>{{item.site_name}}</p>
+                    </div>
                 </div>
             </div>
-            <div class="weui-media-box weui-media-box_text" *ngIf="searchMarkers?.length === 0">暂无数据</div>
+            <div class="weui-media-box weui-media-box_text" *ngIf="searchMarkers?.length === 0 && !loading">暂无数据</div>
+            <div class="weui-panel__bd" *ngIf="loading">
+                <div class="weui-media-box weui-media-box_text">正在查询...</div>
+            </div>
         </div>
-        <ng-template #loading>
+        <!--<ng-template #loading>
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">正在查询...</div>
             </div>
-        </ng-template>
+        </ng-template>-->
         <!--<a class="weui-panel__ft" href="javascript:void(0);">
             <div class="weui-cell weui-cell_access weui-cell_link">
                 <div class="weui-cell__bd">More</div>

@@ -32,7 +32,7 @@ export class ConfirmOrderComponent implements OnInit {
         this.baseProvider.post('getServiceOrderDetail', {
             'service_order_id': id
         }).subscribe(order => {
-                if (order.status.succeed) {
+                if (order.status.succeed === '1') {
                     this.order = order.data.service_order_info;
                     this.isLoaded = true;
                 } else {

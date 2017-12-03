@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
     all: any = {
         pagination :  {
             page : 1,
-            total: 10
+            count: 10
         },
         lists : [],
         isLoaded : false
@@ -27,7 +27,7 @@ export class OrdersComponent implements OnInit {
     needPay: any = {
         pagination :  {
             page : 1,
-            total: 10
+            count: 10
         },
         lists : [],
         isLoaded : false
@@ -35,7 +35,7 @@ export class OrdersComponent implements OnInit {
     needProcess: any = {
         pagination :  {
             page : 1,
-            total: 10
+            count: 10
         },
         lists : [],
         isLoaded : false
@@ -43,7 +43,7 @@ export class OrdersComponent implements OnInit {
     processing: any = {
         pagination :  {
             page : 1,
-            total: 10
+            count: 10
         },
         lists : [],
         isLoaded : false
@@ -51,7 +51,7 @@ export class OrdersComponent implements OnInit {
     hasDone: any = {
         pagination :  {
             page : 1,
-            total: 10
+            count: 10
         },
         lists : [],
         isLoaded : false
@@ -86,11 +86,13 @@ export class OrdersComponent implements OnInit {
             'type'       : this.key
         })
             .subscribe(lists => {
-                if (lists.status.succeed) {
+                if (lists.status.succeed === '1') {
+                    let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.service_order_list;
-                    console.log(this.key);
-                    console.log(this[this.key]);
+                    this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);
+                    // console.log(this.key);
+                    // console.log(this[this.key]);
                 } else {
                     this.errorMessage = lists.status.error_desc;
                 }

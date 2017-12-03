@@ -97,7 +97,7 @@ export class CertificateComponent implements OnInit {
     getInitData() {
         this.baseService.post('getMemberCarList', {})
             .subscribe(cars => {
-                if (cars.status.succeed) {
+                if (cars.status.succeed === '1') {
                     this.cars = cars.data.member_car_list;
                 } else {
                     this.errorMessage = cars.status.error_desc;
@@ -106,16 +106,24 @@ export class CertificateComponent implements OnInit {
 
         this.baseService.post('getOpenRegionList', {})
             .subscribe(cities => {
-                if (cities.status.succeed) {
+                if (cities.status.succeed === '1') {
                     this.cities = this.groupRegionByPrefix(cities.data.region_list);
                 } else {
                     this.errorMessage = cities.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getSiteList', {})
+        this.baseService.post('getSiteList', {
+            'filter_info' : {
+                'site_name' : '',
+                'region_id' : '',
+                'site_category_id' : '',
+                'longitude_num' : '',
+                'latitude_num' : ''
+            }
+        })
             .subscribe(stations => {
-                if (stations.status.succeed) {
+                if (stations.status.succeed === '1') {
                     this.rebuildStation(stations.data.site_list);
                 } else {
                     this.errorMessage = stations.status.error_desc;
@@ -124,7 +132,7 @@ export class CertificateComponent implements OnInit {
 
         this.baseService.post('getServiceDateList', {})
             .subscribe(dates => {
-                if (dates.status.succeed) {
+                if (dates.status.succeed === '1') {
                     this.dates = dates.data.service_date_list;
                 } else {
                     this.errorMessage = dates.status.error_desc;
@@ -223,7 +231,7 @@ export class CertificateComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.shouldReservation = !this.memberDetail.member_auth_info.member_auth_status;
+                    this.shouldReservation = this.memberDetail.member_auth_info.member_auth_status === '0';
                     // this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
@@ -234,7 +242,7 @@ export class CertificateComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type'       : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -334,11 +342,11 @@ export class CertificateComponent implements OnInit {
     }
 
     goToUser() {
-        if (!this.memberDetail.member_auth_info.identity_auth_status) {
+        if (this.memberDetail.member_auth_info.identity_auth_status === '0') {
             this.router.navigate(['/userInfo']);
             return;
         }
-        if (!this.memberDetail.member_auth_info.car_auth_status) {
+        if (this.memberDetail.member_auth_info.car_auth_status === '0') {
             this.router.navigate(['/carInfo']);
         }
     }

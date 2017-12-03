@@ -161,7 +161,7 @@ export class LicenseComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.shouldReservation = !this.memberDetail.member_auth_info.member_auth_status;
+                    this.shouldReservation = this.memberDetail.member_auth_info.member_auth_status === '0';
                     // this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
@@ -172,7 +172,7 @@ export class LicenseComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type'       : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -273,11 +273,11 @@ export class LicenseComponent implements OnInit {
     }
 
     goToUser() {
-        if (!this.memberDetail.member_auth_info.identity_auth_status) {
+        if (this.memberDetail.member_auth_info.identity_auth_status === '0') {
             this.router.navigate(['/userInfo']);
             return;
         }
-        if (!this.memberDetail.member_auth_info.car_auth_status) {
+        if (this.memberDetail.member_auth_info.car_auth_status === '0') {
             this.router.navigate(['/carInfo']);
         }
     }

@@ -111,7 +111,7 @@ export class ReviewComponent implements OnInit {
     getInitData() {
         this.baseService.post('getMemberCarList', {})
             .subscribe(cars => {
-                if (cars.status.succeed) {
+                if (cars.status.succeed === '1') {
                     this.cars = cars.data.member_car_list;
                 } else {
                     this.errorMessage = cars.status.error_desc;
@@ -120,7 +120,7 @@ export class ReviewComponent implements OnInit {
 
         this.baseService.post('getOpenRegionList', {})
             .subscribe(cities => {
-                if (cities.status.succeed) {
+                if (cities.status.succeed === '1') {
                     this.cities = this.groupRegionByPrefix(cities.data.region_list);
                 } else {
                     this.errorMessage = cities.status.error_desc;
@@ -129,7 +129,7 @@ export class ReviewComponent implements OnInit {
 
         this.baseService.post('getSiteList', {})
             .subscribe(stations => {
-                if (stations.status.succeed) {
+                if (stations.status.succeed === '1') {
                     this.rebuildStation(stations.data.site_list);
                 } else {
                     this.errorMessage = stations.status.error_desc;
@@ -138,7 +138,7 @@ export class ReviewComponent implements OnInit {
 
         this.baseService.post('getServiceDateList', {})
             .subscribe(dates => {
-                if (dates.status.succeed) {
+                if (dates.status.succeed === '1') {
                     this.dates = dates.data.service_date_list;
                 } else {
                     this.errorMessage = dates.status.error_desc;
@@ -147,7 +147,7 @@ export class ReviewComponent implements OnInit {
 
         this.baseService.post('getCarTypeList', {})
             .subscribe(bartrailerType => {
-                if (bartrailerType.status.succeed) {
+                if (bartrailerType.status.succeed === '1') {
                     this.bartrailerType = bartrailerType.data.car_type_list;
                 } else {
                     this.errorMessage = bartrailerType.status.error_desc;
@@ -156,7 +156,7 @@ export class ReviewComponent implements OnInit {
 
         this.baseService.post('getCarTypeListAlter', {})
             .subscribe(bartrailerType => {
-                if (bartrailerType.status.succeed) {
+                if (bartrailerType.status.succeed === '1') {
                     this.bartrailerType = bartrailerType.data.car_type_list;
                 } else {
                     this.errorMessage = bartrailerType.status.error_desc;
@@ -244,7 +244,7 @@ export class ReviewComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.shouldReservation = !this.memberDetail.member_auth_info.member_auth_status;
+                    this.shouldReservation = this.memberDetail.member_auth_info.member_auth_status === '0';
                     // this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
@@ -324,7 +324,7 @@ export class ReviewComponent implements OnInit {
         let image : any = {};
         let sort_order = 0;
         let keys = Object.keys(uploaded).sort();
-        let image_type_id = this.imageTypeService.getTypeByKey('car_service_type_image').image_type_id;
+        let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
         keys.forEach(key => {
             let upload = uploaded[key];
             image.sort_order = sort_order++;
@@ -355,11 +355,11 @@ export class ReviewComponent implements OnInit {
     }
 
     goToUser() {
-        if (!this.memberDetail.member_auth_info.identity_auth_status) {
+        if (this.memberDetail.member_auth_info.identity_auth_status === '0') {
             this.router.navigate(['/userInfo']);
             return;
         }
-        if (!this.memberDetail.member_auth_info.car_auth_status) {
+        if (this.memberDetail.member_auth_info.car_auth_status === '0') {
             this.router.navigate(['/carInfo']);
         }
     }

@@ -104,7 +104,7 @@ export class CarInfoComponent implements OnInit {
     getInitData() {
         this.baseService.post('getProvinceCodeList', {})
             .subscribe(provinces => {
-                if (provinces.status.succeed) {
+                if (provinces.status.succeed === '1') {
                     this.provinces = provinces.data.province_code_list;
                     this.selectedProvince = this.provinces[0];
                     this.selectedProvince.selected = true;
@@ -117,16 +117,18 @@ export class CarInfoComponent implements OnInit {
 
         this.baseService.post('getCarPropertyList', {})
             .subscribe(carProperties => {
-                if (carProperties.status.succeed) {
+                if (carProperties.status.succeed === '1') {
                     this.carProperties = carProperties.data.car_property_list;
                 } else {
                     this.errorMessage = carProperties.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getCarTypeList', {})
+        this.baseService.post('getCarTypeList', {
+            'parent_id' : ''
+        })
             .subscribe(carTypes => {
-                if (carTypes.status.succeed) {
+                if (carTypes.status.succeed === '1') {
                     this.carTypes = carTypes.data.car_type_list;
                 } else {
                     this.errorMessage = carTypes.status.error_desc;
@@ -378,7 +380,7 @@ export class CarInfoComponent implements OnInit {
             }
         }*/)
             .subscribe(carList => {
-                if (carList.status.succeed) {
+                if (carList.status.succeed === '1') {
                     this.carInfo = carList.data.member_car_list;
                 } else {
                     this.errorMessage = carList.status.error_desc;
@@ -394,7 +396,7 @@ export class CarInfoComponent implements OnInit {
                 'plate_no' : cardId
             })
                 .subscribe(hasCarInfo => {
-                    if (hasCarInfo.status.succeed) {
+                    if (hasCarInfo.status.succeed === '1') {
                         if (hasCarInfo.data.car_info.car_id) {
                             this.hasCarInfo = hasCarInfo.data.car_info;
                             this.setCarDetail(this.hasCarInfo);
@@ -403,9 +405,13 @@ export class CarInfoComponent implements OnInit {
                             this.setCarDetail(null);
                         }
                     } else {
-                        this.errorMessage = hasCarInfo.status.error_desc;
+                        // this.errorMessage = hasCarInfo.status.error_desc;
+                        console.log(hasCarInfo.status.error_desc);
                     }
-                }, error => this.errorMessage = <any>error);
+                }, error => {
+                    console.log(error);
+                    /*this.errorMessage = <any>error*/
+                });
         } else {
             this.hasCarInfo = {};
             // this.setCarDetail(null);

@@ -12,7 +12,9 @@ export class UserComponent implements OnInit {
 
     member: any = {
         'member_info' : {},
-        'message_dashboard_info': {},
+        'message_dashboard_info': {
+            'new_message_count' : '0'
+        },
         'service_order_dashboard_info': {},
     };
     errorMessage: any;

@@ -28,7 +28,7 @@ export class CarListComponent implements OnInit {
             'member_id' : '1'
         })
             .subscribe(carList => {
-                if (carList.status.succeed) {
+                if (carList.status.succeed === '1') {
                     this.carList = carList.data.member_car_list;
                     this.carList.forEach(car => {
                         let plateNo = car.plate_no;
@@ -79,7 +79,7 @@ export class CarListComponent implements OnInit {
             }
         })
             .subscribe(carList => {
-                if (carList.status.succeed) {
+                if (carList.status.succeed === '1') {
                     this.carList = carList.data.member_car_list;
                 } else {
                     this.errorMessage = carList.status.error_desc;

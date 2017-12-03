@@ -37,7 +37,7 @@ export class PaymentComponent implements OnInit {
     }
 
     ngOnInit() {
-        let id = this.route.snapshot.paramMap.get('id');
+        let id = this.route.snapshot.queryParamMap.get('oid');
         this.loadOrder(id);
     }
 
@@ -45,7 +45,7 @@ export class PaymentComponent implements OnInit {
         this.baseProvider.post('getServiceOrderDetail', {
             'service_order_id': id
         }).subscribe(order => {
-                if (order.status.succeed) {
+                if (order.status.succeed === '1') {
                     this.order = order.data.service_order_info;
                     this.isLoaded = true;
                 } else {
@@ -64,21 +64,23 @@ export class PaymentComponent implements OnInit {
         this.onShow('loading');
         let service_order_id = this.order.service_order_id;
 
-        this.baseProvider.post('payWithWechat', {
-            'service_order_id': service_order_id
-        })
+        this.baseProvider.post('operatorServiceOrder', {
+            'submit_service_order_info': { 'service_order_id': service_order_id},
+            'operator_type' : 1
+        }, true)
             .subscribe(signData => {
-                if (signData.status.succeed) {
-                    let sign = signData.data;
-                    this.payResult = signData.data.sign_data;
+                if (signData.status.succeed === '1') {
+                    let signParam = JSON.parse(signData.data.payment_order_info.payment_order_param);
+                    // this.payResult = sign.payment_order_param;
+                    // console.log(signParam);
                     this.isLoaded = true;
                     this.wxService.onChooseWXPay({
-                        'appId'    : sign.appId,
-                        'timestamp': sign.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                        'nonceStr' : sign.nonceStr, // 支付签名随机串，不长于 32 位
-                        'package'  : sign.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+                        'appId'    : signParam.appId,
+                        'timestamp': signParam.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        'nonceStr' : signParam.nonceStr, // 支付签名随机串，不长于 32 位
+                        'package'  : signParam.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
                         'signType' : 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                        'paySign'  : sign.paySign, // 支付签名
+                        'paySign'  : signParam.paySign, // 支付签名
                         'success'  : (res) => {
                             // alert(JSON.stringify(res));
                             if (res.errMsg === 'chooseWXPay:ok') {

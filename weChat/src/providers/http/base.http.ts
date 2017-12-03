@@ -22,12 +22,14 @@ import { AuthService } from '../auth.service';
 @Injectable()
 export class BaseProvider {
 
-    url = config.prefix;
+    url = config.api;
     access_token = '';
 
     constructor(public http : Http, private authService: AuthService) {
-        console.log('Hello Base Provider');
+        // console.log('Hello Base Provider');
         this.access_token = this.authService.getToken();
+        // console.log('this.access_token');
+        // console.log(this.access_token);
     }
 
     headers : any;
@@ -81,16 +83,22 @@ export class BaseProvider {
     }
 
     post(name : any, data : any, isTest?) {
-        let url = config.prefix + '?access_token=' + this.access_token;
-        let path = apiBase[name];
+        let url = this.url + '?access_token=' + this.access_token;
+        let route = apiBase[name];
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
 
-        let urlSearchParams = this.setSearchParams(path, data);
+        let urlSearchParams = this.setSearchParams(route, data);
 
-        if (isTest) {
+        /*if (isTest) {
             url = 'http://218.244.158.175/xr_car_server/api_client/index.php' + '?access_token=' + this.access_token;
+        }*/
+
+        if (!config.production) {
+            url = url + '&route=' + route;
         }
+
+        // console.log("POST");
 
         return this.http.post(url, urlSearchParams, options)
             .map(this.extractData)

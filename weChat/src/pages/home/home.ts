@@ -53,8 +53,9 @@ export class HomeComponent implements OnInit {
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
-        this.baseService.post('getCarProductList', this.pagination)
-            .subscribe(products => {
+        this.baseService.post('getCarProductList', {
+            pagination: this.pagination
+        }).subscribe(products => {
                 if (products.status.succeed === '1') {
                     console.log(products);
                     this.products = this.products.concat(products.data.car_product_list);

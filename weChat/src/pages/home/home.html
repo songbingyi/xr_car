@@ -3,8 +3,8 @@
         <div class="full-with-page header-menu">
             <ul>
                 <li *ngFor="let serviceType of serviceTypes; index as index">
-                    <div class="header-menu-item" (click)="goModule(serviceType)" *ngIf="serviceType.service_type_status">
-                        <img [src]="'/assets/images/menu/' + serviceType.service_type_key + (serviceType.service_type_status === 2 ? '.grey.png' : '.png')"/>
+                    <div class="header-menu-item" (click)="goModule(serviceType)" *ngIf="serviceType.service_type_status === '1' || serviceType.service_type_status === '2'">
+                        <img [src]="'/assets/images/menu/' + serviceType.service_type_key + (serviceType.service_type_status === '2' ? '.grey.png' : '.png')"/>
                         <h3>{{serviceType.service_type_name}}</h3>
                     </div>
                 </li>

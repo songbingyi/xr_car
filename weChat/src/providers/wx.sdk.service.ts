@@ -1,7 +1,9 @@
 import {Observable} from 'rxjs/Rx';
-import {Http} from '@angular/http';
+import {Http, URLSearchParams} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {JWeiXinService} from 'ngx-weui/jweixin';
+
+import {config} from '../app/app.config';
 
 declare const wx : any;
 
@@ -14,6 +16,17 @@ export class WXSDKService {
     isWeChatPayReady: Boolean = false;
 
     constructor(private http : Http) {}
+
+    setSearchParams(path, data) {
+        let urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('route', path);
+        urlSearchParams.append('jsonText', JSON.stringify(data));
+        urlSearchParams.append('device_type', '40');
+        urlSearchParams.append('device_version', '1.0');
+        urlSearchParams.append('version_code', '1');
+        urlSearchParams.append('channel', '');
+        return urlSearchParams;
+    }
 
     init() {
         this.checkJsApi();
@@ -29,11 +42,16 @@ export class WXSDKService {
                 reject('config 注册失败');
             });
 
-            let url = encodeURIComponent(location.href.split('#')[0]);
+            // let url = encodeURIComponent(location.href.split('#')[0]);
+            let url = location.href.split('#')[0];
+
+            let urlSearchParams = this.setSearchParams('base/tools/getWxSignPackage', {'url' : url});
             // console.log(url);
-            this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)
+            // this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)
+            this.http.post(config.getWxSignPackage, urlSearchParams)
                 .map(response => {
-                    let a = response;
+                    // console.log(response.json().data.signPackage);
+                    // let a = response;
                     return response.json();
                 })
                 .catch((error : Response | any) => {
@@ -42,8 +60,7 @@ export class WXSDKService {
                     return Observable.throw(error);
                 })
                 .subscribe((response) => {
-                    let wxConfig : any = response;
-                    // wxConfig.debug = true;
+                    let wxConfig : any = response.data.signPackage;
                     wxConfig.jsApiList = [
                         // 所有要调用的 API 都要加到这个列表中
                         'chooseImage',
@@ -54,6 +71,7 @@ export class WXSDKService {
                         'chooseWXPay',
                         'hideAllNonBaseMenuItem'
                     ];
+                    // wxConfig.debug = true;
                     /*
                     debug     : false,
                     appId     : $scope.wxConfig.appId,
@@ -83,7 +101,7 @@ export class WXSDKService {
                     // alert("微信版本过低，请升级最新版本微信。");
                     self.isWeChatPayReady = false;
                 }
-                console.log(self.isWeChatPayReady);
+                // console.log(self.isWeChatPayReady);
                 // 以键值对的形式返回，可用的api值true，不可用为false
                 // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
             }

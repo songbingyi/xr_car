@@ -8,20 +8,14 @@ import {config} from '../app/app.config';
 
 @Injectable()
 export class AuthService {
-    member_id: any = '1';
-    token: any = 'SASMAL36SKLASKLAMSJKA980D';
+    member_id: any; // = '1';
+    token: any; // = '14cfdaad35c1005073b9b0b2c425beb3';
 
-    constructor(private localStorage: LocalStorage, private router: Router, private location: Location) {}
+    constructor(private localStorage: LocalStorage, private router: Router, private location: Location) {
+        this.parseSession();
+    }
 
-    checkLogin(isJustCheck?) {
-        let isLoggedIn = this.isLoggedIn();
-        if ( !isLoggedIn ) {
-            this.redirect();
-            return false;
-        }
-        if (isJustCheck) {
-            return true;
-        }
+    parseSession() {
         let session = this.getSession();
         if (session) {
             let member_id = session.split('__')[1];
@@ -33,6 +27,20 @@ export class AuthService {
                 this.token = token;
             }
         }
+    }
+
+    checkLogin(isJustCheck?) {
+        let isLoggedIn = this.isLoggedIn();
+        if ( !isLoggedIn ) {
+            this.redirect();
+            return false;
+        }
+        if (isJustCheck) {
+            return true;
+        }
+
+        this.parseSession();
+
         return true;
     }
 

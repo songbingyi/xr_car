@@ -1,7 +1,7 @@
 <div class="page">
     <div class="scroll-page">
         <!--<span (click)="changeMode('license');">驾照</span> | <span (click)="changeMode('car');">车辆</span> | <span (click)="changeMode('cert');">营运</span>-->
-        <div class="confirm-order" *ngIf="order.service_product_info.service_type.service_type_key === 'service_driving_license'">
+        <div class="confirm-order" *ngIf="order?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="order.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+        <div class="confirm-order" *ngIf="order?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -146,7 +146,7 @@
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="order.service_product_info.service_type.service_type_key === 'service_audit_car'">
+        <div class="confirm-order" *ngIf="order?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">

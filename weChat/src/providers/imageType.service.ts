@@ -27,7 +27,7 @@ export class ImageTypeList {
             .subscribe(imageTypeMap => {
                 if (imageTypeMap.status.succeed) {
                     this.imageTypeMap = imageTypeMap.data.image_type_list;
-                    console.log(this.imageTypeMap);
+                    // console.log(this.imageTypeMap);
                 } else {
                     this.errorMessage = imageTypeMap.status.error_desc;
                 }
@@ -40,7 +40,9 @@ export class ImageTypeList {
         for (let i = 0; i < len; i++) {
             let imageType = imageTypeMap[i];
             if (imageType.image_type_key === key) {
-                return imageType;
+                let result = JSON.parse(JSON.stringify(imageType));
+                delete result.image_type_name;
+                return result;
             }
         }
     }

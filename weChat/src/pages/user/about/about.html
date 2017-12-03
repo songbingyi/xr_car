@@ -1,8 +1,8 @@
 <div>
     <div class="user-header">
         <div class="user-bg">
-            <img class="avatar" src="/assets/images/user/avatar.default.png" />
-            <span class="username">陕汽控股</span>
+            <img class="avatar" [src]="member.member_info?.icon_image?.thumb || '/assets/images/user/avatar.default.png'" />
+            <span class="username">{{member.member_info?.real_name || member.member_info?.member_name}}</span>
         </div>
     </div>
     <div class="weui-cells__title-empty"></div>
@@ -17,7 +17,7 @@
             <div class="weui-cell__bd">
                 <p>官方网站</p>
             </div>
-            <div class="weui-cell__ft"><a href="http://www.hsqc.com.cn/">http://www.hsqc.com.cn/</a></div>
+            <div class="weui-cell__ft"><a href="http://www.hsqc.com.cn/">http://www.hsqc.com.cn</a></div>
         </a>
     </div>
 </div>

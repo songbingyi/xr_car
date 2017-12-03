@@ -10,7 +10,8 @@ let config = {
     appid    : 'wx09fff9f719ae398e',
     url      : 'http://wx.lex-mung.com/',
     // prefix   : './assets/mock/',
-    prefix   : 'http://localhost:3100/api/mock/',
+    api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
+    getWxSignPackage : 'http://218.244.158.175/xr_car_server/api_client/index.php',
     production : production
 };
 
@@ -22,7 +23,8 @@ if (production) {
         salt_key : 'xr_car_client_519fee838e0b5dec',
         appid    : 'wx09fff9f719ae398e',
         url      : 'http://wx.lex-mung.com/',
-        prefix   : 'http://api.xrtruck.com/index.php',
+        api   : 'http://api.xrtruck.com/index.php',
+        getWxSignPackage : 'http://218.244.158.175/xr_car_server/api_client/index.php',
         production : production
     };
 }

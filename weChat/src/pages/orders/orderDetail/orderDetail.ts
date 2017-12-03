@@ -28,7 +28,7 @@ export class OrderDetailComponent implements OnInit {
             'service_order_id' : id
         })
             .subscribe(detail => {
-                if (detail.status.succeed) {
+                if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
                 } else {
@@ -74,7 +74,7 @@ export class OrderDetailComponent implements OnInit {
             'submit_service_order_info' : id
         })
             .subscribe(detail => {
-                if (detail.status.succeed) {
+                if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
                 } else {

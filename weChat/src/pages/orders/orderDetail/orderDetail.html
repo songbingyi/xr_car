@@ -9,7 +9,7 @@
             <p>订单状态：{{detail?.service_order_status_info.service_order_status_name}}</p>
             <p class="text-primary" [hidden]="!detail?.service_order_comment">原因：{{detail?.service_order_comment}}</p>
         </div>
-        <div class="confirm-order" *ngIf="detail.service_product_info.service_type.service_type_key === 'service_driving_license'">
+        <div class="confirm-order" *ngIf="detail?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="detail.service_product_info.service_type.service_type_key === 'service_operation_certificate'">
+        <div class="confirm-order" *ngIf="detail?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -177,7 +177,7 @@
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="detail.service_product_info.service_type.service_type_key === 'service_audit_car'">
+        <div class="confirm-order" *ngIf="detail?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">

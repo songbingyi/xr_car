@@ -7,6 +7,8 @@ import { Md5 } from '../../../providers/md5/md5';
 import { CustomValidators } from '../../../providers/custom.validators';
 import { BaseProvider } from '../../../providers/http/base.http';
 
+import { config } from '../../../app/app.config';
+
 
 @Component({
     selector    : 'app-user-info',
@@ -75,9 +77,9 @@ export class UserInfoComponent implements OnInit {
             'member_id' : '1'
         })
             .subscribe(memberDetail => {
-                if (memberDetail.status.succeed) {
+                if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.identityAuthStatus = !!this.memberDetail.member_auth_info.identity_auth_status;
+                    this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
@@ -100,7 +102,7 @@ export class UserInfoComponent implements OnInit {
             'verify_code' : this.userInfoForm.value.vcode
         })
             .subscribe(verifyCode => {
-                if (verifyCode.status.succeed) {
+                if (verifyCode.status.succeed === '1') {
                     this.verifyCode = verifyCode.data;
                     this.timeOut = 60;
                     this.timing = true;
@@ -125,7 +127,7 @@ export class UserInfoComponent implements OnInit {
             'verify_code' : this.updateForm.value.vcode
         })
             .subscribe(verifyCode => {
-                if (verifyCode.status.succeed) {
+                if (verifyCode.status.succeed === '1') {
                     this.verifyCode = verifyCode.data;
                     this.timeOut = 60;
                     this.timing = true;
@@ -149,12 +151,18 @@ export class UserInfoComponent implements OnInit {
         } else {
             this.errorMessage = '';
         }
+
+        console.log(phone);
+        console.log(config.salt_key);
+        console.log(phone + config.salt_key);
+        console.log(Md5.hashStr(phone + config.salt_key));
+
         this.baseService.post('getVerifyCode', {
             'mobile' : phone,
-            'code' : Md5.hashStr(this.localStorage.get('s') + phone)
+            'code' : Md5.hashStr(phone + config.salt_key)
         })
             .subscribe(verifyCode => {
-                if (verifyCode.status.succeed) {
+                if (verifyCode.status.succeed === '1') {
                     this.verifyCode = verifyCode.data;
                     this.timeOut = 60;
                     this.timing = true;

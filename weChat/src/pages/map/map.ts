@@ -27,6 +27,7 @@ declare const qq: any;
 export class MapComponent implements OnInit {
     options: any = {};
     status: string = '';
+    loading : Boolean = false;
     geoLocation : boolean = false;
 
     items: Observable<string[]>;
@@ -135,18 +136,21 @@ export class MapComponent implements OnInit {
     }
 
     loadMakers(options, type?) {
+        if (type) {
+            this.loading = true;
+        }
         return this.baseProvider.post('getSiteList', {"filter_info" : {
             "site_name" : options.name || '',
             "region_id" : "",
             "site_category_id" : "",
             "longitude_num" : options.latitude || this.latitude || 34.341568,
             "latitude_num" : options.longitude || this.longitude || 108.94075
-        }})
-            .subscribe(markers => {
+        }}).subscribe(markers => {
                     this.serviceNumber = 0;
                     this.reviewNumber = 0;
-                if (markers.status.succeed) {
+                if (markers.status.succeed === '1') {
                     if(type){
+                        this.loading = false;
                         this.searchMarkers = markers.data.site_list;
                         this.searchMarkers.forEach(marker=>{
                             // 服务站
@@ -161,6 +165,7 @@ export class MapComponent implements OnInit {
                             }
                             // this.setMarker(marker);
                         });
+                        return ;
                     }
                     this.markers = markers.data.site_list;
                     this.markers.forEach(marker=>{
@@ -180,9 +185,12 @@ export class MapComponent implements OnInit {
                     });
                 } else {
                     this.errorMessage = markers.status.error_desc;
+                    this.loading = false;
                 }
-            },
-            error => this.errorMessage = <any>error
+            }, error => {
+                this.errorMessage = <any>error;
+                this.loading = false;
+            }
         );
     }
 
