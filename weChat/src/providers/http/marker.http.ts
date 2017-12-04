@@ -19,7 +19,7 @@ import {config} from '../../app/app.config';
 @Injectable()
 export class MarkersProvider {
 
-    url = config.prefix;
+    url = config.api;
 
     constructor(public http: Http) {
         console.log('Hello Markers Provider');

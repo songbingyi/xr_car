@@ -7,7 +7,7 @@
             <div class="scroll-page">
                 <div *ngIf="all.isLoaded && all.lists.length">
                     <div *ngFor="let item of all.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -264,7 +264,7 @@
             <div class="scroll-page">
                 <div *ngIf="needPay.isLoaded && needPay.lists.length">
                     <div *ngFor="let item of needPay.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -289,7 +289,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -328,7 +328,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -388,7 +388,7 @@
             <div class="scroll-page">
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
                     <div *ngFor="let item of needProcess.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -413,7 +413,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -452,7 +452,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -512,7 +512,7 @@
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
                     <div *ngFor="let item of processing.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -537,7 +537,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -576,7 +576,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -636,7 +636,7 @@
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
                     <div *ngFor="let item of processing.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_driving_license'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -661,7 +661,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_operation_certificate'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
@@ -700,7 +700,7 @@
                             </div>
                         </div>
 
-                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_product_info?.service_type?.service_type_key === 'service_audit_car'">
+                        <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>

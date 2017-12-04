@@ -74,7 +74,7 @@ export class UserInfoComponent implements OnInit {
 
     getCarAndMemberInfo() {
         this.baseService.post('getMemberDetail', {
-            'member_id' : '1'
+            // 'member_id' : '1'
         })
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
@@ -95,20 +95,21 @@ export class UserInfoComponent implements OnInit {
         }
         console.log(this.userInfoForm.value);
         this.baseService.post('editMemberInfo', {
-            'member_id' : '1',
+            // 'member_id' : '1',
             'mobile' : this.userInfoForm.value.phone,
             'real_name'  : this.userInfoForm.value.username,
             'id_number'  : this.userInfoForm.value.userId,
-            'verify_code' : this.userInfoForm.value.vcode
+            'verify_code' : Md5.hashStr(this.userInfoForm.value.vcode + config.salt_key)
         })
-            .subscribe(verifyCode => {
-                if (verifyCode.status.succeed === '1') {
-                    this.verifyCode = verifyCode.data;
+            .subscribe(result => {
+                if (result.status.succeed === '1') {
+                    /*this.verifyCode = verifyCode.data;
                     this.timeOut = 60;
                     this.timing = true;
-                    this.timeLeft();
+                    this.timeLeft();*/
+                    this.getCarAndMemberInfo();
                 } else {
-                    this.errorMessage = verifyCode.status.error_desc;
+                    this.errorMessage = result.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -122,18 +123,19 @@ export class UserInfoComponent implements OnInit {
         }
         console.log(this.updateForm.value);
         this.baseService.post('editMemberInfo', {
-            'member_id' : '1',
+            // 'member_id' : '1',
             'mobile' : this.updateForm.value.phone,
-            'verify_code' : this.updateForm.value.vcode
+            'verify_code' : Md5.hashStr(this.updateForm.value.vcode + config.salt_key)
         })
-            .subscribe(verifyCode => {
-                if (verifyCode.status.succeed === '1') {
-                    this.verifyCode = verifyCode.data;
+            .subscribe(result => {
+                if (result.status.succeed === '1') {
+                    /*this.verifyCode = result.data;
                     this.timeOut = 60;
                     this.timing = true;
-                    this.timeLeft();
+                    this.timeLeft();*/
+                    this.getCarAndMemberInfo();
                 } else {
-                    this.errorMessage = verifyCode.status.error_desc;
+                    this.errorMessage = result.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -152,10 +154,10 @@ export class UserInfoComponent implements OnInit {
             this.errorMessage = '';
         }
 
-        console.log(phone);
-        console.log(config.salt_key);
-        console.log(phone + config.salt_key);
-        console.log(Md5.hashStr(phone + config.salt_key));
+        // console.log(phone);
+        // console.log(config.salt_key);
+        // console.log(phone + config.salt_key);
+        // console.log(Md5.hashStr(phone + config.salt_key));
 
         this.baseService.post('getVerifyCode', {
             'mobile' : phone,

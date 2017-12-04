@@ -170,6 +170,7 @@ export class LicenseComponent implements OnInit {
     }
 
     uploadImage(wechat_server_id, type) {
+        alert('wechat_server_id : ' + wechat_server_id);
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
             'image_type'       : this.imageTypeService.getTypeByKey('service_order_image')

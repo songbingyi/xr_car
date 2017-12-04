@@ -136,6 +136,19 @@ export class CarInfoComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
+    /*getMemberCarList() {
+        this.baseService.post('getCarTypeList', {
+            'parent_id' : ''
+        })
+            .subscribe(carTypes => {
+                if (carTypes.status.succeed === '1') {
+                    this.carTypes = carTypes.data.car_type_list;
+                } else {
+                    this.errorMessage = carTypes.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }*/
+
     validators(result) {
         this.errorMessage = '';
         return this.customValidators.isValid(result || this.result);
@@ -186,7 +199,7 @@ export class CarInfoComponent implements OnInit {
                 valid: true
             },
             f: {
-                value : item ? item.vin_no: '',
+                value : item ? item.vin_no : '',
                 valid: true
             },
             g: {
@@ -351,7 +364,7 @@ export class CarInfoComponent implements OnInit {
             path = 'editMemberCar';
             item.operator_type = type;
             item.car_info.car_id = this.car_id;
-            item.car_info.company_info.company_id = this.company_id;
+            item.car_info.company_info.company_id = '0'; // this.company_id;
         }
         this.baseService.post(path, item /*{
             'member_id' : '1',
@@ -381,7 +394,8 @@ export class CarInfoComponent implements OnInit {
         }*/)
             .subscribe(carList => {
                 if (carList.status.succeed === '1') {
-                    this.carInfo = carList.data.member_car_list;
+                    // this.carInfo = carList.data.member_car_list;
+                    this.router.navigate(['/carList']);
                 } else {
                     this.errorMessage = carList.status.error_desc;
                 }

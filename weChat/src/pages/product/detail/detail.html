@@ -2,7 +2,7 @@
     <div class="scroll-page">
         <div class="slider">
             <div *ngIf="images.length===1">
-                <img [src]="images[0].url" />
+                <img [src]="images[0].url || ''" />
             </div>
             <weui-swiper [options]="options" *ngIf="images.length>1" #wuiSwiper>
                 <div class="swiper-container">

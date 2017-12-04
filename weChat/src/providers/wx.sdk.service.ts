@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Rx';
-import {Http, URLSearchParams} from '@angular/http';
+import {Headers, Http, RequestOptions, URLSearchParams} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {JWeiXinService} from 'ngx-weui/jweixin';
 
@@ -24,8 +24,15 @@ export class WXSDKService {
         urlSearchParams.append('device_type', '40');
         urlSearchParams.append('device_version', '1.0');
         urlSearchParams.append('version_code', '1');
-        urlSearchParams.append('channel', '');
+        urlSearchParams.append('channel', '10001');
         return urlSearchParams;
+    }
+
+    getHeader() {
+        let headers = new Headers();
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return new RequestOptions({headers : headers});
     }
 
     init() {
@@ -33,7 +40,7 @@ export class WXSDKService {
         return new Promise((resolve, reject) => {
 
             wx.ready(() => {
-                wx.hideAllNonBaseMenuItem();
+                // wx.hideAllNonBaseMenuItem();
                 resolve(wx);
             });
 
@@ -44,14 +51,15 @@ export class WXSDKService {
 
             // let url = encodeURIComponent(location.href.split('#')[0]);
             let url = location.href.split('#')[0];
-
+            alert(url);
             let urlSearchParams = this.setSearchParams('base/tools/getWxSignPackage', {'url' : url});
             // console.log(url);
             // this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)
-            this.http.post(config.getWxSignPackage, urlSearchParams)
+            this.http.post(config.api, urlSearchParams, this.getHeader())
                 .map(response => {
                     // console.log(response.json().data.signPackage);
                     // let a = response;
+                    // console.log(response);
                     return response.json();
                 })
                 .catch((error : Response | any) => {
@@ -61,6 +69,8 @@ export class WXSDKService {
                 })
                 .subscribe((response) => {
                     let wxConfig : any = response.data.signPackage;
+                    // console.log(response);
+                    // console.log(wxConfig);
                     wxConfig.jsApiList = [
                         // 所有要调用的 API 都要加到这个列表中
                         'chooseImage',
@@ -68,10 +78,10 @@ export class WXSDKService {
                         'uploadImage',
                         'downloadImage',
                         'getLocation',
-                        'chooseWXPay',
-                        'hideAllNonBaseMenuItem'
+                        'chooseWXPay'/*,
+                        'hideAllNonBaseMenuItem'*/
                     ];
-                    // wxConfig.debug = true;
+                     wxConfig.debug = true;
                     /*
                     debug     : false,
                     appId     : $scope.wxConfig.appId,

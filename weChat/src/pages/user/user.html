@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="information">
-            <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" [routerLink]="['/carInfo']">车辆信息</a>
+            <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" (click)="goNext()">车辆信息</a>
         </div>
     </div>
 

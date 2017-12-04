@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgZone, OnDestroy} from '@angular/core';
 
 import {BaseProvider} from '../../providers/http/base.http';
+import {Router} from "@angular/router";
 
 @Component({
     selector    : 'app-user',
@@ -17,15 +18,15 @@ export class UserComponent implements OnInit {
         },
         'service_order_dashboard_info': {},
     };
+    carList: any = [];
     errorMessage: any;
 
-    constructor(private zone : NgZone, private baseProvider : BaseProvider) {
+    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router) {
+        this.hasCar();
     }
 
     ngOnInit() {
-        this.baseProvider.post('getMemberDashboard', {
-            'member_id' : '1'
-        })
+        this.baseService.post('getMemberDashboard', {})
             .subscribe(member => {
                     if (member.status.succeed === '1') {
                         this.member = member.data;
@@ -35,5 +36,26 @@ export class UserComponent implements OnInit {
                 },
                 error => this.errorMessage = <any>error
             );
+    }
+
+    hasCar() {
+        this.baseService.post('getMemberCarList', {})
+            .subscribe(carList => {
+                if (carList.status.succeed === '1') {
+                    this.carList = carList.data.member_car_list;
+                } else {
+                    // this.errorMessage = carList.status.error_desc;
+                }
+            }, error => {
+                // this.errorMessage = <any>error;
+            });
+    }
+
+    goNext() {
+        if (this.carList.length) {
+            this.router.navigate(['/carList']);
+        }else{
+            this.router.navigate(['/carInfo']);
+        }
     }
 }

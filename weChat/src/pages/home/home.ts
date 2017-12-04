@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
                     this.isLoading = false;
                     this.isLoaded = true;
 
-                    if ((!products.paginated.more) && !!callbackDone) {
+                    if ((products.paginated.more === '0') && !!callbackDone) {
                         return callbackDone();
                     }
 

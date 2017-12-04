@@ -20,7 +20,7 @@ console.log(config);
 @Injectable()
 export class ProductProvider {
 
-    url = config.prefix;
+    url = config.api;
 
     constructor(public http: Http) {
         console.log('Hello Product Provider');

@@ -23,7 +23,8 @@ if (production) {
         salt_key : 'xr_car_client_519fee838e0b5dec',
         appid    : 'wx09fff9f719ae398e',
         url      : 'http://wx.lex-mung.com/',
-        api   : 'http://api.xrtruck.com/index.php',
+        // api   : 'http://api.xrtruck.com/index.php',
+        api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
         getWxSignPackage : 'http://218.244.158.175/xr_car_server/api_client/index.php',
         production : production
     };

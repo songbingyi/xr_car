@@ -154,14 +154,14 @@ export class ReviewComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getCarTypeListAlter', {})
+        /*this.baseService.post('getCarTypeListAlter', {})
             .subscribe(bartrailerType => {
                 if (bartrailerType.status.succeed === '1') {
                     this.bartrailerType = bartrailerType.data.car_type_list;
                 } else {
                     this.errorMessage = bartrailerType.status.error_desc;
                 }
-            }, error => this.errorMessage = <any>error);
+            }, error => this.errorMessage = <any>error);*/
     }
 
     rebuildStation(stations) {

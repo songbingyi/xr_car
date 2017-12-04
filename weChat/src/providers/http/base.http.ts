@@ -78,7 +78,7 @@ export class BaseProvider {
         urlSearchParams.append('device_type', '40');
         urlSearchParams.append('device_version', '1.0');
         urlSearchParams.append('version_code', '1');
-        urlSearchParams.append('channel', '');
+        urlSearchParams.append('channel', '10001');
         return urlSearchParams;
     }
 
