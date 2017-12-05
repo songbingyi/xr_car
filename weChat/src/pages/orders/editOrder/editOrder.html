@@ -1,6 +1,5 @@
-<div class="page">
+<div class="page edit-order-page">
     <div class="scroll-page">
-        <!--<span (click)="changeMode('license');">驾照</span> | <span (click)="changeMode('car');">车辆</span> | <span (click)="changeMode('cert');">营运</span>-->
         <div class="order-bar">
             <span class="left">订单号：{{detail?.service_order_no}}</span>
             <span class="right">下单时间：{{detail?.service_order_date}}</span>
@@ -9,7 +8,7 @@
             <p>订单状态：{{detail?.service_order_status_info.service_order_status_name}}</p>
             <p class="text-primary" [hidden]="!detail?.service_order_comment">原因：{{detail?.service_order_comment}}</p>
         </div>
-        <div class="confirm-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
+        <div class="edit-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -38,21 +37,29 @@
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
+                                    <span (click)="choose('a')">修改</span>
+                                </div>
                                 <span>驾照正副本</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'" >
+                                    <span (click)="choose('b')">修改</span>
+                                </div>
                                 <span>人靠白墙半身照</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'"></div>
+                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'">
+                                    <span (click)="choose('c')">修改</span>
+                                </div>
                                 <span>身份证正面</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'">
+                                    <span (click)="choose('d')">修改</span>
+                                </div>
                                 <span>身份证反面</span>
                             </td>
                         </tr>
@@ -73,22 +80,10 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
-                    <!--<div class="weui-cell__bd">
-                        <span> </span>
-                    </div>-->
-                    <div class="weui-cell__bd button-sp-area">
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
-                        <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="deleteOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete">删除</a>-->
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
+        <div class="edit-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_operation_certificate'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -120,6 +115,14 @@
                     </div>
                     <div class="weui-cell__ft">{{detail?.service_order_return_apply_date}}</div>
                 </div>
+                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
+                    <div class="weui-cell__bd">
+                        <p>审验时间</p>
+                    </div>
+                    <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">
+                        {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
+                    </div>
+                </a>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
                         <p>检测地点</p>
@@ -138,11 +141,15 @@
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
+                                    <span (click)="choose('a')">修改</span>
+                                </div>
                                 <span>营运证</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
+                                    <span (click)="choose('b')">修改</span>
+                                </div>
                                 <span>行驶证</span>
                             </td>
                         </tr>
@@ -163,21 +170,10 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
-                    <!--<div class="weui-cell__bd">
-                        <span> </span>
-                    </div>-->
-                    <div class="weui-cell__bd button-sp-area">
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="confirm-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
+        <div class="edit-order" *ngIf="detail?.service_order_product_info?.service_type_info?.service_type_key === 'service_audit_car'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -209,6 +205,14 @@
                     </div>
                     <div class="weui-cell__ft">{{detail?.service_order_return_apply_date}}</div>
                 </div>
+                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
+                    <div class="weui-cell__bd">
+                        <p>审验时间</p>
+                    </div>
+                    <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">
+                        {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
+                    </div>
+                </a>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
                         <p>检测地点</p>
@@ -225,15 +229,20 @@
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===1">
                     <img class="single-img" [src]="detail?.service_order_product_info.service_order_product_image_list[0].thumb" style="height:150px;width: 250px;"/>
+                    <span (click)="choose('a')">修改</span>
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===2">
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
+                                    <span (click)="choose('a')">修改</span>
+                                </div>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
+                                    <span (click)="choose('b')">修改</span>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -253,20 +262,35 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
-                    <!--<div class="weui-cell__bd">
-                        <span> </span>
-                    </div>-->
-                    <div class="weui-cell__bd button-sp-area">
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
-                    </div>
-                </div>
             </div>
         </div>
 
+        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="editOrder(detail?.service_order_id)">确认提交</a>
+
     </div>
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay">付款</a>
+    <!--<a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay">付款</a>-->
+
+    <div class="" [hidden]="!showDateType">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-picker weui-animate-slide-up">
+            <div class="weui-picker__hd">
+                <a href="javascript:;" data-action="cancel" class="weui-picker__action" (click)="cancelTypeBox()">取消</a>
+                <a href="javascript:;" data-action="select" class="weui-picker__action" (click)="selectDateType()">确定</a>
+            </div>
+            <div class="weui-picker__bd">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label" for="date-{{date.service_date_id}}" *ngFor="let date of dates; index as index">
+                        <div class="weui-cell__bd">
+                            <p>{{date.service_date | date:'MM.dd'}}</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedDate" [value]="date" name="date" id="date-{{date.service_date_id}}">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

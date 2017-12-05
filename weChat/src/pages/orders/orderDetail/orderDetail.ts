@@ -3,6 +3,10 @@ import {BaseProvider} from '../../../providers/http/base.http';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { DialogService, DialogConfig } from 'ngx-weui/dialog';
+
+import { ToastComponent, ToastService } from 'ngx-weui/toast';
+
 @Component({
     selector    : 'app-order-detail',
     templateUrl : './orderDetail.html',
@@ -14,8 +18,9 @@ export class OrderDetailComponent implements OnInit {
     errorMessage: any;
     detail: any;
     isLoaded: Boolean = false;
+    dialogConfig: DialogConfig;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private sanitizer: DomSanitizer) {}
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService) {}
 
     ngOnInit() {
         let id: string = this.route.snapshot.paramMap.get('id');
@@ -46,30 +51,42 @@ export class OrderDetailComponent implements OnInit {
     /**
      * "操作类型
      * 1-付款
-     * 2-取消订单
-     * 3-删除订单
+     * 2-取消订单  (修改？)
+     * 3-删除订单 就是取消
      * 4-申请退款"
      */
-    // 修改
-    editOrder(id) {
-
-    }
     // 取消
     cancelOrder(id) {
-        this.operation(id, 2);
-    }
-    // 删除
-    deleteOrder(id) {
-        this.operation(id, 3);
+        this.dialogConfig = {
+            skin: 'ios',
+            backdrop: false,
+            content: '您确定要取消此订单吗？'
+        };
+        this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
+            if (res.value) {
+                this.operation(id, 3);
+            }
+        });
+        return false;
     }
     // 退款
     refundOrder(id) {
-        this.operation(id, 4);
+        this.dialogConfig = {
+            skin: 'ios',
+            backdrop: false,
+            content: '您确定要退款吗？'
+        };
+        this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
+            if (res.value) {
+                this.operation(id, 4);
+            }
+        });
+        return false;
     }
 
 
     operation(id, operation) {
-        this.baseService.post('getServiceOrderDetail', {
+        this.baseService.post('operatorServiceOrder', {
             'operator_type': operation,
             'submit_service_order_info' : id
         })
@@ -77,10 +94,19 @@ export class OrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
+                    this.showToast(operation);
                 } else {
                     this.errorMessage = detail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    showToast(operation) {
+        let msg = operation === 3 ? '取消订单成功' : '退款申请已提交请耐心等待';
+        this.toastService.success(msg);
+        setTimeout(() => {
+            this.toastService.hide();
+        }, 3000);
     }
 
     changeMode(type) {

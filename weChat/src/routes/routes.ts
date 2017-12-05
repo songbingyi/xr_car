@@ -28,6 +28,7 @@ import {ReviewComponent} from '../pages/review/review';
 
 import {OrdersComponent} from '../pages/orders/orders';
 import {OrderDetailComponent} from '../pages/orders/orderDetail/orderDetail';
+import {EditOrderComponent} from '../pages/orders/editOrder/editOrder';
 import {ConfirmOrderComponent} from '../pages/orders/confirmOrder/confirmOrder';
 
 import {MailComponent} from '../pages/orders/mail/mail';
@@ -47,12 +48,12 @@ const appRoutes: Routes = [
     {path : 'service_operation_certificate', component : CertificateComponent, canActivate: [AuthGuard]},
     {path : 'service_driving_license', component : LicenseComponent, canActivate: [AuthGuard]},
     {path : 'service_audit_car', component : ReviewComponent, canActivate: [AuthGuard]},
-    // {path : 'service_auditi_car', component : ReviewComponent, canActivate: [AuthGuard]},
     {path : 'detail/:id', component : DetailComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
     {path : 'orders/:status', component : OrdersComponent, canActivate: [AuthGuard]},
     {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},
+    {path : 'editOrder/:id', component : EditOrderComponent, canActivate: [AuthGuard]},
     {path : 'confirmOrder/:id', component : ConfirmOrderComponent, canActivate: [AuthGuard]},
     {path : 'mail', component : MailComponent, canActivate: [AuthGuard]},
     {path : 'payment', component : PaymentComponent, canActivate: [AuthGuard]},

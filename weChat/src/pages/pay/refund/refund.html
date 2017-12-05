@@ -1,7 +1,7 @@
 <div>
     <div class="order-bar">
-        <span class="left">订单号：219809170912</span>
-        <span class="right">下单时间：2017-08-06  12:43</span>
+        <span class="left">订单号：{{detail?.service_order_no}}</span>
+        <span class="right">下单时间：{{detail?.service_order_date}}</span>
     </div>
     <div class="refund-body">
         <div class="weui-cells">
@@ -9,7 +9,7 @@
                 <div class="weui-cell__bd">
                     <p>退款金额</p>
                 </div>
-                <div class="weui-cell__ft"><span class="text-warning">￥520</span></div>
+                <div class="weui-cell__ft"><span class="text-warning">￥{{detail?.total}}</span></div>
             </div>
             <div class="weui-cell weui-cell-special">
                 <div class="weui-cell__bd">
@@ -23,6 +23,6 @@
         </div>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">确认退款</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="refundOrder(detail?.service_order_id)">确认退款</a>
 
 </div>

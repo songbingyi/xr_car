@@ -60,6 +60,7 @@ import { PaymentTypeList } from '../providers/paymentType.service';
 import { BaseProvider } from '../providers/http/base.http';
 import { RedirectComponent } from '../pages/redirect/redirect';
 import { LoginComponent } from '../pages/login/login';
+import { EditOrderComponent } from '../pages/orders/editOrder/editOrder';
 
 @NgModule({
     declarations : [
@@ -93,7 +94,8 @@ import { LoginComponent } from '../pages/login/login';
         CategoryComponent,
         NotifyDetailComponent,
         RedirectComponent,
-        LoginComponent
+        LoginComponent,
+        EditOrderComponent
     ],
     imports      : [
         AppRoutingModule,

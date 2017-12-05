@@ -24,10 +24,10 @@
                                     <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -63,10 +63,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -102,10 +102,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -281,10 +281,9 @@
                                     <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -320,10 +319,9 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -359,10 +357,9 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -405,10 +402,9 @@
                                     <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -444,10 +440,9 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -483,10 +478,9 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -529,10 +523,10 @@
                                     <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -568,10 +562,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -607,10 +601,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -653,10 +647,10 @@
                                     <span>支付金额 :<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                                        <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>-->
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -692,10 +686,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -731,10 +725,10 @@
                                     <span>支付金额 :<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item.service_order_id]">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                                    <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>-->
+                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>

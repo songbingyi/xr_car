@@ -32,7 +32,7 @@ export class ReviewComponent implements OnInit {
 
     showDateType : Boolean = false;
 
-     selectedAllBartrailer: boolean = null; // 是否全选了所有挂车的挂箱和挂头 true，还是只选了一个 false
+    selectedAllBartrailer: Boolean = null; // 是否全选了所有挂车的挂箱和挂头 true，还是只选了一个 false
 
     showBartrailerType : Boolean = false;
     serviceType: any;
@@ -145,16 +145,9 @@ export class ReviewComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getCarTypeList', {})
-            .subscribe(bartrailerType => {
-                if (bartrailerType.status.succeed === '1') {
-                    this.bartrailerType = bartrailerType.data.car_type_list;
-                } else {
-                    this.errorMessage = bartrailerType.status.error_desc;
-                }
-            }, error => this.errorMessage = <any>error);
-
-        /*this.baseService.post('getCarTypeListAlter', {})
+        /*this.baseService.post('getCarTypeList', {
+            'parent_id' : ''
+        })
             .subscribe(bartrailerType => {
                 if (bartrailerType.status.succeed === '1') {
                     this.bartrailerType = bartrailerType.data.car_type_list;
@@ -162,6 +155,21 @@ export class ReviewComponent implements OnInit {
                     this.errorMessage = bartrailerType.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);*/
+
+        /**/
+    }
+
+    getBartrailerType(id) {
+        this.baseService.post('getCarTypeList', {
+            'parent_id' : id
+        })
+            .subscribe(bartrailerType => {
+                if (bartrailerType.status.succeed === '1') {
+                    this.bartrailerType = bartrailerType.data.car_type_list;
+                } else {
+                    this.errorMessage = bartrailerType.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
     }
 
     rebuildStation(stations) {
@@ -238,9 +246,7 @@ export class ReviewComponent implements OnInit {
     }
 
     getCarAndMemberInfo() {
-        this.baseService.post('getMemberDetail', {
-            'member_id' : '1'
-        })
+        this.baseService.post('getMemberDetail', {})
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
@@ -371,7 +377,7 @@ export class ReviewComponent implements OnInit {
             this.errorMessage = '所有信息为必填！';
             return;
         }
-        this.selectedAllBartrailer = this.result.bartrailer ? this.result.bartrailer.car_type_id === '1' : false;
+        this.selectedAllBartrailer = this.isBartrailer; // this.result.bartrailer ? this.result.bartrailer.car_type_id === '1' : false;
         this.errorMessage = '';
         this.initUploaded();
         this.showNext = true;
@@ -395,11 +401,12 @@ export class ReviewComponent implements OnInit {
     }
 
     onchange($event, item) {
-        this.isBartrailer = !!item.car_type_info.has_child;
+        this.isBartrailer = item.car_type_info.car_type_id === '4' || !!item.car_type_info.has_child;
         if (this.isBartrailer) {
             this.result.bartrailer = {
                 valid : true
             };
+            this.getBartrailerType(item.car_id);
         } else {
             delete this.result.bartrailer;
         }

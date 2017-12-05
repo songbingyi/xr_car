@@ -27,7 +27,7 @@ export class PaymentTypeList {
             .subscribe(paymentTypeMap => {
                 if (paymentTypeMap.status.succeed) {
                     this.paymentTypeMap = paymentTypeMap.data.payment_code_list;
-                    console.log(this.paymentTypeMap);
+                    // console.log(this.paymentTypeMap);
                 } else {
                     this.errorMessage = paymentTypeMap.status.error_desc;
                 }

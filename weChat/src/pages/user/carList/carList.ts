@@ -4,6 +4,9 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {BaseProvider} from '../../../providers/http/base.http';
 import {LocalStorage} from '../../../providers/localStorage';
 
+import { DialogService, DialogConfig } from 'ngx-weui/dialog';
+import { ToastComponent, ToastService } from 'ngx-weui/toast';
+
 @Component({
     selector    : 'app-carlist',
     templateUrl : './carList.html',
@@ -13,10 +16,12 @@ export class CarListComponent implements OnInit {
 
     errorMessage : any;
 
+    dialogConfig: DialogConfig;
+
     carList : any = [];
     carListIndex : string[] = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 
-    constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage) {
+    constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage, private toastService: ToastService, private dialogService: DialogService) {
         this.getInitData();
     }
 
@@ -48,7 +53,17 @@ export class CarListComponent implements OnInit {
     }
 
     delete(item) {
-        this.operation(3, item);
+        this.dialogConfig = {
+            skin: 'ios',
+            backdrop: false,
+            content: '您确定要退款吗？'
+        };
+        this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
+            if (res.value) {
+                this.operation(3, item);
+            }
+        });
+        return false;
     }
 
     operation(type, item) {
