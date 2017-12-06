@@ -38,7 +38,7 @@
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0]?.thumb + ')'"></div>
                                 <span>驾照正副本</span>
                             </td>
                             <td>
@@ -78,6 +78,7 @@
                         <span> </span>
                     </div>-->
                     <div class="weui-cell__bd button-sp-area">
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
@@ -118,7 +119,7 @@
                     <div class="weui-cell__bd">
                         <p>预约时间</p>
                     </div>
-                    <div class="weui-cell__ft">{{detail?.service_order_return_apply_date}}</div>
+                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('service_date').service_order_product_extend_value}}</div>
                 </div>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
@@ -168,6 +169,7 @@
                         <span> </span>
                     </div>-->
                     <div class="weui-cell__bd button-sp-area">
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
@@ -207,7 +209,7 @@
                     <div class="weui-cell__bd">
                         <p>预约时间</p>
                     </div>
-                    <div class="weui-cell__ft">{{detail?.service_order_return_apply_date}}</div>
+                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('service_date').service_order_product_extend_value}}</div>
                 </div>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
@@ -258,6 +260,7 @@
                         <span> </span>
                     </div>-->
                     <div class="weui-cell__bd button-sp-area">
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
@@ -269,4 +272,9 @@
 
     </div>
     <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay">付款</a>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
 </div>

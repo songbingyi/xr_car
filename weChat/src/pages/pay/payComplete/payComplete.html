@@ -26,4 +26,8 @@
     </div>
 </div>
 
+<div class="error-bar" [hidden]="!errorMessage">
+    <p>{{errorMessage}}</p>
+</div>
+
 <span (click)="isSuccess=false">成功</span> | <span (click)="isSuccess=true">失败</span>

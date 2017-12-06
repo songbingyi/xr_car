@@ -220,8 +220,8 @@ export class ReviewComponent implements OnInit {
                 'member_car_info'           : {
                     'car_id'             : this.result.car.car_id,
                     'province_code_info' : {
-                        'province_code_id' : this.result.car.province_code_info.province_code_name,
-                        'province_code_name' : this.result.car.province_code_info.province_code_id
+                        'province_code_id' : this.result.car.province_code_info.province_code_id,
+                        'province_code_name' : this.result.car.province_code_info.province_code_name
                     },
                     'plate_no'           : this.result.car.plate_no
                 },
@@ -298,8 +298,8 @@ export class ReviewComponent implements OnInit {
                     'member_car_info'           : {
                         'car_id'             : this.result.car.car_id,
                         'province_code_info' : {
-                            'province_code_id' : this.result.car.province_code_info.province_code_name,
-                            'province_code_name' : this.result.car.province_code_info.province_code_id
+                            'province_code_id' : this.result.car.province_code_info.province_code_id,
+                            'province_code_name' : this.result.car.province_code_info.province_code_name
                         },
                         'plate_no'           : this.result.car.plate_no
                     },

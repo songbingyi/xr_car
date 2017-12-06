@@ -27,7 +27,7 @@ export class RefundComponent implements OnInit {
     getInitData(id) {
         this.isLoaded = false;
         this.baseService.post('getServiceOrderDetail', {
-            'service_order_id' : id
+            'service_order_id' : {'service_order_id' : id }
         })
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {

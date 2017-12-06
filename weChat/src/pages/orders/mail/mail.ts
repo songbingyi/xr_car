@@ -11,6 +11,8 @@ export class MailComponent implements OnInit {
         txt : ''
     };
 
+    errorMessage: any;
+
     constructor() {
     }
 

@@ -36,8 +36,19 @@ export class OrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
+                    if (!this.detail.service_order_id) {
+                        this.showToast('没有找到此订单！');
+                        this.hideToast(() => {
+                            this.router.navigate(['/orders', 0]);
+                        });
+                    }
                 } else {
                     this.errorMessage = detail.status.error_desc;
+                    if (detail.status.error_code === '4004') {
+                        setTimeout(() => {
+                            this.router.navigate(['/orders', 0]);
+                        }, 2000);
+                    }
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -88,25 +99,46 @@ export class OrderDetailComponent implements OnInit {
     operation(id, operation) {
         this.baseService.post('operatorServiceOrder', {
             'operator_type': operation,
-            'submit_service_order_info' : id
+            'submit_service_order_info' : {'service_order_id' : id }
         })
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
-                    this.detail = detail.data.service_order_info;
-                    this.showToast(operation);
+                    // this.detail = detail.data.service_order_info;
+                    this.showResult(operation);
                 } else {
                     this.errorMessage = detail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
 
-    showToast(operation) {
+    showResult(operation) {
         let msg = operation === 3 ? '取消订单成功' : '退款申请已提交请耐心等待';
+        this.showToast(msg);
+        this.hideToast(() => {
+            if (operation === 3) {
+                this.router.navigate(['/orders', 0]);
+            }
+        });
+    }
+
+    showToast(msg) {
+        // let msg = operation === 3 ? '取消订单成功' : '退款申请已提交请耐心等待';
         this.toastService.success(msg);
+    }
+
+    hideToast(callback) {
+        /*this.toastService.hide();
+        if (callback) {
+            callback();
+        }*/
         setTimeout(() => {
             this.toastService.hide();
-        }, 3000);
+            if (callback) {
+                callback();
+            }
+        }, 2000);
+        // this.toastService.hide();
     }
 
     changeMode(type) {
@@ -126,6 +158,31 @@ export class OrderDetailComponent implements OnInit {
         return {};
     }
 
+    shouldShowPlaceholderBtn(item) {
+        let total = 0;
+        let obj: any = {};
 
+        if (item.service_order_status_info) {
+            obj = item.service_order_status_info;
+        }
+
+        if (obj.is_pay) {
+            total ++ ;
+        }
+
+        if (obj.is_edit) {
+            total ++ ;
+        }
+
+        if (obj.is_delete) {
+            total ++ ;
+        }
+
+        if (obj.is_return) {
+            total ++ ;
+        }
+
+        return total > 1;
+    }
 
 }

@@ -25,11 +25,11 @@ export class EditOrderComponent implements OnInit {
 
     selectedDate : any;
 
-    uploaded : any = {
-        a : null,
-        b : null,
-        c : null,
-        d : null
+    uploadedIndex : any = {
+        a : 0,
+        b : 1,
+        c : 2,
+        d : 3
     };
 
     result : any = {
@@ -62,7 +62,7 @@ export class EditOrderComponent implements OnInit {
         this.getInitData(id);
     }
 
-    initUploaded() {
+    /*initUploaded() {
         let key = this.detail.service_order_product_info.service_type_info.service_type_key;
 
         if (key === 'service_driving_license') { // 驾照
@@ -91,7 +91,7 @@ export class EditOrderComponent implements OnInit {
                 };
             }
         }
-    }
+    }*/
 
     getInitData(id?) {
         this.isLoaded = false;
@@ -102,7 +102,7 @@ export class EditOrderComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
-                    this.initUploaded();
+                    // this.initUploaded();
                 } else {
                     this.errorMessage = detail.status.error_desc;
                 }
@@ -168,11 +168,17 @@ export class EditOrderComponent implements OnInit {
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
-                    this.uploaded[type] = image_info.data.image_info.thumb;
+                    // this.uploaded[type] = image_info.data.image_info.thumb;
+                    this.setPictureToList(type, image_info.data.image_info.thumb);
                 } else {
                     this.errorMessage = image_info.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    setPictureToList(type, url) {
+        let index = this.uploadedIndex[type];
+        this.detail.service_order_product_info.service_order_product_image_list[index].thumb = url;
     }
 
     /*confirmOrder() {
@@ -229,18 +235,18 @@ export class EditOrderComponent implements OnInit {
 
     getUploadedData() {
         let images = this.detail.service_order_product_info.service_order_product_image_list;
-        let uploaded = this.uploaded;
+        // let uploaded = this.uploaded;
         let tmp = [];
         let image : any = {};
-        let sort_order = 0;
-        let keys = Object.keys(uploaded).sort();
+        // let sort_order = 0;
+        // let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
 
-        keys.forEach(key => {
-            let upload = uploaded[key];
-            image.sort_order = sort_order++;
+        images.forEach((picture, index ) => {
+            // let upload = uploaded[key];
+            image.sort_order = index;
             image.image_type_id = image_type_id;
-            image.image_url = upload;
+            image.image_url = picture.thumb;
             tmp.push(image);
         });
 

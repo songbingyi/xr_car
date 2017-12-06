@@ -118,4 +118,8 @@ export class OrdersComponent implements OnInit {
         return {};
     }
 
+    shouldShowPlaceholderBtn(item) {
+        return (item.service_order_status_info.is_pay === '1' && item.service_order_status_info.is_edit !== '1') || (item.service_order_status_info.is_pay !== '1' && item.service_order_status_info.is_edit === '1');
+    }
+
 }
