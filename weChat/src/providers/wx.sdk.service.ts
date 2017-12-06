@@ -81,7 +81,7 @@ export class WXSDKService {
                         'chooseWXPay'/*,
                         'hideAllNonBaseMenuItem'*/
                     ];
-                     wxConfig.debug = true;
+                     // wxConfig.debug = true;
                     /*
                     debug     : false,
                     appId     : $scope.wxConfig.appId,
