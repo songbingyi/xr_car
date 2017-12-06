@@ -1,6 +1,7 @@
 <div class="app-detail">
     <div class="scroll-page">
-        <div class="slider">
+        <div class="empty-image" *ngIf="images.length===0"></div>
+        <div class="slider"*ngIf="images.length">
             <div *ngIf="images.length===1">
                 <img [src]="images[0].url || ''" />
             </div>

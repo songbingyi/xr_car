@@ -5,7 +5,7 @@ import { AqmComponent } from 'angular-qq-maps';
 
 import { RatingComponent, RatingConfig } from 'ngx-weui/rating';
 
-import { TaobaoService } from './tb.service';
+// import { TaobaoService } from './tb.service';
 import { Observable } from 'rxjs/Rx';
 
 import {MarkersProvider} from '../../providers/http/marker.http';
@@ -13,7 +13,7 @@ import {MarkersProvider} from '../../providers/http/marker.http';
 import {MarkerModel} from '../../models/marker.model';
 
 import { WXSDKService } from '../../providers/wx.sdk.service';
-import {BaseProvider} from '../../providers/http/base.http';
+import { BaseProvider } from '../../providers/http/base.http';
 
 declare const qq: any;
 
@@ -22,7 +22,7 @@ declare const qq: any;
     templateUrl : './map.html',
     styleUrls   : ['./map.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ TaobaoService, BaseProvider ]
+    providers: [ BaseProvider ]
 })
 export class MapComponent implements OnInit {
     options: any = {};
@@ -97,8 +97,8 @@ export class MapComponent implements OnInit {
 
     private map: any;
     onReady(mapNative: any) {
-        let latitude = this.latitude || 34.341568;
-        let longitude = this.longitude || 108.940175;
+        let latitude = this.latitude || 108.940175;
+        let longitude = this.longitude || 34.341568;
 
         mapNative.setOptions({
             zoom: 12,
@@ -143,8 +143,8 @@ export class MapComponent implements OnInit {
             "site_name" : options.name || '',
             "region_id" : "",
             "site_category_id" : "",
-            "longitude_num" : options.latitude || this.latitude || 34.341568,
-            "latitude_num" : options.longitude || this.longitude || 108.94075
+            "longitude_num" : options.latitude || this.latitude || 108.94075,
+            "latitude_num" : options.longitude || this.longitude || 34.341568
         }}).subscribe(markers => {
                     this.serviceNumber = 0;
                     this.reviewNumber = 0;

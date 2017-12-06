@@ -51,7 +51,7 @@ export class WXSDKService {
 
             // let url = encodeURIComponent(location.href.split('#')[0]);
             let url = location.href.split('#')[0];
-            alert(url);
+            // alert(url);
             let urlSearchParams = this.setSearchParams('base/tools/getWxSignPackage', {'url' : url});
             // console.log(url);
             // this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)

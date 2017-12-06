@@ -62,7 +62,7 @@
                     <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.latitude_num}}&epointy={{currentMarker.longitude_num}}&eword={{currentMarker.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell" *ngIf="currentMarker.mobile || currentMarker.telephone">
                 <div class="weui-cell__bd">
                     <p>{{currentMarker.telephone}}{{currentMarker.telephone?'、':''}}{{currentMarker.mobile}}</p>
                 </div>

@@ -25,11 +25,14 @@ export class BaseProvider {
     url = config.api;
     access_token = '';
 
+    static self: any;
+
     constructor(public http : Http, private authService: AuthService) {
         // console.log('Hello Base Provider');
         this.access_token = this.authService.getToken();
         // console.log('this.access_token');
         // console.log(this.access_token);
+        BaseProvider.self = this;
     }
 
     headers : any;
@@ -120,7 +123,7 @@ export class BaseProvider {
         // console.log(body);
         // 整体判断是否登录信息过期。
         if (body.status.error_code === '2002') {
-            this.authService.redirect();
+            BaseProvider.self.authService.redirect();
             return {};
         }
         return body || {};

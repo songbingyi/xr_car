@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
     isLoading : Boolean = false;
     isLoaded : Boolean = false;
 
+    show: Boolean = false;
+
     serviceTypes: any = [];
 
     @ViewChild(InfiniteLoaderComponent) il;
@@ -50,6 +52,10 @@ export class HomeComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
         this.loadProducts();
+    }
+
+    ngAfterViewInit() {
+        this.bindEvent();
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
@@ -103,6 +109,17 @@ export class HomeComponent implements OnInit {
             this.myScrollContainer.nativeElement.scrollIntoView(); // this.myScrollContainer.nativeElement.scrollHeight;
         } catch (err) {
         }
+    }
+
+    bindEvent() {
+        console.log('bindEvent');
+        let content = document.querySelector('.weui-infiniteloader__content')[0];
+        /*content.addEventListener('scroll', (event) => {
+            console.log(event);
+        });
+        window.addEventListener('scroll', (event) => {
+            console.log(event);
+        });*/
     }
 
 }

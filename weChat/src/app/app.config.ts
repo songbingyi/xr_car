@@ -8,6 +8,7 @@ let config = {
     version  : 'v0.0.1',
     salt_key : 'xr_car_client_519fee838e0b5dec',
     appid    : 'wx09fff9f719ae398e',
+    apiKey   : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC', // 地图的 key
     url      : 'http://wx.lex-mung.com/',
     // prefix   : './assets/mock/',
     api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
@@ -22,6 +23,7 @@ if (production) {
         version  : 'v0.0.1',
         salt_key : 'xr_car_client_519fee838e0b5dec',
         appid    : 'wx09fff9f719ae398e',
+        apiKey   : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC', // 地图的 key
         url      : 'http://wx.lex-mung.com/',
         // api   : 'http://api.xrtruck.com/index.php',
         api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',

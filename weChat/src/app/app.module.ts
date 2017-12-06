@@ -62,6 +62,8 @@ import { RedirectComponent } from '../pages/redirect/redirect';
 import { LoginComponent } from '../pages/login/login';
 import { EditOrderComponent } from '../pages/orders/editOrder/editOrder';
 
+import {config} from './app.config';
+
 @NgModule({
     declarations : [
         AppComponent,
@@ -107,7 +109,7 @@ import { EditOrderComponent } from '../pages/orders/editOrder/editOrder';
         JsonpModule,
         WeUiModule.forRoot(),
         AqmModule.forRoot({
-            apiKey : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC' // app key为必选项
+            apiKey : config.apiKey // 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC' // app key为必选项
         }),
         TabsModule
     ],
