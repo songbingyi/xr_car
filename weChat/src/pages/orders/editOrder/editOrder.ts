@@ -228,12 +228,14 @@ export class EditOrderComponent implements OnInit {
     }*/
 
     getUploadedData() {
+        let images = this.detail.service_order_product_info.service_order_product_image_list;
         let uploaded = this.uploaded;
         let tmp = [];
         let image : any = {};
         let sort_order = 0;
         let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
+
         keys.forEach(key => {
             let upload = uploaded[key];
             image.sort_order = sort_order++;
@@ -241,6 +243,7 @@ export class EditOrderComponent implements OnInit {
             image.image_url = upload;
             tmp.push(image);
         });
+
         return tmp;
     }
 
