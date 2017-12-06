@@ -238,7 +238,7 @@ export class ReviewComponent implements OnInit {
             .subscribe(price => {
                 if (price.status.succeed === '1') {
                     this.service_product_info = price.data.service_product_info;
-                    this.price = price.data.service_product_info.price;
+                    this.price = (price.data.service_product_info.price - 0);
                 } else {
                     this.errorMessage = price.status.error_desc;
                 }

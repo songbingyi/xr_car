@@ -73,16 +73,18 @@ export class PaymentComponent implements OnInit {
                     let signParam = JSON.parse(signData.data.payment_order_info.payment_order_param);
                     // this.payResult = sign.payment_order_param;
                     // console.log(signParam);
+                    // alert(signData.data.payment_order_info.payment_order_param);
                     this.onHide('loading');
                     this.isLoaded = true;
+                    // let paySign = {}
                     this.wxService.onChooseWXPay({
-                        'appId'    : signParam.appId,
-                        'timestamp': signParam.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                        'nonceStr' : signParam.nonceStr, // 支付签名随机串，不长于 32 位
-                        'package'  : signParam.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-                        'signType' : signParam.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                        'paySign'  : signParam.paySign, // 支付签名
-                        'success'  : (res) => {
+                        // appid    : signParam.appId,
+                        timestamp: signParam.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        nonceStr : signParam.nonceStr, // 支付签名随机串，不长于 32 位
+                        package  : signParam.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+                        signType : signParam.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                        paySign  : signParam.paySign, // 支付签名
+                        success  : (res) => {
                             alert('success');
                             alert(JSON.stringify(res));
                             if (res.errMsg === 'chooseWXPay:ok') {
@@ -102,15 +104,15 @@ export class PaymentComponent implements OnInit {
                             }
                         },
                         'cancel'   : (res) => {
-                            alert('cancel');
-                            alert(JSON.stringify(res));
+                            // alert('cancel');
+                            // alert(JSON.stringify(res));
                             // alert('取消支付，请重试。');
                             this.setMessage('支付被取消，请重试。');
                             this.clearMessage();
                         },
                         fail     : (res) => {
-                            alert('fail');
-                            alert(JSON.stringify(res));
+                            // alert('fail');
+                            // alert(JSON.stringify(res));
                             // alert('支付失败，请重试。');
                             this.setMessage('支付失败，请重试。');
                             this.clearMessage();

@@ -1,18 +1,18 @@
-<div class="weui-msg" [hidden]="isSuccess">
+<div class="weui-msg" [hidden]="!(isLoaded && isSuccess)">
     <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
     <div class="weui-msg__text-area">
         <h2 class="weui-msg__title">付款成功</h2>
-        <p class="weui-msg__desc">您的订单支付已成功</p>
+        <p class="weui-msg__desc">您的订单支付已成功。</p>
     </div>
     <div class="weui-msg__opr-area">
         <p class="weui-btn-area">
-            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">查看订单</a>
-            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding">返回首页</a>
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [routerLink]="['/orderDetail', orderId]">查看订单</a>
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" [routerLink]="['/home']">返回首页</a>
         </p>
     </div>
 </div>
 
-<div class="weui-msg" [hidden]="!isSuccess">
+<div class="weui-msg" [hidden]="!(isLoaded && !isSuccess)">
     <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
     <div class="weui-msg__text-area">
         <h2 class="weui-msg__title">支付失败</h2>
@@ -20,8 +20,8 @@
     </div>
     <div class="weui-msg__opr-area">
         <p class="weui-btn-area">
-            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding">查看订单</a>
-            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding">返回首页</a>
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [routerLink]="['/orderDetail', orderId]">查看订单</a>
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" [routerLink]="['/home']">返回首页</a>
         </p>
     </div>
 </div>
@@ -30,4 +30,4 @@
     <p>{{errorMessage}}</p>
 </div>
 
-<span (click)="isSuccess=false">成功</span> | <span (click)="isSuccess=true">失败</span>
+<!--<span (click)="isSuccess=false">成功</span> | <span (click)="isSuccess=true">失败</span>-->

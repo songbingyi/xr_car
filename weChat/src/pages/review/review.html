@@ -92,7 +92,7 @@
                             {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
                         </div>
                     </a>
-                    <a class="weui-cell" href="javascript:;">
+                    <a class="weui-cell" href="javascript:;" *ngIf="price">
                         <div class="weui-cell__bd">
                             <p>费     用</p>
                         </div>
