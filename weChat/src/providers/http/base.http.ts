@@ -121,6 +121,7 @@ export class BaseProvider {
     private extractData(res : Response) {
         let body = res.json();
         // console.log(body);
+        // alert(JSON.stringify(body));
         // 整体判断是否登录信息过期。
         if (body.status.error_code === '2002') {
             BaseProvider.self.authService.redirect();
