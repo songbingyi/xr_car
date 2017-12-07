@@ -1,49 +1,52 @@
-import { NgZone, OnDestroy } from '@angular/core';
+import {NgZone, OnDestroy} from '@angular/core';
 /* tslint:disable */
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { AqmComponent } from 'angular-qq-maps';
+import {Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import {AqmComponent} from 'angular-qq-maps';
 
-import { RatingComponent, RatingConfig } from 'ngx-weui/rating';
+import {RatingComponent, RatingConfig} from 'ngx-weui/rating';
 
 // import { TaobaoService } from './tb.service';
-import { Observable } from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 
 import {MarkersProvider} from '../../providers/http/marker.http';
 
 import {MarkerModel} from '../../models/marker.model';
 
-import { WXSDKService } from '../../providers/wx.sdk.service';
-import { BaseProvider } from '../../providers/http/base.http';
+import {WXSDKService} from '../../providers/wx.sdk.service';
+import {BaseProvider} from '../../providers/http/base.http';
 
 declare const qq: any;
 
 @Component({
-    selector    : 'app-map',
-    templateUrl : './map.html',
-    styleUrls   : ['./map.scss'],
+    selector: 'app-map',
+    templateUrl: './map.html',
+    styleUrls: ['./map.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ BaseProvider ]
+    providers: [BaseProvider]
 })
 export class MapComponent implements OnInit {
     options: any = {};
     status: string = '';
-    loading : Boolean = false;
-    geoLocation : boolean = false;
+    loading: Boolean = false;
+    geoLocation: boolean = false;
+    distance : Number = 20000;
 
     items: Observable<string[]>;
     value: string;
 
     searchMarkers: any = [];
-    markers : any = [];
+    markers: any = [];
     currentMarker: any;
-    mapMarkers:any = [];
+    mapMarkers: any = [];
 
-    serviceNumber : number = 0;
-    reviewNumber : number = 0;
+    serviceNumber: number = 0;
+    reviewNumber: number = 0;
 
     isShowPhoneList: boolean = false;
 
-    errorMessage : any;
+    errorMessage: any;
+
+    isLoaded:Boolean = false;
 
     customIconsAndClassCog: RatingConfig = {
         cls: 'rating',
@@ -70,14 +73,15 @@ export class MapComponent implements OnInit {
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
         this.wxs = this.wxService.init();
-        this.wxs.then(res=>{
+        this.wxs.then(res => {
             this.getLocation();
         });
     }
 
-    ngAfterViewInit() {}
+    ngAfterViewInit() {
+    }
 
-    getLocation() {
+    getLocation(callback?) {
         this.wxService.onGetLocation({
             type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: (res) => {
@@ -85,6 +89,10 @@ export class MapComponent implements OnInit {
                 this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                 // let speed = res.speed; // 速度，以米/每秒计
                 // let accuracy = res.accuracy; // 位置精度
+                if( callback ){
+                    callback(this.latitude, this.longitude);
+                }
+
                 this.zone.run(() => {
                     this.panTo({
                         lat: this.latitude,
@@ -96,9 +104,10 @@ export class MapComponent implements OnInit {
     }
 
     private map: any;
+
     onReady(mapNative: any) {
-        let latitude = this.latitude || 108.940175;
-        let longitude = this.longitude || 34.341568;
+        let latitude = this.latitude || 34.341568;
+        let longitude = this.longitude || 108.940175;
 
         mapNative.setOptions({
             zoom: 12,
@@ -126,8 +135,8 @@ export class MapComponent implements OnInit {
         this.biggerSize = new qq.maps.Size(65, 72);
 
         this.loadMakers({
-            latitude : latitude,
-            longitude : longitude
+            latitude: latitude,
+            longitude: longitude
         });
     }
 
@@ -139,47 +148,51 @@ export class MapComponent implements OnInit {
         if (type) {
             this.loading = true;
         }
-        return this.baseProvider.post('getSiteList', {"filter_info" : {
-            "site_name" : options.name || '',
-            "region_id" : "",
-            "site_category_id" : "",
-            "longitude_num" : options.latitude || this.latitude || 108.94075,
-            "latitude_num" : options.longitude || this.longitude || 34.341568
-        }}).subscribe(markers => {
-                    this.serviceNumber = 0;
-                    this.reviewNumber = 0;
+        return this.baseProvider.post('getSiteList', {
+            'filter_info': {
+                'site_name': options.name || '',
+                'region_id': '',
+                'site_category_id': '',
+                'latitude_num': options.latitude || this.latitude || 34.341568,
+                'longitude_num': options.longitude || this.longitude || 108.94075,
+                'distance': this.distance
+            }
+        }).subscribe(markers => {
+                this.serviceNumber = 0;
+                this.reviewNumber = 0;
                 if (markers.status.succeed === '1') {
-                    if(type){
+                    this.isLoaded = true;
+                    if (type) {
                         this.loading = false;
                         this.searchMarkers = markers.data.site_list;
-                        this.searchMarkers.forEach(marker=>{
+                        this.searchMarkers.forEach(marker => {
                             // 服务站
-                            if (marker.site_category_info.site_category_id === "1") {
+                            if (marker.site_category_info.site_category_id === '1') {
                                 marker.icon = '/assets/images/marker/service.s.png';
                                 marker.type = 'service';
                             }
                             // 监测站
-                            if (marker.site_category_info.site_category_id === "2") {
+                            if (marker.site_category_info.site_category_id === '2') {
                                 marker.icon = '/assets/images/marker/review.s.png';
                                 marker.type = 'review';
                             }
                             // this.setMarker(marker);
                         });
-                        return ;
+                        return;
                     }
                     this.markers = markers.data.site_list;
-                    this.markers.forEach(marker=>{
+                    this.markers.forEach(marker => {
                         // 服务站
-                        if (marker.site_category_info.site_category_id === "1") {
+                        if (marker.site_category_info.site_category_id === '1') {
                             marker.icon = '/assets/images/marker/service.s.png';
                             marker.type = 'service';
-                            this.serviceNumber ++ ;
+                            this.serviceNumber++;
                         }
                         // 监测站
-                        if (marker.site_category_info.site_category_id === "2") {
+                        if (marker.site_category_info.site_category_id === '2') {
                             marker.icon = '/assets/images/marker/review.s.png';
                             marker.type = 'review';
-                            this.reviewNumber ++ ;
+                            this.reviewNumber++;
                         }
                         this.setMarker(marker);
                     });
@@ -197,7 +210,7 @@ export class MapComponent implements OnInit {
     setMarker(marker: any) {
         let aMarker = new qq.maps.Marker({
             position: new qq.maps.LatLng(marker.latitude_num, marker.longitude_num),
-            icon : new qq.maps.MarkerImage(marker.icon, this.normalSize, '', '', this.normalSize, ''),
+            icon: new qq.maps.MarkerImage(marker.icon, this.normalSize, '', '', this.normalSize, ''),
             map: this.map
         });
         aMarker.origin = marker;
@@ -207,7 +220,7 @@ export class MapComponent implements OnInit {
 
 
     bindClickToMaker(marker: any) {
-        qq.maps.event.addListener(marker, 'click', (event)=>{
+        qq.maps.event.addListener(marker, 'click', (event) => {
             this.restoreMakerSize(marker);
             this.showMarker(marker);
             /*marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
@@ -239,7 +252,7 @@ export class MapComponent implements OnInit {
 
     getSiteMarkerById(id) {
         let marker: any = {};
-        this.mapMarkers.forEach( m=>{
+        this.mapMarkers.forEach(m => {
             if (m.origin.site_id === id) {
                 marker = m;
             }
@@ -247,7 +260,7 @@ export class MapComponent implements OnInit {
         return marker;
     }
 
-    showInfoWindow(marker){
+    showInfoWindow(marker) {
         this.currentMarker = marker;
         this.rate = marker.rank_score;
     }
@@ -257,10 +270,11 @@ export class MapComponent implements OnInit {
         this.rate = 0;
     }
 
-    bindEvent() {}
+    bindEvent() {
+    }
 
     panTo(loc) {
-        if(this.map){
+        if (this.map) {
             this.map.panTo(new qq.maps.LatLng(loc.lat, loc.lng));
         }
     }
@@ -269,7 +283,7 @@ export class MapComponent implements OnInit {
         this.value = term;
         if (term) {
             this.loadMakers({
-                name : term
+                name: term
             }, 'search');
         }
     }
@@ -282,12 +296,18 @@ export class MapComponent implements OnInit {
         this.isShowPhoneList = false;
     }
 
+    refreshSite() {
+        this.getLocation((lat, lng)=>{
+            this.loadMakers({latitude: lat, longitude: lng});
+        });
+    }
+
     onCancel() {
-        console.log('onCancel')
+        console.log('onCancel');
     }
 
     onClear() {
-        console.log('onCancel')
+        console.log('onCancel');
     }
 
     onSubmit(value: string) {

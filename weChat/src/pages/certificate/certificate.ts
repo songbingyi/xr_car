@@ -113,11 +113,22 @@ export class CertificateComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
+        this.baseService.post('getServiceDateList', {})
+            .subscribe(dates => {
+                if (dates.status.succeed === '1') {
+                    this.dates = dates.data.service_date_list;
+                } else {
+                    this.errorMessage = dates.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    getSitList() {
         this.baseService.post('getSiteList', {
             'filter_info' : {
                 'site_name' : '',
-                'region_id' : '',
-                'site_category_id' : '',
+                'region_id' : this.result.city.region_id,
+                'site_category_id' : '2',
                 'longitude_num' : '',
                 'latitude_num' : ''
             }
@@ -127,15 +138,6 @@ export class CertificateComponent implements OnInit {
                     this.rebuildStation(stations.data.site_list);
                 } else {
                     this.errorMessage = stations.status.error_desc;
-                }
-            }, error => this.errorMessage = <any>error);
-
-        this.baseService.post('getServiceDateList', {})
-            .subscribe(dates => {
-                if (dates.status.succeed === '1') {
-                    this.dates = dates.data.service_date_list;
-                } else {
-                    this.errorMessage = dates.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -151,6 +153,10 @@ export class CertificateComponent implements OnInit {
     }
 
     showStation() {
+        if(!this.result.city.region_id){
+            this.errorMessage = '请先选择城市。';
+            return false;
+        }
         this.pickerService.show(this.stations, '', [0], {
             type: 'default',
             separator: '|',
@@ -392,6 +398,8 @@ export class CertificateComponent implements OnInit {
         this.result.city.valid = true;
         this.validators(this.result);
         this.fullPopup.close();
+        this.errorMessage = '';
+        this.getSitList();
     }
 
     showDateTypeBox() {

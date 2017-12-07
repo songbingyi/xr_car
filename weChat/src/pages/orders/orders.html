@@ -256,7 +256,7 @@
                     </div>
                 </div>
 
-                <weui-pagination [current]="all.pagination.page" [total]="all.pagination.total" (change)="change($event, 0)" *ngIf="all.isLoaded && all.lists.length"></weui-pagination>
+                <weui-pagination [nextText]="'下一页'" [current]="all.pagination.page" [total]="all.pagination.total" (change)="change($event, 0)" *ngIf="all.isLoaded && all.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -380,7 +380,7 @@
                     </div>
                 </div>
 
-                <weui-pagination [current]="needPay.pagination.page" [total]="needPay.pagination.total" (change)="change($event, 1)" *ngIf="needPay.isLoaded && needPay.lists.length"></weui-pagination>
+                <weui-pagination [nextText]="'下一页'" [current]="needPay.pagination.page" [total]="needPay.pagination.total" (change)="change($event, 1)" *ngIf="needPay.isLoaded && needPay.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -504,7 +504,7 @@
                     </div>
                 </div>
 
-                <weui-pagination [current]="needProcess.pagination.page" [total]="needProcess.pagination.total" (change)="change($event, 2)" *ngIf="needProcess.isLoaded && needProcess.lists.length"></weui-pagination>
+                <weui-pagination [nextText]="'下一页'" [current]="needProcess.pagination.page" [total]="needProcess.pagination.total" (change)="change($event, 2)" *ngIf="needProcess.isLoaded && needProcess.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -631,7 +631,7 @@
                     </div>
                 </div>
 
-                <weui-pagination [current]="processing.pagination.page" [total]="processing.pagination.total" (change)="change($event, 3)" *ngIf="processing.isLoaded && processing.lists.length"></weui-pagination>
+                <weui-pagination [nextText]="'下一页'" [current]="processing.pagination.page" [total]="processing.pagination.total" (change)="change($event, 3)" *ngIf="processing.isLoaded && processing.lists.length"></weui-pagination>
 
             </div>
         </tab>
@@ -755,7 +755,7 @@
                     </div>
                 </div>
 
-                <weui-pagination [current]="hasDone.pagination.page" [total]="hasDone.pagination.total" (change)="change($event, 4)" *ngIf="hasDone.isLoaded && hasDone.lists.length"></weui-pagination>
+                <weui-pagination [nextText]="'下一页'" [current]="hasDone.pagination.page" [total]="hasDone.pagination.total" (change)="change($event, 4)" *ngIf="hasDone.isLoaded && hasDone.lists.length"></weui-pagination>
 
             </div>
         </tab>

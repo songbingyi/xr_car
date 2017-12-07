@@ -15,7 +15,7 @@ export class MessageService {
      *        4-你的信息
      *        5-你的信息
      */
-    sendMessage(type: number) {
+    sendMessage(type: any) {
         // console.log('TAG' + '---------->>>' + type);
         this.subject.next({type: type});
     }

@@ -42,6 +42,12 @@
                         </div>
                         <div class="weui-cell__ft" [ngClass]="{'error':!result.licenseType.valid}">{{result.licenseType.driving_license_type_name || '请选择驾照类型'}}</div>
                     </a>
+                    <a class="weui-cell" href="javascript:;" *ngIf="price">
+                        <div class="weui-cell__bd">
+                            <p>费     用</p>
+                        </div>
+                        <div class="weui-cell__ft"><span class="text-warning">{{price}}</span></div>
+                    </a>
                 </div>
             </div>
             <div class="tab-content" [hidden]="!showNext">

@@ -12,6 +12,7 @@ import {ProductModel} from '../../models/product.model';
 import {InfiniteLoaderComponent} from 'ngx-weui/infiniteloader';
 
 import {Observable} from 'rxjs/Rx';
+import {MessageService} from '../../providers/messageService';
 
 @Component({
     selector    : 'app-home',
@@ -36,7 +37,12 @@ export class HomeComponent implements OnInit {
     @ViewChild(InfiniteLoaderComponent) il;
     @ViewChild('scrollMe') private myScrollContainer : ElementRef;
 
-    constructor(private baseService: BaseProvider, private router : Router, private localStorage: LocalStorage) {
+    constructor(private baseService: BaseProvider, private router : Router, private localStorage: LocalStorage, private message: MessageService) {
+        this.message.getMessage().subscribe(msg => {
+            if(msg.type === 'refresh'){
+                this.refresh();
+            }
+        });
     }
 
     status : string;
@@ -46,7 +52,6 @@ export class HomeComponent implements OnInit {
             .subscribe(serviceTypes => {
                 if (serviceTypes.status.succeed === '1') {
                     this.serviceTypes = serviceTypes.data.service_type_list;
-                    console.log(this.serviceTypes);
                 } else {
                     this.errorMessage = serviceTypes.status.error_desc;
                 }
@@ -55,7 +60,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        this.bindEvent();
+        // this.bindEvent();
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
@@ -63,11 +68,13 @@ export class HomeComponent implements OnInit {
             pagination: this.pagination
         }).subscribe(products => {
                 if (products.status.succeed === '1') {
-                    console.log(products);
+                    // console.log(products);
                     this.products = this.products.concat(products.data.car_product_list);
 
                     this.isLoading = false;
                     this.isLoaded = true;
+
+                    this.bindEvent();
 
                     if ((products.paginated.more === '0') && !!callbackDone) {
                         return callbackDone();
@@ -82,6 +89,12 @@ export class HomeComponent implements OnInit {
             },
             error => this.errorMessage = <any>error
         );
+    }
+
+    refresh() {
+        this.pagination.page = 1;
+        this.goTop();
+        this.loadProducts();
     }
 
     onLoadMore(comp : InfiniteLoaderComponent) {
@@ -104,7 +117,6 @@ export class HomeComponent implements OnInit {
     }
 
     goTop() {
-        // console.log(this.myScrollContainer.nativeElement.scrollTop);
         try {
             this.myScrollContainer.nativeElement.scrollIntoView(); // this.myScrollContainer.nativeElement.scrollHeight;
         } catch (err) {
@@ -112,14 +124,21 @@ export class HomeComponent implements OnInit {
     }
 
     bindEvent() {
-        console.log('bindEvent');
-        let content = document.querySelector('.weui-infiniteloader__content')[0];
-        /*content.addEventListener('scroll', (event) => {
-            console.log(event);
-        });
-        window.addEventListener('scroll', (event) => {
-            console.log(event);
-        });*/
+        let $body = document.querySelector('body');
+        let height = $body.clientHeight || $body.offsetHeight;
+        setTimeout(() => {
+            let content = document.querySelector('.weui-infiniteloader__content');
+             // console.log(content);
+            content.addEventListener('scroll', (event) => {
+                let scrollTop = content.scrollTop;
+                if( scrollTop > height){
+                    this.show = true;
+                }else{
+                    this.show = false;
+                }
+                console.log(content.scrollTop);
+            });
+        },0)
     }
 
 }

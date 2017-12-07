@@ -49,6 +49,12 @@
         font-size:18px;
         color:#B2B2B2;
     }
+
+    .refresh-site {
+        position: absolute;
+        bottom: 95px;
+        right: 0;
+    }
 }
 
 .info-window {
@@ -67,8 +73,8 @@
         }
     }
     .weui-cell {
-        height: 29px;
-        line-height: 29px;
+        height: 34px;
+        line-height: 34px;
         background:transparent;
     }
     .special-cell {
@@ -89,17 +95,17 @@
             }
         }
     }
-    
+
     .weui-cell__ft {
         img {
-            width:25px;
-            height:25px;
+            width: 30px;
+            height: 30px;
             position: relative;
-            top: 5px;
+            top: 6px;
             left: 0;
         }
     }
-    
+
     &.review {
         .special-cell {
             height:48px;

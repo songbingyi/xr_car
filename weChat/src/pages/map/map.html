@@ -31,11 +31,13 @@
     </div>
 
     <div class="information-bar" *ngIf="!currentMarker && markers.length>0">
-        <img src="/assets/images/icon/triangle.png" /> <span>方圆20公里共找到{{serviceNumber?(serviceNumber+'个服务站，'):''}}{{reviewNumber?(reviewNumber+'个检测站'):''}}</span>
+        <img src="/assets/images/icon/triangle.png" /> <span>方圆{{distance | distance}}共找到{{serviceNumber?(serviceNumber+'个服务站，'):''}}{{reviewNumber?(reviewNumber+'个检测站'):''}}</span>
     </div>
-    <div class="information-bar no-data" *ngIf="markers.length===0">
+    <div class="information-bar no-data" *ngIf="isLoaded && markers.length===0">
         <img src="/assets/images/icon/triangle.png" /> <span>暂无数据</span>
     </div>
+
+    <a class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn refresh-site" href="javascript:;" (click)="refreshSite()">刷新</a>
 
     <div class="info-window weui-cell-special" *ngIf="currentMarker" [ngClass]="{'review':currentMarker.type==='review'}">
         <div class="weui-cells">

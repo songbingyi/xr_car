@@ -55,6 +55,6 @@
                 </div>
             </div>
         </div>
-        <div class="goTop" (click)="goTop();" [hidden]="products.length && show"></div>
+        <div class="goTop" (click)="goTop();" [hidden]="(products.length && !show) || products.length===0"></div>
     </div>
 </weui-infiniteloader>

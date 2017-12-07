@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService) {
+    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService) {
 
     }
 
@@ -49,6 +49,7 @@ export class IndexComponent implements OnInit {
     }
 
     selected(item, index) {
+        this.refresh(item);
         this.tabs.forEach(tab => {
             tab.selected = '';
         });
@@ -59,7 +60,13 @@ export class IndexComponent implements OnInit {
         this.activeTabIndex = index;
         this.isLoggedIn(this.activeTabIndex);
         this.localStorage.set('activeTabIndex', index);
-        this.titleService.setTitle('轩仁车务-' + item.title);
+        // this.titleService.setTitle('轩仁车务-' + item.title);
+    }
+
+    refresh(item) {
+        if (item.selected) {
+            this.message.sendMessage('refresh');
+        }
     }
 
     setSelected() {
@@ -68,7 +75,7 @@ export class IndexComponent implements OnInit {
             tab.selected = '';
             if (activeTabIndex === index) {
                 tab.selected = 'weui-bar__item_on';
-                this.titleService.setTitle('轩仁车务-' + tab.title);
+                // this.titleService.setTitle('轩仁车务-' + tab.title);
             }
         });
 

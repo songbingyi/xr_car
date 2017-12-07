@@ -85,8 +85,8 @@ export class PaymentComponent implements OnInit {
                         signType : signParam.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                         paySign  : signParam.paySign, // 支付签名
                         success  : (res) => {
-                            alert('success');
-                            alert(JSON.stringify(res));
+                            // alert('success');
+                            // alert(JSON.stringify(res));
                             if (res.errMsg === 'chooseWXPay:ok') {
                                 // $scope.weChatPayObj.payingSuccess = true;
                                 this.onShow('success');
