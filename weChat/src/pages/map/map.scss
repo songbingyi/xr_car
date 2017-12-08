@@ -55,6 +55,15 @@
         bottom: 95px;
         right: 0;
     }
+
+    .csssprite {
+        max-width: unset !important;
+        max-height:unset !important;
+        min-width: unset !important;
+        min-height:unset !important;
+        width:100% !important;
+        height:100% !important;
+    }
 }
 
 .info-window {

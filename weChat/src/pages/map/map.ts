@@ -168,12 +168,12 @@ export class MapComponent implements OnInit {
                         this.searchMarkers.forEach(marker => {
                             // 服务站
                             if (marker.site_category_info.site_category_id === '1') {
-                                marker.icon = '/assets/images/marker/service.s.png';
+                                marker.icon = '/assets/images/marker/service.png';
                                 marker.type = 'service';
                             }
                             // 监测站
                             if (marker.site_category_info.site_category_id === '2') {
-                                marker.icon = '/assets/images/marker/review.s.png';
+                                marker.icon = '/assets/images/marker/review.png';
                                 marker.type = 'review';
                             }
                             // this.setMarker(marker);
@@ -184,13 +184,13 @@ export class MapComponent implements OnInit {
                     this.markers.forEach(marker => {
                         // 服务站
                         if (marker.site_category_info.site_category_id === '1') {
-                            marker.icon = '/assets/images/marker/service.s.png';
+                            marker.icon = '/assets/images/marker/service.png';
                             marker.type = 'service';
                             this.serviceNumber++;
                         }
                         // 监测站
                         if (marker.site_category_info.site_category_id === '2') {
-                            marker.icon = '/assets/images/marker/review.s.png';
+                            marker.icon = '/assets/images/marker/review.png';
                             marker.type = 'review';
                             this.reviewNumber++;
                         }
@@ -231,7 +231,7 @@ export class MapComponent implements OnInit {
     }
 
     showMarker(marker) {
-        let icon = marker.origin.icon.replace('.s.png', '.l.png');
+        let icon = marker.origin.icon.replace('.png', '.big.png');
         marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
         marker.setZIndex(9);
         this.zone.run(() => {
