@@ -112,8 +112,10 @@ export class HomeComponent implements OnInit {
     }
 
     goModule(serviceType) {
-        this.localStorage.setObject(serviceType.service_type_key, serviceType);
-        this.router.navigate([serviceType.service_type_key]);
+        if (serviceType.service_type_status === '1') {
+            this.localStorage.setObject(serviceType.service_type_key, serviceType);
+            this.router.navigate([serviceType.service_type_key]);
+        }
     }
 
     goTop() {
@@ -136,7 +138,7 @@ export class HomeComponent implements OnInit {
                 }else{
                     this.show = false;
                 }
-                console.log(content.scrollTop);
+                // console.log(content.scrollTop);
             });
         },0)
     }

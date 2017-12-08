@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
         'message_dashboard_info': {
             'new_message_count' : '0'
         },
-        'service_order_dashboard_info': {},
+        'service_order_dashboard_info': null,
     };
     carList: any = [];
     errorMessage: any;
@@ -49,6 +49,10 @@ export class UserComponent implements OnInit {
             }, error => {
                 // this.errorMessage = <any>error;
             });
+    }
+
+    hasNotify(key) {
+        return this.member.service_order_dashboard_info && this.member.service_order_dashboard_info[key] !== '0';
     }
 
     goNext() {
