@@ -97,6 +97,6 @@
         </div>
     </div>-->
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [hidden]="carList.length===3" [routerLink]="['/carInfo']">添加车辆</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [hidden]="carList.length===0 || carList.length===3" [routerLink]="['/carInfo']">添加车辆</a>
 
 </div>

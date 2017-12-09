@@ -111,6 +111,7 @@ import {config} from './app.config';
         JsonpModule,
         WeUiModule.forRoot(),
         AqmModule.forRoot({
+            apiLibraries:['geometry'],
             apiKey : config.apiKey // 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC' // app key为必选项
         }),
         TabsModule

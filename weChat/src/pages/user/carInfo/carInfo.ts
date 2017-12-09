@@ -241,13 +241,13 @@ export class CarInfoComponent implements OnInit {
     }
 
     showIdTypeBox() {
-        if ( !this.hasCarInfo.car_id ) {
+        if ( this.hasCarInfo.is_modify === '1' ) {
             this.showIdType = !this.showIdType;
         }
     }
 
     showCarTypeBox() {
-        if ( !this.hasCarInfo.car_id ) {
+        if ( this.hasCarInfo.is_modify === '1' ) {
             this.showCarType = !this.showCarType;
         }
     }

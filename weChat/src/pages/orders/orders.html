@@ -2,7 +2,7 @@
     <tabset (onSelect)="onTabSelect($event)">
         <tab [active]="activeIndex===0">
             <span *tabHeading class="tab-set-heading">
-                全部<q class="weui-badge" *ngIf="all.lists.length">{{all.lists.length}}</q>
+                全部<!--<q class="weui-badge" *ngIf="all.lists.length">{{all.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
                 <div *ngIf="all.isLoaded && all.lists.length">
@@ -12,7 +12,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
                                 <div class="weui-cell__bd">
@@ -38,7 +40,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -80,7 +84,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -266,7 +272,7 @@
         </tab>
         <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
-                待付款<q class="weui-badge" *ngIf="needPay.lists.length">{{needPay.lists.length}}</q>
+                待付款<!--<q class="weui-badge" *ngIf="needPay.lists.length">{{needPay.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
                 <div *ngIf="needPay.isLoaded && needPay.lists.length">
@@ -276,7 +282,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
                                 <div class="weui-cell__bd">
@@ -301,7 +309,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -342,7 +352,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -394,7 +406,7 @@
         </tab>
         <tab [active]="activeIndex===2">
             <span *tabHeading class="tab-set-heading">
-                待处理<q class="weui-badge" *ngIf="needProcess.lists.length">{{needProcess.lists.length}}</q>
+                待处理<!--<q class="weui-badge" *ngIf="needProcess.lists.length">{{needProcess.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
@@ -404,7 +416,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
                                 <div class="weui-cell__bd">
@@ -429,7 +443,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -470,7 +486,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -522,7 +540,7 @@
         </tab>
         <tab [active]="activeIndex===3">
             <span *tabHeading class="tab-set-heading">
-                处理中<q class="weui-badge" *ngIf="processing.lists.length">{{processing.lists.length}}</q>
+                处理中<!--<q class="weui-badge" *ngIf="processing.lists.length">{{processing.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
@@ -532,7 +550,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
                                 <div class="weui-cell__bd">
@@ -558,7 +578,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -600,7 +622,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -653,7 +677,7 @@
         </tab>
         <tab [active]="activeIndex===4">
             <span *tabHeading class="tab-set-heading">
-                已完成<q class="weui-badge" *ngIf="hasDone.lists.length">{{hasDone.lists.length}}</q>
+                已完成<!--<q class="weui-badge" *ngIf="hasDone.lists.length">{{hasDone.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
@@ -663,7 +687,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
                                 <div class="weui-cell__bd">
@@ -688,7 +714,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
@@ -729,7 +757,9 @@
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
-                                <div class="weui-cell__ft"><span></span></div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">

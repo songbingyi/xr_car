@@ -1,7 +1,7 @@
 <div class="map-container">
     <aqm-map #map [options]="options" (ready)="onReady($event)" style="height: 100%;"></aqm-map>
 
-    <weui-searchbar (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
+    <weui-searchbar (click)="onClick()" (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 
     <div class="weui-panel" *ngIf="value">
         <div class="weui-panel__bd">
@@ -48,17 +48,17 @@
                         <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
                     </p>
                 </div>
-                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{distance_format}}</span></div>
+                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarker.distance | distance}}<em>公里</em></span></div>
             </div>
             <div class="weui-cell" *ngIf="currentMarker.service">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.service_description}}</p>
+                    <p>主营服务：{{currentMarker.service_description}}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.site_address}}</p>
+                    <p>具体地址：{{currentMarker.site_address}}</p>
                 </div>
                 <div class="weui-cell__ft">
                     <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.latitude_num}}&epointy={{currentMarker.longitude_num}}&eword={{currentMarker.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
@@ -66,7 +66,7 @@
             </div>
             <div class="weui-cell" *ngIf="currentMarker.mobile || currentMarker.telephone">
                 <div class="weui-cell__bd">
-                    <p>{{currentMarker.telephone}}{{currentMarker.telephone?'、':''}}{{currentMarker.mobile}}</p>
+                    <p>联系电话：{{currentMarker.telephone}}{{(currentMarker.telephone && currentMarker.mobile) ? '、' : ''}}{{currentMarker.mobile}}</p>
                 </div>
                 <div class="weui-cell__ft" *ngIf="currentMarker.mobile&&currentMarker.telephone"><a (click)="showPhoneList()"><img src="/assets/images/icon/phone.png" /></a></div>
                 <div class="weui-cell__ft" *ngIf="(!currentMarker.mobile&&currentMarker.telephone) || (currentMarker.mobile&&!currentMarker.telephone)"><a href="{{'tel:' + (currentMarker.mobile || currentMarker.telephone)}}"><img src="/assets/images/icon/phone.png" /></a></div>

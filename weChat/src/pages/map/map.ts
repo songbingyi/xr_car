@@ -29,7 +29,11 @@ export class MapComponent implements OnInit {
     status: string = '';
     loading: Boolean = false;
     geoLocation: boolean = false;
-    distance : Number = 20000;
+    distances : any = [5000, 10000, 15000, 20000];
+    distanceIndex : any = 0;
+    distance : Number = this.distances[this.distanceIndex];
+
+    theNullMarker: any;
 
     items: Observable<string[]>;
     value: string;
@@ -98,6 +102,7 @@ export class MapComponent implements OnInit {
                         lat: this.latitude,
                         lng: this.longitude
                     });
+                    this.showPosition();
                 });
             }
         });
@@ -124,15 +129,31 @@ export class MapComponent implements OnInit {
             });
         });
 
+        qq.maps.event.addListener(this.map, 'bounds_changed', (event: any) => {
+            let bounds = this.map.getBounds();
+            let from = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.minX);
+            let to = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.maxX);
+            let distance = qq.maps.geometry ? qq.maps.geometry.spherical.computeDistanceBetween(from, to) : this.distance;
+            this.zone.run(() => {
+                this.distance = distance;
+                this.loadMakers({});
+            });
+        });
+
         //添加监听事件
         qq.maps.event.addListener(this.map, 'dragend', (event: any) => {
             this.zone.run(() => {
-                console.log(this.map.getCenter());
+                // console.log(this.map.getCenter());
             });
         });
 
         this.normalSize = new qq.maps.Size(40, 46);
         this.biggerSize = new qq.maps.Size(65, 72);
+
+        /*
+        marker.icon, this.normalSize, '', '', this.normalSize, ''
+        */
+        this.theNullMarker = new qq.maps.MarkerImage('', new qq.maps.Size(1, 1), '', '', new qq.maps.Point(0, 0), '');
 
         this.loadMakers({
             latitude: latitude,
@@ -140,8 +161,16 @@ export class MapComponent implements OnInit {
         });
     }
 
+
+
     ngOnInit() {
         this.bindEvent();
+    }
+
+    getDistance() {
+        this.distanceIndex ++ ;
+        this.distance = this.distances[this.distanceIndex];
+        return this.distance;
     }
 
     loadMakers(options, type?) {
@@ -161,6 +190,13 @@ export class MapComponent implements OnInit {
                 this.serviceNumber = 0;
                 this.reviewNumber = 0;
                 if (markers.status.succeed === '1') {
+                    if (markers.data && markers.data.site_list && markers.data.site_list.length===0) {
+                        if(this.distanceIndex <= this.distances.length) {
+                            this.getDistance();
+                            this.loadMakers(this.options);
+                        }
+                        return ;
+                    }
                     this.isLoaded = true;
                     if (type) {
                         this.loading = false;
@@ -232,6 +268,7 @@ export class MapComponent implements OnInit {
 
     showMarker(marker) {
         let icon = marker.origin.icon.replace('.png', '.big.png');
+        // marker.setIcon(this.theNullMarker);
         marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
         marker.setZIndex(9);
         this.zone.run(() => {
@@ -244,7 +281,8 @@ export class MapComponent implements OnInit {
         let icon = '';
         if (currentMapMarker) {
             icon = currentMapMarker.origin.icon;
-            currentMapMarker.setIcon(new qq.maps.MarkerImage(icon, this.normalSize), '', '', this.normalSize, '');
+            // currentMapMarker.setIcon(this.theNullMarker);
+            currentMapMarker.setIcon(new qq.maps.MarkerImage(icon, this.normalSize), this.normalSize, '', this.normalSize, '');
             currentMapMarker.setZIndex(0);
         }
         this.currentMapMarker = mapMarker;
@@ -280,6 +318,7 @@ export class MapComponent implements OnInit {
     }
 
     onSearch(term: string) {
+        // console.log("Search");
         this.value = term;
         if (term) {
             this.loadMakers({
@@ -302,16 +341,35 @@ export class MapComponent implements OnInit {
         });
     }
 
+    showPosition() {
+        let latitude = this.latitude || 34.341568;
+        let longitude = this.longitude || 108.940175;
+
+        let circleMarker = new qq.maps.Marker({
+            position: new qq.maps.LatLng(latitude, longitude),
+            clickable: false,
+            zIndex:99999,
+            icon: new qq.maps.MarkerImage('/assets/images/marker/location.png', new qq.maps.Size(25, 25), '', '', new qq.maps.Size(25, 25), ''),
+            map: this.map
+        });
+    }
+
+    onClick() {
+        // console.log('onClick');
+        this.restoreMakerSize();
+        this.hiddenInfoWindow();
+    }
+
     onCancel() {
-        console.log('onCancel');
+        // console.log('onCancel');
     }
 
     onClear() {
-        console.log('onCancel');
+        // console.log('onCancel');
     }
 
     onSubmit(value: string) {
-        console.log('onSubmit', value);
+        // console.log('onSubmit', value);
     }
 
     onclickItem(item) {

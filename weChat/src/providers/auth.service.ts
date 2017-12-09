@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild } from '@angular/router';
+import {Headers, Http, RequestOptions, URLSearchParams} from '@angular/http';
 
 import {LocalStorage} from './localStorage';
+import {BaseProvider} from './http/base.http';
 
 import {config} from '../app/app.config';
 
@@ -11,8 +13,9 @@ export class AuthService {
     member_id: any; // = '1';
     token: any; // = '14cfdaad35c1005073b9b0b2c425beb3';
 
-    constructor(private localStorage: LocalStorage, private router: Router, private location: Location) {
+    constructor(private localStorage: LocalStorage, private router: Router, private location: Location, private http : Http) {
         this.parseSession();
+        // this.updateMemberInfo();
     }
 
     parseSession() {
@@ -77,6 +80,41 @@ export class AuthService {
         if (sessionId) {
             this.localStorage.set('sessionId', sessionId);
         }
+    }
+
+    setSearchParams(path, data) {
+        let urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('route', path);
+        urlSearchParams.append('jsonText', JSON.stringify(data));
+        urlSearchParams.append('device_type', '40');
+        urlSearchParams.append('device_version', '1.0');
+        urlSearchParams.append('version_code', '1');
+        urlSearchParams.append('channel', '10001');
+        return urlSearchParams;
+    }
+
+    getHeader() {
+        let headers = new Headers();
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        return new RequestOptions({headers : headers});
+    }
+
+    updateMemberInfo() {
+        let urlSearchParams = this.setSearchParams('base/tools/updateMemberInfo', {'member_id':this.member_id});
+        this.http.post(config.api, urlSearchParams, this.getHeader())
+            .map(response => {
+                return response.json();
+            })
+            .subscribe(memberInfo => {
+            if (memberInfo.status.succeed === '1') {
+                // this.memberInfo = memberInfo.data;
+            } else {
+                // this.errorMessage = memberInfo.status.error_desc;
+            }
+        }, error => {
+            // this.errorMessage = <any>error;
+        });
     }
 
 }
