@@ -2,7 +2,7 @@ import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({name: 'distance'})
 export class DistancePipe implements PipeTransform {
-    transform(value, args: string[]) : any {
+    transform(value, args: string[], type?) : any {
         let string = ['米','公里'];
         let distance: any = parseInt(value, 10);
         let index = 0;
@@ -19,6 +19,12 @@ export class DistancePipe implements PipeTransform {
         }else{
             index = 0;
             result = Math.round(distance);
+        }
+
+        console.log(type);
+
+        if (type) {
+            return result;
         }
         return result + string[index];
     }

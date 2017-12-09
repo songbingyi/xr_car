@@ -48,9 +48,9 @@
                         <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
                     </p>
                 </div>
-                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarker.distance | distance}}<em>公里</em></span></div>
+                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarker.distance | distance:true}}<em>公里</em></span></div>
             </div>
-            <div class="weui-cell" *ngIf="currentMarker.service">
+            <div class="weui-cell" *ngIf="currentMarker.type==='service'">
                 <div class="weui-cell__bd">
                     <p>主营服务：{{currentMarker.service_description}}</p>
                 </div>

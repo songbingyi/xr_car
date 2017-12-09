@@ -173,7 +173,7 @@ export class LicenseComponent implements OnInit {
         alert('wechat_server_id : ' + wechat_server_id);
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('service_order_image')
+            'image_type_info'  : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -323,6 +323,9 @@ export class LicenseComponent implements OnInit {
 
 
     selectLicenseType() {
+        if(!this.selectedLicense) {
+            return ;
+        }
         this.result.licenseType = this.selectedLicense;
         this.result.licenseType.valid = true;
         this.validators(this.result);

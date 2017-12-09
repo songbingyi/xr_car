@@ -34,6 +34,7 @@ export class MapComponent implements OnInit {
     distance : Number = this.distances[this.distanceIndex];
 
     theNullMarker: any;
+    circleMarker : any;
 
     items: Observable<string[]>;
     value: string;
@@ -247,7 +248,8 @@ export class MapComponent implements OnInit {
         let aMarker = new qq.maps.Marker({
             position: new qq.maps.LatLng(marker.latitude_num, marker.longitude_num),
             icon: new qq.maps.MarkerImage(marker.icon, this.normalSize, '', '', this.normalSize, ''),
-            map: this.map
+            map: this.map,
+            flat: true
         });
         aMarker.origin = marker;
         this.mapMarkers.push(aMarker);
@@ -268,7 +270,10 @@ export class MapComponent implements OnInit {
 
     showMarker(marker) {
         let icon = marker.origin.icon.replace('.png', '.big.png');
-        // marker.setIcon(this.theNullMarker);
+        // marker.setIcon('/assets/images/marker/blank.png');
+        // console.log(marker.getIcon());
+        // marker.setIcon(new qq.maps.MarkerImage('/assets/images/marker/blank.png', this.biggerSize, '', '', this.biggerSize, ''))
+        // console.log(marker.getIcon());
         marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
         marker.setZIndex(9);
         this.zone.run(() => {
@@ -345,13 +350,19 @@ export class MapComponent implements OnInit {
         let latitude = this.latitude || 34.341568;
         let longitude = this.longitude || 108.940175;
 
-        let circleMarker = new qq.maps.Marker({
-            position: new qq.maps.LatLng(latitude, longitude),
-            clickable: false,
-            zIndex:99999,
-            icon: new qq.maps.MarkerImage('/assets/images/marker/location.png', new qq.maps.Size(25, 25), '', '', new qq.maps.Size(25, 25), ''),
-            map: this.map
-        });
+        if( this.circleMarker ) {
+            this.circleMarker.setMap(null);
+        }
+
+        if(qq && qq.maps && qq.maps.LatLng) {
+            this.circleMarker = new qq.maps.Marker({
+                position: new qq.maps.LatLng(latitude, longitude),
+                clickable: false,
+                zIndex:999,
+                icon: new qq.maps.MarkerImage('/assets/images/marker/location.png', new qq.maps.Size(25, 25), '', '', new qq.maps.Size(25, 25), ''),
+                map: this.map
+            });
+        }
     }
 
     onClick() {

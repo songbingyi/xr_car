@@ -53,12 +53,11 @@ export class CarInfoComponent implements OnInit {
     ]);
 
     cardIdv = new FormControl('', [
-        Validators.required,
-        this.customValidators.eq(6)
+        Validators.required/*,
+        this.customValidators.eq(17)*/
     ]);
     cardIdx = new FormControl('', [
-        Validators.required,
-        this.customValidators.eq(6)
+        Validators.required
     ]);
 
 
@@ -162,7 +161,7 @@ export class CarInfoComponent implements OnInit {
         this.localStorage.remove('carInfo');
     }
 
-    setCarDetail(item) {
+    setCarDetail(item, isNull?) {
         this.car_id = item ? item.car_id : '';
         this.company_id = item ? item.company_info.company_id : '';
 
@@ -241,18 +240,22 @@ export class CarInfoComponent implements OnInit {
     }
 
     showIdTypeBox() {
-        if ( this.hasCarInfo.is_modify === '1' ) {
+        if ( this.hasCarInfo.is_modify !== '0' ) {
             this.showIdType = !this.showIdType;
         }
     }
 
     showCarTypeBox() {
-        if ( this.hasCarInfo.is_modify === '1' ) {
+        if ( this.hasCarInfo.is_modify !== '0' ) {
             this.showCarType = !this.showCarType;
         }
     }
 
     selectIdType() {
+        console.log(this.selectedCarProperty);
+        if(!this.selectedCarProperty){
+            return;
+        }
         this.result.d = this.selectedCarProperty;
         this.result.d.valid = true;
         this.validators(this.result);
@@ -261,6 +264,10 @@ export class CarInfoComponent implements OnInit {
     }
 
     selectCarType() {
+        console.log(this.selectedCarType);
+        if(!this.selectedCarType){
+            return;
+        }
         this.result.e = this.selectedCarType;
         this.result.e.valid = true;
         this.validators(this.result);
@@ -278,18 +285,17 @@ export class CarInfoComponent implements OnInit {
         this.validators(this.result);
     }
 
-    filterData(result) {
+    filterData(result, car_id?) {
         return {
-            'member_id' : '1',
             'car_info' : {
-                'car_id' : '',
+                'car_id' : car_id || '',
                 'province_code_info' : {
                     'province_code_id' : result.a.province_code_id,
                     'province_code_name' : result.a.province_code_name
                 },
                 'plate_no' : result.b.value,
                 'company_info' : {
-                    'company_id' : '',
+                    'company_id' : '0',
                     'company_name' : result.c.value
                 },
                 'car_property_info' : {
@@ -307,7 +313,8 @@ export class CarInfoComponent implements OnInit {
     }
 
     submit() {
-        if (this.car_id) {
+        console.log(this.car_id);
+        if (this.car_id && !this.hasCarInfo.car_id) {
             this.update();
         } else {
             this.save();
@@ -325,7 +332,7 @@ export class CarInfoComponent implements OnInit {
 
         console.log(result);
 
-        let car_info = this.filterData(result);
+        let car_info = this.filterData(result, this.hasCarInfo.car_id || '');
 
         this.operation(0, car_info);
     }
@@ -416,7 +423,7 @@ export class CarInfoComponent implements OnInit {
                             this.setCarDetail(this.hasCarInfo);
                         } else {
                             this.hasCarInfo = {};
-                            this.setCarDetail(null);
+                            // this.setCarDetail(null, false);
                         }
                     } else {
                         // this.errorMessage = hasCarInfo.status.error_desc;

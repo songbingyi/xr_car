@@ -6,7 +6,7 @@
                 <div class="weui-cell__bd">
                     <p>车牌号</p>
                 </div>
-                <div class="weui-cell__ft"><span>{{item.province_code_info.province_code_name}}{{item.plate_no_formatted}}</span></div>
+                <div class="weui-cell__ft"><span>{{item.province_code_info.province_code_name}}{{item.plate_no_formatted | uppercase}}</span></div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -30,20 +30,20 @@
                 <div class="weui-cell__bd">
                     <p>车架号码</p>
                 </div>
-                <div class="weui-cell__ft">{{item.vin_no}}</div>
+                <div class="weui-cell__ft">{{item.vin_no | uppercase}}</div>
             </div>
             <div class="weui-cell no-border">
                 <div class="weui-cell__bd">
                     <p>发动机号</p>
                 </div>
-                <div class="weui-cell__ft">{{item.engine_no}}</div>
+                <div class="weui-cell__ft">{{item.engine_no | uppercase}}</div>
             </div>
             <div class="weui-cell cell-operation">
                 <div class="weui-cell__bd">
-                    <a *ngIf="item.is_modify" (click)="modify(item)">修改</a>
+                    <a *ngIf="item.is_modify === '1'" (click)="modify(item)">修改</a>
                 </div>
                 <div class="weui-cell__bd">
-                    <a *ngIf="item.is_delete" (click)="delete(item)">删除</a>
+                    <a *ngIf="item.is_delete === '1'" (click)="delete(item)">删除</a>
                 </div>
             </div>
         </div>

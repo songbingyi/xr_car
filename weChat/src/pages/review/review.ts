@@ -198,7 +198,15 @@ export class ReviewComponent implements OnInit {
             station.value = station.site_id;
             result.push(station);
         });
-        this.stations = [result];
+
+        if (stations.length) {
+            this.stations =  [result];
+        }else{
+            this.stations =  [[{
+                label : '此城市没有站点',
+                value : '-1'
+            }]];
+        }
     }
 
     showStation() {
@@ -284,7 +292,7 @@ export class ReviewComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type_info'  : this.imageTypeService.getTypeByKey('car_service_type_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -442,10 +450,13 @@ export class ReviewComponent implements OnInit {
     select(item) {
         this.result.city = item;
         this.result.city.valid = true;
+        this.getSitList();
+        this.result.station = {
+            valid : true
+        };
         this.validators(this.result);
         this.fullPopup.close();
         this.errorMessage = '';
-        this.getSitList();
     }
 
     showBartrailerTypeBox() {
@@ -453,6 +464,9 @@ export class ReviewComponent implements OnInit {
     }
 
     selectBartrailerType() {
+        if(!this.selectedBartrailer) {
+            return ;
+        }
         this.result.bartrailer = this.selectedBartrailer;
         this.result.bartrailer.valid = true;
         this.validators(this.result);
@@ -465,6 +479,9 @@ export class ReviewComponent implements OnInit {
     }
 
     selectDateType() {
+        if(!this.selectedDate) {
+            return ;
+        }
         this.result.date = this.selectedDate;
         this.result.date.valid = true;
         this.validators(this.result);

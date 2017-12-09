@@ -149,7 +149,15 @@ export class CertificateComponent implements OnInit {
             station.value = station.site_id;
             result.push(station);
         });
-        this.stations =  [result];
+
+        if (stations.length) {
+            this.stations =  [result];
+        }else{
+            this.stations =  [[{
+                label : '此城市没有站点',
+                value : '-1'
+            }]];
+        }
     }
 
     showStation() {
@@ -248,7 +256,7 @@ export class CertificateComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('service_order_image')
+            'image_type_info'  : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -396,10 +404,13 @@ export class CertificateComponent implements OnInit {
     select(item) {
         this.result.city = item;
         this.result.city.valid = true;
+        this.getSitList();
+        this.result.station = {
+            valid : true
+        };
         this.validators(this.result);
         this.fullPopup.close();
         this.errorMessage = '';
-        this.getSitList();
     }
 
     showDateTypeBox() {
@@ -407,6 +418,9 @@ export class CertificateComponent implements OnInit {
     }
 
     selectDateType() {
+        if(!this.selectedDate) {
+            return ;
+        }
         this.result.date = this.selectedDate;
         this.result.date.valid = true;
         this.validators(this.result);
