@@ -204,7 +204,8 @@ export class ReviewComponent implements OnInit {
         }else{
             this.stations =  [[{
                 label : '此城市没有站点',
-                value : '-1'
+                value : '-1',
+                disabled: true
             }]];
         }
     }
@@ -408,7 +409,7 @@ export class ReviewComponent implements OnInit {
             this.errorMessage = '所有信息为必填！';
             return;
         }
-        this.selectedAllBartrailer = this.isBartrailer; // this.result.bartrailer ? this.result.bartrailer.car_type_id === '1' : false;
+        this.selectedAllBartrailer = this.result.bartrailer ? this.result.bartrailer.car_type_id === '7' : false;
         this.errorMessage = '';
         this.initUploaded();
         this.showNext = true;
@@ -467,6 +468,7 @@ export class ReviewComponent implements OnInit {
         if(!this.selectedBartrailer) {
             return ;
         }
+        console.log(this.selectedBartrailer);
         this.result.bartrailer = this.selectedBartrailer;
         this.result.bartrailer.valid = true;
         this.validators(this.result);

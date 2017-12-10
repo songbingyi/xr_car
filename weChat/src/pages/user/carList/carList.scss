@@ -9,6 +9,12 @@
         line-height:50px;
         a {
             color: #1970A6;
+            &.text-info {
+                color:#9B9B9B;
+            }
+            &.disabled {
+
+            }
         }
     }
     .special-cell {

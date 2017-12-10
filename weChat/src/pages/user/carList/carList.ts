@@ -29,9 +29,7 @@ export class CarListComponent implements OnInit {
     }
 
     getInitData() {
-        this.baseService.post('getMemberCarList', {
-            'member_id' : '1'
-        })
+        this.baseService.post('getMemberCarList', {})
             .subscribe(carList => {
                 if (carList.status.succeed === '1') {
                     this.carList = carList.data.member_car_list;
@@ -40,6 +38,7 @@ export class CarListComponent implements OnInit {
                         let prefix = plateNo.slice(0, 1);
                         car.plate_no_formatted = plateNo.replace(prefix, (prefix + '·'));
                     });
+                    // this.carList[1].is_modify = '0';
                 } else {
                     this.errorMessage = carList.status.error_desc;
                 }
@@ -48,15 +47,21 @@ export class CarListComponent implements OnInit {
 
     modify(item) {
         // this.operation(2, item);
+        if(item.is_modify === '0') {
+            return;
+        }
         this.localStorage.setObject('carInfo', item);
         this.router.navigate(['/carInfo']);
     }
 
     delete(item) {
+        if(item.is_delete === '0') {
+            return;
+        }
         this.dialogConfig = {
             skin: 'ios',
             backdrop: false,
-            content: '您确定要退款吗？'
+            content: '您确定要删除此车辆吗？'
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
@@ -68,7 +73,6 @@ export class CarListComponent implements OnInit {
 
     operation(type, item) {
         this.baseService.post('editMemberCar', {
-            'member_id' : '1',
             'operator_type' : type,
             'car_info' : {
                 'car_id' : item.car_id,
@@ -95,7 +99,11 @@ export class CarListComponent implements OnInit {
         })
             .subscribe(carList => {
                 if (carList.status.succeed === '1') {
-                    this.carList = carList.data.member_car_list;
+                    if(type === 3) {
+                        this.getInitData();
+                    }else{
+                        // this.carList = carList.data.member_car_list;
+                    }
                 } else {
                     this.errorMessage = carList.status.error_desc;
                 }

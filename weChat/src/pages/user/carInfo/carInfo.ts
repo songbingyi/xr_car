@@ -1,42 +1,49 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormGroup, FormControl, FormBuilder} from '@angular/forms';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 import {CustomValidators} from '../../../providers/custom.validators';
 
 import {BaseProvider} from '../../../providers/http/base.http';
 import {LocalStorage} from '../../../providers/localStorage';
 
-import { errorCode } from '../../../assets/data/error.code';
+// import {errorCode} from '../../../assets/data/error.code';
+import { DialogService, DialogConfig } from 'ngx-weui/dialog';
+// import { ToastComponent, ToastService } from 'ngx-weui/toast';
 
 @Component({
-    selector    : 'app-car-info',
-    templateUrl : './carInfo.html',
-    styleUrls   : ['./carInfo.scss']
+    selector: 'app-car-info',
+    templateUrl: './carInfo.html',
+    styleUrls: ['./carInfo.scss']
 })
 export class CarInfoComponent implements OnInit {
 
+    dialogConfig: DialogConfig;
+
     carInfo: any;
 
-    showPanel : Boolean = false;
-    isShowImage : Boolean = false;
+    operationType: String = 'add';
+    shouldDelete: Boolean = false;
 
-    showIdType : Boolean = false;
-    showCarType : Boolean = false;
+    showPanel: Boolean = false;
+    isShowImage: Boolean = false;
 
-    errorMessage : any;
+    showIdType: Boolean = false;
+    showCarType: Boolean = false;
+
+    errorMessage: any;
 
     carProperties: any = [];
-    carTypes     : any = [];
+    carTypes: any = [];
 
-    provinces : Array<any>;
-    groupedProvince : Array<any>;
-    selectedProvince : any;
+    provinces: Array<any>;
+    groupedProvince: Array<any>;
+    selectedProvince: any;
 
     selectedCarProperty: any;
     selectedCarType: any;
 
-    rowLength : any = 10; // 每行几个省
+    rowLength: any = 10; // 每行几个省
 
     // 编辑时使用下面两个字段
     company_id: string;
@@ -61,11 +68,11 @@ export class CarInfoComponent implements OnInit {
     ]);
 
 
-    carInfoForm : FormGroup = this.builder.group({
-        cardId      : this.cardId,
-        companyName : this.companyName,
-        cardIdv     : this.cardIdv,
-        cardIdx     : this.cardIdx
+    carInfoForm: FormGroup = this.builder.group({
+        cardId: this.cardId,
+        companyName: this.companyName,
+        cardIdv: this.cardIdv,
+        cardIdx: this.cardIdx
     });
 
     result: any = {
@@ -92,7 +99,7 @@ export class CarInfoComponent implements OnInit {
         }
     };
 
-    constructor(private route : ActivatedRoute, private router: Router, private builder : FormBuilder, private customValidators : CustomValidators, private baseService : BaseProvider, private localStorage: LocalStorage) {
+    constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService) {
         this.getInitData();
     }
 
@@ -124,7 +131,7 @@ export class CarInfoComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
 
         this.baseService.post('getCarTypeList', {
-            'parent_id' : ''
+            'parent_id': ''
         })
             .subscribe(carTypes => {
                 if (carTypes.status.succeed === '1') {
@@ -156,12 +163,14 @@ export class CarInfoComponent implements OnInit {
     getCarDetail() {
         let carInfo = this.localStorage.getObject('carInfo');
         if (carInfo.car_id) {
+            this.operationType = 'edit';
             this.setCarDetail(carInfo);
+            this.shouldDelete = carInfo.is_delete === '1';
         }
         this.localStorage.remove('carInfo');
     }
 
-    setCarDetail(item, isNull?) {
+    setCarDetail(item) {
         this.car_id = item ? item.car_id : '';
         this.company_id = item ? item.company_info.company_id : '';
 
@@ -174,35 +183,35 @@ export class CarInfoComponent implements OnInit {
 
         this.result = {
             a: {
-                province_code_id : item ? item.province_code_info.province_code_id : '',
-                province_code_name : item ? item.province_code_info.province_code_name : '',
-                selected : true,
+                province_code_id: item ? item.province_code_info.province_code_id : '',
+                province_code_name: item ? item.province_code_info.province_code_name : '',
+                selected: true,
                 valid: true
             },
             b: {
-                value : item ? item.plate_no : '',
+                value: item ? item.plate_no : '',
                 valid: true
             },
             c: {
-                value : item ? item.company_info.company_name : '',
+                value: item ? item.company_info.company_name : '',
                 valid: true
             },
             d: {
-                car_property_id : item ? item.car_property_info.car_property_id : '',
-                car_property_name : item ? item.car_property_info.car_property_name : '',
+                car_property_id: item ? item.car_property_info.car_property_id : '',
+                car_property_name: item ? item.car_property_info.car_property_name : '',
                 valid: true
             },
             e: {
-                car_type_id : item ? item.car_type_info.car_type_id : '',
-                car_type_name : item ? item.car_type_info.car_type_name : '',
+                car_type_id: item ? item.car_type_info.car_type_id : '',
+                car_type_name: item ? item.car_type_info.car_type_name : '',
                 valid: true
             },
             f: {
-                value : item ? item.vin_no : '',
+                value: item ? item.vin_no : '',
                 valid: true
             },
             g: {
-                value : item ? item.engine_no : '',
+                value: item ? item.engine_no : '',
                 valid: true
             }
         };
@@ -240,20 +249,19 @@ export class CarInfoComponent implements OnInit {
     }
 
     showIdTypeBox() {
-        if ( this.hasCarInfo.is_modify !== '0' ) {
+        if (this.hasCarInfo.is_modify !== '0') {
             this.showIdType = !this.showIdType;
         }
     }
 
     showCarTypeBox() {
-        if ( this.hasCarInfo.is_modify !== '0' ) {
+        if (this.hasCarInfo.is_modify !== '0') {
             this.showCarType = !this.showCarType;
         }
     }
 
     selectIdType() {
-        console.log(this.selectedCarProperty);
-        if(!this.selectedCarProperty){
+        if (!this.selectedCarProperty) {
             return;
         }
         this.result.d = this.selectedCarProperty;
@@ -264,8 +272,7 @@ export class CarInfoComponent implements OnInit {
     }
 
     selectCarType() {
-        console.log(this.selectedCarType);
-        if(!this.selectedCarType){
+        if (!this.selectedCarType) {
             return;
         }
         this.result.e = this.selectedCarType;
@@ -287,36 +294,37 @@ export class CarInfoComponent implements OnInit {
 
     filterData(result, car_id?) {
         return {
-            'car_info' : {
-                'car_id' : car_id || '',
-                'province_code_info' : {
-                    'province_code_id' : result.a.province_code_id,
-                    'province_code_name' : result.a.province_code_name
+            'car_info': {
+                'car_id': car_id || '',
+                'province_code_info': {
+                    'province_code_id': result.a.province_code_id,
+                    'province_code_name': result.a.province_code_name
                 },
-                'plate_no' : result.b.value,
-                'company_info' : {
-                    'company_id' : '0',
-                    'company_name' : result.c.value
+                'plate_no': result.b.value,
+                'company_info': {
+                    'company_id': '0',
+                    'company_name': result.c.value
                 },
-                'car_property_info' : {
-                    'car_property_id' : result.d.car_property_id,
-                    'car_property_name' : result.d.car_property_name
+                'car_property_info': {
+                    'car_property_id': result.d.car_property_id,
+                    'car_property_name': result.d.car_property_name
                 },
-                'car_type_info' : {
-                    'car_type_id' : result.e.car_type_id,
-                    'car_type_name' : result.e.car_type_name
+                'car_type_info': {
+                    'car_type_id': result.e.car_type_id,
+                    'car_type_name': result.e.car_type_name
                 },
-                'vin_no' : result.f.value,
-                'engine_no' : result.g.value
+                'vin_no': result.f.value,
+                'engine_no': result.g.value
             }
         };
     }
 
     submit() {
-        console.log(this.car_id);
-        if (this.car_id && !this.hasCarInfo.car_id) {
+        if (this.car_id && this.operationType === 'edit') {
             this.update();
-        } else {
+        }
+
+        if (this.operationType === 'add') {
             this.save();
         }
     }
@@ -330,7 +338,7 @@ export class CarInfoComponent implements OnInit {
         }
         this.errorMessage = '';
 
-        console.log(result);
+        // console.log(result);
 
         let car_info = this.filterData(result, this.hasCarInfo.car_id || '');
 
@@ -351,7 +359,7 @@ export class CarInfoComponent implements OnInit {
         this.operation(2, car_info);
     }
 
-    delete(item) {
+    delete() {
         let result = this.result;
         let map = this.validators(result);
         if (!map.valid || this.carInfoForm.invalid) {
@@ -360,19 +368,31 @@ export class CarInfoComponent implements OnInit {
         }
         this.errorMessage = '';
 
-        let car_info = this.filterData(result);
-
-        this.operation(3, car_info);
+        this.dialogConfig = {
+            skin: 'ios',
+            backdrop: false,
+            content: '您确定要删除此车辆吗？'
+        };
+        this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
+            if (res.value) {
+                let car_info = this.filterData(result);
+                this.operation(3, car_info);
+            }
+        });
+        return false;
     }
 
     operation(type, item) {
         let path = 'addMemberCar';
-        if (type) {
+        if (this.operationType === 'edit') {
             path = 'editMemberCar';
             item.operator_type = type;
             item.car_info.car_id = this.car_id;
             item.car_info.company_info.company_id = '0'; // this.company_id;
         }
+        // console.log(path);
+        // console.log(item);
+
         this.baseService.post(path, item /*{
             'member_id' : '1',
             'operator_type' : type,
@@ -413,13 +433,14 @@ export class CarInfoComponent implements OnInit {
         console.log(cardId);
         if (cardId && cardId.length === 6) {
             this.baseService.post('getCarInfo', {
-                'province_code_id' : this.result.a.province_code_id,
-                'plate_no' : cardId
+                'province_code_id': this.result.a.province_code_id,
+                'plate_no': cardId
             })
                 .subscribe(hasCarInfo => {
                     if (hasCarInfo.status.succeed === '1') {
                         if (hasCarInfo.data.car_info.car_id) {
                             this.hasCarInfo = hasCarInfo.data.car_info;
+                            // this.hasCarInfo.is_modify = '0';
                             this.setCarDetail(this.hasCarInfo);
                         } else {
                             this.hasCarInfo = {};
@@ -447,11 +468,11 @@ export class CarInfoComponent implements OnInit {
     }
 
 
-    onItemChange(data : any) {
+    onItemChange(data: any) {
         console.log('onItemChange', data);
     }
 
-    onItemGroupChange(data : any) {
+    onItemGroupChange(data: any) {
         console.log('onItemGroupChange', data);
     }
 

@@ -131,15 +131,17 @@ export class HomeComponent implements OnInit {
         setTimeout(() => {
             let content = document.querySelector('.weui-infiniteloader__content');
              // console.log(content);
-            content.addEventListener('scroll', (event) => {
-                let scrollTop = content.scrollTop;
-                if( scrollTop > height){
-                    this.show = true;
-                }else{
-                    this.show = false;
-                }
-                // console.log(content.scrollTop);
-            });
+            if(content) {
+                content.addEventListener('scroll', (event) => {
+                    let scrollTop = content.scrollTop;
+                    if( scrollTop > height){
+                        this.show = true;
+                    }else{
+                        this.show = false;
+                    }
+                    // console.log(content.scrollTop);
+                });
+            }
         },0)
     }
 

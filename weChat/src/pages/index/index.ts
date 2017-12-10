@@ -42,14 +42,14 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit() : void {
-        let activeTabIndex : any = this.localStorage.get('activeTabIndex');
+        let activeTabIndex : any = this.localStorage.getS('activeTabIndex');
         this.activeTabIndex = activeTabIndex ? (activeTabIndex - 0) : 0;
         this.setSelected();
         this.isLoggedIn(this.activeTabIndex);
     }
 
     selected(item, index) {
-        this.refresh(item);
+        this.refresh(item, index);
         this.tabs.forEach(tab => {
             tab.selected = '';
         });
@@ -59,13 +59,18 @@ export class IndexComponent implements OnInit {
         // this.message.sendMessage(index);
         this.activeTabIndex = index;
         this.isLoggedIn(this.activeTabIndex);
-        this.localStorage.set('activeTabIndex', index);
+        this.localStorage.setS('activeTabIndex', index);
         // this.titleService.setTitle('轩仁车务-' + item.title);
     }
 
-    refresh(item) {
+    refresh(item, index) {
         if (item.selected) {
-            this.message.sendMessage('refresh');
+            if(index === 0){
+                this.message.sendMessage('refresh');
+            }
+            if(index === 2){
+                this.message.sendMessage('userRefresh');
+            }
         }
     }
 

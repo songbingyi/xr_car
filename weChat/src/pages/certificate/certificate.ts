@@ -155,7 +155,8 @@ export class CertificateComponent implements OnInit {
         }else{
             this.stations =  [[{
                 label : '此城市没有站点',
-                value : '-1'
+                value : '-1',
+                disabled: true
             }]];
         }
     }

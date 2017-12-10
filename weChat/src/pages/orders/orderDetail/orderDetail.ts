@@ -36,6 +36,7 @@ export class OrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
+                    // this.detail.service_order_comment = "这是一大段订单的状态描述";
                     if (!this.detail.service_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {

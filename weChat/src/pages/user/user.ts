@@ -3,6 +3,7 @@ import {NgZone, OnDestroy} from '@angular/core';
 
 import {BaseProvider} from '../../providers/http/base.http';
 import {Router} from "@angular/router";
+import {MessageService} from '../../providers/messageService';
 
 @Component({
     selector    : 'app-user',
@@ -21,8 +22,13 @@ export class UserComponent implements OnInit {
     carList: any = [];
     errorMessage: any;
 
-    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router) {
+    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService) {
         this.hasCar();
+        this.message.getMessage().subscribe(msg => {
+            if(msg.type === 'userRefresh'){
+                this.refresh();
+            }
+        });
     }
 
     ngOnInit() {
@@ -53,6 +59,11 @@ export class UserComponent implements OnInit {
 
     hasNotify(key) {
         return this.member.service_order_dashboard_info && this.member.service_order_dashboard_info[key] !== '0';
+    }
+
+    refresh() {
+        this.ngOnInit();
+        this.hasCar();
     }
 
     goNext() {

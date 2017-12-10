@@ -13,7 +13,7 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
@@ -41,14 +41,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -85,14 +85,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -239,7 +239,7 @@
                         <div class="weui-cell__bd">
                             <p>驾照审验</p>
                         </div>
-                        <div class="weui-cell__ft"><span class="text-warning">正在退款...</span></div>
+                        <div class="weui-cell__ft"><span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">正在退款...</span></div>
                     </div>
                     <div class="weui-cell with-padding-top">
                         <div class="weui-cell__bd">
@@ -283,7 +283,7 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
@@ -310,14 +310,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -353,14 +353,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -417,7 +417,7 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
@@ -444,14 +444,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -487,14 +487,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -551,7 +551,7 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
@@ -579,14 +579,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -623,14 +623,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -680,15 +680,15 @@
                 已完成<!--<q class="weui-badge" *ngIf="hasDone.lists.length">{{hasDone.lists.length}}</q>-->
             </span>
             <div class="scroll-page">
-                <div *ngIf="processing.isLoaded && processing.lists.length">
-                    <div *ngFor="let item of processing.lists; let index = index">
+                <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
+                    <div *ngFor="let item of hasDone.lists; let index = index">
                         <div class="weui-cells" [routerLink]="['/orderDetail', item.service_order_id]" *ngIf="item?.service_order_product_info?.service_type_info?.service_type_key === 'service_driving_license'">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top with-padding-bottom">
@@ -715,14 +715,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">
@@ -758,14 +758,14 @@
                                     <p>{{getServiceProductSpecTypeInfoByKey('service_type', item).service_order_product_extend_value}}</p>
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <span class="text-warning">{{item?.service_order_status_info.service_order_status_name}}</span>
+                                    <span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">{{item?.service_order_status_info.service_order_status_name}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell with-padding-top">
                                 <div class="weui-cell__bd">
                                     <span class="mini-width eq-width">性质：{{getServiceProductSpecTypeInfoByKey('car_property', item).service_order_product_extend_value}}</span>
                                     <span class="small-width eq-width text-center">类型：{{getServiceProductSpecTypeInfoByKey('car_type', item).service_order_product_extend_value}}</span>
-                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase}}</span>
+                                    <span class="normal-width eq-width">车牌号：{{getServiceProductSpecTypeInfoByKey('car_plate_no', item).service_order_product_extend_value | uppercase | plateFormat}}</span>
                                 </div>
                             </div>
                             <div class="weui-cell no-border">

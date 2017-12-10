@@ -45,6 +45,7 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
 
 import { KeysPipe } from '../pipes/keys';
 import { DistancePipe } from '../pipes/distance';
+import { PlateFormatPipe } from '../pipes/plate.format';
 
 import { FocusBlurDirective } from '../directives/focus.blur';
 
@@ -93,6 +94,7 @@ import {config} from './app.config';
 
         KeysPipe,
         DistancePipe,
+        PlateFormatPipe,
 
         NotifyComponent,
         CategoryComponent,

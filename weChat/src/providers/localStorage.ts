@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LocalStorage {
     public localStorage: any;
+    private sessionStorage: any;
 
     constructor() {
         if (!localStorage) {
             throw new Error('Current browser does not support Local Storage');
         }
+        this.sessionStorage = sessionStorage;
         this.localStorage = localStorage;
     }
 
@@ -29,5 +31,13 @@ export class LocalStorage {
 
     public remove(key: string): any {
         this.localStorage.removeItem(key);
+    }
+
+    public setS(key: string, value: string): void {
+        this.sessionStorage[key] = value;
+    }
+
+    public getS(key: string): string {
+        return this.sessionStorage[key] || false;
     }
 }

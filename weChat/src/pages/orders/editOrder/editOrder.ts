@@ -102,6 +102,7 @@ export class EditOrderComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
+                    // this.detail.service_order_status_info.service_order_status_id='22';
                     // this.initUploaded();
                 } else {
                     this.errorMessage = detail.status.error_desc;
@@ -274,6 +275,10 @@ export class EditOrderComponent implements OnInit {
      */
     // 修改
     editOrder(id) {
+        if( !this.result.date.service_date_id && this.detail.service_order_status_info.service_order_status_id==='32' ) {
+            this.errorMessage = '请选择审验时间！';
+            return;
+        }
         this.operation(id, 2);
     }
 
@@ -284,8 +289,8 @@ export class EditOrderComponent implements OnInit {
                 'service_order_id'                        : id,
                 'service_order_product_image_upload_list' : this.getUploadedData(),
                 'service_date'                            : {
-                    'service_date_id' : this.selectedDate.service_date_id,
-                    'service_date'    : this.selectedDate.service_date
+                    'service_date_id' : this.result.date.service_date_id,
+                    'service_date'    : this.result.date.service_date
                 }
             }
         })
@@ -323,14 +328,14 @@ export class EditOrderComponent implements OnInit {
 
     selectDateType() {
         this.result.date = this.selectedDate;
-        this.result.date.valid = true;
-        this.validators(this.result);
-        this.selectedDate = null;
+        // this.result.date.valid = true;
+        // this.validators(this.result);
+        // this.selectedDate = null;
         this.cancelTypeBox();
     }
 
     cancelTypeBox() {
-        this.selectedDate = null;
+        // this.selectedDate = null;
         this.showDateType = false;
     }
 

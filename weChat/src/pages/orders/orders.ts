@@ -73,7 +73,7 @@ export class OrdersComponent implements OnInit {
     }
 
     onTabSelect(event) {
-        console.log(event);
+        // console.log(event);
         this.key    = this.objKey[event];
         // this[this.key].pagination.page ++;
         this.getInitData();
@@ -120,6 +120,12 @@ export class OrdersComponent implements OnInit {
 
     shouldShowPlaceholderBtn(item) {
         return (item.service_order_status_info.is_pay === '1' && item.service_order_status_info.is_edit !== '1') || (item.service_order_status_info.is_pay !== '1' && item.service_order_status_info.is_edit === '1');
+    }
+
+    isWarning(item?) {
+        if( item ) {
+            return (item.service_order_status_info.service_order_status_id === '10' || item.service_order_status_info.service_order_status_id === '22');
+        }
     }
 
 }

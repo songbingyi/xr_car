@@ -38,13 +38,13 @@
                         <tr>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
-                                    <span (click)="choose('a')">修改</span>
+                                    <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>驾照正副本</span>
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'" >
-                                    <span (click)="choose('b')">修改</span>
+                                    <span (click)="choose('b')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>人靠白墙半身照</span>
                             </td>
@@ -52,13 +52,13 @@
                         <tr>
                             <td>
                                 <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'">
-                                    <span (click)="choose('c')">修改</span>
+                                    <span (click)="choose('c')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>身份证正面</span>
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'">
-                                    <span (click)="choose('d')">修改</span>
+                                    <span (click)="choose('d')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>身份证反面</span>
                             </td>
@@ -107,19 +107,19 @@
                     <div class="weui-cell__bd">
                         <p>车牌号码</p>
                     </div>
-                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('car_plate_no').service_order_product_extend_value | uppercase}}</div>
+                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('car_plate_no').service_order_product_extend_value | uppercase | plateFormat}}</div>
                 </div>
-                <div class="weui-cell weui-cell-small">
+                <div class="weui-cell weui-cell-small" *ngIf="detail?.service_order_status_info.service_order_status_id!=='32'">
                     <div class="weui-cell__bd">
                         <p>预约时间</p>
                     </div>
                     <div class="weui-cell__ft">{{detail?.service_order_return_apply_date}}</div>
                 </div>
-                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
+                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()" *ngIf="detail?.service_order_status_info.service_order_status_id==='32'">
                     <div class="weui-cell__bd">
                         <p>审验时间</p>
                     </div>
-                    <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">
+                    <div class="weui-cell__ft">
                         {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
                     </div>
                 </a>
@@ -142,13 +142,13 @@
                         <tr>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
-                                    <span (click)="choose('a')">修改</span>
+                                    <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>营运证</span>
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
-                                    <span (click)="choose('b')">修改</span>
+                                    <span (click)="choose('b')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                                 <span>行驶证</span>
                             </td>
@@ -197,19 +197,19 @@
                     <div class="weui-cell__bd">
                         <p>车牌号码</p>
                     </div>
-                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('car_plate_no').service_order_product_extend_value | uppercase}}</div>
+                    <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('car_plate_no').service_order_product_extend_value | uppercase | plateFormat}}</div>
                 </div>
-                <div class="weui-cell weui-cell-small">
+                <div class="weui-cell weui-cell-small" *ngIf="detail?.service_order_status_info.service_order_status_id!=='32'">
                     <div class="weui-cell__bd">
                         <p>预约时间</p>
                     </div>
                     <div class="weui-cell__ft">{{getServiceProductSpecTypeInfoByKey('service_date').service_order_product_extend_value}}</div>
                 </div>
-                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()">
+                <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showDateTypeBox()" *ngIf="detail?.service_order_status_info.service_order_status_id==='32'">
                     <div class="weui-cell__bd">
                         <p>审验时间</p>
                     </div>
-                    <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">
+                    <div class="weui-cell__ft">
                         {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
                     </div>
                 </a>
@@ -229,19 +229,19 @@
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===1">
                     <img class="single-img" [src]="detail?.service_order_product_info.service_order_product_image_list[0].thumb" style="height:150px;width: 250px;"/>
-                    <span (click)="choose('a')">修改</span>
+                    <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===2">
                     <table class="table-container">
                         <tr>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
-                                    <span (click)="choose('a')">修改</span>
+                                    <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
-                                    <span (click)="choose('b')">修改</span>
+                                    <span (click)="choose('b')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                             </td>
                         </tr>
@@ -265,7 +265,7 @@
             </div>
         </div>
 
-        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="editOrder(detail?.service_order_id)">确认提交</a>
+        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="editOrder(detail?.service_order_id)"  *ngIf="detail?.service_order_status_info.service_order_status_id==='32' || detail?.service_order_status_info.service_order_status_id==='22'">确认提交</a>
 
     </div>
     <!--<a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay">付款</a>-->

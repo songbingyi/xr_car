@@ -74,6 +74,8 @@ export class MapComponent implements OnInit {
 
     @ViewChild('map') mapComp: AqmComponent;
 
+    mapReady: Boolean = false;
+
     wxs: any;
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
@@ -103,8 +105,11 @@ export class MapComponent implements OnInit {
                         lat: this.latitude,
                         lng: this.longitude
                     });
-                    this.showPosition();
                 });
+
+                if(this.mapReady){
+                    this.showPosition();
+                }
             }
         });
     }
@@ -114,6 +119,8 @@ export class MapComponent implements OnInit {
     onReady(mapNative: any) {
         let latitude = this.latitude || 34.341568;
         let longitude = this.longitude || 108.940175;
+
+        this.mapReady = true;
 
         mapNative.setOptions({
             zoom: 12,
@@ -151,15 +158,14 @@ export class MapComponent implements OnInit {
         this.normalSize = new qq.maps.Size(40, 46);
         this.biggerSize = new qq.maps.Size(65, 72);
 
-        /*
-        marker.icon, this.normalSize, '', '', this.normalSize, ''
-        */
         this.theNullMarker = new qq.maps.MarkerImage('', new qq.maps.Size(1, 1), '', '', new qq.maps.Point(0, 0), '');
 
         this.loadMakers({
             latitude: latitude,
             longitude: longitude
         });
+
+        this.showPosition();
     }
 
 

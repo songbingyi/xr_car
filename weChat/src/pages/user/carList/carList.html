@@ -40,10 +40,10 @@
             </div>
             <div class="weui-cell cell-operation">
                 <div class="weui-cell__bd">
-                    <a *ngIf="item.is_modify === '1'" (click)="modify(item)">修改</a>
+                    <a [ngClass]="item.is_modify === '1' ? '' : 'disabled text-info'" (click)="modify(item)">修改</a>
                 </div>
                 <div class="weui-cell__bd">
-                    <a *ngIf="item.is_delete === '1'" (click)="delete(item)">删除</a>
+                    <a [ngClass]="item.is_delete === '1' ? '' : 'disabled text-info'" (click)="delete(item)">删除</a>
                 </div>
             </div>
         </div>
