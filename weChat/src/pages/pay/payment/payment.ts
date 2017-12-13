@@ -59,6 +59,7 @@ export class PaymentComponent implements OnInit {
     payOrder() {
         if (!this.isWeChatPayReady) {
             this.setMessage('请等待支付服务初始化完成。');
+            this.clearMessage();
             return;
         }
         this.onShow('loading');

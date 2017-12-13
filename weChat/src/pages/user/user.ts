@@ -5,6 +5,8 @@ import {BaseProvider} from '../../providers/http/base.http';
 import {Router} from "@angular/router";
 import {MessageService} from '../../providers/messageService';
 
+import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
+
 @Component({
     selector    : 'app-user',
     templateUrl : './user.html',
@@ -22,13 +24,14 @@ export class UserComponent implements OnInit {
     carList: any = [];
     errorMessage: any;
 
-    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService) {
+    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService) {
         this.hasCar();
         this.message.getMessage().subscribe(msg => {
             if(msg.type === 'userRefresh'){
                 this.refresh();
             }
         });
+        this.refreshMemberInfoService.refreshMemberInfo();
     }
 
     ngOnInit() {

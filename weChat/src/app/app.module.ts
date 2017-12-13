@@ -65,6 +65,7 @@ import { LoginComponent } from '../pages/login/login';
 import { EditOrderComponent } from '../pages/orders/editOrder/editOrder';
 
 import {config} from './app.config';
+import {RefreshMemberInfoService} from '../providers/refresh.member.info.service';
 
 @NgModule({
     declarations : [
@@ -118,7 +119,7 @@ import {config} from './app.config';
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList, PaymentTypeList],
+    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList, PaymentTypeList, RefreshMemberInfoService],
     bootstrap    : [AppComponent]
 })
 export class AppModule {
