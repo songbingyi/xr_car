@@ -2,7 +2,7 @@
     <div class="top-tips">
         <p>注：最多可绑定3辆车的信息<!-- | <a [routerLink]="['/carList']">列表</a>--></p>
     </div>
-    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMessage}">
+    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">
     <div class="weui-cells__title">车牌号码</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
@@ -72,7 +72,7 @@
     <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" (click)="delete()" *ngIf="shouldDelete">删除</a>
 
     <div class="weui-gallery" [hidden]="!isShowImage">
-        <span class="weui-gallery__img" style="background-image: url('/assets/images/tmp/vin.png');"></span>
+        <span class="weui-gallery__img" style="background-image: url('/assets/images/tmp/vin.jpg');"></span>
         <div class="weui-gallery__opr">
             <a href="javascript:" class="weui-gallery__del" (click)="showImage()">
                 <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>

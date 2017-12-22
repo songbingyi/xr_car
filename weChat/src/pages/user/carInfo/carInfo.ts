@@ -56,7 +56,8 @@ export class CarInfoComponent implements OnInit {
         this.customValidators.eq(6)
     ]);
     companyName = new FormControl('', [
-        Validators.required
+        Validators.required,
+        this.customValidators.isChinese
     ]);
 
     cardIdv = new FormControl('', [
@@ -98,6 +99,8 @@ export class CarInfoComponent implements OnInit {
             valid: true
         }
     };
+
+    fromError: Boolean = false;
 
     constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService) {
         this.getInitData();
@@ -288,8 +291,26 @@ export class CarInfoComponent implements OnInit {
     }
 
     setItem(name, obj) {
+        let controls = this.carInfoForm && this.carInfoForm.controls;
         this.result[name].value = obj.value;
         this.validators(this.result);
+        if (name === 'b') {
+            if(controls.cardId && controls.cardId.invalid && controls.cardId.value) {
+                // console.log(controls.cardId.invalid);
+                this.errorMessage = "车牌号码格式不正确";
+            }else{
+                this.errorMessage = '';
+            }
+        }
+        if (name === 'c') {
+            if(controls.companyName && controls.companyName.invalid && controls.companyName.value) {
+                // console.log(controls.companyName.invalid);
+                this.errorMessage = "所属公司名称应该用汉字填写";
+            }else{
+                this.errorMessage = '';
+            }
+        }
+
     }
 
     filterData(result, car_id?) {
@@ -333,10 +354,12 @@ export class CarInfoComponent implements OnInit {
         let result = this.result;
         let map = this.validators(result);
         if (!map.valid || this.carInfoForm.invalid) {
-            this.errorMessage = '所有信息为必填！';
+            // this.errorMessage = '所有信息为必填！';
+            this.fromError = true;
             return;
         }
         this.errorMessage = '';
+        this.fromError = false;
 
         // console.log(result);
 
@@ -349,10 +372,12 @@ export class CarInfoComponent implements OnInit {
         let result = this.result;
         let map = this.validators(result);
         if (!map.valid || this.carInfoForm.invalid) {
-            this.errorMessage = '所有信息为必填！';
+            // this.errorMessage = '所有信息为必填！';
+            this.fromError = true;
             return;
         }
         this.errorMessage = '';
+        this.fromError = false;
 
         let car_info = this.filterData(result);
 
@@ -363,10 +388,12 @@ export class CarInfoComponent implements OnInit {
         let result = this.result;
         let map = this.validators(result);
         if (!map.valid || this.carInfoForm.invalid) {
-            this.errorMessage = '所有信息为必填！';
+            // this.errorMessage = '所有信息为必填！';
+            this.fromError = true;
             return;
         }
         this.errorMessage = '';
+        this.fromError = false;
 
         this.dialogConfig = {
             skin: 'ios',
@@ -430,7 +457,7 @@ export class CarInfoComponent implements OnInit {
     }
 
     hasCar(cardId?) {
-        console.log(cardId);
+        // console.log(cardId);
         if (cardId && cardId.length === 6) {
             this.baseService.post('getCarInfo', {
                 'province_code_id': this.result.a.province_code_id,

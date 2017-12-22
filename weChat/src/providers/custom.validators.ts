@@ -14,6 +14,13 @@ export class CustomValidators {
         };
     }
 
+    public isChinese(input: FormControl) {
+        let CHINESE_REGEXP = /^[\u4E00-\u9FA5]+$/;
+        return CHINESE_REGEXP.test(input.value) ? null : {
+            validateMobile: {valid: false}
+        }
+    }
+
     public isNumber(input: FormControl) {
         let value = input.value;
         return parseInt(value, 10) === (value - 0) ? null : {isNumber : true};

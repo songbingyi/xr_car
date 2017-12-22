@@ -22,7 +22,7 @@ export class AboutComponent implements OnInit {
 
     ngOnInit() {
         this.baseProvider.post('getMemberDashboard', {
-            'member_id' : '1'
+            // 'member_id' : '1'
         })
             .subscribe(member => {
                     if (member.status.succeed === '1') {

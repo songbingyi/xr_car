@@ -4,7 +4,7 @@
             注：姓名要与行驶证车主一致，否则无法绑定车辆；姓名和身份证号填写后不可修改！
         </p>
     </div>
-    <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':errorMessage}">
+    <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">
         <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
@@ -68,7 +68,7 @@
     </div>
 
     <div class="modify-phone" [hidden]="!isModifying">
-        <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':errorMessage}">
+        <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':fromError}">
             <!--<div class="weui-cells__title-empty"></div>-->
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_vcode">

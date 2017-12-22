@@ -68,6 +68,8 @@ export class UserInfoComponent implements OnInit {
         vcode : this.updateVcode
     });
 
+    fromError: Boolean = false;
+
     constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone) {
         this.getCarAndMemberInfo();
     }
@@ -88,10 +90,12 @@ export class UserInfoComponent implements OnInit {
 
     save() {
         if (this.userInfoForm.invalid) {
-            this.errorMessage = '请修改红色错误信息后再提交';
+            // this.errorMessage = '请修改红色错误信息后再提交';
+            this.fromError = true;
             return ;
         } else {
             this.errorMessage = '';
+            this.fromError = false;
         }
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
@@ -116,10 +120,12 @@ export class UserInfoComponent implements OnInit {
 
     update() {
         if (this.updateForm.invalid) {
-            this.errorMessage = '请修改红色错误信息后再提交';
+            // this.errorMessage = '请修改红色错误信息后再提交';
+            this.fromError = true;
             return ;
         } else {
             this.errorMessage = '';
+            this.fromError = false;
         }
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',

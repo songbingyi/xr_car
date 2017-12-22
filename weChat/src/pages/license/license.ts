@@ -158,7 +158,7 @@ export class LicenseComponent implements OnInit {
 
     getCarAndMemberInfo() {
         this.baseService.post('getMemberDetail', {
-            'member_id' : '1'
+            // 'member_id' : '1'
         })
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
