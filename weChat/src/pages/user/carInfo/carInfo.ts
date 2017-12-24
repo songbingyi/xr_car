@@ -56,8 +56,8 @@ export class CarInfoComponent implements OnInit {
         this.customValidators.eq(6)
     ]);
     companyName = new FormControl('', [
-        Validators.required,
-        this.customValidators.isChinese
+        Validators.required/*,
+        this.customValidators.isChinese*/
     ]);
 
     cardIdv = new FormControl('', [
@@ -165,12 +165,13 @@ export class CarInfoComponent implements OnInit {
 
     getCarDetail() {
         let carInfo = this.localStorage.getObject('carInfo');
+        this.localStorage.remove('carInfo');
+
         if (carInfo.car_id) {
             this.operationType = 'edit';
             this.setCarDetail(carInfo);
             this.shouldDelete = carInfo.is_delete === '1';
         }
-        this.localStorage.remove('carInfo');
     }
 
     setCarDetail(item) {

@@ -100,8 +100,9 @@ export class OrdersComponent implements OnInit {
     }
 
     change($event, type) {
+        // console.log($event);
         this.key    = this.objKey[type];
-        this[this.key].pagination.page ++;
+        this[this.key].pagination.page = $event;
         this.getInitData();
     }
 

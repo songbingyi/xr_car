@@ -60,11 +60,17 @@
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <p>应支付</p>
+                        <p>{{showText(detail)}}</p>
                     </div>
                     <div class="weui-cell__ft"><span class="text-warning">￥{{detail?.total}}</span></div>
                 </div>
-                <div class="weui-cell weui-cell-special">
+                <div class="weui-cell" *ngIf="shouldShowDate(detail)">
+                    <div class="weui-cell__bd">
+                        <p>{{showFinalText(detail)}}</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">{{detail?.service_order_return_finish_date}}</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special" *ngIf="shouldShowPayMethod(detail)">
                     <div class="weui-cell__bd">
                         <p>支付方式</p>
                     </div>
@@ -73,7 +79,7 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
+                <div class="weui-cell cell-operation" *ngIf="shouldShowOperation(detail)">
                     <!--<div class="weui-cell__bd">
                         <span> </span>
                     </div>-->
@@ -81,7 +87,7 @@
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">删除</a>
                         <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="deleteOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete">删除</a>-->
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
                     </div>
@@ -151,11 +157,17 @@
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <p>应支付</p>
+                        <p>{{showText(detail)}}</p>
                     </div>
                     <div class="weui-cell__ft"><span class="text-warning">￥{{detail?.total}}</span></div>
                 </div>
-                <div class="weui-cell weui-cell-special">
+                <div class="weui-cell" *ngIf="shouldShowDate(detail)">
+                    <div class="weui-cell__bd">
+                        <p>{{showFinalText(detail)}}</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">{{detail?.service_order_return_finish_date}}</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special" *ngIf="shouldShowPayMethod(detail)">
                     <div class="weui-cell__bd">
                         <p>支付方式</p>
                     </div>
@@ -164,7 +176,7 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
+                <div class="weui-cell cell-operation" *ngIf="shouldShowOperation(detail)">
                     <!--<div class="weui-cell__bd">
                         <span> </span>
                     </div>-->
@@ -172,7 +184,7 @@
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">删除</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
                     </div>
                 </div>
@@ -240,13 +252,25 @@
                         </tr>
                     </table>
                 </div>
+                <!--<div class="weui-cell">-->
+                    <!--<div class="weui-cell__bd">-->
+                        <!--<p>应支付</p>-->
+                    <!--</div>-->
+                    <!--<div class="weui-cell__ft"><span class="text-warning">￥{{detail?.total}}</span></div>-->
+                <!--</div>-->
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <p>应支付</p>
+                        <p>{{showText(detail)}}</p>
                     </div>
                     <div class="weui-cell__ft"><span class="text-warning">￥{{detail?.total}}</span></div>
                 </div>
-                <div class="weui-cell weui-cell-special">
+                <div class="weui-cell" *ngIf="shouldShowDate(detail)">
+                    <div class="weui-cell__bd">
+                        <p>{{showFinalText(detail)}}</p>
+                    </div>
+                    <div class="weui-cell__ft"><span class="text-warning">{{detail?.service_order_return_finish_date}}</span></div>
+                </div>
+                <div class="weui-cell weui-cell-special" *ngIf="shouldShowPayMethod(detail)">
                     <div class="weui-cell__bd">
                         <p>支付方式</p>
                     </div>
@@ -255,7 +279,7 @@
                         <p>（暂不支持其他支付方式）</p>
                     </div>
                 </div>
-                <div class="weui-cell cell-operation">
+                <div class="weui-cell cell-operation" *ngIf="shouldShowOperation(detail)">
                     <!--<div class="weui-cell__bd">
                         <span> </span>
                     </div>-->
@@ -263,7 +287,7 @@
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(detail)">占位</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="payOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_pay === '1'">付款</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_edit === '1'">修改</a>
-                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">取消</a>
+                        <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" (click)="cancelOrder(detail?.service_order_id)" *ngIf="detail?.service_order_status_info.is_delete === '1'">删除</a>
                         <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/refund', detail?.service_order_id]" *ngIf="detail?.service_order_status_info.is_return === '1'">退款</a>
                     </div>
                 </div>

@@ -64,6 +64,10 @@
         &.with-padding-bottom {
             margin-bottom: 5px;
         }*/
+        &.with-padding-top.with-padding-bottom {
+            height: 40px;
+            line-height: 40px;
+        }
     }
     .special-cell {
         height:48px;
@@ -117,7 +121,7 @@
         strong {
             color:#FA9D3B;
             font-weight:normal;
-            margin-left:10px;
+            margin-left:0;
         }
     }
     .button-sp-area {

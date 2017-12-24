@@ -11,10 +11,12 @@ import {config} from '../app/app.config';
 @Injectable()
 export class RefreshMemberInfoService {
     member_id: any;
+    token: any;
     memberInfo: any;
 
     constructor(private authService: AuthService, private router: Router, private location: Location, private http : Http) {
         this.member_id = this.authService.getMemberId();
+        this.token = this.authService.getToken();
     }
 
     setSearchParams(path, data) {
@@ -36,7 +38,7 @@ export class RefreshMemberInfoService {
     }
 
     refreshMemberInfo() {
-        let urlSearchParams = this.setSearchParams('member/member/loginWithToken', {'member_id':this.member_id});
+        let urlSearchParams = this.setSearchParams('member/member/loginWithToken', {'member_id':this.member_id,'token':this.token});
         this.http.post(config.api, urlSearchParams, this.getHeader())
             .map(response => {
                 return response.json();
@@ -47,9 +49,11 @@ export class RefreshMemberInfoService {
                 this.authService.setMemberId(memberInfo.member_id);
                 this.authService.setToken(memberInfo.token);
             } else {
+                // this.authService.redirect();
                 // this.errorMessage = memberInfo.status.error_desc;
             }
         }, error => {
+                // this.authService.redirect();
             // this.errorMessage = <any>error;
         });
     }

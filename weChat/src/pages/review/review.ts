@@ -299,7 +299,7 @@ export class ReviewComponent implements OnInit {
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
-                    this.uploaded[type] = image_info.data.image_info.thumb;
+                    this.uploaded[type] = image_info.data.image_info.source || image_info.data.image_info.thumb;
                 } else {
                     this.errorMessage = image_info.status.error_desc;
                 }
@@ -361,11 +361,11 @@ export class ReviewComponent implements OnInit {
     getUploadedData() {
         let uploaded = this.uploaded;
         let tmp = [];
-        let image : any = {};
         let sort_order = 0;
         let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
         keys.forEach(key => {
+            let image : any = {};
             let upload = uploaded[key];
             image.sort_order = sort_order++;
             image.image_type_id = image_type_id;

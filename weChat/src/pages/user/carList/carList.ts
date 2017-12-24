@@ -38,6 +38,9 @@ export class CarListComponent implements OnInit {
                         let prefix = plateNo.slice(0, 1);
                         car.plate_no_formatted = plateNo.replace(prefix, (prefix + '·'));
                     });
+                    if(!this.carList.length){
+                        this.router.navigate(['/carInfo']);
+                    }
                     // this.carList[1].is_modify = '0';
                 } else {
                     this.errorMessage = carList.status.error_desc;

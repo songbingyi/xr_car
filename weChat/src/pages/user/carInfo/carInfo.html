@@ -20,7 +20,7 @@
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">所属公司</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入公司名称" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
+                <input class="weui-input" type="text" placeholder="请输入公司名称" [attr.disabled]="(hasCarInfo?.is_modify === '0' || (company_id && company_id !== '0')) ? '' : null" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
             </div>
         </div>
         <!--<div class="weui-cell">

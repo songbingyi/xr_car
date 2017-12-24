@@ -102,7 +102,8 @@ export class EditOrderComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
-                    // this.detail.service_order_status_info.service_order_status_id='22';
+                    this.detail.service_order_status_info.service_order_status_id = '32'
+                    // this.detail.service_order_status_info.service_order_status_id = '22';
                     // this.initUploaded();
                 } else {
                     this.errorMessage = detail.status.error_desc;
@@ -170,7 +171,8 @@ export class EditOrderComponent implements OnInit {
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
                     // this.uploaded[type] = image_info.data.image_info.thumb;
-                    this.setPictureToList(type, image_info.data.image_info.thumb);
+                    let image = image_info.data.image_info.source || image_info.data.image_info.thumb;
+                        this.setPictureToList(type, image);
                 } else {
                     this.errorMessage = image_info.status.error_desc;
                 }
@@ -269,7 +271,7 @@ export class EditOrderComponent implements OnInit {
     /**
      * "操作类型
      * 1-付款
-     * 2-取消订单  (修改？)
+     * 2-修改订单
      * 3-删除订单 就是取消
      * 4-申请退款"
      */

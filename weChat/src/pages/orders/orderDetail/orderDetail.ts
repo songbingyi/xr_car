@@ -36,7 +36,9 @@ export class OrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
-                    // this.detail.service_order_comment = "这是一大段订单的状态描述";
+                    // this.detail.service_order_status_info.service_order_status_id = '32';
+                    // this.detail.service_order_status_info.service_order_status_name = '未到站';
+                    // this.detail.service_order_comment = "经服务人员反馈，您在预约时间内未到站进行审车。您可修改预约时间，并重新提交审核。在通知后72小时未进行操作，该订单将自动取消并退款。";
                     if (!this.detail.service_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
@@ -63,7 +65,7 @@ export class OrderDetailComponent implements OnInit {
     /**
      * "操作类型
      * 1-付款
-     * 2-取消订单  (修改？)
+     * 2-修改订单
      * 3-删除订单 就是取消
      * 4-申请退款"
      */
@@ -72,7 +74,7 @@ export class OrderDetailComponent implements OnInit {
         this.dialogConfig = {
             skin: 'ios',
             backdrop: false,
-            content: '您确定要取消此订单吗？'
+            content: '您确定要删除此订单吗？'
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
@@ -114,7 +116,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     showResult(operation) {
-        let msg = operation === 3 ? '取消订单成功' : '退款申请已提交请耐心等待';
+        let msg = operation === 3 ? '删除订单成功' : '退款申请已提交请耐心等待';
         this.showToast(msg);
         this.hideToast(() => {
             if (operation === 3) {
@@ -124,7 +126,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     showToast(msg) {
-        // let msg = operation === 3 ? '取消订单成功' : '退款申请已提交请耐心等待';
+        // let msg = operation === 3 ? '删除订单成功' : '退款申请已提交请耐心等待';
         this.toastService.success(msg);
     }
 
@@ -186,4 +188,35 @@ export class OrderDetailComponent implements OnInit {
         return total > 1;
     }
 
+
+    showText(detail?) {
+        let status_id = detail.service_order_status_info.service_order_status_id || this.detail.service_order_status_info.service_order_status_id;
+        let text = ['实付款', '应付款'];
+        let status = ['21', '22', '31', '32', '41', '51', '61', '62'];
+        return status.indexOf(status_id) > -1 ? text[0] : text[1];
+    }
+
+    showFinalText(detail) {
+        let status_id = detail.service_order_status_info.service_order_status_id || this.detail.service_order_status_info.service_order_status_id;
+        let text = {'51':'完成时间','61':'申请退款时间','62':'退款时间'};
+        return text[status_id];
+    }
+
+    shouldShowPayMethod(detail) {
+        let status_id = detail.service_order_status_info.service_order_status_id || this.detail.service_order_status_info.service_order_status_id;
+        let status = ['21', '22', '31', '32', '41', '51', '61', '62'];
+        return status.indexOf(status_id) < 0;
+    }
+
+    shouldShowOperation(detail) {
+        let status_id = detail.service_order_status_info.service_order_status_id || this.detail.service_order_status_info.service_order_status_id;
+        let status = ['21', '41', '61'];
+        return status.indexOf(status_id) < 0;
+    }
+
+    shouldShowDate(detail) {
+        let status_id = detail.service_order_status_info.service_order_status_id || this.detail.service_order_status_info.service_order_status_id;
+        let status = ['51', '61', '62'];
+        return status.indexOf(status_id) > -1;
+    }
 }
