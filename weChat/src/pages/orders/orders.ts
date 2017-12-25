@@ -90,6 +90,8 @@ export class OrdersComponent implements OnInit {
                     let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.service_order_list;
+                    // this[this.key].lists[0].service_order_status_info.service_order_status_id = '61';
+                    // this[this.key].lists[1].service_order_status_info.service_order_status_id = '62';
                     this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);
                     // console.log(this.key);
                     // console.log(this[this.key]);
@@ -126,6 +128,15 @@ export class OrdersComponent implements OnInit {
     isWarning(item?) {
         if( item ) {
             return (item.service_order_status_info.service_order_status_id === '10' || item.service_order_status_info.service_order_status_id === '22');
+        }
+    }
+
+    showText(item?) {
+        if(item){
+            let status_id = item.service_order_status_info.service_order_status_id;
+            let text = ['支付金额：', '退款金额：'];
+            let status = ['61', '62'];
+            return status.indexOf(status_id) > -1 ? text[1] : text[0];
         }
     }
 

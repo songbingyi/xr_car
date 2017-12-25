@@ -102,7 +102,7 @@ export class EditOrderComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
-                    this.detail.service_order_status_info.service_order_status_id = '32'
+                    // this.detail.service_order_status_info.service_order_status_id = '32'
                     // this.detail.service_order_status_info.service_order_status_id = '22';
                     // this.initUploaded();
                 } else {
@@ -326,6 +326,7 @@ export class EditOrderComponent implements OnInit {
 
     showDateTypeBox() {
         this.showDateType = !this.showDateType;
+        this.errorMessage = '';
     }
 
     selectDateType() {

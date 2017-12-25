@@ -43,10 +43,12 @@ export class LicenseComponent implements OnInit {
 
     result : any = {
         city        : {
-            valid : true
+            valid : true,
+            isTouched: false
         },
         licenseType : {
-            valid : true
+            valid : true,
+            isTouched: false
         }
     };
 
@@ -288,8 +290,14 @@ export class LicenseComponent implements OnInit {
         }
     }
 
+    setAllTouched() {
+        this.result.licenseType.isTouched = true;
+        this.result.city.isTouched = true;
+    }
+
     goNext() {
         let result = this.result;
+        this.setAllTouched();
         let map = this.validators(result);
         if (!map.valid) {
             return;
@@ -323,6 +331,7 @@ export class LicenseComponent implements OnInit {
 
     showLicenseTypeBox() {
         this.showLicenseType = !this.showLicenseType;
+        // this.result.licenseType.isTouched = true;
     }
 
 
@@ -335,6 +344,11 @@ export class LicenseComponent implements OnInit {
         this.validators(this.result);
         this.selectedLicense = null;
         this.cancelTypeBox();
+    }
+
+    showCityBox() {
+        this.fullPopup.show();
+        // this.result.city.isTouched = true;
     }
 
     cancelTypeBox() {

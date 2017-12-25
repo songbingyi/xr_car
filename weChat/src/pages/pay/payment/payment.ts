@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, NgZone} from '@angular/core';
 import {ToastComponent, ToastService} from 'ngx-weui/toast';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -25,7 +25,7 @@ export class PaymentComponent implements OnInit {
 
     wx : any;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private wxService : WXSDKService) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private wxService : WXSDKService, private zone: NgZone) {
         this.wx = this.wxService.init().then(result => {
             // console.log(result);
             // console.log(this.wxService.isWeChatPayReady);
@@ -90,17 +90,24 @@ export class PaymentComponent implements OnInit {
                             // alert(JSON.stringify(res));
                             if (res.errMsg === 'chooseWXPay:ok') {
                                 // $scope.weChatPayObj.payingSuccess = true;
-                                this.onShow('success');
+                                this.zone.run(() => {
+                                    this.onShow('success');
+                                });
                                 setTimeout(() => {
-                                    this.router.navigate(['/payComplete', service_order_id]);
+                                    window.location.href = '/payComplete/' + service_order_id;
+                                    //this.router.navigate(['/payComplete', service_order_id]);
                                 }, 3000);
                             } else if (res.errMsg === 'chooseWXPay:cancel') {
-                                this.onHide('loading');
-                                this.setMessage('支付被取消。');
-                                this.clearMessage();
+                                this.zone.run(() => {
+                                    this.onHide('loading');
+                                    this.setMessage('支付被取消。');
+                                    this.clearMessage();
+                                });
                             } else {
-                                this.setMessage('支付可能出现错误，请和客服人员确认是否成功，或重试。');
-                                this.clearMessage();
+                                this.zone.run(() => {
+                                    this.setMessage('支付可能出现错误，请和客服人员确认是否成功，或重试。');
+                                    this.clearMessage();
+                                });
                                 // alert('支付可能出现错误，请和收费人员确认是否成功，或重试。');
                             }
                         },
@@ -108,15 +115,19 @@ export class PaymentComponent implements OnInit {
                             // alert('cancel');
                             // alert(JSON.stringify(res));
                             // alert('取消支付，请重试。');
-                            this.setMessage('支付被取消，请重试。');
-                            this.clearMessage();
+                            this.zone.run(() => {
+                                this.setMessage('支付被取消，请重试。');
+                                this.clearMessage();
+                            });
                         },
                         fail     : (res) => {
                             // alert('fail');
                             // alert(JSON.stringify(res));
                             // alert('支付失败，请重试。');
-                            this.setMessage('支付失败，请重试。');
-                            this.clearMessage();
+                            this.zone.run(() => {
+                                this.setMessage('支付失败，请重试。');
+                                this.clearMessage();
+                            });
                         }
                     });
 
@@ -152,7 +163,9 @@ export class PaymentComponent implements OnInit {
 
     clearMessage() {
         setTimeout(() => {
-            this.errorMessage = '';
+            this.zone.run(() => {
+                this.errorMessage = '';
+            });
         }, 3000);
     }
 

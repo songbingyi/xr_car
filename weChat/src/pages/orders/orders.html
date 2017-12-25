@@ -23,7 +23,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item?.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -67,7 +67,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -111,7 +111,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="weui-cell cell-operation">
                         <div class="weui-cell__bd">
-                            <span>支付金额：<strong>￥520</strong></span>
+                            <span>{{showText(item)}}<strong>￥520</strong></span>
                         </div>
                         <div class="weui-cell__bd button-sp-area">
                             <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
@@ -187,7 +187,7 @@
                     </div>
                     <div class="weui-cell cell-operation">
                         <div class="weui-cell__bd">
-                            <span>支付金额：<strong>￥520</strong></span>
+                            <span>{{showText(item)}}<strong>￥520</strong></span>
                         </div>
                         <div class="weui-cell__bd button-sp-area">
                             <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
@@ -223,7 +223,7 @@
                     </div>
                     <div class="weui-cell cell-operation">
                         <div class="weui-cell__bd">
-                            <span>支付金额：<strong>￥520</strong></span>
+                            <span>{{showText(item)}}<strong>￥520</strong></span>
                         </div>
                         <div class="weui-cell__bd button-sp-area">
                             <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
@@ -248,7 +248,7 @@
                     </div>
                     <div class="weui-cell cell-operation">
                         <div class="weui-cell__bd">
-                            <span>支付金额：<strong>￥520</strong></span>
+                            <span>{{showText(item)}}<strong>￥520</strong></span>
                         </div>
                         <div class="weui-cell__bd button-sp-area">
                             &lt;!&ndash;<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
@@ -293,7 +293,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item?.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -322,7 +322,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -336,7 +336,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -365,7 +365,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -379,7 +379,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -427,7 +427,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item?.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
@@ -456,7 +456,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -470,7 +470,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
@@ -499,7 +499,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -513,7 +513,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
@@ -561,7 +561,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item?.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -591,7 +591,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -605,7 +605,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -649,7 +649,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
@@ -698,7 +698,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item?.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
@@ -727,7 +727,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -741,7 +741,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
@@ -770,7 +770,7 @@
                             </div>
                             <div class="weui-cell no-border">
                                 <div class="weui-cell__bd">
-                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value}}</p>
+                                    <p>时间：{{getServiceProductSpecTypeInfoByKey('service_date', item).service_order_product_extend_value | date:'yyyy年MM月dd日'}}</p>
                                 </div>
                             </div>
                             <div class="weui-cell no-border with-padding-bottom">
@@ -784,7 +784,7 @@
                             </div>
                             <div class="weui-cell cell-operation">
                                 <div class="weui-cell__bd">
-                                    <span>支付金额：<strong>￥{{item.total}}</strong></span>
+                                    <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
                                 <div class="weui-cell__bd button-sp-area">
                                     <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>

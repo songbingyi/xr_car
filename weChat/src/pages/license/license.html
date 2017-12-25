@@ -30,17 +30,17 @@
             <div class="tab-content" [hidden]="showNext">
                 <div class="weui-cells__title">请选择对应信息</div>
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access" href="javascript:;" (click)="fullPopup.show()">
+                    <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showCityBox();">
                         <div class="weui-cell__bd">
                             <p>驾照归属地</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.region_name || '请选择审验城市'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':(!result.city.valid && result.city.isTouched)}">{{result.city.region_name || '请选择审验城市'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;" (click)="showLicenseTypeBox()">
                         <div class="weui-cell__bd">
                             <p>驾照类型</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.licenseType.valid}">{{result.licenseType.driving_license_type_name || '请选择驾照类型'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':(!result.licenseType.valid && result.licenseType.isTouched)}">{{result.licenseType.driving_license_type_name || '请选择驾照类型'}}</div>
                     </a>
                     <a class="weui-cell" href="javascript:;" *ngIf="price">
                         <div class="weui-cell__bd">

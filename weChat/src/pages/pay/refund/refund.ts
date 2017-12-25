@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, NgZone} from '@angular/core';
 import {DialogConfig, DialogService} from 'ngx-weui/dialog';
 import {BaseProvider} from '../../../providers/http/base.http';
 import {ToastService} from 'ngx-weui/toast';
@@ -16,7 +16,7 @@ export class RefundComponent implements OnInit {
     isLoaded: Boolean = false;
     dialogConfig: DialogConfig;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private zone: NgZone) {
     }
 
     ngOnInit() {
@@ -64,17 +64,20 @@ export class RefundComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.service_order_info;
-                    this.showToast();
+                    this.showToast(id);
                 } else {
                     this.errorMessage = detail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
 
-    showToast() {
+    showToast(id) {
         this.toastService.success('退款申请已提交请耐心等待');
         setTimeout(() => {
-            this.toastService.hide();
+            this.zone.run(() => {
+                this.toastService.hide();
+                this.router.navigate(['/orderDetail', id])
+            });
         }, 3000);
     }
 

@@ -113,7 +113,9 @@ export class UserInfoComponent implements OnInit {
                     this.isModifying = false;
                     this.getCarAndMemberInfo();
                 } else {
-                    this.errorMessage = result.status.error_desc;
+                    if(result.status.error_code === '1012'){
+                        this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
+                    }
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -126,6 +128,11 @@ export class UserInfoComponent implements OnInit {
         } else {
             this.errorMessage = '';
             this.fromError = false;
+        }
+        if(!this.verifyCode || !this.verifyCode.code){
+            this.fromError = true;
+            this.errorMessage = '请先获取验证码再提交！';
+            return ;
         }
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
@@ -141,7 +148,9 @@ export class UserInfoComponent implements OnInit {
                     this.isModifying = false;
                     this.getCarAndMemberInfo();
                 } else {
-                    this.errorMessage = result.status.error_desc;
+                    if(result.status.error_code === '1012'){
+                        this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
+                    }
                 }
             }, error => this.errorMessage = <any>error);
     }

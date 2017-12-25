@@ -64,16 +64,20 @@ export class ReviewComponent implements OnInit {
 
     result : any = {
         city    : {
-            valid : true
+            valid : true,
+            isTouched: false
         },
         station : {
-            valid : true
+            valid : true,
+            isTouched: false
         },
         date    : {
-            valid : true
+            valid : true,
+            isTouched: false
         },
         car     : {
-            valid : true
+            valid : true,
+            isTouched: false
         }
     };
 
@@ -162,12 +166,26 @@ export class ReviewComponent implements OnInit {
     }
 
     getBartrailerType(id) {
+        let defaultData = [
+            {
+                "car_type_id": "5",
+                "car_type_name": "挂头"
+            },
+            {
+                "car_type_id": "6",
+                "car_type_name": "挂厢"
+            },
+            {
+                "car_type_id": "7",
+                "car_type_name": "全部"
+            }
+        ];
         this.baseService.post('getCarTypeList', {
             'parent_id' : id
         })
             .subscribe(bartrailerType => {
                 if (bartrailerType.status.succeed === '1') {
-                    this.bartrailerType = bartrailerType.data.car_type_list;
+                    this.bartrailerType = bartrailerType.data.car_type_list.length ? bartrailerType.data.car_type_list : defaultData;
                 } else {
                     this.errorMessage = bartrailerType.status.error_desc;
                 }
@@ -307,6 +325,7 @@ export class ReviewComponent implements OnInit {
     }
 
     confirmOrder() {
+        console.log(this.uploaded);
         if (this.customValidators.isUploaded(this.uploaded)) {
             this.baseService.post('addServiceOrder', {
                 'submit_service_order_info' : {
@@ -404,11 +423,25 @@ export class ReviewComponent implements OnInit {
         }
     }
 
+    setAllTouched() {
+        this.result.city.isTouched = true;
+        this.result.station.isTouched = true;
+        this.result.date.isTouched = true;
+        if(this.result.bartrailer){
+            this.result.bartrailer.isTouched = true;
+        }
+    }
+
     goNext() {
         let result = this.result;
+        if(!this.result.selected){
+            this.errorMessage = '请先选择要审验的车辆！';
+            return;
+        }
+        this.setAllTouched();
         let map = this.validators(result);
         if (!map.valid) {
-            this.errorMessage = '所有信息为必填！';
+            // this.errorMessage = '所有信息为必填！';
             return;
         }
         this.selectedAllBartrailer = this.result.bartrailer ? this.result.bartrailer.car_type_id === '7' : false;
@@ -438,7 +471,8 @@ export class ReviewComponent implements OnInit {
         this.isBartrailer = item.car_type_info.car_type_id === '4' || !!item.car_type_info.has_child;
         if (this.isBartrailer) {
             this.result.bartrailer = {
-                valid : true
+                valid : true,
+                isTouched: false
             };
             this.getBartrailerType(item.car_id);
         } else {
@@ -470,7 +504,7 @@ export class ReviewComponent implements OnInit {
         if(!this.selectedBartrailer) {
             return ;
         }
-        console.log(this.selectedBartrailer);
+        // console.log(this.selectedBartrailer);
         this.result.bartrailer = this.selectedBartrailer;
         this.result.bartrailer.valid = true;
         this.validators(this.result);

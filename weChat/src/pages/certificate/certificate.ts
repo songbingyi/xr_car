@@ -56,16 +56,20 @@ export class CertificateComponent implements OnInit {
 
     result : any = {
         city     : {
-            valid: true
+            valid: true,
+            isTouched: false
         },
         station  : {
-            valid: true
+            valid: true,
+            isTouched: false
         },
         date     : {
-            valid: true
+            valid: true,
+            isTouched: false
         },
         car : {
-            valid: true
+            valid: true,
+            isTouched: false
         }
     };
 
@@ -368,11 +372,22 @@ export class CertificateComponent implements OnInit {
         }
     }
 
+    setAllTouched() {
+        this.result.city.isTouched = true;
+        this.result.station.isTouched = true;
+        this.result.date.isTouched = true;
+    }
+
     goNext() {
         let result = this.result;
+        if(!this.result.selected){
+            this.errorMessage = '请先选择要审验的车辆！';
+            return;
+        }
+        this.setAllTouched();
         let map = this.validators(result);
         if (!map.valid) {
-            this.errorMessage = '所有信息为必填！';
+            //this.errorMessage = '所有信息为必填！';
             return;
         }
         this.errorMessage = '';

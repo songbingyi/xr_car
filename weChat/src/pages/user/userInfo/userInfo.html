@@ -1,7 +1,7 @@
 <div class="user-info">
     <div class="top-tips" [hidden]="hasPhone">
         <p>
-            注：姓名要与行驶证车主一致，否则无法绑定车辆；姓名和身份证号填写后不可修改！
+            姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
     </div>
     <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">
@@ -54,7 +54,7 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>身份账号</p>
+                    <p>身份证号</p>
                 </div>
                 <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
             </div>

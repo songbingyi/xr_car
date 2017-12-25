@@ -52,13 +52,13 @@
                         <div class="weui-cell__bd">
                             <p>审验城市</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.city.valid}">{{result.city.region_name || '请选择审验城市'}}</div>
+                        <div class="weui-cell__ft" [ngClass]="{'error':(!result.city.valid && result.city.isTouched)}">{{result.city.region_name || '请选择审验城市'}}</div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
                         <div class="weui-cell__bd">
                             <p>审验站点</p>
                         </div>
-                        <div class="weui-cell__ft station-name" [ngClass]="{'error':!result.station.valid}" (click)="showStation()">
+                        <div class="weui-cell__ft station-name" [ngClass]="{'error':(!result.station.valid && result.station.isTouched)}" (click)="showStation()">
                             <span class="for-station">{{result.station.site_name || '请选择审验站点'}}</span>
                         </div>
                     </a>
@@ -66,7 +66,7 @@
                         <div class="weui-cell__bd">
                             <p>审验时间</p>
                         </div>
-                        <div class="weui-cell__ft" [ngClass]="{'error':!result.date.valid}">
+                        <div class="weui-cell__ft" [ngClass]="{'error':(!result.date.valid && result.date.isTouched)}">
                             {{result.date.service_date ? (result.date.service_date | date:'MM.dd') : '请选择审验时间'}}
                         </div>
                     </a>
