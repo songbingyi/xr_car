@@ -165,7 +165,7 @@ export class ReviewComponent implements OnInit {
         /**/
     }
 
-    getBartrailerType(id) {
+    getBartrailerType(car_type_id) {
         let defaultData = [
             {
                 "car_type_id": "5",
@@ -181,7 +181,7 @@ export class ReviewComponent implements OnInit {
             }
         ];
         this.baseService.post('getCarTypeList', {
-            'parent_id' : id
+            'parent_id' : car_type_id
         })
             .subscribe(bartrailerType => {
                 if (bartrailerType.status.succeed === '1') {
@@ -474,7 +474,7 @@ export class ReviewComponent implements OnInit {
                 valid : true,
                 isTouched: false
             };
-            this.getBartrailerType(item.car_id);
+            this.getBartrailerType(item.car_type_info.car_type_id);
         } else {
             delete this.result.bartrailer;
         }
