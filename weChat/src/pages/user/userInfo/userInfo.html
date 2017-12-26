@@ -1,6 +1,6 @@
 <div class="user-info">
-    <div class="top-tips" [hidden]="hasPhone">
-        <p>
+    <div class="top-tips">
+        <p [hidden]="identityAuthStatus">
             姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
     </div>

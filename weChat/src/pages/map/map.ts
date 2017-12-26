@@ -200,7 +200,7 @@ export class MapComponent implements OnInit {
                     if (markers.data && markers.data.site_list && markers.data.site_list.length===0) {
                         if(this.distanceIndex <= this.distances.length) {
                             this.getDistance();
-                            this.loadMakers(this.options);
+                            this.loadMakers(this.options, type);
                         }
                         return ;
                     }
@@ -329,7 +329,7 @@ export class MapComponent implements OnInit {
     }
 
     onSearch(term: string) {
-        // console.log("Search");
+        console.log("Search");
         this.value = term;
         if (term) {
             this.loadMakers({

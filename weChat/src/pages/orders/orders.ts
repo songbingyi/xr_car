@@ -108,6 +108,13 @@ export class OrdersComponent implements OnInit {
         this.getInitData();
     }
 
+    goPayment($event, service_order_id) {
+        $event.stopPropagation();
+        if(service_order_id){
+            window.location.href = '/payment?oid=' + service_order_id;
+        }
+    }
+
 
     getServiceProductSpecTypeInfoByKey(key, detail) {
         let productSpecTypes = (detail && detail.service_order_product_info) ? detail.service_order_product_info.service_order_product_extend_list : [];

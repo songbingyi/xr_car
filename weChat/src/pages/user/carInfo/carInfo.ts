@@ -175,20 +175,21 @@ export class CarInfoComponent implements OnInit {
     }
 
     setCarDetail(item) {
+        // console.log(item);
         this.car_id = item ? item.car_id : '';
-        this.company_id = item ? item.company_info.company_id : '';
+        this.company_id = (item && item.company_info) ? item.company_info.company_id : '';
 
         this.carInfoForm.setValue({
             cardId: item ? item.plate_no : '',
-            companyName: item ? item.company_info.company_name : '',
-            cardIdv: item ? item.vin_no : '',
-            cardIdx: item ? item.engine_no : ''
+            companyName: (item && item.company_info) ? item.company_info.company_name : '',
+            cardIdv: (item && item.vin_no) ? item.vin_no : '',
+            cardIdx: (item && item.engine_no) ? item.engine_no : ''
         });
 
         this.result = {
             a: {
-                province_code_id: item ? item.province_code_info.province_code_id : '',
-                province_code_name: item ? item.province_code_info.province_code_name : '',
+                province_code_id: (item && item.province_code_info) ? item.province_code_info.province_code_id : '',
+                province_code_name: (item && item.province_code_info) ? item.province_code_info.province_code_name : '',
                 selected: true,
                 valid: true
             },
@@ -197,17 +198,17 @@ export class CarInfoComponent implements OnInit {
                 valid: true
             },
             c: {
-                value: item ? item.company_info.company_name : '',
+                value: (item && item.company_info) ? item.company_info.company_name : '',
                 valid: true
             },
             d: {
-                car_property_id: item ? item.car_property_info.car_property_id : '',
-                car_property_name: item ? item.car_property_info.car_property_name : '',
+                car_property_id: (item && item.car_property_info) ? item.car_property_info.car_property_id : '',
+                car_property_name: (item && item.car_property_info) ? item.car_property_info.car_property_name : '',
                 valid: true
             },
             e: {
-                car_type_id: item ? item.car_type_info.car_type_id : '',
-                car_type_name: item ? item.car_type_info.car_type_name : '',
+                car_type_id: (item && item.car_type_info) ? item.car_type_info.car_type_id : '',
+                car_type_name: (item && item.car_type_info) ? item.car_type_info.car_type_name : '',
                 valid: true
             },
             f: {
@@ -472,7 +473,13 @@ export class CarInfoComponent implements OnInit {
                             this.setCarDetail(this.hasCarInfo);
                         } else {
                             this.hasCarInfo = {};
-                            // this.setCarDetail(null, false);
+                            this.setCarDetail({
+                                province_code_info : {
+                                    province_code_id : this.result.a.province_code_id,
+                                    province_code_name : this.result.a.province_code_name
+                                },
+                                plate_no : cardId
+                            });
                         }
                     } else {
                         // this.errorMessage = hasCarInfo.status.error_desc;
@@ -484,7 +491,13 @@ export class CarInfoComponent implements OnInit {
                 });
         } else {
             this.hasCarInfo = {};
-            // this.setCarDetail(null);
+            this.setCarDetail({
+                province_code_info : {
+                    province_code_id : this.result.a.province_code_id,
+                    province_code_name : this.result.a.province_code_name
+                },
+                plate_no : cardId
+            });
         }
     }
 

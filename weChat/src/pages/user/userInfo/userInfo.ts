@@ -112,6 +112,10 @@ export class UserInfoComponent implements OnInit {
                     this.timeLeft();*/
                     this.isModifying = false;
                     this.getCarAndMemberInfo();
+                    this.userInfoForm.controls.phone.setValue('');
+                    this.userInfoForm.controls.username.setValue('');
+                    this.userInfoForm.controls.userId.setValue('');
+                    this.userInfoForm.controls.vcode.setValue('');
                 } else {
                     if(result.status.error_code === '1012'){
                         this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
@@ -121,6 +125,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     update() {
+        console.log(this.updateForm);
         if (this.updateForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
             this.fromError = true;
@@ -145,11 +150,17 @@ export class UserInfoComponent implements OnInit {
                     this.timeOut = 60;
                     this.timing = true;
                     this.timeLeft();*/
+                    this.timeOut = 60;
+                    this.timing = false;
                     this.isModifying = false;
+                    this.updateForm.controls.phone.setValue('');
+                    this.updateForm.controls.vcode.setValue('');
                     this.getCarAndMemberInfo();
                 } else {
                     if(result.status.error_code === '1012'){
                         this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
+                    }else{
+                        this.errorMessage = result.status.error_desc;
                     }
                 }
             }, error => this.errorMessage = <any>error);

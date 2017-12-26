@@ -76,9 +76,17 @@ export class RefundComponent implements OnInit {
         setTimeout(() => {
             this.zone.run(() => {
                 this.toastService.hide();
-                this.router.navigate(['/orderDetail', id])
+                this.router.navigate(['/orderDetail', (id.service_order_id || id)]);
             });
         }, 3000);
     }
 
+    canRefund() {
+        let status = ['22', '31', '32'];
+        if(this.detail){
+            let status_id = this.detail.service_order_status_info.service_order_status_id;
+            return status.indexOf(status_id) > -1;
+        }
+        return false;
+    }
 }

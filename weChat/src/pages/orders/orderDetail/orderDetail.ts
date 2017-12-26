@@ -125,6 +125,13 @@ export class OrderDetailComponent implements OnInit {
         });
     }
 
+    goPayment($event, service_order_id) {
+        $event.stopPropagation();
+        if(service_order_id){
+            window.location.href = '/payment?oid=' + service_order_id;
+        }
+    }
+
     showToast(msg) {
         // let msg = operation === 3 ? '删除订单成功' : '退款申请已提交请耐心等待';
         this.toastService.success(msg);

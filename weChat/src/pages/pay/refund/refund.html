@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="refundOrder(detail?.service_order_id)">确认退款</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" *ngIf="canRefund()" (click)="refundOrder(detail?.service_order_id)">确认退款</a>
 
     <div class="error-bar" [hidden]="!errorMessage">
         <p>{{errorMessage}}</p>

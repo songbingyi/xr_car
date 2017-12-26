@@ -26,6 +26,8 @@ export class CertificateComponent implements OnInit {
     @ViewChild('ios') iosAS: DialogComponent;
     @ViewChild('full') fullPopup: PopupComponent;
 
+    isSubmitting: Boolean = false; // 是否正在提交订单
+
     shouldReservation : Boolean = false;
     shouldReservationBox : Boolean = true;
 
@@ -186,6 +188,9 @@ export class CertificateComponent implements OnInit {
     }
 
     onStationChanged(station) {
+        if(station.value === '-1'){
+            return;
+        }
         this.result.station = station; // this.filterStation();
         this.result.station.valid = true;
         this.validators(this.result);
@@ -275,7 +280,11 @@ export class CertificateComponent implements OnInit {
     }
 
     confirmOrder() {
+        if(this.isSubmitting) {
+            return false;
+        }
         if (this.customValidators.isUploaded(this.uploaded)) {
+            this.isSubmitting = true;
             this.baseService.post('addServiceOrder', {
                 'submit_service_order_info' : {
                     'service_product_info'                    : {
@@ -318,8 +327,14 @@ export class CertificateComponent implements OnInit {
                 .subscribe(orderResult => {
                     if (orderResult.status.succeed === '1') {
                         this.router.navigate(['/confirmOrder', orderResult.data.service_order_id]);
+                    }else{
+                        this.errorMessage = orderResult.status.error_desc;
+                        this.isSubmitting = false;
                     }
-                }, error => this.errorMessage = <any>error);
+                }, error => {
+                    this.errorMessage = <any>error;
+                    this.isSubmitting = false;
+                });
         } else {
             this.errorMessage = '请按照要求上传图片！';
             return false;
@@ -345,7 +360,7 @@ export class CertificateComponent implements OnInit {
 
     validators(result) {
         this.errorMessage = '';
-        let map = this.customValidators.isValid(result || this.result);
+        let map = this.customValidators.isValid(result || this.result, 2);
         if (map.valid) {
             this.getPriceData();
         } else {
