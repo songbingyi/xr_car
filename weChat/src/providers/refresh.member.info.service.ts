@@ -14,9 +14,10 @@ export class RefreshMemberInfoService {
     token: any;
     memberInfo: any;
 
-    constructor(private authService: AuthService, private router: Router, private location: Location, private http : Http) {
+    constructor(private authService: AuthService, private router: Router, private location: Location, private http : Http, private localStorage: LocalStorage) {
         this.member_id = this.authService.getMemberId();
         this.token = this.authService.getToken();
+        this.localStorage.setS('RefreshMemberInfo', 'RefreshMemberInfo')
     }
 
     setSearchParams(path, data) {
@@ -27,6 +28,7 @@ export class RefreshMemberInfoService {
         urlSearchParams.append('device_version', '1.0');
         urlSearchParams.append('version_code', '1');
         urlSearchParams.append('channel', '10001');
+        urlSearchParams.append('token', this.token);
         return urlSearchParams;
     }
 
@@ -38,7 +40,10 @@ export class RefreshMemberInfoService {
     }
 
     refreshMemberInfo() {
-        let urlSearchParams = this.setSearchParams('member/member/loginWithToken', {'member_id':this.member_id,'token':this.token});
+        if(this.localStorage.getS('RefreshMemberInfo')){
+            return;
+        }
+        let urlSearchParams = this.setSearchParams('member/member/loginWithToken', {'member_id':this.member_id});
         this.http.post(config.api, urlSearchParams, this.getHeader())
             .map(response => {
                 return response.json();
@@ -49,11 +54,11 @@ export class RefreshMemberInfoService {
                 this.authService.setMemberId(memberInfo.member_id);
                 this.authService.setToken(memberInfo.token);
             } else {
-                // this.authService.redirect();
+                this.authService.redirect();
                 // this.errorMessage = memberInfo.status.error_desc;
             }
         }, error => {
-                // this.authService.redirect();
+                this.authService.redirect();
             // this.errorMessage = <any>error;
         });
     }

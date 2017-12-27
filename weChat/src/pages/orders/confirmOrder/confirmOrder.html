@@ -30,21 +30,21 @@
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[0]?.thumb)" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
                                 <span>驾照正副本</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[1]?.thumb)" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
                                 <span>人靠白墙半身照</span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <div class="image uploaded img-license aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'"></div>
+                                <div class="image uploaded img-license aspect-ratio" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[2]?.thumb)" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'"></div>
                                 <span>身份证正面</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[3]?.thumb)" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'"></div>
                                 <span>身份证反面</span>
                             </td>
                         </tr>
@@ -118,11 +118,11 @@
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[0]?.thumb)" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
                                 <span>营运证</span>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" data-ratio="1:1" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[1]?.thumb)" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
                                 <span>行驶证</span>
                             </td>
                         </tr>
@@ -193,16 +193,16 @@
                     </div>
                 </div>
                 <div class="images-container" *ngIf="order?.service_order_product_info.service_order_product_image_list.length===1">
-                    <img class="single-img" [src]="order?.service_order_product_info.service_order_product_image_list[0].thumb" style="height:150px;width: 250px;"/>
+                    <img class="single-img" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[0]?.thumb)" [src]="order?.service_order_product_info.service_order_product_image_list[0].thumb" style="height:150px;width: 250px;"/>
                 </div>
                 <div class="images-container" *ngIf="order?.service_order_product_info.service_order_product_image_list.length===2">
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
+                                <div class="image aspect-ratio" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[0]?.thumb)" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[0].thumb + ')'"></div>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
+                                <div class="image aspect-ratio" (click)="showImage(order?.service_order_product_info.service_order_product_image_list[1]?.thumb)" data-ratio="1:1" [style.background-image]="'url(' + order?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'"></div>
                             </td>
                         </tr>
                     </table>
@@ -226,5 +226,15 @@
         </div>
 
     </div>
+
+    <div class="weui-gallery" [hidden]="!isShowImage">
+        <span class="weui-gallery__img" [style.background-image]="'url(' + largerImg + ')'"></span>
+        <div class="weui-gallery__opr">
+            <a href="javascript:" class="weui-gallery__del" (click)="showImage()">
+                <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>
+            </a>
+        </div>
+    </div>
+
     <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="payOrder()" *ngIf="order?.service_order_status_info.is_pay">付款</a>
 </div>

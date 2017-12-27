@@ -86,7 +86,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}"/>
+                        <input class="weui-input" type="text" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}"/>
                     </div>
                 </div>
             </div>

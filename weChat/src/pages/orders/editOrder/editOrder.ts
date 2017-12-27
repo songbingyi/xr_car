@@ -166,7 +166,7 @@ export class EditOrderComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type_info'       : this.imageTypeService.getTypeByKey('car_service_type_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -286,6 +286,7 @@ export class EditOrderComponent implements OnInit {
 
 
     operation(id, operation) {
+        console.log(id);
         this.baseService.post('editServiceOrder', {
             'submit_service_order_info' : {
                 'service_order_id'                        : id,
@@ -299,7 +300,8 @@ export class EditOrderComponent implements OnInit {
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
-                    this.detail = detail.data.service_order_info;
+                    // this.detail = detail.data.service_order_info;
+                    console.log(id);
                     this.router.navigate(['/orderDetail', id]);
                 } else {
                     this.errorMessage = detail.status.error_desc;

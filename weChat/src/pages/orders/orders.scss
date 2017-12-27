@@ -96,7 +96,7 @@
             width:100px;
         }
         .normal-width {
-            width:130px;
+            width:135px;
         }
         p {
             position: relative;
@@ -163,5 +163,30 @@
         height:100px;
         display: block;
         margin: 0 auto;
+    }
+}
+
+@media (max-width:320px)  {
+    /*(max-width:320)*/
+    .orders {
+        .weui-cell__bd {
+            .eq-width {
+                display: inline-block;
+                font-size:12px;
+            }
+            .mini-width {
+                width:60px;
+            }
+            .small-width {
+                width:90px;
+            }
+            .normal-width {
+                width:120px;
+            }
+            p {
+                position: relative;
+                top: 1px
+            }
+        }
     }
 }

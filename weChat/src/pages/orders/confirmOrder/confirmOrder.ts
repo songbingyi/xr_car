@@ -18,6 +18,8 @@ export class ConfirmOrderComponent implements OnInit {
     errorMessage: any;
     isLoaded: Boolean = false;
     isSinglePaymentType: boolean;
+    isShowImage:Boolean = false;
+    largerImg: String = '';
 
     constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private paymentTypeService: PaymentTypeList) {}
 
@@ -63,6 +65,13 @@ export class ConfirmOrderComponent implements OnInit {
 
     changeMode(type) {
         this.mode = type;
+    }
+
+    showImage(img?) {
+        if(img){
+            this.largerImg = img;
+        }
+        this.isShowImage = !this.isShowImage;
     }
 
 }

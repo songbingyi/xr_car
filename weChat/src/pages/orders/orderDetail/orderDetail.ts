@@ -19,6 +19,8 @@ export class OrderDetailComponent implements OnInit {
     detail: any;
     isLoaded: Boolean = false;
     dialogConfig: DialogConfig;
+    isShowImage:Boolean = false;
+    largerImg: String = '';
 
     constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService) {}
 
@@ -149,6 +151,13 @@ export class OrderDetailComponent implements OnInit {
             }
         }, 2000);
         // this.toastService.hide();
+    }
+
+    showImage(img?) {
+        if(img){
+            this.largerImg = img;
+        }
+        this.isShowImage = !this.isShowImage;
     }
 
     changeMode(type) {

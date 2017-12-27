@@ -16,6 +16,8 @@ export class OrdersComponent implements OnInit {
     activeIndex: any;
     isLoaded: boolean;
 
+    order_type: Number;
+
     all: any = {
         pagination :  {
             page : 1,
@@ -67,6 +69,7 @@ export class OrdersComponent implements OnInit {
     ngOnInit() {
         let activeIndex: string = this.route.snapshot.paramMap.get('status');
         this.activeIndex = parseInt(activeIndex, 10);
+        this.order_type = this.activeIndex;
         // this.status = this.objName[this.activeIndex];
         this.key    = this.objKey[this.activeIndex];
         this.getInitData();
@@ -74,6 +77,7 @@ export class OrdersComponent implements OnInit {
 
     onTabSelect(event) {
         // console.log(event);
+        this.order_type = event;
         this.key    = this.objKey[event];
         // this[this.key].pagination.page ++;
         this.getInitData();
@@ -82,8 +86,8 @@ export class OrdersComponent implements OnInit {
     getInitData() {
         this[this.key].isLoaded = false;
         this.baseService.post('getServiceOrderList', {
-            'pagination' : this[this.key].pagination,
-            'type'       : this.key
+            'pagination'   : this[this.key].pagination,
+            'filter_value' : {order_type: this.order_type}
         })
             .subscribe(lists => {
                 if (lists.status.succeed === '1') {

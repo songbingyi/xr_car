@@ -89,14 +89,34 @@ export class UserInfoComponent implements OnInit {
     }
 
     save() {
+        let userId = this.userInfoForm.value.userId;
+        let mobile = this.userInfoForm.value.phone;
+        //let regxU15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+        let regxU18 = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/;
+        let regxM = (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+
+        // 身份证号格式验证
+        if(userId && (/*!regxU15.test(userId) && */!regxU18.test(userId))){
+            this.errorMessage = '身份证号格式不正确';
+            return ;
+        }
+
+        // 手机号格式验证
+        if(mobile && (!regxM.test(mobile))){
+            this.errorMessage = '手机号格式不正确';
+            return ;
+        }
+
         if (this.userInfoForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
+            this.errorMessage = '';
             this.fromError = true;
             return ;
         } else {
             this.errorMessage = '';
             this.fromError = false;
         }
+        //console.log();
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
             'mobile' : this.userInfoForm.value.phone,
@@ -125,20 +145,35 @@ export class UserInfoComponent implements OnInit {
     }
 
     update() {
-        console.log(this.updateForm);
+        // console.log(this.updateForm);
         if (this.updateForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
+            this.errorMessage = '';
             this.fromError = true;
             return ;
         } else {
             this.errorMessage = '';
             this.fromError = false;
         }
+
         if(!this.verifyCode || !this.verifyCode.code){
             this.fromError = true;
             this.errorMessage = '请先获取验证码再提交！';
             return ;
         }
+
+        if(!this.updateForm.value.vcode){
+            this.fromError = true;
+            this.errorMessage = '请输入有效的验证码！';
+            return ;
+        }
+
+        if(this.verifyCode && this.verifyCode.verify_code && this.updateForm.value.vcode && (this.verifyCode.verify_code !== this.updateForm.value.vcode)){
+            //this.fromError = true;
+            this.errorMessage = '输入的验证码不正确！';
+            return ;
+        }
+
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
             'mobile' : this.updateForm.value.phone,
