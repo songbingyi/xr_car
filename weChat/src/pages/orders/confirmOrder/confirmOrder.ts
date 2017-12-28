@@ -68,10 +68,10 @@ export class ConfirmOrderComponent implements OnInit {
     }
 
     showImage(img?) {
-        if(img){
+        /*if(img){
             this.largerImg = img;
         }
-        this.isShowImage = !this.isShowImage;
+        this.isShowImage = !this.isShowImage;*/
     }
 
 }

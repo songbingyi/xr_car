@@ -87,6 +87,11 @@ export class ReviewComponent implements OnInit {
         a : null
     };
 
+    pagination = {
+        page : 1,
+        count: 100
+    };
+
     wx : any;
 
     constructor(private route : ActivatedRoute, private router : Router, private pickerService : PickerService, private baseService : BaseProvider, private customValidators : CustomValidators, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private localStorage: LocalStorage, private refreshMemberInfoService: RefreshMemberInfoService) {
@@ -135,7 +140,9 @@ export class ReviewComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getSiteList', {})
+        this.baseService.post('getSiteList', {
+            'pagination': this.pagination
+        })
             .subscribe(stations => {
                 if (stations.status.succeed === '1') {
                     this.rebuildStation(stations.data.site_list);
@@ -202,7 +209,8 @@ export class ReviewComponent implements OnInit {
                 'site_category_id' : '2',
                 'longitude_num' : '',
                 'latitude_num' : ''
-            }
+            },
+            'pagination': this.pagination
         })
             .subscribe(stations => {
                 if (stations.status.succeed === '1') {

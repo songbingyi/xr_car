@@ -154,10 +154,10 @@ export class OrderDetailComponent implements OnInit {
     }
 
     showImage(img?) {
-        if(img){
+        /*if(img){
             this.largerImg = img;
         }
-        this.isShowImage = !this.isShowImage;
+        this.isShowImage = !this.isShowImage;*/
     }
 
     changeMode(type) {

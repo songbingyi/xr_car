@@ -203,9 +203,16 @@ export class UserInfoComponent implements OnInit {
 
     getVCode() {
         let phone = this.userInfoForm.value.phone;
+        let regxM = (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
 
         if (this.isModifying) {
             phone = this.updateForm.value.phone;
+        }
+
+        // 手机号格式验证
+        if(phone && (!regxM.test(phone))){
+            this.errorMessage = '手机号格式不正确';
+            return ;
         }
 
         if (!phone) {

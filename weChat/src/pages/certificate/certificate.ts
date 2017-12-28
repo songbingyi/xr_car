@@ -80,6 +80,11 @@ export class CertificateComponent implements OnInit {
         b: null
     };
 
+    pagination = {
+        page : 1,
+        count: 100
+    };
+
     wx: any;
 
     constructor(private route : ActivatedRoute, private router : Router, private pickerService: PickerService, private baseService: BaseProvider, private customValidators: CustomValidators, private wxService: WXSDKService, private zone: NgZone, private imageTypeService : ImageTypeList, private localStorage: LocalStorage, private refreshMemberInfoService: RefreshMemberInfoService) {
@@ -139,7 +144,8 @@ export class CertificateComponent implements OnInit {
                 'site_category_id' : '2',
                 'longitude_num' : '',
                 'latitude_num' : ''
-            }
+            },
+            'pagination': this.pagination
         })
             .subscribe(stations => {
                 if (stations.status.succeed === '1') {

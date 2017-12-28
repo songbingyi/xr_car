@@ -76,6 +76,11 @@ export class MapComponent implements OnInit {
 
     mapReady: Boolean = false;
 
+    pagination = {
+        page : 1,
+        count: 100
+    };
+
     wxs: any;
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
@@ -180,10 +185,50 @@ export class MapComponent implements OnInit {
         return this.distance;
     }
 
-    loadMakers(options, type?) {
-        if (type) {
-            this.loading = true;
-        }
+    loadMarkersBySearch(options) {
+        this.searchMarkers = [];
+        this.loading = true;
+        return this.baseProvider.post('getSiteList', {
+            'filter_info': {
+                'site_name': options.name || '',
+                'region_id': '',
+                'site_category_id': '',
+                'latitude_num': options.latitude || this.latitude || 34.341568,
+                'longitude_num': options.longitude || this.longitude || 108.94075,
+                'distance': '200000' //this.distance
+            },
+            'pagination': this.pagination
+        }).subscribe(markers => {
+                if (markers.status.succeed === '1') {
+                    //this.isLoaded = true;
+                    this.loading = false;
+                    this.searchMarkers = markers.data.site_list;
+                    this.searchMarkers.forEach(marker => {
+                        // 服务站
+                        if (marker.site_category_info.site_category_id === '1') {
+                            marker.icon = '/assets/images/marker/service.png';
+                            marker.type = 'service';
+                        }
+                        // 监测站
+                        if (marker.site_category_info.site_category_id === '2') {
+                            marker.icon = '/assets/images/marker/review.png';
+                            marker.type = 'review';
+                        }
+                        // this.setMarker(marker);
+                    });
+                } else {
+                    this.errorMessage = markers.status.error_desc;
+                    this.loading = false;
+                }
+            }, error => {
+                this.errorMessage = <any>error;
+                this.loading = false;
+            }
+        );
+    }
+
+    loadMakers(options) {
+        this.isLoaded = false;
         return this.baseProvider.post('getSiteList', {
             'filter_info': {
                 'site_name': options.name || '',
@@ -192,22 +237,21 @@ export class MapComponent implements OnInit {
                 'latitude_num': options.latitude || this.latitude || 34.341568,
                 'longitude_num': options.longitude || this.longitude || 108.94075,
                 'distance': this.distance
-            }
+            },
+            'pagination': this.pagination
         }).subscribe(markers => {
-                this.serviceNumber = 0;
-                this.reviewNumber = 0;
                 if (markers.status.succeed === '1') {
                     if (markers.data && markers.data.site_list && markers.data.site_list.length===0) {
                         if(this.distanceIndex <= this.distances.length) {
                             this.getDistance();
-                            this.loadMakers(options, type);
+                            this.loadMakers(options);
                         }
-                        this.loading = false;
-                        this.searchMarkers= [];
+                        //this.loading = false;
+                        //this.searchMarkers= [];
                         return ;
                     }
                     this.isLoaded = true;
-                    if (type) {
+                    /*if (type) {
                         this.loading = false;
                         this.searchMarkers = markers.data.site_list;
                         this.searchMarkers.forEach(marker => {
@@ -224,7 +268,9 @@ export class MapComponent implements OnInit {
                             // this.setMarker(marker);
                         });
                         return;
-                    }
+                    }*/
+                    this.serviceNumber = 0;
+                    this.reviewNumber = 0;
                     this.markers = markers.data.site_list;
                     this.markers.forEach(marker => {
                         // 服务站
@@ -243,11 +289,11 @@ export class MapComponent implements OnInit {
                     });
                 } else {
                     this.errorMessage = markers.status.error_desc;
-                    this.loading = false;
+                    //this.loading = false;
                 }
             }, error => {
                 this.errorMessage = <any>error;
-                this.loading = false;
+                //this.loading = false;
             }
         );
     }
@@ -334,9 +380,9 @@ export class MapComponent implements OnInit {
         //console.log("Search");
         this.value = term;
         if (term) {
-            this.loadMakers({
+            this.loadMarkersBySearch({
                 name: term
-            }, 'search');
+            });
         }
     }
 

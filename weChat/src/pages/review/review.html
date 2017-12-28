@@ -68,13 +68,13 @@
                 <div class="weui-cells__title" [hidden]="!isBartrailer">三.审验材料添加</div>
                 <div class="weui-cells__title" [hidden]="isBartrailer">二.审验材料添加</div>
                 <div class="weui-cells">
-                    <a class="weui-cell weui-cell_access" [ngClass]="{'is-off-site':result.car.region_info && result.car.region_info.region_id && result.city.region_id && result.car.region_info.region_id !== result.city.region_id}" href="javascript:;" (click)="fullPopup.show()">
+                    <a class="weui-cell weui-cell_access" [ngClass]="{'is-off-site':result.car.province_code_info?.region_info && result.car.province_code_info?.region_info.region_id && result.city.region_id && result.car.province_code_info?.region_info.region_id !== result.city.region_id}" href="javascript:;" (click)="fullPopup.show()">
                         <div class="weui-cell__bd">
                             <p>审验城市</p>
                         </div>
                         <div class="weui-cell__ft" [ngClass]="{'error':(!result.city.valid && result.city.isTouched)}">
                             <span>{{result.city.region_name || '请选择审验城市'}}</span>
-                            <p class="text-tips" *ngIf="result.car.region_info && result.car.region_info.region_id && result.city.region_id && result.car.region_info.region_id !== result.city.region_id">注：异地审车须加收服务费</p>
+                            <p class="text-tips" *ngIf="result.car.province_code_info?.region_info && result.car.province_code_info?.region_info.region_id && result.city.region_id && result.car.province_code_info?.region_info.region_id !== result.city.region_id">注：异地审车须加收服务费</p>
                         </div>
                     </a>
                     <a class="weui-cell weui-cell_access" href="javascript:;">
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="tab-content" [hidden]="!showNext">
-                <div class="weui-cells__title">请上传以下照片</div>
+                <div class="weui-cells__title">请上传行驶证正副本照片</div>
                 <div class="images-container">
                     <span>示例图片</span>
                     <img class="single-img" src="/assets/images/tmp/shenche.png" />
