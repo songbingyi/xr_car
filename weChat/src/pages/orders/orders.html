@@ -2,7 +2,7 @@
     <tabset (onSelect)="onTabSelect($event)">
         <tab [active]="activeIndex===0">
             <span *tabHeading class="tab-set-heading">
-                全部<!--<q class="weui-badge" *ngIf="all.lists.length">{{all.lists.length}}</q>-->
+                全部
             </span>
             <div class="scroll-page">
                 <div *ngIf="all.isLoaded && all.lists.length">
@@ -29,8 +29,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">删除</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -73,8 +71,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">删除</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -117,147 +113,12 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">删除</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-
-
-                <!--<a class="weui-cells" [routerLink]="['/orderDetail', 1]">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
-                        </div>
-                        <div class="weui-cell__ft"><span class="text-danger">很抱歉，审核未通过...</span></div>
-                    </div>
-                    <div class="weui-cell with-padding-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>{{showText(item)}}<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary">修改</a>
-                            &lt;!&ndash;<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>&ndash;&gt;
-                        </div>
-                    </div>
-                </a>
-
-                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
-                        </div>
-                        <div class="weui-cell__ft"><span class="text-info">审核中…</span></div>
-                    </div>
-                    <div class="weui-cell with-padding-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>{{showText(item)}}<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
-                            &lt;!&ndash;<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>&ndash;&gt;
-                        </div>
-                    </div>
-                </a>
-
-                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>营运证审验</p>
-                        </div>
-                        <div class="weui-cell__ft"><span class="text-info">处理中…</span></div>
-                    </div>
-                    <div class="weui-cell with-padding-top">
-                        <div class="weui-cell__bd">
-                            <p><span>性质：公户</span> <span>类型：大型汽车</span> <span>车牌号：陕A12543</span></p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>时间：2017年10月20日</p>
-                        </div>
-                    </div>
-                    <div class="weui-cell no-border">
-                        <div class="weui-cell__bd">
-                            <p>地点：西安  西安新盛检测站 </p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>{{showText(item)}}<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default disabled weui-btn_mini_primary">修改</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default">取消</a>
-                            &lt;!&ndash;<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn disabled weui-btn_mini weui-btn_default weui-btn_mini_warn">修改</a>&ndash;&gt;
-                        </div>
-                    </div>
-                </a>
-
-                <a class="weui-cells" [routerLink]="['/orderDetail', 1]">
-                    <div class="weui-cell special-cell">
-                        <div class="weui-cell__bd">
-                            <p>驾照审验</p>
-                        </div>
-                        <div class="weui-cell__ft"><span  [ngClass]="isWarning(item) ? 'text-danger' : 'text-warning'">正在退款...</span></div>
-                    </div>
-                    <div class="weui-cell with-padding-top">
-                        <div class="weui-cell__bd">
-                            <p><span>AB证</span></p>
-                        </div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd">
-                            <span>{{showText(item)}}<strong>￥520</strong></span>
-                        </div>
-                        <div class="weui-cell__bd button-sp-area">
-                            &lt;!&ndash;<a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_primary">修改</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">取消</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">付款</a>
-                            <a href="javascript:;" class="weui-btn-disabled weui-btn_mini weui-btn_warn">修改</a>&ndash;&gt;
-                        </div>
-                    </div>
-                </a>-->
 
                 <div class="empty-container" *ngIf="all.isLoaded && all.lists.length===0">
                     <div class="empty">
@@ -272,7 +133,7 @@
         </tab>
         <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
-                待付款<!--<q class="weui-badge" *ngIf="needPay.lists.length">{{needPay.lists.length}}</q>-->
+                待付款<q class="weui-badge" *ngIf="hasNotify('order_obligation_count')">{{service_order_dashboard_info.order_obligation_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="needPay.isLoaded && needPay.lists.length">
@@ -299,7 +160,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -342,7 +202,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -385,7 +244,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>-->
                                 </div>
                             </div>
                         </div>
@@ -406,7 +264,7 @@
         </tab>
         <tab [active]="activeIndex===2">
             <span *tabHeading class="tab-set-heading">
-                待处理<!--<q class="weui-badge" *ngIf="needProcess.lists.length">{{needProcess.lists.length}}</q>-->
+                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count')">{{service_order_dashboard_info.order_pending_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
@@ -432,8 +290,6 @@
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -475,8 +331,6 @@
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -518,8 +372,6 @@
                                 <div class="weui-cell__bd button-sp-area">
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -540,7 +392,7 @@
         </tab>
         <tab [active]="activeIndex===3">
             <span *tabHeading class="tab-set-heading">
-                处理中<!--<q class="weui-badge" *ngIf="processing.lists.length">{{processing.lists.length}}</q>-->
+                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count')">{{service_order_dashboard_info.order_process_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
@@ -567,8 +419,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -611,8 +461,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -655,8 +503,6 @@
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder" *ngIf="shouldShowPlaceholderBtn(item)">占位</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" (click)="goPayment($event, item?.service_order_id)" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
                                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
                                 </div>
                             </div>
                         </div>
@@ -677,7 +523,7 @@
         </tab>
         <tab [active]="activeIndex===4">
             <span *tabHeading class="tab-set-heading">
-                已完成<!--<q class="weui-badge" *ngIf="hasDone.lists.length">{{hasDone.lists.length}}</q>-->
+                已完成
             </span>
             <div class="scroll-page">
                 <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
@@ -700,12 +546,7 @@
                                 <div class="weui-cell__bd">
                                     <span>{{showText(item)}}<strong>￥{{item?.total}}</strong></span>
                                 </div>
-                                <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
-                                </div>
+                                <div class="weui-cell__bd button-sp-area"> </div>
                             </div>
                         </div>
 
@@ -743,12 +584,7 @@
                                 <div class="weui-cell__bd">
                                     <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
-                                <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
-                                </div>
+                                <div class="weui-cell__bd button-sp-area"> </div>
                             </div>
                         </div>
 
@@ -786,12 +622,7 @@
                                 <div class="weui-cell__bd">
                                     <span>{{showText(item)}}<strong>￥{{item.total}}</strong></span>
                                 </div>
-                                <div class="weui-cell__bd button-sp-area">
-                                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn" [routerLink]="['/confirmOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_pay === '1'">付款</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" [routerLink]="['/editOrder', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_edit === '1'">修改</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_delete === '1'">取消</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" [routerLink]="['/orderDetail', item?.service_order_id]" *ngIf="item?.service_order_status_info.is_return === '1'">退款</a>-->
-                                </div>
+                                <div class="weui-cell__bd button-sp-area"> </div>
                             </div>
                         </div>
 

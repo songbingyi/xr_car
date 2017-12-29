@@ -4,6 +4,7 @@ import {NgZone, OnDestroy} from '@angular/core';
 import {BaseProvider} from '../../providers/http/base.http';
 import {Router} from "@angular/router";
 import {MessageService} from '../../providers/messageService';
+import {LocalStorage} from '../../providers/localStorage';
 
 import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
 
@@ -24,14 +25,13 @@ export class UserComponent implements OnInit {
     carList: any = [];
     errorMessage: any;
 
-    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService) {
+    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private localStorage: LocalStorage) {
         this.hasCar();
         this.message.getMessage().subscribe(msg => {
             if(msg.type === 'userRefresh'){
                 this.refresh();
             }
         });
-        this.refreshMemberInfoService.refreshMemberInfo();
     }
 
     ngOnInit() {
@@ -39,6 +39,9 @@ export class UserComponent implements OnInit {
             .subscribe(member => {
                     if (member.status.succeed === '1') {
                         this.member = member.data;
+                        if(this.member.service_order_dashboard_info) {
+                            this.localStorage.setObject('service_order_dashboard_info', this.member.service_order_dashboard_info);
+                        }
                     } else {
                         this.errorMessage = member.status.error_desc;
                     }

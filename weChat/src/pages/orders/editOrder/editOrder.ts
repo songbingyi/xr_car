@@ -181,7 +181,7 @@ export class EditOrderComponent implements OnInit {
 
     setPictureToList(type, url) {
         let index = this.uploadedIndex[type];
-        this.detail.service_order_product_info.service_order_product_image_list[index].thumb = url;
+        this.detail.service_order_product_info.service_order_product_image_list[index].source = url;
     }
 
     /*confirmOrder() {
@@ -249,7 +249,7 @@ export class EditOrderComponent implements OnInit {
             // let upload = uploaded[key];
             image.sort_order = index;
             image.image_type_id = image_type_id;
-            image.image_url = picture.thumb;
+            image.image_url = picture.source;
             tmp.push(image);
         });
 

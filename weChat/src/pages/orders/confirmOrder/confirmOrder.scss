@@ -52,6 +52,9 @@
         padding-bottom: 10px;
         .image {
             margin-top:0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
         }
         span {
             margin-top: 10px;

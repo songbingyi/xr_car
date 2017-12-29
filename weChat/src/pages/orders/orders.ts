@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import {Router, ActivatedRoute, ParamMap, NavigationStart, NavigationEnd} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { BaseProvider } from '../../providers/http/base.http';
+import {LocalStorage} from '../../providers/localStorage';
 
 @Component({
     selector    : 'app-orders',
@@ -59,27 +60,48 @@ export class OrdersComponent implements OnInit {
         isLoaded : false
     };
 
+    service_order_dashboard_info: any;
+
     errorMessage: any;
 
     objName : any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
     objKey : any = ['all', 'needPay', 'needProcess', 'processing', 'hasDone'];
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private localStorage: LocalStorage) {
+        this.router.events.subscribe(event => {
+            if(event instanceof NavigationEnd) {
+                // console.log(event);
+                // this.getInitData();
+            }
+        });
     }
 
     ngOnInit() {
         let activeIndex: string = this.route.snapshot.paramMap.get('status');
+        let page: string = this.route.snapshot.paramMap.get('page');
         this.activeIndex = parseInt(activeIndex, 10);
         this.order_type = this.activeIndex;
         // this.status = this.objName[this.activeIndex];
         this.key    = this.objKey[this.activeIndex];
+        this[this.key].pagination.page = page;
+        this.getService_order_dashboard_info();
         this.getInitData();
     }
 
+    getService_order_dashboard_info() {
+        this.service_order_dashboard_info = this.localStorage.getObject('service_order_dashboard_info');
+    }
+
+    hasNotify(key) {
+        return this.service_order_dashboard_info && this.service_order_dashboard_info[key] !== '0';
+    }
+
     onTabSelect(event) {
-        // console.log(event);
         this.order_type = event;
         this.key    = this.objKey[event];
         // this[this.key].pagination.page ++;
+        //this.getInitData();
+        this.activeIndex = event;
+        this.router.navigate(['/orders', event, this[this.key].pagination.page]);
         this.getInitData();
     }
 
@@ -106,9 +128,10 @@ export class OrdersComponent implements OnInit {
     }
 
     change($event, type) {
-        // console.log($event);
         this.key    = this.objKey[type];
         this[this.key].pagination.page = $event;
+        // this.getInitData();
+        this.router.navigate(['/orders', this.activeIndex, $event]);
         this.getInitData();
     }
 

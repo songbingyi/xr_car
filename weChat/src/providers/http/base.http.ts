@@ -29,7 +29,6 @@ export class BaseProvider {
 
     constructor(public http : Http, private authService: AuthService) {
         // console.log('Hello Base Provider');
-        this.access_token = this.authService.getToken();
         // console.log('this.access_token');
         // console.log(this.access_token);
         BaseProvider.self = this;
@@ -74,6 +73,7 @@ export class BaseProvider {
     }
 
     setSearchParams(path, data) {
+        this.access_token = this.authService.getToken();
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('route', path);
         urlSearchParams.append('token', this.access_token);
@@ -86,6 +86,7 @@ export class BaseProvider {
     }
 
     post(name : any, data : any, isTest?) {
+        this.access_token = this.authService.getToken();
         let url = this.url + '?access_token=' + this.access_token;
         let route = apiBase[name];
         let headers = this.getHeaders();

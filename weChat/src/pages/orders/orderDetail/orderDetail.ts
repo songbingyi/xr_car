@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 import {BaseProvider} from '../../../providers/http/base.http';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -22,7 +23,7 @@ export class OrderDetailComponent implements OnInit {
     isShowImage:Boolean = false;
     largerImg: String = '';
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService) {}
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location) {}
 
     ngOnInit() {
         let id: string = this.route.snapshot.paramMap.get('id');
@@ -44,14 +45,16 @@ export class OrderDetailComponent implements OnInit {
                     if (!this.detail.service_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
-                            this.router.navigate(['/orders', 0]);
+                            this.location.back();
+                            // this.router.navigate(['/orders', 0]);
                         });
                     }
                 } else {
                     this.errorMessage = detail.status.error_desc;
                     if (detail.status.error_code === '4004') {
                         setTimeout(() => {
-                            this.router.navigate(['/orders', 0]);
+                            this.location.back();
+                            //this.router.navigate(['/orders', 0]);
                         }, 2000);
                     }
                 }
@@ -122,7 +125,8 @@ export class OrderDetailComponent implements OnInit {
         this.showToast(msg);
         this.hideToast(() => {
             if (operation === 3) {
-                this.router.navigate(['/orders', 0]);
+                this.location.back();
+                // this.router.navigate(['/orders', 0]);
             }
         });
     }

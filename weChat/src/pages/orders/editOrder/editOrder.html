@@ -45,7 +45,7 @@
                         <tr>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0]?.thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0]?.source + ')'">
                                     <span (click)="choose('a')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -53,7 +53,7 @@
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.source + ')'">
                                     <span (click)="choose('b')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -63,7 +63,7 @@
                         <tr>
                             <td>
                                 <div class="image uploaded img-license aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[2]?.thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[2]?.source + ')'">
                                     <span (click)="choose('c')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -71,7 +71,7 @@
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[3]?.thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[3]?.source + ')'">
                                     <span (click)="choose('d')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -189,7 +189,7 @@
                         <tr>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].source + ')'">
                                     <span (click)="choose('a')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -197,7 +197,7 @@
                             </td>
                             <td>
                                 <div class="image aspect-ratio" data-ratio="1:1"
-                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
+                                     [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.source + ')'">
                                     <span (click)="choose('b')"
                                           *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
@@ -340,19 +340,19 @@
                     </div>
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===1">
-                    <img class="single-img" [src]="detail?.service_order_product_info.service_order_product_image_list[0].thumb" style="height:150px;width: 250px;"/>
+                    <img class="single-img" [src]="detail?.service_order_product_info.service_order_product_image_list[0].source" style="height:150px;width: 250px;"/>
                     <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                 </div>
                 <div class="images-container" *ngIf="detail?.service_order_product_info.service_order_product_image_list.length===2">
                     <table class="table-container">
                         <tr>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].thumb + ')'">
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[0].source + ')'">
                                     <span (click)="choose('a')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                             </td>
                             <td>
-                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.thumb + ')'">
+                                <div class="image aspect-ratio" data-ratio="1:1" [style.background-image]="'url(' + detail?.service_order_product_info.service_order_product_image_list[1]?.source + ')'">
                                     <span (click)="choose('b')" *ngIf="detail?.service_order_status_info.service_order_status_id==='22'">修改</span>
                                 </div>
                             </td>

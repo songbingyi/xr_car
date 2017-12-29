@@ -4,6 +4,7 @@ import {Title} from '@angular/platform-browser';
 import {MessageService} from '../../providers/messageService';
 import {LocalStorage} from '../../providers/localStorage';
 import {AuthService} from '../../providers/auth.service';
+import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
 
 @Component({
     selector    : 'app-index',
@@ -37,7 +38,7 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService) {
+    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService) {
 
     }
 
@@ -91,6 +92,8 @@ export class IndexComponent implements OnInit {
             if (!this.authService.isLoggedIn()) {
                 this.localStorage.remove('activeTabIndex');
                 this.authService.redirect();
+            }else{
+                this.refreshMemberInfoService.refreshMemberInfo();
             }
         }
     }

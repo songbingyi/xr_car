@@ -17,7 +17,6 @@ export class RefreshMemberInfoService {
     constructor(private authService: AuthService, private router: Router, private location: Location, private http : Http, private localStorage: LocalStorage) {
         this.member_id = this.authService.getMemberId();
         this.token = this.authService.getToken();
-        this.localStorage.setS('RefreshMemberInfo', 'RefreshMemberInfo')
     }
 
     setSearchParams(path, data) {
@@ -43,6 +42,7 @@ export class RefreshMemberInfoService {
         if(this.localStorage.getS('RefreshMemberInfo')){
             return;
         }
+        this.localStorage.setS('RefreshMemberInfo', 'RefreshMemberInfo');
         let urlSearchParams = this.setSearchParams('member/member/loginWithToken', {'member_id':this.member_id});
         this.http.post(config.api, urlSearchParams, this.getHeader())
             .map(response => {
@@ -51,8 +51,9 @@ export class RefreshMemberInfoService {
             .subscribe(memberInfo => {
             if (memberInfo.status.succeed === '1') {
                 this.memberInfo = memberInfo.data;
-                this.authService.setMemberId(memberInfo.member_id);
-                this.authService.setToken(memberInfo.token);
+                this.authService.setMemberId(this.memberInfo.member_id);
+                this.authService.setToken(this.memberInfo.token);
+                this.authService.setSession(this.memberInfo.token + '__' + this.memberInfo.member_id);
             } else {
                 this.authService.redirect();
                 // this.errorMessage = memberInfo.status.error_desc;
