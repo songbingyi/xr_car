@@ -8,7 +8,6 @@ let apiBase : IDictionary<string> = {
     'getProvinceCodeList'       : 'base/province_code/getProvinceCodeList',
     'getCarPropertyList'        : 'base/car_property/getCarPropertyList',
     'getCarTypeList'            : 'base/car_type/getCarTypeList',
-    'getCarTypeListAlter'       : 'base/car_type/getCarTypeListAlter', // 最终需要删掉
     'getDrivingLicenseTypeList' : 'base/driving_license_type/getDrivingLicenseTypeList',
     'getOpenRegionList'         : 'base/region/getOpenRegionList',
     'getSiteList'               : 'site/site/getSiteList',
@@ -41,9 +40,7 @@ let apiBase : IDictionary<string> = {
     'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
     'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
     'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',
-
-
-    'payWithWechat' : 'base/tools/payWithWechat' // need deleted
+    'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity'
 };
 
 export {apiBase};

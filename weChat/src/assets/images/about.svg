@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="640px" viewBox="0 0 640 640" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>关于我们LOGO-彩色</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="318.936877" cy="318.936877" r="318.936877"></circle>
+        <polygon id="path-3" points="0 4.22156863 0 71.3686275 166.948039 71.3686275 166.948039 4.22156863"></polygon>
+        <polygon id="path-5" points="0 372.869608 497.823529 372.869608 497.823529 0.997058824 0 0.997058824"></polygon>
+    </defs>
+    <g id="图片" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="关于我们LOGO-彩色">
+            <g id="Avatar">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Avatar-base">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <circle stroke="#FFFFFF" stroke-width="9" cx="318.936877" cy="318.936877" r="314.436877"></circle>
+                </g>
+            </g>
+            <g id="Page-1" transform="translate(69.000000, 165.000000)">
+                <path d="M4.83431373,36.0892157 C4.83431373,36.0892157 68.3441176,92.9519608 75.0009804,103.236275 L177.226471,103.236275 C177.226471,103.236275 123.393137,50.0009804 106.451961,36.0892157 L4.83431373,36.0892157 Z" id="Fill-1" fill="#BAE0F1"></path>
+                <path d="M68.3401961,200.620588 C68.3401961,200.620588 128.712745,155.502941 75.0068627,103.228431 L177.222549,103.228431 C177.222549,103.228431 226.830392,151.630392 166.948039,200.620588 L68.3401961,200.620588 Z" id="Fill-3" fill="#77B6D8"></path>
+                <g id="Group-7" transform="translate(0.000000, 196.399020)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g id="Clip-6"></g>
+                    <path d="M68.3401961,4.22156863 C68.3401961,4.22156863 30.2323529,48.9862745 -0.00294117647,71.3686275 L94.3598039,71.3686275 C94.3598039,71.3686275 160.751961,15.8294118 166.948039,4.22156863 L68.3401961,4.22156863 Z" id="Fill-5" fill="#03538B" mask="url(#mask-4)"></path>
+                </g>
+                <path d="M349.628431,1 C349.628431,1 264.932353,67.5392157 247.393137,90.5294118 L388.942157,90.5294118 C388.942157,90.5294118 455.481373,22.7745098 489.353922,1 L349.628431,1 Z" id="Fill-8" fill="#BAE0F1"></path>
+                <path d="M247.395098,90.527451 C247.395098,90.527451 171.777451,147.998039 261.306863,217.556863 L400.434314,217.556863 C400.434314,217.556863 313.659804,160.978431 388.944118,90.527451 L247.395098,90.527451 Z" id="Fill-10" fill="#77B6D8"></path>
+                <path d="M363.539216,307.07549 C363.539216,307.07549 277.529412,236.07549 261.303922,217.555882 L400.441176,217.555882 L497.823529,307.07549" id="Fill-12" fill="#03538B"></path>
+                <mask id="mask-6" fill="white">
+                    <use xlink:href="#path-5"></use>
+                </mask>
+                <g id="Clip-14"></g>
+            </g>
+        </g>
+    </g>
+</svg>

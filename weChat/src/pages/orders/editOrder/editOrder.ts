@@ -286,7 +286,7 @@ export class EditOrderComponent implements OnInit {
 
 
     operation(id, operation) {
-        console.log(id);
+        // console.log(id);
         this.baseService.post('editServiceOrder', {
             'submit_service_order_info' : {
                 'service_order_id'                        : id,

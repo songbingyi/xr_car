@@ -352,7 +352,7 @@ export class CertificateComponent implements OnInit {
         let tmp = [];
         let sort_order = 0;
         let keys = Object.keys(uploaded).sort();
-        let image_type_id = this.imageTypeService.getTypeByKey('car_service_type_image').image_type_id;
+        let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
         keys.forEach(key => {
             let image : any = {};
             let upload = uploaded[key];

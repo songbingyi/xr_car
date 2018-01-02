@@ -73,7 +73,7 @@ export class BaseProvider {
     }
 
     setSearchParams(path, data) {
-        this.access_token = this.authService.getToken();
+        this.access_token = this.authService.getToken() || '';
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('route', path);
         urlSearchParams.append('token', this.access_token);
@@ -86,7 +86,7 @@ export class BaseProvider {
     }
 
     post(name : any, data : any, isTest?) {
-        this.access_token = this.authService.getToken();
+        this.access_token = this.authService.getToken() || '';
         let url = this.url + '?access_token=' + this.access_token;
         let route = apiBase[name];
         let headers = this.getHeaders();
@@ -98,13 +98,14 @@ export class BaseProvider {
             url = 'http://218.244.158.175/xr_car_server/api_client/index.php' + '?access_token=' + this.access_token;
         }*/
 
-        if (!config.production) {
+        if (config.production) {
             url = url + '&route=' + route;
         }
 
         // console.log("POST");
 
         return this.http.post(url, urlSearchParams, options)
+            .timeout(5000)
             .map(this.extractData)
             .catch(this.handleError);
     }

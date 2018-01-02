@@ -62,6 +62,8 @@ export class ReviewComponent implements OnInit {
     bartrailerType : Array<any>;
     price : Number = 0;
 
+    isOtherCity: Boolean = false; // 是否是异地
+
     // stationId: 0;
 
     result : any = {
@@ -323,6 +325,20 @@ export class ReviewComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
+    checkRegionIsOtherCity(target_region_id, source_region_id) {
+        this.baseService.post('checkRegionIsOtherCity', {
+            'target_region_id' : target_region_id,
+            'source_region_id' : source_region_id
+        })
+            .subscribe(isOtherCity => {
+                if (isOtherCity.status.succeed === '1') {
+                    this.isOtherCity = isOtherCity.data.is_other_city === '1';
+                } else {
+                    this.errorMessage = isOtherCity.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
@@ -420,6 +436,7 @@ export class ReviewComponent implements OnInit {
 
     validators(result) {
         this.errorMessage = '';
+        this.isRegionIsOtherCity(result || this.result);
         let map = this.customValidators.isValid(result || this.result, 2);
         if (map.valid) {
             this.getPriceData();
@@ -427,6 +444,15 @@ export class ReviewComponent implements OnInit {
             this.price = 0;
         }
         return map;
+    }
+
+    isRegionIsOtherCity(result) {
+        // console.log(result);
+        if(result.car.province_code_info && result.car.province_code_info.region_info && result.car.province_code_info.region_info.region_id){
+            if(result.city && result.city.region_id){
+                this.checkRegionIsOtherCity(result.city.region_id, result.car.province_code_info.region_info.region_id);
+            }
+        }
     }
 
     onTabSelect(event) {
