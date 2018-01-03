@@ -342,7 +342,7 @@ export class ReviewComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type_info'  : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type_info'  : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {

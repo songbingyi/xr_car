@@ -123,7 +123,7 @@
                 <div class="empty-container" *ngIf="all.isLoaded && all.lists.length===0">
                     <div class="empty">
                         <img src="/assets/images/empty.png"/>
-                        <p>内容突然就没有了</p>
+                        <p>暂无相关订单</p>
                     </div>
                 </div>
 
@@ -133,7 +133,7 @@
         </tab>
         <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
-                待付款<q class="weui-badge" *ngIf="hasNotify('order_obligation_count')">{{service_order_dashboard_info.order_obligation_count}}</q>
+                待付款<q class="weui-badge" *ngIf="hasNotify('order_obligation_count', 'needPay')">{{needPay.lists.length || service_order_dashboard_info.order_obligation_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="needPay.isLoaded && needPay.lists.length">
@@ -254,7 +254,7 @@
                 <div class="empty-container" *ngIf="needPay.isLoaded && needPay.lists.length===0">
                     <div class="empty">
                         <img src="/assets/images/empty.png"/>
-                        <p>内容突然就没有了</p>
+                        <p>暂无相关订单</p>
                     </div>
                 </div>
 
@@ -264,7 +264,7 @@
         </tab>
         <tab [active]="activeIndex===2">
             <span *tabHeading class="tab-set-heading">
-                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count')">{{service_order_dashboard_info.order_pending_count}}</q>
+                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || service_order_dashboard_info.order_pending_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
@@ -382,7 +382,7 @@
                 <div class="empty-container" *ngIf="needProcess.isLoaded && needProcess.lists.length===0">
                     <div class="empty">
                         <img src="/assets/images/empty.png"/>
-                        <p>内容突然就没有了</p>
+                        <p>暂无相关订单</p>
                     </div>
                 </div>
 
@@ -392,7 +392,7 @@
         </tab>
         <tab [active]="activeIndex===3">
             <span *tabHeading class="tab-set-heading">
-                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count')">{{service_order_dashboard_info.order_process_count}}</q>
+                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count', 'processing')">{{processing.lists.length || service_order_dashboard_info.order_process_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
@@ -513,7 +513,7 @@
                 <div class="empty-container" *ngIf="processing.isLoaded && processing.lists.length===0">
                     <div class="empty">
                         <img src="/assets/images/empty.png"/>
-                        <p>内容突然就没有了</p>
+                        <p>暂无相关订单</p>
                     </div>
                 </div>
 
@@ -632,7 +632,7 @@
                 <div class="empty-container" *ngIf="hasDone.isLoaded && hasDone.lists.length===0">
                     <div class="empty">
                         <img src="/assets/images/empty.png"/>
-                        <p>内容突然就没有了</p>
+                        <p>暂无相关订单</p>
                     </div>
                 </div>
 

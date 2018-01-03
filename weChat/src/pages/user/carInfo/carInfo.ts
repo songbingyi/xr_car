@@ -9,6 +9,7 @@ import {LocalStorage} from '../../../providers/localStorage';
 
 // import {errorCode} from '../../../assets/data/error.code';
 import { DialogService, DialogConfig } from 'ngx-weui/dialog';
+import {Location} from '@angular/common';
 // import { ToastComponent, ToastService } from 'ngx-weui/toast';
 
 @Component({
@@ -44,6 +45,7 @@ export class CarInfoComponent implements OnInit {
     selectedCarType: any;
 
     rowLength: any = 10; // 每行几个省
+    maxCar : Number = 3; // 最多几辆车
 
     // 编辑时使用下面两个字段
     company_id: string;
@@ -101,9 +103,11 @@ export class CarInfoComponent implements OnInit {
     };
 
     fromError: Boolean = false;
+    enoughCar: Boolean = false; // 是否已经有足够的车辆了。
 
-    constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService) {
+    constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService, private location: Location) {
         this.getInitData();
+        this.hasEnoughCar();
     }
 
     ngOnInit() {
@@ -143,6 +147,28 @@ export class CarInfoComponent implements OnInit {
                     this.errorMessage = carTypes.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    hasEnoughCar(callback?) {
+        this.baseService.post('getMemberCarList', {})
+            .subscribe(carList => {
+                if (carList.status.succeed === '1') {
+                    this.enoughCar = carList.data.member_car_list ? carList.data.member_car_list.length === this.maxCar : false;
+                    if(callback){
+                        callback(carList.data.member_car_list);
+                    }
+                } else {
+                    if(callback){
+                        callback([]);
+                    }
+                    // this.errorMessage = carList.status.error_desc;
+                }
+            }, error => {
+                if(callback){
+                    callback([]);
+                }
+                // this.errorMessage = <any>error;
+            });
     }
 
     /*getMemberCarList() {
@@ -450,8 +476,14 @@ export class CarInfoComponent implements OnInit {
         }*/)
             .subscribe(carList => {
                 if (carList.status.succeed === '1') {
+                    this.hasEnoughCar((list)=>{
+                        if(list.length > 1){
+                            this.location.back();
+                        }else{
+                            this.router.navigate(['/carList']);
+                        }
+                    });
                     // this.carInfo = carList.data.member_car_list;
-                    this.router.navigate(['/carList']);
                 } else {
                     this.errorMessage = carList.status.error_desc;
                 }
@@ -472,14 +504,16 @@ export class CarInfoComponent implements OnInit {
                             // this.hasCarInfo.is_modify = '0';
                             this.setCarDetail(this.hasCarInfo);
                         } else {
-                            this.hasCarInfo = {};
-                            this.setCarDetail({
-                                province_code_info : {
-                                    province_code_id : this.result.a.province_code_id,
-                                    province_code_name : this.result.a.province_code_name
-                                },
-                                plate_no : cardId
-                            });
+                            if(this.hasCarInfo.car_id) {
+                                this.hasCarInfo = {};
+                                this.setCarDetail({
+                                    province_code_info: {
+                                        province_code_id: this.result.a.province_code_id,
+                                        province_code_name: this.result.a.province_code_name
+                                    },
+                                    plate_no: cardId
+                                });
+                            }
                         }
                     } else {
                         // this.errorMessage = hasCarInfo.status.error_desc;
@@ -490,14 +524,17 @@ export class CarInfoComponent implements OnInit {
                     /*this.errorMessage = <any>error*/
                 });
         } else {
-            this.hasCarInfo = {};
-            this.setCarDetail({
-                province_code_info : {
-                    province_code_id : this.result.a.province_code_id,
-                    province_code_name : this.result.a.province_code_name
-                },
-                plate_no : cardId
-            });
+            console.log(this.hasCarInfo.car_id);
+            if(this.hasCarInfo.car_id){
+                this.hasCarInfo = {};
+                this.setCarDetail({
+                    province_code_info : {
+                        province_code_id : this.result.a.province_code_id,
+                        province_code_name : this.result.a.province_code_name
+                    },
+                    plate_no : cardId
+                });
+            }
         }
     }
 

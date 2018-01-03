@@ -63,7 +63,7 @@ export class RefundComponent implements OnInit {
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
-                    this.detail = detail.data.service_order_info;
+                    // this.detail = detail.data.service_order_info;
                     this.showToast(id);
                 } else {
                     this.errorMessage = detail.status.error_desc;

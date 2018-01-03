@@ -5,7 +5,7 @@
     "scripts"        : {
         "ng"    : "ng",
         "start" : "ng serve",
-        "serve" : "sudo ng serve --port 80 --host wx.lex-mung.com",
+        "serve" : "sudo ng serve --port 80 --host wx.xrtruck.com",
         "build" : "ng build",
         "buildp": "ng build --prod --build-optimizer --aot",
         "test"  : "ng test",

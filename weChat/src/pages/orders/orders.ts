@@ -64,6 +64,13 @@ export class OrdersComponent implements OnInit {
 
     errorMessage: any;
 
+    maps   : any = {
+        'all' : 'order_total_count',
+        'needPay' : 'order_obligation_count',
+        'needProcess' : 'order_pending_count',
+        'processing' : 'order_process_count',
+        'hasDone' : 'order_finish_count'
+    };
     objName : any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
     objKey : any = ['all', 'needPay', 'needProcess', 'processing', 'hasDone'];
     constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private localStorage: LocalStorage) {
@@ -91,8 +98,15 @@ export class OrdersComponent implements OnInit {
         this.service_order_dashboard_info = this.localStorage.getObject('service_order_dashboard_info');
     }
 
-    hasNotify(key) {
-        return this.service_order_dashboard_info && this.service_order_dashboard_info[key] !== '0';
+    hasNotify(key, type) {
+        /*if(type){
+            if(this[type].lists.length) {
+                return this[type].lists.length > 0;
+            }else{
+                return false;
+            }
+        }*/
+        return this.service_order_dashboard_info && this.service_order_dashboard_info[key] !== '0' && this.service_order_dashboard_info[key] !== 0;
     }
 
     onTabSelect(event) {
@@ -116,6 +130,14 @@ export class OrdersComponent implements OnInit {
                     let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.service_order_list;
+                    this.service_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
+                    /*{
+                        "order_total_count":"3",
+                        "order_obligation_count":"3",
+                        "order_pending_count":"0",
+                        "order_process_count":"0",
+                        "order_finish_count":"0"
+                    }*/
                     // this[this.key].lists[0].service_order_status_info.service_order_status_id = '61';
                     // this[this.key].lists[1].service_order_status_info.service_order_status_id = '62';
                     this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);

@@ -20,6 +20,7 @@ export class CarListComponent implements OnInit {
 
     carList : any = [];
     carListIndex : string[] = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+    maxCar : Number = 3; // 最多几辆车
 
     constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage, private toastService: ToastService, private dialogService: DialogService) {
         this.getInitData();

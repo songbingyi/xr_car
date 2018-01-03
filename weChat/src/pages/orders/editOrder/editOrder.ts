@@ -166,7 +166,7 @@ export class EditOrderComponent implements OnInit {
     uploadImage(wechat_server_id, type) {
         this.baseService.post('editWeChatImage', {
             'wechat_server_id' : wechat_server_id,
-            'image_type_info'       : this.imageTypeService.getTypeByKey('car_service_type_image')
+            'image_type_info'       : this.imageTypeService.getTypeByKey('service_order_image')
         })
             .subscribe(image_info => {
                 if (image_info.status.succeed === '1') {
@@ -240,13 +240,14 @@ export class EditOrderComponent implements OnInit {
         let images = this.detail.service_order_product_info.service_order_product_image_list;
         // let uploaded = this.uploaded;
         let tmp = [];
-        let image : any = {};
+
         // let sort_order = 0;
         // let keys = Object.keys(uploaded).sort();
         let image_type_id = this.imageTypeService.getTypeByKey('service_order_image').image_type_id;
 
         images.forEach((picture, index ) => {
             // let upload = uploaded[key];
+            let image : any = {};
             image.sort_order = index;
             image.image_type_id = image_type_id;
             image.image_url = picture.source;
