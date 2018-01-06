@@ -44,19 +44,19 @@
             <div class="weui-cell special-cell">
                 <div class="weui-cell__bd">
                     <p>
-                        <span class="text-primary">{{currentMarker.site_name}}</span>
+                        <span class="text-primary company-name">{{currentMarker.site_name}}</span>
                         <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
                     </p>
                 </div>
                 <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarker.distance | distance:true}}<em>公里</em></span></div>
             </div>
-            <div class="weui-cell" *ngIf="currentMarker.type==='service'">
+            <div class="weui-cell text-special-cell" *ngIf="currentMarker.type==='service'">
                 <div class="weui-cell__bd">
                     <p>主营服务：{{currentMarker.service_description}}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell text-special-cell with-two-col">
                 <div class="weui-cell__bd">
                     <p>具体地址：{{currentMarker.site_address}}</p>
                 </div>
