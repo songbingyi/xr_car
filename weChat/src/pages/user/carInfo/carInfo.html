@@ -68,7 +68,7 @@
     </div>
     </form>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':carInfoForm.invalid&&carInfoForm.dirty}" (click)="submit()" *ngIf="!enoughCar">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':carInfoForm.invalid&&carInfoForm.dirty}" (click)="submit()" *ngIf="!enoughCar || (operationType === 'edit')">确定</a>
     <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" (click)="delete()" *ngIf="shouldDelete">删除</a>
 
     <div class="weui-gallery" [hidden]="!isShowImage">

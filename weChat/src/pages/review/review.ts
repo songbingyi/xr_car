@@ -142,7 +142,15 @@ export class ReviewComponent implements OnInit {
                 }
             }, error => this.errorMessage = <any>error);
 
-        this.baseService.post('getSiteList', {
+        /*this.baseService.post('getSiteList', {
+            'filter_info' : {
+                'site_name' : '',
+                'region_id' : this.result.city.region_id,
+                'site_category_id' : '2',
+                'longitude_num' : '',
+                'latitude_num' : '',
+                'distance' : '200000'
+            },
             'pagination': this.pagination
         })
             .subscribe(stations => {
@@ -151,7 +159,7 @@ export class ReviewComponent implements OnInit {
                 } else {
                     this.errorMessage = stations.status.error_desc;
                 }
-            }, error => this.errorMessage = <any>error);
+            }, error => this.errorMessage = <any>error);*/
 
         this.baseService.post('getServiceDateList', {})
             .subscribe(dates => {

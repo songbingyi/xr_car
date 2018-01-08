@@ -143,7 +143,8 @@ export class CertificateComponent implements OnInit {
                 'region_id' : this.result.city.region_id,
                 'site_category_id' : '2',
                 'longitude_num' : '',
-                'latitude_num' : ''
+                'latitude_num' : '',
+                'distance' : '200000'
             },
             'pagination': this.pagination
         })
