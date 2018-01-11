@@ -31,7 +31,7 @@
     </div>
 
     <div class="information-bar" *ngIf="!currentMarker && markers.length>0">
-        <img src="/assets/images/icon/triangle.png" /> <span>方圆{{distance | distance}}共找到{{serviceNumber?(serviceNumber+'个服务站，'):''}}{{reviewNumber?(reviewNumber+'个检测站'):''}}</span>
+        <img src="/assets/images/icon/triangle.png" /> <span>{{mapNotify()}}</span>
     </div>
     <div class="information-bar no-data" *ngIf="isLoaded && markers.length===0">
         <img src="/assets/images/icon/triangle.png" /> <span>暂无数据</span>

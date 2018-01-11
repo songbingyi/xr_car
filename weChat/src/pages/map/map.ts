@@ -15,6 +15,8 @@ import {MarkerModel} from '../../models/marker.model';
 import {WXSDKService} from '../../providers/wx.sdk.service';
 import {BaseProvider} from '../../providers/http/base.http';
 
+import {DistancePipe} from '../../pipes/distance';
+
 declare const qq: any;
 
 @Component({
@@ -417,6 +419,29 @@ export class MapComponent implements OnInit {
                 map: this.map
             });
         }
+    }
+
+    mapNotify() {
+        let distance = new DistancePipe();
+        let serviceNumber = this.serviceNumber;
+        let reviewNumber = this.reviewNumber;
+        let string = '';
+        if(serviceNumber){
+            string = this.serviceNumber+'个服务站';
+        }
+        if(reviewNumber){
+            string = this.reviewNumber+'个检测站';
+        }
+        if(serviceNumber && reviewNumber){
+            string = this.serviceNumber+'个服务站，' + this.reviewNumber+'个检测站';
+        }
+        let distanceString = distance.transform(this.distance);
+        if(distanceString){
+            return '方圆' + distanceString + '共找到' + string;
+        }else{
+            return '处理中...';
+        }
+
     }
 
     onClick() {
