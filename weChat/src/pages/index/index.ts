@@ -5,6 +5,7 @@ import {MessageService} from '../../providers/messageService';
 import {LocalStorage} from '../../providers/localStorage';
 import {AuthService} from '../../providers/auth.service';
 import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
+import {IdentityAuthService} from '../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-index',
@@ -38,8 +39,8 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService) {
-
+    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
     }
 
     ngOnInit() : void {

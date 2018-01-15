@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import {BaseProvider} from '../../../providers/http/base.http';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 // declare const Swiper: any;
 
@@ -41,8 +42,8 @@ export class DetailComponent implements OnInit {
 
     images: any = [];
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider) {
-
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
     }
 
     ngOnInit() {

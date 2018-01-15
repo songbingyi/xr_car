@@ -10,6 +10,7 @@ import {LocalStorage} from '../../../providers/localStorage';
 // import {errorCode} from '../../../assets/data/error.code';
 import { DialogService, DialogConfig } from 'ngx-weui/dialog';
 import {Location} from '@angular/common';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 // import { ToastComponent, ToastService } from 'ngx-weui/toast';
 
 @Component({
@@ -105,9 +106,10 @@ export class CarInfoComponent implements OnInit {
     fromError: Boolean = false;
     enoughCar: Boolean = false; // 是否已经有足够的车辆了。
 
-    constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService, private location: Location) {
+    constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
         this.getInitData();
         this.hasEnoughCar();
+        this.identityAuthService.check();
     }
 
     ngOnInit() {

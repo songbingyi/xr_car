@@ -10,11 +10,9 @@ let config = {
     appid    : 'wx09fff9f719ae398e',
     apiKey   : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC', // 地图的 key
     url      : 'http://wx.xrtruck.com/',
-    // prefix   : './assets/mock/',
     // api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
-    // getWxSignPackage : 'http://218.244.158.175/xr_car_server/api_client/index.php',
     api   : 'http://api-client.xrtruck.com',
-    // getWxSignPackage : 'http://api-client.xrtruck.com/index.php',
+    identityAuth : true,
     production : production
 };
 
@@ -28,9 +26,8 @@ if (production) {
         apiKey   : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC', // 地图的 key
         url      : 'http://wx.xrtruck.com/',
         api      : 'http://api-client.xrtruck.com',
-        // getWxSignPackage : 'http://api-client.xrtruck.com/index.php',
         // api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
-        // getWxSignPackage : 'http://218.244.158.175/xr_car_server/api_client/index.php',
+        identityAuth : true,
         production : production
     };
 }

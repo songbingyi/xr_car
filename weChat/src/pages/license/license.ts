@@ -18,6 +18,9 @@ import {ImageTypeList} from '../../providers/imageType.service';
 import {LocalStorage} from '../../providers/localStorage';
 import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
 
+import { config } from '../../app/app.config';
+import {IdentityAuthService} from '../../providers/identityAuth.service';
+
 @Component({
     selector      : 'app-license',
     templateUrl   : './license.html',
@@ -75,12 +78,16 @@ export class LicenseComponent implements OnInit {
 
     wx : any;
 
-    constructor(private route : ActivatedRoute, private router : Router, private location : Location, private baseService : BaseProvider, private customValidators : CustomValidators, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private localStorage: LocalStorage, private refreshMemberInfoService: RefreshMemberInfoService) {
+    identityAuth: boolean;
+
+    constructor(private route : ActivatedRoute, private router : Router, private location : Location, private baseService : BaseProvider, private customValidators : CustomValidators, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private localStorage: LocalStorage, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
         this.wx = this.wxService.init();
         this.getInitData();
         this.getCarAndMemberInfo();
         this.imageTypeService.init();
         this.refreshMemberInfoService.refreshMemberInfo();
+        this.identityAuth = config.identityAuth;
     }
 
     ngOnInit() {

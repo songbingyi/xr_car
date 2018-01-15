@@ -8,6 +8,7 @@ import { CustomValidators } from '../../../providers/custom.validators';
 import { BaseProvider } from '../../../providers/http/base.http';
 
 import { config } from '../../../app/app.config';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 
 @Component({
@@ -70,8 +71,11 @@ export class UserInfoComponent implements OnInit {
 
     fromError: Boolean = false;
 
-    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone) {
+    identityAuth: boolean;
+
+    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService) {
         this.getCarAndMemberInfo();
+        this.identityAuth = config.identityAuth;
     }
 
     getCarAndMemberInfo() {
@@ -131,11 +135,15 @@ export class UserInfoComponent implements OnInit {
                     this.timing = true;
                     this.timeLeft();*/
                     this.isModifying = false;
-                    this.getCarAndMemberInfo();
                     this.userInfoForm.controls.phone.setValue('');
                     this.userInfoForm.controls.username.setValue('');
                     this.userInfoForm.controls.userId.setValue('');
                     this.userInfoForm.controls.vcode.setValue('');
+                    if(config.identityAuth){
+                        this.identityAuthService.goHome();
+                    }else{
+                        this.getCarAndMemberInfo();
+                    }
                 } else {
                     if(result.status.error_code === '1012'){
                         this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;

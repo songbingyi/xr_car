@@ -4,6 +4,7 @@ import 'rxjs/add/operator/switchMap';
 
 import {BaseProvider} from '../../../providers/http/base.http';
 import {PaymentTypeList} from '../../../providers/paymentType.service';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class ConfirmOrderComponent implements OnInit {
     isShowImage:Boolean = false;
     largerImg: String = '';
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private paymentTypeService: PaymentTypeList) {}
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private paymentTypeService: PaymentTypeList, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
+    }
 
     ngOnInit() {
         let id = this.route.snapshot.paramMap.get('id');

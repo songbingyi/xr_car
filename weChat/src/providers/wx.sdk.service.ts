@@ -40,7 +40,7 @@ export class WXSDKService {
         return new Promise((resolve, reject) => {
 
             wx.ready(() => {
-                // wx.hideAllNonBaseMenuItem();
+                wx.hideAllNonBaseMenuItem();
                 resolve(wx);
             });
 
@@ -79,8 +79,8 @@ export class WXSDKService {
                         'uploadImage',
                         'downloadImage',
                         'getLocation',
-                        'chooseWXPay'/*,
-                        'hideAllNonBaseMenuItem'*/
+                        'chooseWXPay',
+                        'hideAllNonBaseMenuItem'
                     ];
                     // wxConfig.debug = true;
                     /*

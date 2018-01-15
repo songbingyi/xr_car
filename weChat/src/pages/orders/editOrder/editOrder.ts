@@ -6,6 +6,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {WXSDKService} from '../../../providers/wx.sdk.service';
 import {ImageTypeList} from '../../../providers/imageType.service';
 import {CustomValidators} from '../../../providers/custom.validators';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-edit-order',
@@ -52,9 +53,10 @@ export class EditOrderComponent implements OnInit {
 
     wx : any;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService : BaseProvider, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private customValidators : CustomValidators) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseService : BaseProvider, private wxService : WXSDKService, private zone : NgZone, private imageTypeService : ImageTypeList, private customValidators : CustomValidators, private identityAuthService:IdentityAuthService) {
         this.wx = this.wxService.init();
         this.imageTypeService.init();
+        this.identityAuthService.check();
     }
 
     ngOnInit() {

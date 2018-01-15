@@ -7,6 +7,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DialogService, DialogConfig } from 'ngx-weui/dialog';
 
 import { ToastComponent, ToastService } from 'ngx-weui/toast';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
+
+import { config } from '../../../app/app.config';
 
 @Component({
     selector    : 'app-order-detail',
@@ -23,7 +26,9 @@ export class OrderDetailComponent implements OnInit {
     isShowImage:Boolean = false;
     largerImg: String = '';
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location) {}
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
+    }
 
     ngOnInit() {
         let id: string = this.route.snapshot.paramMap.get('id');
@@ -45,7 +50,7 @@ export class OrderDetailComponent implements OnInit {
                     if (!this.detail.service_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
-                            this.location.back();
+                            this.goBack();
                             // this.router.navigate(['/orders', 0]);
                         });
                     }
@@ -53,12 +58,18 @@ export class OrderDetailComponent implements OnInit {
                     this.errorMessage = detail.status.error_desc;
                     if (detail.status.error_code === '4004') {
                         setTimeout(() => {
-                            this.location.back();
+                            this.goBack();
                             //this.router.navigate(['/orders', 0]);
                         }, 2000);
                     }
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    goBack() {
+        if(!config.identityAuth){
+            this.location.back();
+        }
     }
 
     payOrder(service_order_id) {

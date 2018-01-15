@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import {BaseProvider} from '../../../providers/http/base.http';
 
 import { WXSDKService } from '../../../providers/wx.sdk.service';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-payment',
@@ -25,13 +26,14 @@ export class PaymentComponent implements OnInit {
 
     wx : any;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private wxService : WXSDKService, private zone: NgZone) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private wxService : WXSDKService, private zone: NgZone, private identityAuthService:IdentityAuthService) {
         this.wx = this.wxService.init().then(result => {
             // console.log(result);
             // console.log(this.wxService.isWeChatPayReady);
             this.isWeChatPayReady = true;
             this.errorMessage = '';
         });
+        this.identityAuthService.check();
         // console.log(this.wxService.isWeChatPayReady);
         // this.isWeChatPayReady = this.wxService.isWeChatPayReady;
     }

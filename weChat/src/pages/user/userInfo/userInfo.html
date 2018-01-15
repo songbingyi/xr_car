@@ -1,7 +1,10 @@
 <div class="user-info">
     <div class="top-tips">
-        <p [hidden]="identityAuthStatus">
+        <p [hidden]="identityAuthStatus || identityAuth">
             姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
+        </p>
+        <p [hidden]="identityAuthStatus || !identityAuth">
+            请先添加个人信息！<br/>姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
     </div>
     <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">

@@ -4,6 +4,7 @@ import 'rxjs/add/operator/switchMap';
 
 import {BaseProvider} from '../../providers/http/base.http';
 import {LocalStorage} from '../../providers/localStorage';
+import {IdentityAuthService} from '../../providers/identityAuth.service';
 
 @Component({
     selector: 'app-orders',
@@ -76,13 +77,8 @@ export class OrdersComponent implements OnInit {
     objName: any = ['全部订单', '待付款', '待处理', '处理中', '已完成'];
     objKey: any = ['all', 'needPay', 'needProcess', 'processing', 'hasDone'];
 
-    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage) {
-        /*this.router.events.subscribe(event => {
-            if(event instanceof NavigationEnd) {
-                console.log(event);
-                this.getInitData();
-            }
-        });*/
+    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
     }
 
     ngOnInit() {
@@ -162,7 +158,7 @@ export class OrdersComponent implements OnInit {
         this[this.key].pagination.page = $event;
         // this.getInitData();
         this.router.navigate(['/orders', this.activeIndex, $event]);
-        this.getInitData();
+        // this.getInitData();
     }
 
     goPayment($event, service_order_id) {

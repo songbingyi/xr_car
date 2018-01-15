@@ -10,9 +10,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 import { WeUiModule } from 'ngx-weui';
 import { AqmModule } from 'angular-qq-maps';
-import { TabsModule } from '../components/tabs/index';
+import { TabsModule } from '../components/tabs';
 
-import { IndexComponent } from '../pages/index/index';
+import { IndexComponent } from '../pages/index';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from '../pages/home/home';
@@ -58,6 +58,7 @@ import { AuthService } from '../providers/auth.service';
 import { AuthGuard } from '../providers/auth-guard.service';
 import { ImageTypeList } from '../providers/imageType.service';
 import { PaymentTypeList } from '../providers/paymentType.service';
+import { IdentityAuthService } from '../providers/identityAuth.service';
 
 import { BaseProvider } from '../providers/http/base.http';
 import { RedirectComponent } from '../pages/redirect/redirect';
@@ -119,7 +120,7 @@ import {RefreshMemberInfoService} from '../providers/refresh.member.info.service
         }),
         TabsModule
     ],
-    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList, PaymentTypeList, RefreshMemberInfoService],
+    providers    : [MessageService, LocalStorage, WXSDKService, /*WXService,*/ CustomValidators, BaseProvider, AuthGuard, AuthService, ImageTypeList, PaymentTypeList, IdentityAuthService, RefreshMemberInfoService],
     bootstrap    : [AppComponent]
 })
 export class AppModule {

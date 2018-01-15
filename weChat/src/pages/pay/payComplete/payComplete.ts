@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BaseProvider} from '../../../providers/http/base.http';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-pay-complete',
@@ -14,7 +15,8 @@ export class PayCompleteComponent implements OnInit {
     isLoaded: Boolean = false;
     orderId: Number;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
     }
 
     ngOnInit() {

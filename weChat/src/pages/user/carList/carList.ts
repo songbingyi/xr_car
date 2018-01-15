@@ -6,6 +6,7 @@ import {LocalStorage} from '../../../providers/localStorage';
 
 import { DialogService, DialogConfig } from 'ngx-weui/dialog';
 import { ToastComponent, ToastService } from 'ngx-weui/toast';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-carlist',
@@ -22,8 +23,9 @@ export class CarListComponent implements OnInit {
     carListIndex : string[] = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
     maxCar : Number = 3; // 最多几辆车
 
-    constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage, private toastService: ToastService, private dialogService: DialogService) {
+    constructor(private router: Router, private baseService : BaseProvider, private localStorage: LocalStorage, private toastService: ToastService, private dialogService: DialogService, private identityAuthService:IdentityAuthService) {
         this.getInitData();
+        this.identityAuthService.check();
     }
 
     ngOnInit() {

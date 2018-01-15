@@ -3,6 +3,7 @@ import {DialogConfig, DialogService} from 'ngx-weui/dialog';
 import {BaseProvider} from '../../../providers/http/base.http';
 import {ToastService} from 'ngx-weui/toast';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-refund',
@@ -16,7 +17,8 @@ export class RefundComponent implements OnInit {
     isLoaded: Boolean = false;
     dialogConfig: DialogConfig;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private zone: NgZone) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private zone: NgZone, private identityAuthService:IdentityAuthService) {
+        this.identityAuthService.check();
     }
 
     ngOnInit() {
