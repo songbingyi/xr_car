@@ -135,14 +135,14 @@ export class UserInfoComponent implements OnInit {
                     this.timing = true;
                     this.timeLeft();*/
                     this.isModifying = false;
-                    this.userInfoForm.controls.phone.setValue('');
-                    this.userInfoForm.controls.username.setValue('');
-                    this.userInfoForm.controls.userId.setValue('');
-                    this.userInfoForm.controls.vcode.setValue('');
                     if(config.identityAuth){
                         this.identityAuthService.goHome();
                     }else{
                         this.getCarAndMemberInfo();
+                        this.userInfoForm.controls.phone.setValue('');
+                        this.userInfoForm.controls.username.setValue('');
+                        this.userInfoForm.controls.userId.setValue('');
+                        this.userInfoForm.controls.vcode.setValue('');
                     }
                 } else {
                     if(result.status.error_code === '1012'){

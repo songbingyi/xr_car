@@ -35,6 +35,7 @@ export class LicenseComponent implements OnInit {
     isSubmitting: Boolean = false; // 是否正在提交订单
 
     shouldReservation : Boolean = true;
+    identity_auth_status : Boolean = false;
     shouldReservationBox : Boolean = true;
     showLicenseType : Boolean = false;
 
@@ -174,7 +175,10 @@ export class LicenseComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.shouldReservation = this.memberDetail.member_auth_info.member_auth_status === '0';
+                    // this.memberDetail.member_auth_info.identity_auth_status = '0';
+                    // console.log(this.memberDetail);
+                    // this.shouldReservation = this.memberDetail.member_auth_info.member_auth_status === '0';
+                    this.shouldReservation = this.memberDetail.member_auth_info.identity_auth_status === '0';
                     // this.shouldReservationBox = !!this.memberDetail.member_auth_info.member_auth_status;
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
@@ -304,9 +308,9 @@ export class LicenseComponent implements OnInit {
             this.router.navigate(['/userInfo']);
             return;
         }
-        if (this.memberDetail.member_auth_info.car_auth_status === '0') {
+        /*if (this.memberDetail.member_auth_info.car_auth_status === '0') {
             this.router.navigate(['/carInfo']);
-        }
+        }*/
     }
 
     setAllTouched() {

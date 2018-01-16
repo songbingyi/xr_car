@@ -130,7 +130,7 @@ export class MapComponent implements OnInit {
         this.mapReady = true;
 
         mapNative.setOptions({
-            zoom: 12,
+            zoom: 10,
             center: new qq.maps.LatLng(latitude, longitude)
         });
 
@@ -310,6 +310,7 @@ export class MapComponent implements OnInit {
         aMarker.origin = marker;
         this.mapMarkers.push(aMarker);
         this.bindClickToMaker(aMarker);
+        return aMarker;
     }
 
 
@@ -464,6 +465,11 @@ export class MapComponent implements OnInit {
 
     onclickItem(item) {
         let marker = this.getSiteMarkerById(item.site_id);
+        console.log(item);
+        console.log(marker);
+        if(!marker.origin){
+            marker = this.setMarker(item);
+        }
         this.panTo({
             lat: marker.origin.latitude_num,
             lng: marker.origin.longitude_num
