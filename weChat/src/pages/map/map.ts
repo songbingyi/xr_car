@@ -18,6 +18,7 @@ import {BaseProvider} from '../../providers/http/base.http';
 import {DistancePipe} from '../../pipes/distance';
 
 declare const qq: any;
+let windowMap: any;
 
 @Component({
     selector: 'app-map',
@@ -31,9 +32,11 @@ export class MapComponent implements OnInit {
     status: string = '';
     loading: Boolean = false;
     geoLocation: boolean = false;
-    distances : any = [5000, 10000, 15000, 20000];
-    distanceIndex : any = 0;
-    distance : Number = this.distances[this.distanceIndex];
+    // distances : any = [5000, 10000, 15000, 20000];
+    // distanceIndex : any = 0;
+    // distance : Number = this.distances[this.distanceIndex];
+    distanceMax: number = 800000;
+    distance : Number = 5000;
 
     theNullMarker: any;
     circleMarker : any;
@@ -83,6 +86,9 @@ export class MapComponent implements OnInit {
         count: 100
     };
 
+    zoom: number = 10;
+    zoomMin: number = 4;
+
     wxs: any;
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
@@ -130,11 +136,13 @@ export class MapComponent implements OnInit {
         this.mapReady = true;
 
         mapNative.setOptions({
-            zoom: 10,
+            zoom: this.zoom,
             center: new qq.maps.LatLng(latitude, longitude)
         });
 
         this.map = mapNative;
+
+        // console.log(mapNative);
 
         //添加监听事件
         qq.maps.event.addListener(this.map, 'click', (event: any) => {
@@ -144,13 +152,12 @@ export class MapComponent implements OnInit {
             });
         });
 
+        // this.getDistance();
+
         qq.maps.event.addListener(this.map, 'bounds_changed', (event: any) => {
-            let bounds = this.map.getBounds();
-            let from = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.minX);
-            let to = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.maxX);
-            let distance = qq.maps.geometry ? qq.maps.geometry.spherical.computeDistanceBetween(from, to) : this.distance;
+            this.getDistance();
             this.zone.run(() => {
-                this.distance = distance;
+                // this.distance = distance;
                 this.loadMakers({});
             });
         });
@@ -182,9 +189,16 @@ export class MapComponent implements OnInit {
     }
 
     getDistance() {
-        this.distanceIndex ++ ;
-        this.distance = this.distances[this.distanceIndex];
-        return this.distance;
+        // this.distanceIndex ++ ;
+        // this.distance = this.distances[this.distanceIndex];
+        // return this.distance;
+        // console.log('this.distance : ' + this.distance);
+        // console.log(this.map);
+        let bounds = this.map.getBounds();
+        // console.log(bounds);
+        let from = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.minX);
+        let to = new qq.maps.LatLng(bounds.lat.minY, bounds.lng.maxX);
+        this.distance = qq.maps.geometry ? qq.maps.geometry.spherical.computeDistanceBetween(from, to) : this.distance;
     }
 
     loadMarkersBySearch(options) {
@@ -243,11 +257,13 @@ export class MapComponent implements OnInit {
             'pagination': this.pagination
         }).subscribe(markers => {
                 if (markers.status.succeed === '1') {
-                    if (markers.data && markers.data.site_list && markers.data.site_list.length===0) {
-                        if(this.distanceIndex <= this.distances.length) {
+                    if (markers.data && markers.data.site_list && markers.data.site_list.length === 0) {
+                        this.zoomOut();
+                        /*if(this.distanceIndex <= this.distances.length) {
                             this.getDistance();
                             this.loadMakers(options);
-                        }
+                            this.zoomOut();
+                        }*/
                         //this.loading = false;
                         //this.searchMarkers= [];
                         return ;
@@ -298,6 +314,13 @@ export class MapComponent implements OnInit {
                 //this.loading = false;
             }
         );
+    }
+
+    zoomOut() {
+        if((this.zoom >= this.zoomMin) && (this.distance < this.distanceMax)){
+            this.zoom --;
+            this.map.zoomTo(this.zoom);
+        }
     }
 
     setMarker(marker: any) {
@@ -465,8 +488,8 @@ export class MapComponent implements OnInit {
 
     onclickItem(item) {
         let marker = this.getSiteMarkerById(item.site_id);
-        console.log(item);
-        console.log(marker);
+        // console.log(item);
+        // console.log(marker);
         if(!marker.origin){
             marker = this.setMarker(item);
         }
