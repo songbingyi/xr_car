@@ -1,5 +1,6 @@
 <div class="map-container">
-    <aqm-map #map [options]="options" (ready)="onReady($event)" style="height: 100%;"></aqm-map>
+
+    <div id="gaoDeMap" style="height: 100%;width:100%;"></div>
 
     <weui-searchbar (click)="onClick()" (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 
