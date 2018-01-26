@@ -40,7 +40,7 @@ export class IndexComponent implements OnInit {
     ];
 
     constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
-        this.identityAuthService.check();
+        // this.identityAuthService.check();
     }
 
     ngOnInit() : void {
