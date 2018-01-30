@@ -402,12 +402,19 @@ export class MapComponent implements OnInit {
         }
     }
 
-    onSearch(term: string) {
-        //console.log("Search");
-        this.value = term;
-        if (term) {
+    onSearch(term: any) {
+        // console.log("Search");
+        // console.log(term);
+        if(typeof term === 'string'){
+            this.value = term;
+        }else{
+            this.value = term.target.value;
+        }
+        let value = this.value;
+        // console.log(value);
+        if (value) {
             this.loadMarkersBySearch({
-                name: term
+                name: value
             });
         }
     }
