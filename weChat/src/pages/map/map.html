@@ -1,6 +1,10 @@
 <div class="map-container">
 
-    <div id="gaoDeMap" style="height: 100%;width:100%;"></div>
+    <!--<div id="gaoDeMap" style="height: 100%;width:100%;"></div>-->
+
+    <ngx-amap class="map" id="map" [resizeEnable]="true" style="height: 100%;width:100%;">
+        <amap-tool-bar></amap-tool-bar>
+    </ngx-amap>
 
     <weui-searchbar (click)="onClick()" (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 

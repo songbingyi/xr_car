@@ -9,7 +9,8 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 
 import { WeUiModule } from 'ngx-weui';
-import { AqmModule } from 'angular-qq-maps';
+// import { AqmModule } from 'angular-qq-maps';
+import { NgxAmapModule } from 'ngx-amap';
 import { TabsModule } from '../components/tabs';
 
 import { IndexComponent } from '../pages/index';
@@ -114,8 +115,8 @@ import {RefreshMemberInfoService} from '../providers/refresh.member.info.service
         HttpModule,
         JsonpModule,
         WeUiModule.forRoot(),
-        AqmModule.forRoot({
-            apiLibraries:['geometry'],
+        NgxAmapModule.forRoot({
+            //apiLibraries:['geometry'],
             apiKey : config.apiKey // 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC' // app key为必选项
         }),
         TabsModule
