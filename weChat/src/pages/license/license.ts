@@ -280,7 +280,7 @@ export class LicenseComponent implements OnInit {
             tmp.push(image);
             // console.log(image);
         });
-        console.log(tmp);
+        // console.log(tmp);
         return tmp;
     }
 

@@ -67,6 +67,9 @@ import { EditOrderComponent } from '../pages/orders/editOrder/editOrder';
 
 import {config} from './app.config';
 import {RefreshMemberInfoService} from '../providers/refresh.member.info.service';
+import { RescueComponent } from '../pages/rescue/rescue.component';
+import { RescueDetailComponent } from '../pages/rescueDetail/rescue-detail.component';
+import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 @NgModule({
     declarations : [
@@ -103,7 +106,10 @@ import {RefreshMemberInfoService} from '../providers/refresh.member.info.service
         NotifyDetailComponent,
         RedirectComponent,
         LoginComponent,
-        EditOrderComponent
+        EditOrderComponent,
+        RescueComponent,
+        RescueDetailComponent,
+        RescueRankComponent
     ],
     imports      : [
         AppRoutingModule,

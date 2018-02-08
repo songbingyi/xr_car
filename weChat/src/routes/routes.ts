@@ -41,6 +41,11 @@ import {PayCompleteComponent} from '../pages/pay/payComplete/payComplete';
 import { RedirectComponent } from '../pages/redirect/redirect';
 import { LoginComponent } from '../pages/login/login';
 
+import { RescueComponent } from '../pages/rescue/rescue.component';
+import { RescueDetailComponent } from '../pages/rescueDetail/rescue-detail.component';
+import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
+
+
 const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
     {path : 'login', component : LoginComponent},
@@ -64,6 +69,9 @@ const appRoutes: Routes = [
     {path : 'userInfo', component : UserInfoComponent, canActivate: [AuthGuard]},
     {path : 'carInfo', component : CarInfoComponent, canActivate: [AuthGuard]},
     {path : 'carList', component : CarListComponent, canActivate: [AuthGuard]},
+    {path : 'rescue', component : RescueComponent, canActivate: [AuthGuard]},
+    {path : 'rescueDetail/:id', component : RescueDetailComponent},
+    {path : 'rescueRank/:id', component : RescueRankComponent, canActivate: [AuthGuard]},
     {path : 'notify', component : NotifyComponent, canActivate: [AuthGuard]},
     {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},
     {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]}

@@ -40,7 +40,11 @@ let apiBase : IDictionary<string> = {
     'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
     'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
     'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',
-    'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity'
+    'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity',
+    'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
+    'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
+    'getWorkSiteList'           : 'rescue/work_site/getWorkSiteList',
+    'operatorWorkSheet'         : 'rescue/work_sheet/operatorWorkSheet'
 };
 
 export {apiBase};

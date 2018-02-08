@@ -1,0 +1,71 @@
+<!--<div class="show-phone-list">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd">
+            <div class="weui-cells" *ngFor="let car of member_car_list">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>{{car.plate_no}}</p>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="weui-cells no-border">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p><a href="{{'tel:' + currentMarker?.mobile}}">{{currentMarker?.mobile}}</a></p>
+                    </div>
+                </div>
+            </div>-->
+        <!--</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="hiddenPhoneList()">确定</a>
+        </div>
+    </div>
+</div>-->
+<div class="rescue">
+
+    <div class="rescue-dialog" [hidden]="!shouldReservationBox">
+        <div class="weui-mask weui-mask__in"></div>
+        <div class="weui-dialog weui-dialog__in">
+            <div class="weui-dialog__hd">
+                <strong class="weui-dialog__title">请选择需要救援的车辆</strong>
+            </div>
+            <div class="weui-dialog__bd" *ngIf="member_car_list.length">
+                <div class="weui-cells weui-cells_checkbox" *ngFor="let car of member_car_list; index as index" [ngClass]="member_car_list.length===1?'has-border':''" [hidden]="!car.car_id">
+                    <label class="weui-cell weui-check__label" for="car-{{car.car_id}}" [ngClass]="!car.car_id?'no-border':''">
+                        <div class="weui-cell__hd">
+                            <input type="radio" class="weui-check" [(ngModel)]="result.selected" [value]="car" name="car" id="car-{{car.car_id}}" />
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <span>{{car.province_code_info?.province_code_name}}{{car.plate_no | uppercase}}</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="weui-cells" *ngIf="!loaded">
+                <span>加载中...</span>
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="#" class="weui-dialog__btn weui-dialog__btn_default" (click)="cancel($event)">取消</a>
+                <a href="#" class="weui-dialog__btn weui-dialog__btn_primary" (click)="save($event)">确定</a>
+            </div>
+        </div>
+    </div>
+
+    <div [hidden]="shouldReservationBox">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-dialog" style="opacity: 1;visibility: visible;">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">填写信息</strong></div>
+            <div class="weui-dialog__bd">请先补全个人和车辆信息！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="goToUser()">补充信息</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
+</div>

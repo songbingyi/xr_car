@@ -1,0 +1,51 @@
+.rescue {
+    .rescue-dialog {
+        .weui-dialog__title {
+            padding: 1.3em 1.6em 0.5em 0em;
+            margin-left: -10px;
+        }
+        .weui-dialog__bd {
+            height: 145px;
+            .weui-cells_checkbox {
+                &:before {
+                    border-top: none;
+                }
+                &[hidden] {
+                    visibility: hidden;
+                }
+                .weui-check__label {
+                    &:before {
+                        border-top: none;
+                    }
+
+                }
+            }
+            .weui-cells_checkbox {
+                &:last-child:after {
+                    border-bottom: none;
+                }
+            }
+            .weui-cells_checkbox.has-border {
+                &:last-child:after {
+                    border-bottom: 1px solid #E5E5E5;
+                }
+            }
+        }
+        .weui-cells {
+            height: 44px;
+            line-height: 44px;
+        }
+        label {
+            .weui-cell__bd {
+                margin-top: 4px !important;
+                margin-left: 5px !important;
+                text-align: left;
+                color: #000000;
+            }
+        }
+
+    }
+    .error-bar {
+        z-index: 9999999;
+    }
+}

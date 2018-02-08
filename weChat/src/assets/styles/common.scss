@@ -47,11 +47,11 @@ ul, li {
     &[data-ratio="1:1"] {
         padding-top: 100%;
     }
-    
+
     &[data-ratio="16:9"] {
         padding-top: 56.25%;
     }
-    
+
     > * {
         position: absolute;
         left: 0;
@@ -104,10 +104,10 @@ ul, li {
         }
     }
     .weui-btn_default {
-    
+
     }
     .weui-btn_primary {
-    
+
     }
 }
 
@@ -121,7 +121,7 @@ ul, li {
     text-align: center;
     line-height: 20px;
     padding:0;
-    
+
 }
 
 .top-tips {
@@ -195,7 +195,7 @@ ul, li {
             display: inline-block;
         }
         .label-one {
-        
+
         }
         .label-two {
             color:#1970A6;
@@ -223,6 +223,7 @@ ul, li {
     background: rgba(230, 67, 64, 0.8);
     color: #FFF;
     font-size: 15px;
+    z-index: 9;
 }
 
 input::placeholder {

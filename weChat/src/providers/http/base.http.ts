@@ -72,12 +72,16 @@ export class BaseProvider {
         return data;
     }
 
-    setSearchParams(path, data) {
+    setSearchParams(path, data, ignore?) {
         this.access_token = this.authService.getToken() || '';
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('route', path);
-        urlSearchParams.append('token', this.access_token);
-        urlSearchParams.append('jsonText', JSON.stringify(this.setMemberId(data)));
+        if(!ignore){
+            urlSearchParams.append('token', this.access_token);
+            urlSearchParams.append('jsonText', JSON.stringify(this.setMemberId(data)));
+        }else{
+            urlSearchParams.append('jsonText', JSON.stringify(data));
+        }
         urlSearchParams.append('device_type', '40');
         urlSearchParams.append('device_version', '1.0');
         urlSearchParams.append('version_code', '1');
@@ -85,14 +89,14 @@ export class BaseProvider {
         return urlSearchParams;
     }
 
-    post(name : any, data : any, isTest?) {
+    post(name : any, data : any, isTest?, ignore?) {
         this.access_token = this.authService.getToken() || '';
         let url = this.url + '?access_token=' + this.access_token;
         let route = apiBase[name];
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
 
-        let urlSearchParams = this.setSearchParams(route, data);
+        let urlSearchParams = this.setSearchParams(route, data, ignore);
 
         /*if (isTest) {
             url = 'http://218.244.158.175/xr_car_server/api_client/index.php' + '?access_token=' + this.access_token;
