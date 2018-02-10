@@ -145,14 +145,11 @@ export class RescueComponent implements OnInit {
                 latitude_num : this.latitude,
                 longitude_num : this.longitude,
             }
-        }).subscribe(carList => {
-                if (carList.status.succeed === '1') {
-                    this.member_car_list = carList.data.member_car_list;
-                    this.fillCarList();
-                    //this.showList();
-                    this.loaded = true;
+        }).subscribe(result => {
+                if (result.status.succeed === '1') {
+                    this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
                 } else {
-                    this.errorMessage = carList.status.error_desc;
+                    this.errorMessage = result.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;

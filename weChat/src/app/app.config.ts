@@ -10,8 +10,8 @@ let config = {
     appid    : 'wx09fff9f719ae398e',
     apiKey   : 'RO6BZ-4HGWX-4CC4F-ZY4JK-KUFPE-DJBPC', // 地图的 key
     url      : 'http://wx.xrtruck.com/',
-    // api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
-    api   : 'http://api-client.xrtruck.com',
+    api   : 'http://218.244.158.175/xr_car_server/api_client/index.php',
+    // api   : 'http://api-client.xrtruck.com',
     identityAuth : true,
     production : production
 };

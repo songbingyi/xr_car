@@ -43,7 +43,7 @@ let apiBase : IDictionary<string> = {
     'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity',
     'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
     'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
-    'getWorkSiteList'           : 'rescue/work_site/getWorkSiteList',
+    'getWorkSiteList'           : 'rescue/work_sheet/getWorkSiteList',
     'operatorWorkSheet'         : 'rescue/work_sheet/operatorWorkSheet'
 };
 

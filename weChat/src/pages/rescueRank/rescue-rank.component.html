@@ -6,48 +6,48 @@
         </div>
         <div class="status-bar">
             <p>
-                <span class="left">状态：{{workSheetDetail?.work_sheet_status_info.work_sheet_status_name}}</span>
-                <span class="right link-color">查看工单详情</span>
+                <span class="left">状态：{{workSheetDetail?.work_sheet_status_info?.work_sheet_status_name}}</span>
+                <span class="right link-color"><a  [routerLink]="['/rescueDetail', workSheetDetail?.work_sheet_id]">查看工单详情</a></span>
             </p>
         </div>
 
-        <div class="confirm-order">
+        <div class="confirm-order" *ngIf="loaded">
             <div class="weui-cells rank-area">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
                         <p>评价客服</p>
                     </div>
-                    <div class="weui-cell__ft"><span>{{workSheetDetail?.work_sheet_member_info.real_name}}</span></div>
+                    <div class="weui-cell__ft"><span>{{workSheetDetail?.work_sheet_member_info?.real_name}}</span></div>
                 </div>
                 <div class="weui-cell">
                     <weui-rating class="weui-rating" [(ngModel)]="submit_review_user_info.score" [config]="customIconsAndClassCog" [readonly]="work_sheet_status==='3002'"></weui-rating>
                     <textarea class="text-area" placeholder="请输入评价内容" [(ngModel)]="submit_review_user_info.review_description" [hidden]="work_sheet_status==='3002'"></textarea>
-                    <div class="text-area-readonly" [hidden]="work_sheet_status!=='3002'"><p>{{workSheetDetail?.work_sheet_review_user_info.review_description}}</p></div>
+                    <div class="text-area-readonly" [hidden]="work_sheet_status!=='3002'"><p>{{workSheetDetail?.work_sheet_review_user_info?.review_description}}</p></div>
                 </div>
             </div>
         </div>
 
-        <div class="confirm-order">
+        <div class="confirm-order" *ngIf="loaded && workSheetDetail?.site_info?.site_id">
             <div class="weui-cells rank-area">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
                         <p>评价服务站</p>
                     </div>
-                    <div class="weui-cell__ft rank-station-name"><span>{{workSheetDetail?.site_info.site_name}}</span></div>
+                    <div class="weui-cell__ft rank-station-name"><span>{{workSheetDetail?.site_info?.site_name}}</span></div>
                 </div>
                 <div class="weui-cell">
                     <weui-rating class="weui-rating" [(ngModel)]="submit_review_site_info.score" [config]="customIconsAndClassCog" [readonly]="work_sheet_status==='3002'"></weui-rating>
                     <textarea class="text-area" placeholder="请输入评价内容" [(ngModel)]="submit_review_site_info.review_description" [hidden]="work_sheet_status==='3002'"></textarea>
-                    <div class="text-area-readonly" [hidden]="work_sheet_status!=='3002'"><p>{{workSheetDetail?.work_sheet_review_site_info.review_description}}</p></div>
+                    <div class="text-area-readonly" [hidden]="work_sheet_status!=='3002'"><p>{{workSheetDetail?.work_sheet_review_site_info?.review_description}}</p></div>
                 </div>
             </div>
         </div>
 
-        <div class="status-bar default-color" [hidden]="work_sheet_status!=='3002'">
+        <div class="status-bar default-color" *ngIf="loaded" [hidden]="work_sheet_status!=='3002'">
             <p>评价时间：{{workSheetDetail?.work_sheet_close_time}}</p>
         </div>
 
-        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="save()" [hidden]="work_sheet_status==='3002'">提交</a>
+        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" *ngIf="loaded" (click)="submitReview()" [hidden]="work_sheet_status==='3002'">提交</a>
 
     </div>
 

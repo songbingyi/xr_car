@@ -8,7 +8,7 @@
         line-height: 54px;
         font-size:24px;
         color:#000000;
-        .weui-cell__ft {
+        .weui-cell__ft a {
             font-size:14px;
             color:#1970A6;
             text-decoration: underline;
@@ -19,5 +19,9 @@
     }
     .rank-info, .select-station {
         margin: 10px 0;
+    }
+    .site_address {
+        width: 80%;
+        line-height: normal;
     }
 }

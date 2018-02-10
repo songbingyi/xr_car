@@ -69,7 +69,7 @@ export class BaseProvider {
         if (member_id) {
             data.member_id = member_id;
         }
-        return data;
+        return JSON.parse(JSON.stringify(data));
     }
 
     setSearchParams(path, data, ignore?) {

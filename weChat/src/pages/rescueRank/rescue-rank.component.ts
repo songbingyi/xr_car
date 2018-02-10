@@ -43,6 +43,8 @@ export class RescueRankComponent implements OnInit {
 
     errorMessage: any;
 
+    loaded:boolean = false;
+
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService) {
         let id = this.route.snapshot.paramMap.get('id');
         this.work_sheet_id = id;
@@ -54,11 +56,11 @@ export class RescueRankComponent implements OnInit {
 
     getWorkSheetDetail(id) {
 
-        let work_sheet_info= {
+        /*let work_sheet_info= {
             work_sheet_id: '12',
             work_sheet_no: '219809170912',
             work_sheet_status_info: {
-                work_sheet_status_id: '3001',
+                work_sheet_status_id: '3002',
                 work_sheet_status_name: '处理中'
             },
             work_sheet_create_time: '2017-08-06 12:43',
@@ -86,34 +88,46 @@ export class RescueRankComponent implements OnInit {
             work_sheet_review_user_info: {
                 work_sheet_review_user_id: '',
                 score: '4',
-                review_description: '哈哈哈'
+                review_description: '哈哈哈1'
             },
             work_sheet_review_site_info: {
                 work_sheet_review_site_id: '',
-                score: '4',
-                review_description: '哈哈哈'
+                score: '2',
+                review_description: '哈哈哈2'
             }
         };
 
-        this.workSheetDetail = work_sheet_info;
-        this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
+        setTimeout(()=>{
+            this.workSheetDetail = work_sheet_info;
+            this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
+            this.loaded = true;
+        },3000);*/
 
-        /*this.baseService.post('getWorkSheetDetail', {
+        this.baseService.post('getWorkSheetDetail', {
             work_sheet_id: id
-        }, false, this.ignore)
-            .subscribe(workSheetDetail => {
+        }).subscribe(workSheetDetail => {
                 if (workSheetDetail.status.succeed === '1') {
                     this.workSheetDetail = workSheetDetail.data.work_sheet_info;
                     this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
+                    this.loaded = true;
+                    if(this.work_sheet_status !=='3001' && this.work_sheet_status !=='3002'){
+                        this.router.navigate(['/rescueDetail', this.work_sheet_id]);
+                    }
+                    if(!this.workSheetDetail.site_info){
+                        this.submit_review_site_info = {
+                            score : 0,
+                            review_description : ''
+                        };
+                    }
                 } else {
                     this.errorMessage = workSheetDetail.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;
-            });*/
+            });
     }
 
-    save() {
+    submitReview() {
         this.baseService.post('operatorWorkSheet', {
             operator_type:2,
             work_sheet_id: this.work_sheet_id,
@@ -125,7 +139,9 @@ export class RescueRankComponent implements OnInit {
         })
             .subscribe(workSheetDetail => {
                 if (workSheetDetail.status.succeed === '1') {
-                    this.workSheetDetail = workSheetDetail.data.work_sheet_info;
+                    this.work_sheet_status = '3002';
+                    this.workSheetDetail.work_sheet_status_info.work_sheet_status_id = '3002';
+                    // this.router.navigate(['/rescueRank', this.work_sheet_id])
                 } else {
                     this.errorMessage = workSheetDetail.status.error_desc;
                 }

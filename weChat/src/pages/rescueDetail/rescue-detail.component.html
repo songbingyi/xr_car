@@ -37,7 +37,7 @@
                     <div class="weui-cell__bd">
                         <p>故障地址</p>
                     </div>
-                    <div class="weui-cell__ft">{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</div>
+                    <div class="weui-cell__ft site_address">{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</div>
                 </div>
 
             </div>
@@ -47,7 +47,7 @@
             <p>开始处理：{{workSheetDetail?.work_sheet_apply_time}}</p>
         </div>
 
-        <div class="confirm-order" [hidden]="work_sheet_status==='1001' || work_sheet_status==='1002' || work_sheet_status==='2001' || work_sheet_status==='2002' || work_sheet_status==='4001'">
+        <div class="confirm-order" *ngIf="loaded && workSheetDetail?.site_info" [hidden]="work_sheet_status==='1001' || work_sheet_status==='1002' || work_sheet_status==='2001' || work_sheet_status==='2002' || work_sheet_status==='4001'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -71,12 +71,12 @@
                     <div class="weui-cell__bd">
                         <p>地址</p>
                     </div>
-                    <div class="weui-cell__ft">{{workSheetDetail?.site_info.site_address}}</div>
+                    <div class="weui-cell__ft site_address">{{workSheetDetail?.site_info.site_address}}</div>
                 </div>
             </div>
         </div>
 
-        <div class="confirm-order select-station" [hidden]="work_sheet_status!=='2002'">
+        <div class="confirm-order select-station" *ngIf="loaded" [hidden]="work_sheet_status!=='2002'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -95,25 +95,25 @@
             </div>
         </div>
 
-        <div class="confirm-order rank-info" [hidden]="work_sheet_status==='3001' || work_sheet_status==='1001' || work_sheet_status==='1002' || work_sheet_status==='2001' || work_sheet_status==='2002'|| work_sheet_status==='2003' || work_sheet_status==='4001'">
+        <div class="confirm-order rank-info" *ngIf="loaded" [hidden]="work_sheet_status==='3001' || work_sheet_status==='1001' || work_sheet_status==='1002' || work_sheet_status==='2001' || work_sheet_status==='2002'|| work_sheet_status==='2003' || work_sheet_status==='4001'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
                         <p>评价信息</p>
                     </div>
-                    <div class="weui-cell__ft"><a>查看详情</a></div>
+                    <div class="weui-cell__ft"><a [routerLink]="['/rescueRank', workSheetDetail?.work_sheet_id]">查看详情</a></div>
                 </div>
             </div>
         </div>
 
-        <div class="status-bar default-color" [hidden]="work_sheet_status!=='3001' && work_sheet_status!=='3002'">
+        <div class="status-bar default-color" *ngIf="loaded" [hidden]="work_sheet_status!=='3001' && work_sheet_status!=='3002'">
             <p>完成时间：{{workSheetDetail?.work_sheet_finish_time}}</p>
         </div>
 
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="rank()" [hidden]="work_sheet_status!=='3001'">评价</a>
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="save()" [hidden]="work_sheet_status!=='2002'">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded" (click)="rankIt()" [hidden]="work_sheet_status!=='3001'">评价</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded" (click)="assignIt()" [hidden]="work_sheet_status!=='2002'">确定</a>
 
 
     <div class="error-bar" [hidden]="!errorMessage">

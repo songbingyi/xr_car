@@ -34,6 +34,8 @@ export class RescueDetailComponent implements OnInit {
         }
     };
 
+    loaded:boolean = false;
+
     work_sheet_id:any;
 
     work_sheet_status:any;
@@ -45,7 +47,6 @@ export class RescueDetailComponent implements OnInit {
         this.ignore = !!this.route.snapshot.paramMap.get('ignore');
         this.work_sheet_id = id;
         this.getWorkSheetDetail(id);
-        this.getSitList(id);
     }
 
     ngOnInit() {
@@ -53,7 +54,7 @@ export class RescueDetailComponent implements OnInit {
 
     getWorkSheetDetail(id) {
 
-        let work_sheet_info= {
+        /*let work_sheet_info= {
             work_sheet_id: '12',
             work_sheet_no: '219809170912',
             work_sheet_status_info: {
@@ -94,29 +95,57 @@ export class RescueDetailComponent implements OnInit {
             }
         };
 
-        this.workSheetDetail = work_sheet_info;
 
-        this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
 
-        /*this.baseService.post('getWorkSheetDetail', {
+        setTimeout(()=>{
+            this.workSheetDetail = work_sheet_info;
+            this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
+            this.loaded = true;
+        },3000);*/
+
+
+        this.baseService.post('getWorkSheetDetail', {
             work_sheet_id: id
         }, false, this.ignore)
             .subscribe(workSheetDetail => {
                 if (workSheetDetail.status.succeed === '1') {
                     this.workSheetDetail = workSheetDetail.data.work_sheet_info;
                     this.work_sheet_status = this.workSheetDetail ? this.workSheetDetail.work_sheet_status_info.work_sheet_status_id : null;
+                    this.loaded = true;
+                    if(this.work_sheet_status === '2002'){
+                        this.getSitList(id);
+                    }
                 } else {
                     this.errorMessage = workSheetDetail.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;
-            });*/
+            });
     }
 
     getSitList(id) {
+        /*let site_list = [
+            {
+                site_id : '1',
+                site_name : '高新六路',
+                longitude_num : '90.33333',
+                latitude_num : '120.334343',
+                site_address : '高新六路34号',
+                telephone : '18628364751'
+            },
+            {
+                site_id : '2',
+                site_name : '高新四路',
+                longitude_num : '90.33333',
+                latitude_num : '120.334343',
+                site_address : '高新四路34号',
+                telephone : '18628364756'
+            }
+        ];
+        this.rebuildStation(site_list);*/
         this.baseService.post('getWorkSiteList', {
             'work_sheet_id' : id
-        }, false, this.ignore)
+        }, false, true)
             .subscribe(stations => {
                 if (stations.status.succeed === '1') {
                     this.rebuildStation(stations.data.site_list);
@@ -164,7 +193,11 @@ export class RescueDetailComponent implements OnInit {
         this.result.station = station;
     }
 
-    save() {
+    rankIt(){
+        this.router.navigate(['/rescueRank', this.workSheetDetail.work_sheet_id])
+    }
+
+    assignIt() {
         this.baseService.post('operatorWorkSheet', {
             operator_type:1,
             work_sheet_id: this.work_sheet_id,
@@ -173,11 +206,14 @@ export class RescueDetailComponent implements OnInit {
                 submit_review_user_info: '',
                 submit_review_site_info: ''
             }
-        }, false, this.ignore).subscribe(workSheetDetail => {
-                if (workSheetDetail.status.succeed === '1') {
-                    this.workSheetDetail = workSheetDetail.data.work_sheet_info;
+        }, false, this.ignore).subscribe(results => {
+                if (results.status.succeed === '1') {
+                    // console.log(results.data);
+                    this.errorMessage = '分配服务站成功！';
+                    // todo 分配成功服务站之后的交互。
+                    // this.workSheetDetail = workSheetDetail.data.work_sheet_info;
                 } else {
-                    this.errorMessage = workSheetDetail.status.error_desc;
+                    this.errorMessage = results.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;
