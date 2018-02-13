@@ -42,9 +42,13 @@ export class RescueDetailComponent implements OnInit {
 
     ignore:boolean = false;
 
+    assigned:boolean = true;
+
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService) {
         let id = this.route.snapshot.paramMap.get('id');
-        this.ignore = !!this.route.snapshot.paramMap.get('ignore');
+        // this.route.queryParamMap.map(params => { console.log(params.get('ignore')); this.ignore = !!params.get('ignore'); });
+        // console.log(this.route.snapshot.queryParams['ignore']);
+        this.ignore = !!this.route.snapshot.queryParams['ignore'];
         this.work_sheet_id = id;
         this.getWorkSheetDetail(id);
     }
@@ -210,6 +214,7 @@ export class RescueDetailComponent implements OnInit {
                 if (results.status.succeed === '1') {
                     // console.log(results.data);
                     this.errorMessage = '分配服务站成功！';
+                    this.assigned = false;
                     // todo 分配成功服务站之后的交互。
                     // this.workSheetDetail = workSheetDetail.data.work_sheet_info;
                 } else {

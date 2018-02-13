@@ -77,8 +77,10 @@ export class BaseProvider {
         let urlSearchParams = new URLSearchParams();
         urlSearchParams.append('route', path);
         if(!ignore){
-            urlSearchParams.append('token', this.access_token);
-            urlSearchParams.append('jsonText', JSON.stringify(this.setMemberId(data)));
+            urlSearchParams.append('token', this.access_token || 'this is a fake access_token for forbidden access in browser');
+            let newData = this.setMemberId(data);
+            newData.member_id = newData.member_id || 'this is a fake member_id for forbidden access in browser';
+            urlSearchParams.append('jsonText', JSON.stringify(newData));
         }else{
             urlSearchParams.append('jsonText', JSON.stringify(data));
         }
@@ -95,7 +97,6 @@ export class BaseProvider {
         let route = apiBase[name];
         let headers = this.getHeaders();
         let options = this.getOptions({headers : headers});
-
         let urlSearchParams = this.setSearchParams(route, data, ignore);
 
         /*if (isTest) {

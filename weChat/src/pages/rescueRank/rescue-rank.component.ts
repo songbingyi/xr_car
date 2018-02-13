@@ -139,8 +139,9 @@ export class RescueRankComponent implements OnInit {
         })
             .subscribe(workSheetDetail => {
                 if (workSheetDetail.status.succeed === '1') {
-                    this.work_sheet_status = '3002';
-                    this.workSheetDetail.work_sheet_status_info.work_sheet_status_id = '3002';
+                    // this.work_sheet_status = '3002';
+                    // this.workSheetDetail.work_sheet_status_info.work_sheet_status_id = '3002';
+                    this.getWorkSheetDetail(this.work_sheet_id);
                     // this.router.navigate(['/rescueRank', this.work_sheet_id])
                 } else {
                     this.errorMessage = workSheetDetail.status.error_desc;

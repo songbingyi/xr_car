@@ -28,6 +28,8 @@ export class RescueComponent implements OnInit {
 
     wxs:any;
 
+    isNotDone:boolean = true;
+
 
     latitude:any;
     longitude:any;
@@ -129,15 +131,15 @@ export class RescueComponent implements OnInit {
         }
 
         if(!this.latitude || !this.longitude){
-            this.errorMessage = '未获取到可用的地理信息，请同意获取地理信息！';
+            this.errorMessage = '未获取到地理信息，请同意获取地理信息或重试！';
             this.clearError();
             return false;
         }
-        console.log({
+        /*console.log({
             car_id : this.result.selected.car_id,
             latitude_num : this.latitude,
             longitude_num : this.longitude,
-        });// submit_work_sheet_info
+        });*/
 
         this.baseService.post('addWorkSheet', {
             submit_work_sheet_info : {
@@ -147,7 +149,9 @@ export class RescueComponent implements OnInit {
             }
         }).subscribe(result => {
                 if (result.status.succeed === '1') {
-                    this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
+                    this.isNotDone = false;
+                    this.shouldReservationBox = true;
+                    //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
                 } else {
                     this.errorMessage = result.status.error_desc;
                 }
