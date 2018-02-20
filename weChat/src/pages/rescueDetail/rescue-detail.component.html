@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div class="confirm-order select-station" *ngIf="loaded" [hidden]="work_sheet_status!=='2002'">
+        <div class="confirm-order select-station" *ngIf="loaded && ignore" [hidden]="work_sheet_status!=='2002'">
             <div class="weui-cells ">
                 <div class="weui-cell special-cell">
                     <div class="weui-cell__bd">
@@ -112,7 +112,7 @@
 
         <div class="btn-group-large" *ngIf="loaded">
             <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded" (click)="rankIt()" [hidden]="work_sheet_status!=='3001'">评价</a>
-            <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded && assigned" (click)="assignIt()" [hidden]="work_sheet_status!=='2002'">确定</a>
+            <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded && assigned && ignore" (click)="assignIt()" [hidden]="work_sheet_status!=='2002'">确定</a>
         </div>
 
     </div>

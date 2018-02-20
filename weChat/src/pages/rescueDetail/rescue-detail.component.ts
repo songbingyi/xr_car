@@ -202,6 +202,11 @@ export class RescueDetailComponent implements OnInit {
     }
 
     assignIt() {
+        if(!this.result.station.site_id){
+            this.errorMessage = '请选择服务站！';
+            this.clearError();
+            return;
+        }
         this.baseService.post('operatorWorkSheet', {
             operator_type:1,
             work_sheet_id: this.work_sheet_id,
@@ -215,7 +220,9 @@ export class RescueDetailComponent implements OnInit {
                     // console.log(results.data);
                     this.errorMessage = '分配服务站成功！';
                     this.assigned = false;
-                    // todo 分配成功服务站之后的交互。
+                    // this.router.navigate(['']);
+                    this.getWorkSheetDetail(this.work_sheet_id);
+                    this.clearError();
                     // this.workSheetDetail = workSheetDetail.data.work_sheet_info;
                 } else {
                     this.errorMessage = results.status.error_desc;
@@ -223,6 +230,12 @@ export class RescueDetailComponent implements OnInit {
             }, error => {
                 this.errorMessage = <any>error;
             });
+    }
+
+    clearError() {
+        setTimeout(()=>{
+            this.errorMessage = '';
+        },2000);
     }
 
 }
