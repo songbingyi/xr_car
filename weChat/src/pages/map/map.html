@@ -1,10 +1,6 @@
 <div class="map-container">
 
-    <!--<div id="gaoDeMap" style="height: 100%;width:100%;"></div>-->
-
-    <ngx-amap class="map" id="map" [resizeEnable]="true" style="height: 100%;width:100%;">
-        <amap-tool-bar></amap-tool-bar>
-    </ngx-amap>
+    <div id="gaoDeMap" style="height: 100%;width:100%;"></div>
 
     <weui-searchbar (click)="onClick()" (search)="onSearch($event)" (cancel)="onCancel()" (clear)="onClear()" (submit)="onSubmit($event)"></weui-searchbar>
 
@@ -44,37 +40,37 @@
 
     <a class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_warn refresh-site" href="javascript:;" (click)="refreshSite()">刷新</a>
 
-    <div class="info-window weui-cell-special" *ngIf="currentMarker" [ngClass]="{'review':currentMarker.type==='review'}">
+    <div class="info-window weui-cell-special" *ngIf="currentMarkerExtra" [ngClass]="{'review':currentMarkerExtra.type==='review'}">
         <div class="weui-cells">
             <div class="weui-cell special-cell">
                 <div class="weui-cell__bd">
                     <p>
-                        <span class="text-primary company-name">{{currentMarker.site_name}}</span>
-                        <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarker.type==='service'"></weui-rating>
+                        <span class="text-primary company-name">{{currentMarkerExtra.site_name}}</span>
+                        <weui-rating class="weui-rating" [(ngModel)]="rate" [config]="customIconsAndClassCog" [readonly]="readonly" *ngIf="currentMarkerExtra.type==='service'"></weui-rating>
                     </p>
                 </div>
-                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarker.distance | distance:true}}<em>公里</em></span></div>
+                <div class="weui-cell__ft"><span class="text-warning"><!--0.2<em>公里</em>-->{{currentMarkerExtra.distance | distance:true}}<em>公里</em></span></div>
             </div>
-            <div class="weui-cell text-special-cell" *ngIf="currentMarker.type==='service'">
+            <div class="weui-cell text-special-cell" *ngIf="currentMarkerExtra.type==='service'">
                 <div class="weui-cell__bd">
-                    <p>主营服务：{{currentMarker.service_description}}</p>
+                    <p>主营服务：{{currentMarkerExtra.service_description}}</p>
                 </div>
                 <div class="weui-cell__ft"></div>
             </div>
             <div class="weui-cell text-special-cell with-two-col">
                 <div class="weui-cell__bd">
-                    <p>具体地址：{{currentMarker.site_address}}</p>
+                    <p>具体地址：{{currentMarkerExtra.site_address}}</p>
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarker.latitude_num}}&epointy={{currentMarker.longitude_num}}&eword={{currentMarker.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
+                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarkerExtra.latitude_num}}&epointy={{currentMarkerExtra.longitude_num}}&eword={{currentMarkerExtra.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
                 </div>
             </div>
-            <div class="weui-cell" *ngIf="currentMarker.mobile || currentMarker.telephone">
+            <div class="weui-cell" *ngIf="currentMarkerExtra.mobile || currentMarkerExtra.telephone">
                 <div class="weui-cell__bd">
-                    <p>联系电话：{{currentMarker.telephone}}{{(currentMarker.telephone && currentMarker.mobile) ? '、' : ''}}{{currentMarker.mobile}}</p>
+                    <p>联系电话：{{currentMarkerExtra.telephone}}{{(currentMarkerExtra.telephone && currentMarkerExtra.mobile) ? '、' : ''}}{{currentMarkerExtra.mobile}}</p>
                 </div>
-                <div class="weui-cell__ft" *ngIf="currentMarker.mobile&&currentMarker.telephone"><a (click)="showPhoneList()"><img src="/assets/images/icon/phone.png" /></a></div>
-                <div class="weui-cell__ft" *ngIf="(!currentMarker.mobile&&currentMarker.telephone) || (currentMarker.mobile&&!currentMarker.telephone)"><a href="{{'tel:' + (currentMarker.mobile || currentMarker.telephone)}}"><img src="/assets/images/icon/phone.png" /></a></div>
+                <div class="weui-cell__ft" *ngIf="currentMarkerExtra.mobile&&currentMarkerExtra.telephone"><a (click)="showPhoneList()"><img src="/assets/images/icon/phone.png" /></a></div>
+                <div class="weui-cell__ft" *ngIf="(!currentMarkerExtra.mobile&&currentMarkerExtra.telephone) || (currentMarkerExtra.mobile&&!currentMarkerExtra.telephone)"><a href="{{'tel:' + (currentMarkerExtra.mobile || currentMarkerExtra.telephone)}}"><img src="/assets/images/icon/phone.png" /></a></div>
             </div>
         </div>
     </div>
@@ -87,14 +83,14 @@
                 <div class="weui-cells">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p><a href="{{'tel:' + currentMarker?.telephone}}">{{currentMarker?.telephone}}</a></p>
+                            <p><a href="{{'tel:' + currentMarkerExtra?.telephone}}">{{currentMarkerExtra?.telephone}}</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="weui-cells no-border">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <p><a href="{{'tel:' + currentMarker?.mobile}}">{{currentMarker?.mobile}}</a></p>
+                            <p><a href="{{'tel:' + currentMarkerExtra?.mobile}}">{{currentMarkerExtra?.mobile}}</a></p>
                         </div>
                     </div>
                 </div>

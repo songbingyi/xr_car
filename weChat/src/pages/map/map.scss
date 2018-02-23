@@ -76,6 +76,7 @@
     color: #676767;
     padding-bottom: 15px;
     background: RGBA(255, 255, 255, 0.9);
+    z-index: 9999;
     .weui-cells {
         background:transparent;
         &:after {
