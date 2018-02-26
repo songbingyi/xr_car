@@ -51,11 +51,11 @@ export class IndexComponent implements OnInit {
     }
 
     selected(item, index) {
-        this.refresh(item, index);
         this.tabs.forEach(tab => {
             tab.selected = '';
         });
         item.selected = 'weui-bar__item_on';
+        this.refresh(item, index);
         // 调用该服务的方法，发送信息；
         // this.message.sendImages('www.baidu.com'); // 发送图片地址
         // this.message.sendMessage(index);
@@ -69,6 +69,9 @@ export class IndexComponent implements OnInit {
         if (item.selected) {
             if(index === 0){
                 this.message.sendMessage('refresh');
+            }
+            if(index === 1){
+                this.message.sendMessage('refreshMap');
             }
             if(index === 2){
                 this.message.sendMessage('userRefresh');

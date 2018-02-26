@@ -103,7 +103,11 @@
             </div>
             <div class="tab-content" [hidden]="!showNext">
                 <div class="weui-cells__title">请上传行驶证正副本照片</div>
-                <div class="images-container">
+                <div class="images-container" *ngIf="result.bartrailer">
+                    <span>示例图片</span>
+                    <img class="single-img" src="/assets/images/tmp/shenche.bartrailer.png" />
+                </div>
+                <div class="images-container" *ngIf="!result.bartrailer">
                     <span>示例图片</span>
                     <img class="single-img" src="/assets/images/tmp/shenche.png" />
                 </div>

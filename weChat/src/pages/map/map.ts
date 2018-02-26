@@ -16,6 +16,7 @@ import {WXSDKService} from '../../providers/wx.sdk.service';
 import {BaseProvider} from '../../providers/http/base.http';
 
 import {DistancePipe} from '../../pipes/distance';
+import {MessageService} from '../../providers/messageService';
 
 // declare const qq: any;
 declare var AMap;
@@ -89,8 +90,13 @@ export class MapComponent implements OnInit {
     currentMapMarker: any;
     mapMarkers:any = [];
 
-    constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService) {
+    constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService, private message: MessageService) {
         this.wxs = this.wxService.init();
+        this.message.getMessage().subscribe(msg => {
+            if(msg.type === 'refreshMap'){
+                setTimeout(()=>{this.getDistance()},100);
+            }
+        });
     }
 
     ngOnInit() {
@@ -149,7 +155,7 @@ export class MapComponent implements OnInit {
 
         AMap.event.addListener(map, 'zoomend', (event: any) => {
             this.getDistance();
-            console.log('zoomend');
+            //console.log('zoomend');
             this.zone.run(() => {
                 // this.distance = distance;
                 this.loadMakers({
@@ -167,6 +173,8 @@ export class MapComponent implements OnInit {
         });
 
         this.map = map;
+
+        // console.log(this.map);
 
         this.normalSize = new AMap.Size(40, 46);
         this.biggerSize = new AMap.Size(65, 72);
@@ -192,6 +200,10 @@ export class MapComponent implements OnInit {
         // console.log(bounds.getNorthEast());
         let from = new AMap.LngLat(bounds.getNorthEast().lng, bounds.getNorthEast().lat);
         let to = new AMap.LngLat(bounds.getSouthWest().lng, bounds.getSouthWest().lat);
+        //alert(JSON.stringify(bounds.getNorthEast()));
+        // alert(JSON.stringify(from));
+        // alert(JSON.stringify(to));
+        // alert(this.distance);
         this.distance = AMap.GeometryUtil ? AMap.GeometryUtil.distance(from, to) : this.distance;
     }
 
@@ -332,7 +344,7 @@ export class MapComponent implements OnInit {
         AMap.event.addListener(aMarker, 'click', (event) => {
             this.restoreMakerSize(aMarker);
             this.showMarker(aMarker);
-            console.log(this.currentMarkerExtra);
+            // console.log(this.currentMarkerExtra);
             // aMarker.setIcon(new AMap.Icon({size:this.biggerSize, imageOffset:new AMap.Pixel(0, 0), image:marker.icon, imageSize:this.biggerSize}));
             //marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
         });
