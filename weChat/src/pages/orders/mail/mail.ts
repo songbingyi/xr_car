@@ -14,6 +14,7 @@ export class MailComponent implements OnInit {
     errorMessage: any;
 
     constructor() {
+
     }
 
     ngOnInit() {
