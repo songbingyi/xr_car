@@ -1,23 +1,23 @@
 import {NgZone, OnDestroy} from '@angular/core';
 /* tslint:disable */
 import {Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
-import {AqmComponent} from 'angular-qq-maps';
+// import {AqmComponent} from 'angular-qq-maps';
 
 import {RatingComponent, RatingConfig} from 'ngx-weui/rating';
 
 // import { TaobaoService } from './tb.service';
 import {Observable} from 'rxjs/Rx';
 
-import {MarkersProvider} from '../../providers/http/marker.http';
+// import {MarkersProvider} from '../../providers/http/marker.http';
 
-import {MarkerModel} from '../../models/marker.model';
+// import {MarkerModel} from '../../models/marker.model';
 
 import {WXSDKService} from '../../providers/wx.sdk.service';
 import {BaseProvider} from '../../providers/http/base.http';
 
 import {DistancePipe} from '../../pipes/distance';
 
-declare const qq: any;
+// declare const qq: any;
 declare var AMap;
 
 @Component({
@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
     status: string = '';
     loading: boolean = false;
 
-    @ViewChild('map') mapComp: AqmComponent;
+    // @ViewChild('map') mapComp: AqmComponent;
 
     distanceMax: number = 800000;
     distance : Number = 5000;
@@ -49,6 +49,10 @@ export class MapComponent implements OnInit {
     currentMarkerExtra:any;
     markers: any = [];
     value: string;
+
+    clickedItemsBySearch:any = [];
+
+    circleMarker : any;
 
     // 地图对象
     map: any;
@@ -90,7 +94,8 @@ export class MapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.onReady();
+        // TODO 正式环境注释掉
+        // this.onReady();
     }
 
     getLocation(callback?) {
@@ -101,9 +106,9 @@ export class MapComponent implements OnInit {
                 this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                 if( callback ){
                     callback(this.latitude, this.longitude);
+                }else{
+                    this.onReady();
                 }
-                this.onReady();
-
             }
         });
     }
@@ -116,6 +121,8 @@ export class MapComponent implements OnInit {
 
     onReady() {
         let map = new AMap.Map('gaoDeMap', {
+            center:[this.longitude, this.latitude],
+            zoom:this.zoom,
             resizeEnable: true
         });
 
@@ -140,30 +147,52 @@ export class MapComponent implements OnInit {
 
         // this.getDistance();
 
-        /*AMap.event.addListener(map, 'zoomend', (event: any) => {
-            //this.getDistance();
+        AMap.event.addListener(map, 'zoomend', (event: any) => {
+            this.getDistance();
+            console.log('zoomend');
             this.zone.run(() => {
                 // this.distance = distance;
-                this.loadMakers({});
+                this.loadMakers({
+                    latitude: this.latitude,
+                    longitude: this.longitude
+                });
             });
-        });*/
+        });
 
         //添加监听事件
-        /*AMap.event.addListener(map, 'dragend', (event: any) => {
+        AMap.event.addListener(map, 'dragend', (event: any) => {
             this.zone.run(() => {
                 // console.log(this.map.getCenter());
             });
-        });*/
+        });
+
+        this.map = map;
 
         this.normalSize = new AMap.Size(40, 46);
         this.biggerSize = new AMap.Size(65, 72);
+
+        this.getDistance();
 
         this.loadMakers({
             latitude: this.latitude,
             longitude: this.longitude
         });
 
-        this.map = map;
+        this.showPosition();
+    }
+
+    getDistance() {
+        // this.distanceIndex ++ ;
+        // this.distance = this.distances[this.distanceIndex];
+        // return this.distance;
+        // console.log('this.distance : ' + this.distance);
+        // console.log(this.map);
+        let bounds = this.map.getBounds();
+        // console.log(bounds);
+        // console.log(bounds.getNorthEast());
+        let from = new AMap.LngLat(bounds.getNorthEast().lng, bounds.getNorthEast().lat);
+        let to = new AMap.LngLat(bounds.getSouthWest().lng, bounds.getSouthWest().lat);
+        this.distance = AMap.GeometryUtil ? AMap.GeometryUtil.distance(from, to) : this.distance;
     }
 
     loadMarkersBySearch(options) {
@@ -227,10 +256,25 @@ export class MapComponent implements OnInit {
                         this.zoomOut();
                         return ;
                     }
+                    this.map.remove(this.mapMarkers);
                     this.isLoaded = true;
                     this.serviceNumber = 0;
                     this.reviewNumber  = 0;
                     this.markers = markers.data.site_list;
+                    // 通过搜索并点击显示在地图中的站点，清除之后还要再加载进来
+                    this.clickedItemsBySearch.forEach(marker => {
+                        // 服务站
+                        if (marker.site_category_info.site_category_id === '1') {
+                            marker.icon = '/assets/images/marker/service.png';
+                            marker.type = 'service';
+                        }
+                        // 监测站
+                        if (marker.site_category_info.site_category_id === '2') {
+                            marker.icon = '/assets/images/marker/review.png';
+                            marker.type = 'review';
+                        }
+                        this.setMarker(marker);
+                    });
                     this.markers.forEach(marker => {
                         // 服务站
                         if (marker.site_category_info.site_category_id === '1') {
@@ -288,6 +332,7 @@ export class MapComponent implements OnInit {
         AMap.event.addListener(aMarker, 'click', (event) => {
             this.restoreMakerSize(aMarker);
             this.showMarker(aMarker);
+            console.log(this.currentMarkerExtra);
             // aMarker.setIcon(new AMap.Icon({size:this.biggerSize, imageOffset:new AMap.Pixel(0, 0), image:marker.icon, imageSize:this.biggerSize}));
             //marker.setIcon(new qq.maps.MarkerImage(icon, this.biggerSize), '', '', this.biggerSize, '');
         });
@@ -373,11 +418,40 @@ export class MapComponent implements OnInit {
 
     }
 
-
     refreshSite() {
-        /*this.getLocation((lat, lng)=>{
+        this.getLocation((lat, lng)=>{
             this.loadMakers({latitude: lat, longitude: lng});
+        });
+    }
+
+    showPosition() {
+        let latitude = this.latitude || 34.341568;
+        let longitude = this.longitude || 108.940175;
+
+        if( this.circleMarker ) {
+            this.circleMarker.setMap(null);
+        }
+
+        /*let aMarker = new AMap.Marker({
+            position: new AMap.LngLat(marker.longitude_num, marker.latitude_num),
+            icon: new AMap.Icon({size:this.normalSize, image:marker.icon, imageSize:this.normalSize}), //marker.icon, this.normalSize, '', '', this.normalSize, ''
+            map: this.map,
+            clickable: true,
+            topWhenClick: true,
+            extData : marker,
+            offset : new AMap.Pixel(-20, -46)
         });*/
+
+        if(AMap.Marker && AMap.LngLat) {
+            this.circleMarker = new AMap.Marker({
+                position: new AMap.LngLat(longitude, latitude),
+                clickable: false,
+                zIndex:999,
+                icon: new AMap.Icon({size:new AMap.Size(25, 25), image:'/assets/images/marker/location.png', imageSize:new AMap.Size(25, 25)}),
+                //icon: new AMap.Icon('/assets/images/marker/location.png', new qq.maps.Size(25, 25), '', '', new qq.maps.Size(25, 25), ''),
+                map: this.map
+            });
+        }
     }
 
     showPhoneList() {
@@ -431,6 +505,7 @@ export class MapComponent implements OnInit {
         let hasExtData = marker.getExtData;
         if(!hasExtData || (hasExtData && !marker.getExtData().site_id)){
             marker = this.setMarker(item);
+            this.clickedItemsBySearch.push(item);
         }
         this.panTo({
             lat: marker.getExtData().latitude_num,

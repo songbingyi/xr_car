@@ -62,7 +62,9 @@
                     <p>具体地址：{{currentMarkerExtra.site_address}}</p>
                 </div>
                 <div class="weui-cell__ft">
-                    <a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarkerExtra.latitude_num}}&epointy={{currentMarkerExtra.longitude_num}}&eword={{currentMarkerExtra.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>
+                    <!--"https://m.amap.com/navigation/carmap/saddr=108.889862,34.250809,昆明路(公交站)&daddr=108.939621,34.343147,西安市人民政府&saddr_lonlat=108.889862,34.250809,昆明路(公交站)&daddr_lonlat=&saddr_typecode=150700&daddr_typecode=&saddr_poiid=BV10069575&daddr_poiid=&maddr=&sort=&addPassing=remove"-->
+                    <a href="https://m.amap.com/navigation/carmap/saddr={{longitude}},{{latitude}},%E8%B5%B7%E7%82%B9&daddr={{currentMarkerExtra.longitude_num}},{{currentMarkerExtra.latitude_num}},%E7%BB%88%E7%82%B9&sort=dist"><img src="/assets/images/icon/nav.png" /></a>
+                    <!--<a href="https://map.qq.com/m/mqq/nav/epointx={{currentMarkerExtra.latitude_num}}&epointy={{currentMarkerExtra.longitude_num}}&eword={{currentMarkerExtra.site_name}}?ref=locationCluster_tengxun"><img src="/assets/images/icon/nav.png" /></a>-->
                 </div>
             </div>
             <div class="weui-cell" *ngIf="currentMarkerExtra.mobile || currentMarkerExtra.telephone">
