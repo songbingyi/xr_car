@@ -113,6 +113,9 @@ export class RescueRankComponent implements OnInit {
                     if(this.work_sheet_status !=='3001' && this.work_sheet_status !=='3002'){
                         this.router.navigate(['/rescueDetail', this.work_sheet_id]);
                     }
+                    if(this.work_sheet_status ==='3002'){
+                        this.setReviewScore();
+                    }
                     if(!this.workSheetDetail.site_info){
                         this.submit_review_site_info = {
                             score : 0,
@@ -125,6 +128,11 @@ export class RescueRankComponent implements OnInit {
             }, error => {
                 this.errorMessage = <any>error;
             });
+    }
+
+    setReviewScore() {
+        this.submit_review_site_info.score = (this.workSheetDetail && this.workSheetDetail.work_sheet_review_site_info) ? this.workSheetDetail.work_sheet_review_site_info.score : 0;
+        this.submit_review_user_info.score = (this.workSheetDetail && this.workSheetDetail.work_sheet_review_user_info) ? this.workSheetDetail.work_sheet_review_user_info.score : 0;
     }
 
     submitReview() {

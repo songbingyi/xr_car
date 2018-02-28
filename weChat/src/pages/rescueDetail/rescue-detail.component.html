@@ -25,7 +25,7 @@
                     <div class="weui-cell__bd">
                         <p>报修人电话</p>
                     </div>
-                    <div class="weui-cell__ft">{{workSheetDetail?.work_sheet_member_info.mobile}}</div>
+                    <div class="weui-cell__ft"><a class="telephone" href="{{'tel:' + workSheetDetail?.work_sheet_member_info.mobile}}">{{workSheetDetail?.work_sheet_member_info.mobile}}</a></div>
                 </div>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
@@ -65,7 +65,7 @@
                     <div class="weui-cell__bd">
                         <p>联系电话</p>
                     </div>
-                    <div class="weui-cell__ft">{{workSheetDetail?.site_info.telephone}}</div>
+                    <div class="weui-cell__ft"><a class="telephone" href="{{'tel:' + workSheetDetail?.site_info.telephone}}">{{workSheetDetail?.site_info.telephone}}</a></div>
                 </div>
                 <div class="weui-cell no-border weui-cell-small">
                     <div class="weui-cell__bd">
