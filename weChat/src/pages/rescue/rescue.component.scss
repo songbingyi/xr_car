@@ -48,4 +48,21 @@
     .error-bar {
         z-index: 9999999;
     }
+
+    .showResult {
+        position: absolute;
+        top:0;
+        left:0;
+        bottom:0;
+        width:100%;
+        z-index:6000;
+        p {
+            margin: 20px;
+            &.title {
+                text-align: center;
+                margin-top: 100px;
+                font-size: 24px;
+            }
+        }
+    }
 }

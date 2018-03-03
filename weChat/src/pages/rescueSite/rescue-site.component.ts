@@ -5,11 +5,11 @@ import {BaseProvider} from '../../providers/http/base.http';
 import {PickerService} from 'ngx-weui/picker';
 
 @Component({
-    selector: 'app-rescue-detail',
-    templateUrl: './rescue-detail.component.html',
-    styleUrls: ['./rescue-detail.component.scss']
+    selector: 'app-rescue-site',
+    templateUrl: './rescue-site.component.html',
+    styleUrls: ['./rescue-site.component.scss']
 })
-export class RescueDetailComponent implements OnInit {
+export class RescueSiteComponent implements OnInit {
 
     /*
     * 1001	待处理
@@ -132,7 +132,7 @@ export class RescueDetailComponent implements OnInit {
 
         this.baseService.post('getWorkSheetDetail', {
             work_sheet_id: id
-        }, false, this.ignore)
+        }, false, true)
             .subscribe(workSheetDetail => {
                 if (workSheetDetail.status.succeed === '1') {
                     this.workSheetDetail = workSheetDetail.data.work_sheet_info;

@@ -1,0 +1,85 @@
+<div class="page order-detail workSheet-detail workSheet-site">
+    <div class="scroll-page">
+        <div class="order-bar">
+            <span class="left">订单号：{{workSheetDetail?.work_sheet_no}}</span>
+            <span class="right">下单时间：{{workSheetDetail?.work_sheet_create_time}}</span>
+        </div>
+        <div class="status-bar">
+            <p>状态：{{workSheetDetail?.work_sheet_status_info.work_sheet_status_name}}</p>
+        </div>
+        <div class="confirm-order" [hidden]="work_sheet_status!=='2003'">
+            <div class="weui-cells ">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>报修信息</p>
+                    </div>
+                    <div class="weui-cell__ft"><span> </span></div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>报修人姓名</p>
+                    </div>
+                    <div class="weui-cell__ft">{{workSheetDetail?.work_sheet_member_info.real_name}}</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>报修人电话</p>
+                    </div>
+                    <div class="weui-cell__ft"><a class="telephone" href="{{'tel:' + workSheetDetail?.work_sheet_member_info.mobile}}">{{workSheetDetail?.work_sheet_member_info.mobile}}</a></div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>车牌号码</p>
+                    </div>
+                    <div class="weui-cell__ft">{{workSheetDetail?.work_sheet_member_info.car_no}}</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>故障地址</p>
+                    </div>
+                    <div class="weui-cell__ft site_address" *ngIf="longitude && latitude">
+                        <a href="https://m.amap.com/navigation/carmap/saddr={{longitude}},{{latitude}},%E8%B5%B7%E7%82%B9&daddr={{workSheetDetail?.work_sheet_member_info.longitude_num}},{{workSheetDetail?.work_sheet_member_info.latitude_num}},%E7%BB%88%E7%82%B9&sort=dist">{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</a>
+                    </div>
+                    <div class="weui-cell__ft site_address" *ngIf="!longitude || !latitude">
+                        <span>{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar"></div>
+
+        <div class="confirm-order" *ngIf="loaded && workSheetDetail?.site_info" [hidden]="work_sheet_status!=='2003'">
+            <div class="weui-cells ">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>客服信息</p>
+                    </div>
+                    <div class="weui-cell__ft"><span> </span></div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>客服工号</p>
+                    </div>
+                    <div class="weui-cell__ft">{{workSheetDetail?.user_info.user_id}}</div>
+                </div>
+                <div class="weui-cell no-border weui-cell-small" style="height: auto">
+                    <div class="weui-cell__bd">
+                        <p>故障描述</p>
+                    </div>
+                    <div class="weui-cell__ft site_address">{{workSheetDetail?.work_sheet_comment}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="btn-group-large" *ngIf="loaded">
+            <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="loaded" (click)="process()" [hidden]="work_sheet_status!=='2003'">处理</a>
+        </div>-->
+
+    </div>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
+</div>

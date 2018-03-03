@@ -43,6 +43,7 @@ import { LoginComponent } from '../pages/login/login';
 
 import { RescueComponent } from '../pages/rescue/rescue.component';
 import { RescueDetailComponent } from '../pages/rescueDetail/rescue-detail.component';
+import { RescueSiteComponent } from '../pages/rescueSite/rescue-site.component';
 import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 
@@ -71,6 +72,7 @@ const appRoutes: Routes = [
     {path : 'carList', component : CarListComponent, canActivate: [AuthGuard]},
     {path : 'rescue', component : RescueComponent, canActivate: [AuthGuard]},
     {path : 'rescueDetail/:id', component : RescueDetailComponent},
+    {path : 'rescueSite/:id', component : RescueSiteComponent},
     {path : 'rescueRank/:id', component : RescueRankComponent, canActivate: [AuthGuard]},
     {path : 'notify', component : NotifyComponent, canActivate: [AuthGuard]},
     {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},

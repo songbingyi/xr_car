@@ -71,6 +71,7 @@ import {RefreshMemberInfoService} from '../providers/refresh.member.info.service
 import { RescueComponent } from '../pages/rescue/rescue.component';
 import { RescueDetailComponent } from '../pages/rescueDetail/rescue-detail.component';
 import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
+import { RescueSiteComponent } from '../pages/rescueSite/rescue-site.component';
 
 @NgModule({
     declarations : [
@@ -110,7 +111,8 @@ import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
         EditOrderComponent,
         RescueComponent,
         RescueDetailComponent,
-        RescueRankComponent
+        RescueRankComponent,
+        RescueSiteComponent
     ],
     imports      : [
         AppRoutingModule,
