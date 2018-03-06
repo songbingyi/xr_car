@@ -24,7 +24,7 @@
 </div>-->
 <div class="rescue">
 
-    <div class="rescue-dialog" [hidden]="!shouldReservationBox || !isNotDone">
+    <div class="rescue-dialog" [hidden]="!shouldReservationBox || !isNotDone || error_desc">
         <div class="weui-mask weui-mask__in"></div>
         <div class="weui-dialog weui-dialog__in">
             <div class="weui-dialog__hd">
@@ -80,6 +80,12 @@
         <p class="title">救援信息提交成功！</p>
         <p>　　请保持手机畅通，我们会尽快与您取得联系！</p>
         <p>　　车物宝安全提示：请在车辆后方（高速公路100米以外，非高速公路50米以外）安放安全警示标志，同时注意自身及车辆、财产安全！</p>
+        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" *ngIf="loaded" (click)="cancel($event)">我知道了</a>
+    </div>
+
+    <div class="showResult error-result" [hidden]="!error_desc">
+        <p class="title">{{error_desc}}</p>
+        <p>欢迎拨打总部救援电话：<a href="tel:4008876108">400-887-6108</a></p>
         <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" *ngIf="loaded" (click)="cancel($event)">我知道了</a>
     </div>
 

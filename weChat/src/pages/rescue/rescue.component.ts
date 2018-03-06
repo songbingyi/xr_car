@@ -29,6 +29,7 @@ export class RescueComponent implements OnInit {
     wxs:any;
 
     isNotDone:boolean = true;
+    error_desc:boolean = false;
 
 
     latitude:any;
@@ -153,7 +154,7 @@ export class RescueComponent implements OnInit {
                     this.shouldReservationBox = true;
                     //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
                 } else {
-                    this.errorMessage = result.status.error_desc;
+                    this.error_desc = result.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;
