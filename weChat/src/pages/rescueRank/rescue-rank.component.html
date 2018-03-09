@@ -17,7 +17,7 @@
                     <div class="weui-cell__bd">
                         <p>评价客服</p>
                     </div>
-                    <div class="weui-cell__ft"><span>{{workSheetDetail?.work_sheet_member_info?.real_name}}</span></div>
+                    <div class="weui-cell__ft"><span>{{workSheetDetail?.user_info?.user_name}}</span></div>
                 </div>
                 <div class="weui-cell">
                     <weui-rating class="weui-rating" [(ngModel)]="submit_review_user_info.score" [config]="customIconsAndClassCog" [readonly]="work_sheet_status==='3002'"></weui-rating>
