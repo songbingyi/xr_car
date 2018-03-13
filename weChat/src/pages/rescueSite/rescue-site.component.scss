@@ -33,4 +33,18 @@
         margin-top: 20px;
         height: 50px;
     }
+
+    .confirm-order {
+        margin-bottom: 20px;
+    }
+    .alert-table {
+        display: table;
+        width: 100%;
+        .weui-cell__bd, .weui-cell__ft {
+            display: table-cell;
+        }
+        .weui-cell__ft .span {
+            text-align: right;
+        }
+    }
 }

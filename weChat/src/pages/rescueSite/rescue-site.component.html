@@ -1,7 +1,7 @@
 <div class="page order-detail workSheet-detail workSheet-site">
     <div class="scroll-page">
         <div class="order-bar">
-            <span class="left">订单号：{{workSheetDetail?.work_sheet_no}}</span>
+            <span class="left">工单号：{{workSheetDetail?.work_sheet_no}}</span>
             <span class="right">下单时间：{{workSheetDetail?.work_sheet_create_time}}</span>
         </div>
         <div class="status-bar">
@@ -63,11 +63,13 @@
                     </div>
                     <div class="weui-cell__ft">{{workSheetDetail?.user_info.user_id}}</div>
                 </div>
-                <div class="weui-cell no-border weui-cell-small" style="height: auto">
+                <div class="weui-cell no-border weui-cell-small alert-table" style="height: auto">
                     <div class="weui-cell__bd">
                         <p>故障描述</p>
                     </div>
-                    <div class="weui-cell__ft site_address">{{workSheetDetail?.work_sheet_comment}}</div>
+                    <div class="weui-cell__ft site_address">
+                        <span>{{workSheetDetail?.work_sheet_comment}}</span>
+                    </div>
                 </div>
             </div>
         </div>
