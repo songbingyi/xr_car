@@ -100,7 +100,7 @@
         <span>{{errorMessage}}</span>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty}" [hidden]="identityAuthStatus" (click)="save()">确定</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">确定</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改手机号</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty||submitting}" [hidden]="identityAuthStatus" (click)="save()">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改手机号</a>
 </div>

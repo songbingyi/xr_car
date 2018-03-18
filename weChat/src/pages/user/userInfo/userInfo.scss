@@ -17,7 +17,7 @@
     .weui-vcode-btn {
         padding-right:0;
     }
-    
+
     .ng-from-error {
         input.ng-invalid {
             color:#E64340;
@@ -34,4 +34,8 @@
 }
 .weui-vcode-btn.disabled{
     color:#bcc2c5;
+}
+
+a.full-width-btn-with-padding.disabled {
+    opacity:0.6;
 }

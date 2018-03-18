@@ -28,6 +28,8 @@ export class UserInfoComponent implements OnInit {
     memberDetail: any;
     identityAuthStatus: boolean = true;
 
+    submitting:boolean = false;
+
     username = new FormControl('', [
         Validators.required,
         Validators.minLength(2),
@@ -96,7 +98,7 @@ export class UserInfoComponent implements OnInit {
         let userId = this.userInfoForm.value.userId;
         let mobile = this.userInfoForm.value.phone;
         //let regxU15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-        let regxU18 = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/;
+        let regxU18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
         let regxM = (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
 
         // 身份证号格式验证
@@ -111,6 +113,24 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
+        if(!this.verifyCode || !this.verifyCode.code){
+            this.fromError = true;
+            this.errorMessage = '请先获取验证码再提交！';
+            return ;
+        }
+
+        if(!this.userInfoForm.value.vcode){
+            this.fromError = true;
+            this.errorMessage = '请输入有效的验证码！';
+            return ;
+        }
+
+        if(this.verifyCode && this.verifyCode.verify_code && this.userInfoForm.value.vcode && (this.verifyCode.verify_code !== this.userInfoForm.value.vcode)){
+            //this.fromError = true;
+            this.errorMessage = '输入的验证码不正确！';
+            return ;
+        }
+
         if (this.userInfoForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
             this.errorMessage = '';
@@ -120,7 +140,12 @@ export class UserInfoComponent implements OnInit {
             this.errorMessage = '';
             this.fromError = false;
         }
-        //console.log();
+
+        if(this.submitting){
+            return;
+        }
+        //console.log(this.userInfoForm);
+        this.submitting = true;
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
             'mobile' : this.userInfoForm.value.phone,
@@ -130,10 +155,6 @@ export class UserInfoComponent implements OnInit {
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
-                    /*this.verifyCode = verifyCode.data;
-                    this.timeOut = 60;
-                    this.timing = true;
-                    this.timeLeft();*/
                     this.isModifying = false;
                     if(config.identityAuth){
                         this.identityAuthService.goHome();
@@ -147,8 +168,11 @@ export class UserInfoComponent implements OnInit {
                 } else {
                     if(result.status.error_code === '1012'){
                         this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
+                        return;
                     }
+                    this.errorMessage = result.status.error_desc;
                 }
+                this.submitting = false;
             }, error => this.errorMessage = <any>error);
     }
 
@@ -182,6 +206,11 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
+        if(this.submitting){
+            return;
+        }
+        this.submitting = true;
+
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
             'mobile' : this.updateForm.value.phone,
@@ -206,6 +235,7 @@ export class UserInfoComponent implements OnInit {
                         this.errorMessage = result.status.error_desc;
                     }
                 }
+                this.submitting = false;
             }, error => this.errorMessage = <any>error);
     }
 
