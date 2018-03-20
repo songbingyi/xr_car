@@ -20,6 +20,7 @@ import {MessageService} from '../../providers/messageService';
 
 // declare const qq: any;
 declare var AMap;
+declare var gcoord;
 
 @Component({
     selector: 'app-map',
@@ -91,6 +92,7 @@ export class MapComponent implements OnInit {
     mapMarkers:any = [];
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService, private message: MessageService) {
+        this.transformLocation();
         this.wxs = this.wxService.init();
         this.message.getMessage().subscribe(msg => {
             if(msg.type === 'refreshMap'){
@@ -104,12 +106,25 @@ export class MapComponent implements OnInit {
         // this.onReady();
     }
 
+    transformLocation() {
+        // this.longitude = 108.94075;
+        // this.latitude = 34.341568;
+        let result = gcoord.transform(
+            [this.longitude, this.latitude],    // 经纬度坐标
+            gcoord.WGS84,                       // 当前坐标系
+            gcoord.GCJ02                        // 目标坐标系
+        );
+        this.longitude = result[0];
+        this.latitude = result[1];
+    }
+
     getLocation(callback?) {
         this.wxService.onGetLocation({
             type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: (res) => {
                 this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                this.transformLocation();
                 if( callback ){
                     callback(this.latitude, this.longitude);
                 }else{
@@ -155,13 +170,13 @@ export class MapComponent implements OnInit {
 
         AMap.event.addListener(map, 'zoomend', (event: any) => {
             this.getDistance();
-            //console.log('zoomend');
+            console.log('zoomend');
             this.zone.run(() => {
                 // this.distance = distance;
                 this.loadMakers({
                     latitude: this.latitude,
                     longitude: this.longitude
-                });
+                }, true);
             });
         });
 
@@ -250,7 +265,7 @@ export class MapComponent implements OnInit {
     }
 
 
-    loadMakers(options) {
+    loadMakers(options, isZooming?) {
         this.isLoaded = false;
         return this.baseProvider.post('getSiteList', {
             'filter_info': {
@@ -265,8 +280,10 @@ export class MapComponent implements OnInit {
         }).subscribe(markers => {
                 if (markers.status.succeed === '1') {
                     if (markers.data && markers.data.site_list && markers.data.site_list.length === 0) {
-                        this.zoomOut();
-                        return ;
+                        if(!isZooming){
+                            this.zoomOut();
+                            return ;
+                        }
                     }
                     this.map.remove(this.mapMarkers);
                     this.isLoaded = true;

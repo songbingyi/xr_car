@@ -110,7 +110,7 @@ export class BaseProvider {
         // console.log("POST");
 
         return this.http.post(url, urlSearchParams, options)
-            .timeout(5000)
+            .timeout(30000)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -145,6 +145,9 @@ export class BaseProvider {
             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         } else {
             errMsg = error.message ? error.message : error.toString();
+        }
+        if(errMsg === 'Timeout has occurred') {
+            errMsg = '连接网络超时，请选择信号较强的地方重试';
         }
         // console.error(errMsg);
         return Observable.throw(errMsg);

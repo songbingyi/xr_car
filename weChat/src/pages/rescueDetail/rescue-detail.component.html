@@ -76,7 +76,9 @@
                     <div class="weui-cell__bd">
                         <p>地址</p>
                     </div>
-                    <div class="weui-cell__ft site_address">{{workSheetDetail?.site_info.site_address}}</div>
+                    <div class="weui-cell__ft site_address">
+                        <a href="https://m.amap.com/navigation/carmap/saddr={{longitude}},{{latitude}},%E8%B5%B7%E7%82%B9&daddr={{workSheetDetail?.site_info.longitude_num}},{{workSheetDetail?.site_info.latitude_num}},%E7%BB%88%E7%82%B9&sort=dist">{{workSheetDetail?.site_info.site_address}}</a>
+                    </div>
                 </div>
             </div>
         </div>
