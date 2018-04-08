@@ -72,6 +72,9 @@ import { RescueComponent } from '../pages/rescue/rescue.component';
 import { RescueDetailComponent } from '../pages/rescueDetail/rescue-detail.component';
 import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 import { RescueSiteComponent } from '../pages/rescueSite/rescue-site.component';
+import { IllegalComponent } from '../pages/illegal/illegal';
+import { InsuranceComponent } from '../pages/insurance/insurance';
+import { IllegalDetailComponent } from '../pages/illegalDetail/illegalDetail';
 
 @NgModule({
     declarations : [
@@ -112,7 +115,10 @@ import { RescueSiteComponent } from '../pages/rescueSite/rescue-site.component';
         RescueComponent,
         RescueDetailComponent,
         RescueRankComponent,
-        RescueSiteComponent
+        RescueSiteComponent,
+        IllegalComponent,
+        InsuranceComponent,
+        IllegalDetailComponent
     ],
     imports      : [
         AppRoutingModule,

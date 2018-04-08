@@ -114,19 +114,22 @@ export class MapComponent implements OnInit {
             gcoord.WGS84,                       // 当前坐标系
             gcoord.GCJ02                        // 目标坐标系
         );
-        this.longitude = result[0];
-        this.latitude = result[1];
+        this.longitude = parseFloat(parseFloat(result[0]).toFixed(6));
+        this.latitude = parseFloat(parseFloat(result[1]).toFixed(6));
+        //alert(this.longitude);
+        //alert(this.latitude);
     }
 
     getLocation(callback?) {
+        let self = this;
         this.wxService.onGetLocation({
             type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: (res) => {
-                this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                this.transformLocation();
+                self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                self.transformLocation();
                 if( callback ){
-                    callback(this.latitude, this.longitude);
+                    callback(self.latitude, self.longitude);
                 }else{
                     this.onReady();
                 }

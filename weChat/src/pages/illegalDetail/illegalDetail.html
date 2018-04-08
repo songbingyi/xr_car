@@ -1,0 +1,89 @@
+
+<!--
+car_id	车辆ID
+province_code_info	province_code_id	省份ID
+                    province_code_name	省份名称
+                    region_info	        region_id
+		                                region_name
+plate_no	车牌号码
+
+
+illegal_count	违章数
+illegal_total_price	违章罚金
+illegal_total_score	违章计分
+
+
+illegal_time	违章时间
+illegal_address	违章地点
+illegal_content	违章原因
+illegal_price	违章罚金
+illegal_score	违章计分
+illegal_id	违章ID
+-->
+<div class="illegal-detail">
+    <div class="status-bar">
+        <span>车牌号</span>
+        <span class="plate_no">{{(illegal?.car_info?.province_code_info?.province_code_name + illegal?.car_info?.plate_no)  | uppercase | plateFormat}}</span>
+    </div>
+    <div class="overview">
+        <div class="overview-item">
+            <p class="text-warning">{{illegal?.car_illegal_dashboard?.illegal_count || 0}}条</p>
+            <p>未处理</p>
+        </div>
+        <div class="overview-item">
+            <p class="text-warning">{{illegal?.car_illegal_dashboard?.illegal_total_score || 0}}分</p>
+            <p>总计分</p>
+        </div>
+        <div class="overview-item">
+            <p class="text-warning">{{illegal?.car_illegal_dashboard?.illegal_total_price || 0}}元</p>
+            <p>总罚金</p>
+        </div>
+    </div>
+    <div class="illegal-list">
+        <div class="illegal-list-empty" *ngIf="loaded && illegal && illegal.car_illegal_list && illegal.car_illegal_list.length===0">
+            <img src="/assets/images/illegal/empty.png" />
+            <p>恭喜您！</p>
+            <p>您的车辆没有非现场（电子眼）违章记录！</p>
+        </div>
+        <div class="car_illegal_list" *ngIf="loaded && illegal && illegal.car_illegal_list && illegal.car_illegal_list.length > 0">
+            <div class="weui-cells" *ngFor="let car_illegal of illegal.car_illegal_list; index as index">
+                <!--<div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>客服信息</p>
+                    </div>
+                    <div class="weui-cell__ft"><span> </span></div>
+                </div>-->
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>时间</p>
+                    </div>
+                    <div class="weui-cell__ft">{{car_illegal?.illegal_time}}</div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>地点</p>
+                    </div>
+                    <div class="weui-cell__ft">{{car_illegal?.illegal_address}}</div>
+                </div>
+                <div class="weui-cell weui-cell-small alert-table" style="height: auto">
+                    <div class="weui-cell__bd">
+                        <p>违章原因</p>
+                    </div>
+                    <div class="weui-cell__ft car_illegal_content">
+                        <span>{{car_illegal?.illegal_content}}</span>
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell-small">
+                    <div class="weui-cell__bd">
+                        <p>处罚情况</p>
+                    </div>
+                    <div class="weui-cell__ft text-danger"><span [hidden]="car_illegal.illegal_price === '0.00'">罚款{{car_illegal.illegal_price}}元</span> <span [hidden]="car_illegal.illegal_score === '0'">记{{car_illegal.illegal_score}}分</span></div>
+                </div>
+            </div>
+            <div class="pagination">
+                <span>已显示{{illegal.car_illegal_list.length}}/{{illegal.car_illegal_list.length}}条</span>
+            </div>
+        </div>
+
+    </div>
+</div>

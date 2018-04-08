@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 // import {PageNotFoundComponent} from './not-found.component';
-import {IndexComponent} from '../pages/index/index';
+import {IndexComponent} from '../pages/index/';
 
 import { AuthGuard } from '../providers/auth-guard.service';
 
@@ -25,6 +25,9 @@ import {NotifyDetailComponent} from '../pages/notify/detail/detail';
 import {CertificateComponent} from '../pages/certificate/certificate';
 import {LicenseComponent} from '../pages/license/license';
 import {ReviewComponent} from '../pages/review/review';
+import {IllegalComponent} from '../pages/illegal/illegal';
+import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
+import {InsuranceComponent} from '../pages/insurance/insurance';
 
 import {OrdersComponent} from '../pages/orders/orders';
 import {OrderDetailComponent} from '../pages/orders/orderDetail/orderDetail';
@@ -54,6 +57,9 @@ const appRoutes: Routes = [
     {path : 'service_operation_certificate', component : CertificateComponent, canActivate: [AuthGuard]},
     {path : 'service_driving_license', component : LicenseComponent, canActivate: [AuthGuard]},
     {path : 'service_audit_car', component : ReviewComponent, canActivate: [AuthGuard]},
+    {path : 'service_car_regulations', component : IllegalComponent, canActivate: [AuthGuard]},
+    {path : 'service_car_regulations/:id', component : IllegalDetailComponent, canActivate: [AuthGuard]},
+    {path : 'service_car_insurance', component : InsuranceComponent, canActivate: [AuthGuard]},
     {path : 'detail/:id', component : DetailComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent, canActivate: [AuthGuard]},

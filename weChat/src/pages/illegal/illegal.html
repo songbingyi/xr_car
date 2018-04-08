@@ -1,0 +1,37 @@
+<div class="illegal">
+    <div class="weui-cells">
+
+        <a class="weui-cell weui-cell_access" href="javascript:;" *ngFor="let car of cars; index as index"  (click)="goDetail(car)">
+            <div class="weui-cell__hd">
+                <img src="/assets/images/illegal/car.png" alt="" style="width:40px;margin-right:5px;display:block">
+            </div>
+            <div class="weui-cell__bd">
+                <p>{{car.province_code_info.province_code_name}}{{car.plate_no}}</p>
+            </div>
+            <div class="weui-cell__ft"><span>查询</span></div>
+        </a>
+    </div>
+
+    <div [hidden]="shouldReservationBox">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-dialog" style="opacity: 1;visibility: visible;">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">填写信息</strong></div>
+            <div class="weui-dialog__bd" [hidden]="!identityAuth">请先补全个人信息！</div>
+            <div class="weui-dialog__bd" [hidden]="identityAuth">请先补全个人和车辆信息！</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="goToUser()">补充信息</a>
+            </div>
+        </div>
+    </div>
+
+    <div [hidden]="shouldLimitTip">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-dialog" style="opacity: 1;visibility: visible;">
+            <div class="weui-dialog__hd"> </div>
+            <div class="weui-dialog__bd">您今日的查询次数已达上限，请明日再查询</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="ok()">我知道了</a>
+            </div>
+        </div>
+    </div>
+</div>

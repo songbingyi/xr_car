@@ -44,7 +44,8 @@ let apiBase : IDictionary<string> = {
     'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
     'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
     'getWorkSiteList'           : 'rescue/work_sheet/getWorkSiteList',
-    'operatorWorkSheet'         : 'rescue/work_sheet/operatorWorkSheet'
+    'operatorWorkSheet'         : 'rescue/work_sheet/operatorWorkSheet',
+    'getCarIllegalInfo'         : 'illegal/car_illegal/getCarIllegalInfo'
 };
 
 export {apiBase};

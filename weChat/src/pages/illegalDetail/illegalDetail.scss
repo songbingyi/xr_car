@@ -1,0 +1,101 @@
+.illegal-detail {
+    background:#EFEFF4;
+    .left {
+        float:left;
+    }
+    .right {
+        float:right;
+    }
+    .status-bar {
+        padding:0 20px;
+        height:60px;
+        line-height:60px;
+        font-size:15px;
+        color:#888888;
+        position: relative;
+        margin-bottom:5px;
+        .plate_no {
+            position: absolute;
+            left:0;
+            top:0;
+            width:100%;
+            font-size:24px;
+            color:#1970A6;
+            text-align: center;
+        }
+    }
+    .overview {
+        padding:0 20px;
+        display: flex;
+        background: #FFFFFF;
+        text-align: center;
+        height:75px;
+        color:#888888;
+        font-size:15px;
+        .overview-item {
+            margin-top: 7px;
+            flex:1;
+            .text-warning {
+                font-size:23px;
+            }
+        }
+    }
+    .weui-cells {
+        margin-top: 5px;
+        color:#888888;
+        font-size:14px;
+        &:before {
+            border:none;
+        }
+        &:after {
+            border:none;
+        }
+        .weui-cell:before {
+            border:none;
+        }
+        .weui-cell__ft span {
+            margin-left:10px;
+        }
+    }
+    .illegal-list-empty {
+        color:#888888;
+        font-size:15px;
+        text-align: center;
+        margin-top:90px;
+        padding:0 20px;
+        img {
+            text-align: center;
+            width:100px;
+            height:100px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .car_illegal_list {
+        /*padding-bottom: 20px;*/
+    }
+    .alert-table {
+        display: table;
+        width: 100%;
+        .weui-cell__bd, .weui-cell__ft {
+            display: table-cell;
+        }
+        .weui-cell__ft .span {
+            text-align: right;
+        }
+    }
+    .car_illegal_content {
+        width: 80%;
+        line-height: normal;
+        a {
+            color:#1970A6;
+        }
+    }
+
+    .pagination {
+        height:65px;
+        line-height: 65px;
+        text-align: center;
+        color:#1970A6;
+    }
+}

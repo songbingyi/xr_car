@@ -40,7 +40,8 @@ let mockBase : IDictionary<string> = {
     'getMemberMessageDashboard' : '35.getMemberMessageDashboard.mock.json',
     'getMemberMessageList'      : '36.getMemberMessageList.mock.json',
     'getMemberMessageDetail'    : '37.getMemberMessageDetail.mock.json',
-    'getMemberMessageTypeList'  : '38.getMemberMessageTypeList.mock.json'
+    'getMemberMessageTypeList'  : '38.getMemberMessageTypeList.mock.json',
+    'getCarIllegalInfo'         : '45.getCarIllegalInfo.mock.json'
 };
 
 export {mockBase};
