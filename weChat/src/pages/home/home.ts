@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
     }
 
     goModule(serviceType) {
-        if (serviceType.service_type_status === '2') {
+        if (serviceType.service_type_status === '1') {
             this.localStorage.setObject(serviceType.service_type_key, serviceType);
             this.router.navigate([serviceType.service_type_key]);
         }

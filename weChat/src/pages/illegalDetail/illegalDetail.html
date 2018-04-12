@@ -77,7 +77,7 @@ illegal_id	违章ID
                     <div class="weui-cell__bd">
                         <p>处罚情况</p>
                     </div>
-                    <div class="weui-cell__ft text-danger"><span [hidden]="car_illegal.illegal_price === '0.00'">罚款{{car_illegal.illegal_price}}元</span> <span [hidden]="car_illegal.illegal_score === '0'">记{{car_illegal.illegal_score}}分</span></div>
+                    <div class="weui-cell__ft text-danger"><span>罚款{{car_illegal?.illegal_price}}元</span> <span>记{{car_illegal?.illegal_score}}分</span></div>
                 </div>
             </div>
             <div class="pagination">

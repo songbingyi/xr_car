@@ -96,11 +96,14 @@ export class IllegalComponent implements OnInit {
                     ]
                 }
             }
-        };*/
+        };
+        this.illegal = illegals.data.car_info;
+        this.localStorage.setObject('carIllegalInfo', this.illegal);
+        this.router.navigate(['/service_car_regulations', car.car_id]);*/
         this.baseService.post('getCarIllegalInfo', {car_id:car.car_id})
             .subscribe(illegal => {
                 if (illegal.status.succeed === '1') {
-                    this.illegal = illegal.data.car_info;
+                    this.illegal = illegal.data;
                     this.localStorage.setObject('carIllegalInfo', this.illegal);
                     // this.shouldLimitTip = false;
                     this.router.navigate(['/service_car_regulations', car.car_id]);

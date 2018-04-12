@@ -10,14 +10,14 @@ import {LocalStorage} from '../../providers/localStorage';
 })
 export class IllegalDetailComponent implements OnInit {
 
-    illegal = {};
+    illegal:any;
     errorMessage: any;
     loaded: Boolean = false;
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage) {
         //let car_id = this.route.snapshot.paramMap.get('id');
         let carIllegalInfo = this.localStorage.getObject('carIllegalInfo');
-        this.illegal = carIllegalInfo && carIllegalInfo.data ? (carIllegalInfo.data.car_info || {}) : {};
+        this.illegal = carIllegalInfo ? (carIllegalInfo || {}) : {};
         //console.log(this.illegal);
         this.loaded = true;
         this.localStorage.remove('carIllegalInfo');
