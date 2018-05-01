@@ -64,6 +64,12 @@ export class BaseProvider {
             .catch(this.handleError);
     }
 
+    pureGet(url : any){
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     setMemberId(data) {
         let member_id = this.authService.getMemberId();
         if (member_id) {

@@ -37,12 +37,12 @@
                     <div class="weui-cell__bd">
                         <p>故障地址</p>
                     </div>
-                    <div class="weui-cell__ft site_address" *ngIf="longitude && latitude">
+                    <div class="weui-cell__ft site_address">
                         <a href="https://m.amap.com/navigation/carmap/saddr={{longitude}},{{latitude}},%E8%B5%B7%E7%82%B9&daddr={{workSheetDetail?.work_sheet_member_info.longitude_num}},{{workSheetDetail?.work_sheet_member_info.latitude_num}},%E7%BB%88%E7%82%B9&sort=dist">{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</a>
                     </div>
-                    <div class="weui-cell__ft site_address" *ngIf="!longitude || !latitude">
+                    <!--<div class="weui-cell__ft site_address" *ngIf="!longitude || !latitude">
                         <span>{{workSheetDetail?.work_sheet_member_info.work_sheet_address}}</span>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

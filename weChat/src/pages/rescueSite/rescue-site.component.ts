@@ -47,8 +47,8 @@ export class RescueSiteComponent implements OnInit {
 
     wxs:any;
 
-    latitude:any;
-    longitude:any;
+    latitude:any = null;
+    longitude:any = null;
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService, private zone: NgZone) {
         let id = this.route.snapshot.paramMap.get('id');
@@ -64,6 +64,20 @@ export class RescueSiteComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    getLocationBySelf() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                //do_something(position.coords.latitude, position.coords.longitude);
+                if (!this.latitude && !this.longitude) {
+                    this.latitude = position.coords.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    this.longitude = position.coords.longitude; // 经度，浮点数，范围为180 ~ -180。
+                }
+                console.log(this.latitude);
+                console.log(this.longitude);
+            });
+        }
     }
 
     getLocation() {

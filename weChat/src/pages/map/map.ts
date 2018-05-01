@@ -109,6 +109,37 @@ export class MapComponent implements OnInit {
     transformLocation() {
         // this.longitude = 108.94075;
         // this.latitude = 34.341568;
+        //http://restapi.amap.com/v3/assistant/coordinate/convert?locations=116.481499,39.990475&coordsys=gps&output=josn&key=74ce9b3c85717bd4428faff1c89462b1
+        /*let result = gcoord.transform(
+            [this.longitude, this.latitude],    // 经纬度坐标
+            gcoord.WGS84,                       // 当前坐标系
+            gcoord.GCJ02                        // 目标坐标系
+        );*/
+        let url = 'http://restapi.amap.com/v3/assistant/coordinate/convert?locations=' + this.longitude + ','+ this.latitude + '&coordsys=gps&output=josn&key=74ce9b3c85717bd4428faff1c89462b1';
+        this.baseProvider.pureGet(url).subscribe(position => {
+            try {
+                let positions = position.locations.split(",");
+                this.longitude = positions[0];
+                this.latitude = positions[1];
+                //console.log(this.longitude);
+                //console.log(this.latitude);
+            } catch(e) {
+                this.transformLocationNative();
+            }
+
+        },error => {
+            this.transformLocationNative();
+        });
+        /*console.log(this.longitude);
+        console.log(this.latitude);
+        console.log("-------------------------");
+        this.longitude = parseFloat(parseFloat(result[0]).toFixed(6));
+        this.latitude = parseFloat(parseFloat(result[1]).toFixed(6));
+        console.log(this.longitude);
+        console.log(this.latitude);*/
+    }
+
+    transformLocationNative(){
         let result = gcoord.transform(
             [this.longitude, this.latitude],    // 经纬度坐标
             gcoord.WGS84,                       // 当前坐标系
@@ -116,8 +147,6 @@ export class MapComponent implements OnInit {
         );
         this.longitude = parseFloat(parseFloat(result[0]).toFixed(6));
         this.latitude = parseFloat(parseFloat(result[1]).toFixed(6));
-        //alert(this.longitude);
-        //alert(this.latitude);
     }
 
     getLocation(callback?) {

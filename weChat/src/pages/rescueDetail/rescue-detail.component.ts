@@ -47,8 +47,8 @@ export class RescueDetailComponent implements OnInit {
 
     wxs:any;
 
-    latitude:any;
-    longitude:any;
+    latitude:any = null;
+    longitude:any = null;
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService, private zone: NgZone) {
         let id = this.route.snapshot.paramMap.get('id');
