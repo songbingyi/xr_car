@@ -3,6 +3,7 @@ import {WXSDKService} from '../../providers/wx.sdk.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseProvider} from '../../providers/http/base.http';
 import {PickerService} from 'ngx-weui/picker';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-rescue-site',
@@ -50,7 +51,7 @@ export class RescueSiteComponent implements OnInit {
     latitude:any = null;
     longitude:any = null;
 
-    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService, private zone: NgZone) {
+    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private pickerService: PickerService, private wxService: WXSDKService, private zone: NgZone, private sanitizer:DomSanitizer) {
         let id = this.route.snapshot.paramMap.get('id');
         // this.route.queryParamMap.map(params => { console.log(params.get('ignore')); this.ignore = !!params.get('ignore'); });
         // console.log(this.route.snapshot.queryParams['ignore']);
@@ -64,6 +65,10 @@ export class RescueSiteComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    sanitize(url:string){
+        return this.sanitizer.bypassSecurityTrustUrl(url);
     }
 
     getLocationBySelf() {

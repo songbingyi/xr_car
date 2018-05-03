@@ -92,7 +92,7 @@ export class MapComponent implements OnInit {
     mapMarkers:any = [];
 
     constructor(private el: ElementRef, private zone: NgZone, private baseProvider: BaseProvider, private wxService: WXSDKService, private message: MessageService) {
-        this.transformLocation();
+        //this.transformLocation();
         this.wxs = this.wxService.init();
         this.message.getMessage().subscribe(msg => {
             if(msg.type === 'refreshMap'){
@@ -152,11 +152,11 @@ export class MapComponent implements OnInit {
     getLocation(callback?) {
         let self = this;
         this.wxService.onGetLocation({
-            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: (res) => {
                 self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                self.transformLocation();
+                //self.transformLocation();
                 if( callback ){
                     callback(self.latitude, self.longitude);
                 }else{
