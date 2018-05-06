@@ -12,11 +12,11 @@ import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 
 @Component({
-    selector    : 'app-user-info',
-    templateUrl : './userInfo.html',
-    styleUrls   : ['./userInfo.scss']
+    selector    : 'app-user-seller',
+    templateUrl : './userSeller.html',
+    styleUrls   : ['./userSeller.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserSellerComponent implements OnInit {
     hasPhone : boolean = false;
     isModifying: boolean = false;
     verifyCode: any;

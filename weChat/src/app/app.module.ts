@@ -23,6 +23,7 @@ import { UserComponent } from '../pages/user/user';
 
 import { AppRoutingModule } from '../routes/routes';
 import { UserInfoComponent } from '../pages/user/userInfo/userInfo';
+import { UserSellerComponent } from '../pages/user/userSeller/userSeller';
 import { CarInfoComponent } from '../pages/user/carInfo/carInfo';
 import { ContactComponent } from '../pages/user/contact/contact';
 import { AboutComponent } from '../pages/user/about/about';
@@ -85,6 +86,7 @@ import { IllegalDetailComponent } from '../pages/illegalDetail/illegalDetail';
         UserComponent,
         IndexComponent,
         UserInfoComponent,
+        UserSellerComponent,
         CarInfoComponent,
         ContactComponent,
         AboutComponent,

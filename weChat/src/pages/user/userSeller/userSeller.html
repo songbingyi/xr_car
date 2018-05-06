@@ -1,0 +1,60 @@
+<div class="user-info">
+
+    <!---展示-->
+    <div class="has-phone weui-cell-special">
+        <!--<div class="weui-cells__title-empty"></div>-->
+        <div class="weui-cells__title-empty"></div>
+        <div class="weui-cells">
+            <div class="weui-cell special-cell">
+                <div class="weui-cell__bd">
+                    <p>姓名</p>
+                </div>
+                <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>身份证号</p>
+                </div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>手机号码</p>
+                </div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
+            </div>
+        </div>
+
+        <div class="weui-cells__title more-info-text">注：请您（填写）补全以下信息</div>
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd">
+                    <p>从业时长</p>
+                </div>
+                <div class="weui-cell__ft">3 年</div>
+            </div>
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd">
+                    <p>所在地区</p>
+                </div>
+                <div class="weui-cell__ft"><span>陕西</span><span>西安</span></div>
+            </div>
+        </div>
+
+        <div class="weui-cells__title-empty"></div>
+        <label for="weuiAgree" class="weui-agree">
+            <input id="weuiAgree" type="checkbox" [formControl]="userAgree" class="weui-agree__checkbox">
+            <span class="weui-agree__text">
+                已阅读并同意<a href="javascript:void(0);">《销售员协议》</a>
+            </span>
+        </label>
+
+
+    </div>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <span>{{errorMessage}}</span>
+    </div>
+
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" (click)="save()">保存</a>
+</div>

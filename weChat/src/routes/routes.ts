@@ -15,6 +15,7 @@ import {UserComponent} from '../pages/user/user';
 import {AboutComponent} from '../pages/user/about/about';
 import {ContactComponent} from '../pages/user/contact/contact';
 import {UserInfoComponent} from '../pages/user/userInfo/userInfo';
+import {UserSellerComponent} from '../pages/user/userSeller/userSeller';
 import {CarInfoComponent} from '../pages/user/carInfo/carInfo';
 import {CarListComponent} from '../pages/user/carList/carList';
 
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
     {path : 'about', component : AboutComponent, canActivate: [AuthGuard]},
     {path : 'contact', component : ContactComponent, canActivate: [AuthGuard]},
     {path : 'userInfo', component : UserInfoComponent, canActivate: [AuthGuard]},
+    {path : 'userSeller', component : UserSellerComponent, canActivate: [AuthGuard]},
     {path : 'carInfo', component : CarInfoComponent, canActivate: [AuthGuard]},
     {path : 'carList', component : CarListComponent, canActivate: [AuthGuard]},
     {path : 'rescue', component : RescueComponent, canActivate: [AuthGuard]},

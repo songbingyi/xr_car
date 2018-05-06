@@ -1,5 +1,5 @@
 <div class="user-info">
-    <div class="top-tips">
+    <div class="top-tips" [hidden]="identityAuthStatus">
         <p [hidden]="identityAuthStatus || identityAuth">
             姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
@@ -7,6 +7,8 @@
             请先添加个人信息！<br/>姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
     </div>
+
+    <!--新建-->
     <form [formGroup]="userInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">
         <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
             <div class="weui-cell">
@@ -44,10 +46,64 @@
                 </div>
             </div>
         </div>
+
+        <div class="weui-cells__title" [hidden]="identityAuthStatus">选填资料</div>
+        <div class="weui-cells weui-cells_form" [hidden]="identityAuthStatus">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" [formControl]="companyName" placeholder="{{companyName.invalid && (companyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">职位</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" [formControl]="position" placeholder="{{position.invalid && (position.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">公司地址</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" [formControl]="companyAdd" placeholder="{{companyAdd.invalid && (companyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" [formControl]="email" placeholder="{{email.invalid && (email.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="weui-cells__title">销售相关</div>
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd">
+                    <p>从业时长</p>
+                </div>
+                <div class="weui-cell__ft">3 年</div>
+            </div>
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd">
+                    <p>所在地区</p>
+                </div>
+                <div class="weui-cell__ft"><span>陕西</span><span>西安</span></div>
+            </div>
+        </div>-->
+
+        <div class="weui-cells__title-empty"></div>
+        <label for="weuiAgree" class="weui-agree">
+            <input id="weuiAgree" type="checkbox" [formControl]="userAgree" class="weui-agree__checkbox">
+            <span class="weui-agree__text">
+                已阅读并同意<a href="javascript:void(0);">《轩仁车务用户协议》</a>
+            </span>
+        </label>
     </form>
 
+    <!---展示-->
     <div class="has-phone weui-cell-special" [hidden]="!identityAuthStatus || isModifying">
         <!--<div class="weui-cells__title-empty"></div>-->
+        <div class="weui-cells__title">基本资料</div>
         <div class="weui-cells">
             <div class="weui-cell special-cell">
                 <div class="weui-cell__bd">
@@ -68,11 +124,72 @@
                 <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
             </div>
         </div>
+
+        <div class="weui-cells__title">扩展资料</div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>公司名称</p>
+                </div>
+                <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>职位</p>
+                </div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>公司地址</p>
+                </div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>邮箱</p>
+                </div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
+            </div>
+        </div>
+
+        <div class="weui-cells__title">销售相关</div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>从业时长</p>
+                </div>
+                <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>所在地区</p>
+                </div>
+                <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
+            </div>
+        </div>
     </div>
 
+    <!--编辑-->
     <div class="modify-phone" [hidden]="!isModifying">
         <form [formGroup]="updateForm" (ngSubmit)="update()" [ngClass]="{'ng-from-error':fromError}">
-            <!--<div class="weui-cells__title-empty"></div>-->
+            <div class="weui-cells__title-empty"></div>
+            <div class="weui-cells weui-cell-special">
+                <div class="weui-cell special-cell">
+                    <div class="weui-cell__bd">
+                        <p>姓名</p>
+                    </div>
+                    <div class="weui-cell__ft"><span>{{memberDetail?.member_info.real_name}}</span></div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>身份证号</p>
+                    </div>
+                    <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title-empty"></div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_vcode">
                     <div class="weui-cell__hd">
@@ -93,6 +210,50 @@
                     </div>
                 </div>
             </div>
+
+            <div class="weui-cells__title">选填资料</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" [formControl]="companyName" placeholder="{{companyName.invalid && (companyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">职位</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" [formControl]="position" placeholder="{{position.invalid && (position.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">公司地址</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" [formControl]="companyAdd" placeholder="{{companyAdd.invalid && (companyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" [formControl]="email" placeholder="{{email.invalid && (email.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title">销售相关</div>
+            <div class="weui-cells">
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd">
+                        <p>从业时长</p>
+                    </div>
+                    <div class="weui-cell__ft">3 年</div>
+                </div>
+                <div class="weui-cell weui-cell_access">
+                    <div class="weui-cell__bd">
+                        <p>所在地区</p>
+                    </div>
+                    <div class="weui-cell__ft"><span>陕西</span><span>西安</span></div>
+                </div>
+            </div>
         </form>
     </div>
 
@@ -100,7 +261,7 @@
         <span>{{errorMessage}}</span>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty||submitting}" [hidden]="identityAuthStatus" (click)="save()">确定</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">确定</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改手机号</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty||submitting}" [hidden]="identityAuthStatus" (click)="save()">确定</a><!--||!userAgree.value-->
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">保存</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改信息</a>
 </div>

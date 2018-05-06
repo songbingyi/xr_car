@@ -42,6 +42,13 @@ export class CustomValidators {
         return map;
     }
 
+    public isEmail(input: FormControl){
+        let value = input.value;
+        if(value){
+            return Validators.email(input);
+        }
+    }
+
     public isUploaded(map: any) {
         for (let key in map) {
             if (map.hasOwnProperty(key) && !map[key]) {

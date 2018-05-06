@@ -1,4 +1,25 @@
 @import "../../../assets/styles/variables";
+@import "./contact";
+
+.about {
+    padding-bottom: 20px;
+    background: #EFEFF4;
+    .weui-cells__title-empty {
+        height:18px;
+    }
+    .weui-article {
+        background:#FFF;
+        font-size:13px;
+        color:#999999;
+        padding-bottom: 1px;
+        h2 {
+            color:#222222;
+        }
+        section {
+            padding-bottom: 0;
+        }
+    }
+}
 
 .user-header {
     background:$bgWhite;
