@@ -1,5 +1,7 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import {Component, OnInit, NgZone, ViewChild} from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+
+import { PopupComponent } from "ngx-weui/popup";
 
 import { LocalStorage } from '../../../providers/localStorage';
 import { Md5 } from '../../../providers/md5/md5';
@@ -20,6 +22,8 @@ export class UserInfoComponent implements OnInit {
     hasPhone : boolean = false;
     isModifying: boolean = false;
     verifyCode: any;
+
+    @ViewChild('full') fullPopup: PopupComponent;
 
     timeOut = 60;
     timing: boolean = false;
@@ -104,10 +108,10 @@ export class UserInfoComponent implements OnInit {
         userId: this.userId,
         phone: this.phone,
         vcode: this.vcode,
-        companyName: this.companyName,
-        position: this.position,
-        companyAdd: this.companyAdd,
-        email: this.email
+        companyName  : this.companyName,
+        position     : this.position,
+        companyAdd   : this.companyAdd,
+        email        : this.email
     });
 
     updateForm: FormGroup = this.builder.group({
@@ -135,7 +139,7 @@ export class UserInfoComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data;
-                    this.identityAuthStatus = false;//this.memberDetail.member_auth_info.identity_auth_status !== '0';
+                    this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
@@ -201,10 +205,14 @@ export class UserInfoComponent implements OnInit {
         this.submitting = true;
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
-            'mobile' : this.userInfoForm.value.phone,
-            'real_name'  : this.userInfoForm.value.username,
-            'id_number'  : this.userInfoForm.value.userId,
-            'verify_code' : Md5.hashStr(this.verifyCode.code + config.salt_key)
+            'mobile'         : this.userInfoForm.value.phone,
+            'real_name'      : this.userInfoForm.value.username,
+            'id_number'      : this.userInfoForm.value.userId,
+            'verify_code'    : Md5.hashStr(this.verifyCode.code + config.salt_key),
+            'company_name'   : this.userInfoForm.value.companyName,
+            'job_position'   : this.userInfoForm.value.position,
+            'company_address': this.userInfoForm.value.companyAdd,
+            'email'          : this.userInfoForm.value.email
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
@@ -217,6 +225,10 @@ export class UserInfoComponent implements OnInit {
                         this.userInfoForm.controls.username.setValue('');
                         this.userInfoForm.controls.userId.setValue('');
                         this.userInfoForm.controls.vcode.setValue('');
+                        this.userInfoForm.controls.companyName.setValue('');
+                        this.userInfoForm.controls.position.setValue('');
+                        this.userInfoForm.controls.companyAdd.setValue('');
+                        this.userInfoForm.controls.email.setValue('');
                     }
                 } else {
                     if(result.status.error_code === '1012'){
@@ -263,11 +275,23 @@ export class UserInfoComponent implements OnInit {
             return;
         }
         this.submitting = true;
-
+        /*console.log({
+            // 'member_id' : '1',
+            'mobile' : this.updateForm.value.phone,
+            'verify_code' : Md5.hashStr(this.verifyCode.code + config.salt_key),
+            'company_name'   : this.updateForm.value.companyName,
+            'job_position'   : this.updateForm.value.position,
+            'company_address': this.updateForm.value.companyAdd,
+            'email'          : this.updateForm.value.email
+        });*/
         this.baseService.post('editMemberInfo', {
             // 'member_id' : '1',
             'mobile' : this.updateForm.value.phone,
-            'verify_code' : Md5.hashStr(this.verifyCode.code + config.salt_key)
+            'verify_code' : Md5.hashStr(this.verifyCode.code + config.salt_key),
+            'company_name'   : this.updateForm.value.companyName,
+            'job_position'   : this.updateForm.value.position,
+            'company_address': this.updateForm.value.companyAdd,
+            'email'          : this.updateForm.value.email
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
@@ -280,6 +304,11 @@ export class UserInfoComponent implements OnInit {
                     this.isModifying = false;
                     this.updateForm.controls.phone.setValue('');
                     this.updateForm.controls.vcode.setValue('');
+                    this.updateForm.controls.companyName.setValue('');
+                    this.updateForm.controls.position.setValue('');
+                    this.updateForm.controls.companyAdd.setValue('');
+                    this.updateForm.controls.email.setValue('');
+                    this.updateForm.reset();
                     this.getCarAndMemberInfo();
                 } else {
                     if(result.status.error_code === '1012'){
@@ -289,6 +318,7 @@ export class UserInfoComponent implements OnInit {
                     }
                 }
                 this.submitting = false;
+                //this.updateForm.dirty = false;
             }, error => this.errorMessage = <any>error);
     }
 

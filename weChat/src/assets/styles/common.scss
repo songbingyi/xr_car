@@ -81,7 +81,7 @@ ul, li {
 }
 
 .weui-btn_passive {
-    margin-top:75px;
+    margin-top:55px;
 }
 
 .btn-group {
@@ -393,5 +393,36 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
             border : 1px solid rgba(0, 0, 0, 0.2);
             color  : rgba(0, 0, 0, 0.2);
         }
+    }
+}
+
+
+.arguments {
+    padding:15px;
+    background:#FFF;
+    font-size:13px;
+    color:#4A4A4A;
+    h4 {
+        font-size:17px;
+        color:#000000;
+        padding-top:25px;
+        text-align: center;
+    }
+    .header-tips {
+        padding-top:17px;
+    }
+    .chapter {
+        color:#000000;
+        padding:25px;
+        line-height:normal;
+    }
+    p {
+        padding-bottom:10px;
+        line-height:22px;
+    }
+    .button-sp-area {
+        margin: 0 auto;
+        padding: 15px 0;
+        width: 60%;
     }
 }
