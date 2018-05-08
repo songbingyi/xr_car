@@ -48,6 +48,7 @@ import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
 import { KeysPipe } from '../pipes/keys';
 import { DistancePipe } from '../pipes/distance';
 import { PlateFormatPipe } from '../pipes/plate.format';
+import { StarHiddenPipe } from '../pipes/star.hidden';
 
 import { FocusBlurDirective } from '../directives/focus.blur';
 
@@ -107,6 +108,7 @@ import { IllegalDetailComponent } from '../pages/illegalDetail/illegalDetail';
         KeysPipe,
         DistancePipe,
         PlateFormatPipe,
+        StarHiddenPipe,
 
         NotifyComponent,
         CategoryComponent,
