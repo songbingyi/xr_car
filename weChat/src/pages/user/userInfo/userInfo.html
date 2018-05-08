@@ -1,11 +1,12 @@
 <div class="user-info">
     <div class="top-tips" [hidden]="identityAuthStatus">
-        <p [hidden]="identityAuthStatus || identityAuth">
+        <!-- <p [hidden]="identityAuthStatus || identityAuth">
             姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
         </p>
         <p [hidden]="identityAuthStatus || !identityAuth">
             请先添加个人信息！<br/>姓名与身份证号是识别您与绑定的车辆是否相关的有效信息，且添加成功后不可修改，请务必确认填写正确后再完成添加！
-        </p>
+        </p> -->
+        <p>注：姓名要与行驶证车主一致，否则无法绑定车辆；姓名和身份证号填写后不可修改！</p>
     </div>
 
     <!--新建-->
@@ -32,7 +33,7 @@
                     <label class="weui-label">手机</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" [formControl]="phone" placeholder="{{phone.invalid && (phone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}" appFocusBlur />
+                    <input class="weui-input phone-number" type="number" [formControl]="phone" placeholder="{{phone.invalid && (phone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}" appFocusBlur />
                 </div>
                 <div class="weui-cell__ft">
                     <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
@@ -115,18 +116,18 @@
                 <div class="weui-cell__bd">
                     <p>身份证号</p>
                 </div>
-                <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.id_number | starHidden:'3,4'}}</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>手机号码</p>
                 </div>
-                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile}}</div>
+                <div class="weui-cell__ft">{{memberDetail?.member_info.mobile | starHidden:'3,4'}}</div>
             </div>
         </div>
 
         <div class="weui-cells__title">扩展资料</div>
-        <div class="weui-cells">
+        <div class="weui-cells extend-cells">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>公司名称</p>
@@ -185,7 +186,7 @@
                     <div class="weui-cell__bd">
                         <p>身份证号</p>
                     </div>
-                    <div class="weui-cell__ft">{{memberDetail?.member_info.id_number}}</div>
+                    <div class="weui-cell__ft">{{memberDetail?.member_info.id_number | starHidden:'3,4'}}</div>
                 </div>
             </div>
 
@@ -196,7 +197,7 @@
                         <label class="weui-label">手机</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" [formControl]="updatePhone" placeholder="{{updatePhone.invalid && (updatePhone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}">
+                        <input class="weui-input phone-number" type="number" [formControl]="updatePhone" placeholder="{{updatePhone.invalid && (updatePhone.dirty || errorMessage) ? '请填写手机号！' : '请输入手机号码'}}">
                     </div>
                     <div class="weui-cell__ft">
                         <a href="javascript:;" class="weui-vcode-btn" (click)="getVCode();" [hidden]="timing">获取验证码</a>
@@ -206,7 +207,7 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}"/>
+                        <input class="weui-input" type="text" pattern="[0-9]*" [formControl]="updateVcode" placeholder="{{updateVcode.invalid && (updateVcode.dirty || errorMessage) ? '请填写验证码！' : '请输入验证码'}}" />
                     </div>
                 </div>
             </div>
@@ -261,9 +262,10 @@
         <span>{{errorMessage}}</span>
     </div>
 
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty||submitting}" [hidden]="identityAuthStatus" (click)="save()">确定</a><!--||!userAgree.value-->
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':userInfoForm.invalid&&userInfoForm.dirty||submitting}" [hidden]="identityAuthStatus" (click)="save()">确定</a>
+    <!--||!userAgree.value-->
     <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || !isModifying" (click)="update()">保存</a>
-    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || isModifying" (click)="isModifying=!isModifying">修改信息</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" [ngClass]="{'disabled':updateForm.invalid&&updateForm.dirty||submitting}" [hidden]="!identityAuthStatus || isModifying" (click)="modify()">修改信息</a>
 
     <weui-popup #full [config]="{is_full: true}">
         <div class="arguments">
