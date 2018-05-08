@@ -74,7 +74,6 @@ export class UserInfoComponent implements OnInit {
         Validators.maxLength(30)
     ]);
 
-
     updatePhone    = new FormControl('', [
         Validators.required,
         this.customValidators.eq(11),
