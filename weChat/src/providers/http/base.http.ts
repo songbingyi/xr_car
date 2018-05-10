@@ -70,6 +70,13 @@ export class BaseProvider {
             .catch(this.handleError);
     }
 
+    mockGet(name : any, data:any){
+        let url = 'http://wx.xrtruck.com/assets/mock/' + mockBase[name];
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     setMemberId(data) {
         let member_id = this.authService.getMemberId();
         if (member_id) {
@@ -106,7 +113,9 @@ export class BaseProvider {
         let urlSearchParams = this.setSearchParams(route, data, ignore);
 
         /*if (isTest) {
-            url = 'http://218.244.158.175/xr_car_server/api_client/index.php' + '?access_token=' + this.access_token;
+            console.log(mockBase);
+            console.log(mockBase[name]);
+            url = 'http://localhost:4200/assets/mock/' + mockBase[name] + '?access_token=' + this.access_token;
         }*/
 
         if (config.production) {

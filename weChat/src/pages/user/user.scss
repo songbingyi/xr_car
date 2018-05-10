@@ -2,7 +2,7 @@
 
 .user-header {
     background:$bgWhite;
-    margin-top:15px;
+    /*margin-top:15px;*/
     width:100%;
     height:235px;
     position: relative;
@@ -78,4 +78,71 @@
 
 .user-page {
     margin-bottom:20px;
+    .weui-cells__title-empty {
+        height:15px;
+    }
+    .i-want-be-seller {
+        margin:15px;
+        &.full-width-btn-with-padding {
+            height:47px;
+            line-height:47px;
+        }
+    }
+    .order {
+        background:#FFF;
+        margin-bottom:15px;
+        .weui-flex {
+            padding:0 15px;
+            .weui-flex__item {
+                text-align: center;
+                position: relative;
+                span {
+                    font-size:12px;
+                    color:#000000;
+                    position: relative;
+                    top: -8px;
+                }
+                .weui-badge {
+                    position: absolute;
+                    top: -10px;
+                    right: -13px;
+                    color: #FFF;
+                }
+            }
+        }
+        .order-title {
+            font-size:14px;
+            color:#000000;
+        }
+        .order-footer {
+            font-size:12px;
+            color:#888888;
+        }
+
+        .order-status {
+            margin: 13px auto 10px auto;
+            width:27px;
+            height:24px;
+            background-size:contain;
+            background-repeat:no-repeat ;
+            background-position:center center;
+            position: relative;
+
+        }
+        .need-process {
+            background-image:url("../../assets/images/need.process.png");
+        }
+        .processing {
+            background-image:url("../../assets/images/processing.png");
+        }
+        .complete {
+            background-image:url("../../assets/images/complete.png");
+        }
+        .cancelled {
+            background-image:url("../../assets/images/complete.png");
+        }
+        .need-pay {
+            background-image:url("../../assets/images/need.pay.png");
+        }
+    }
 }

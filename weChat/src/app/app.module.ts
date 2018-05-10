@@ -18,11 +18,13 @@ import { IndexComponent } from '../pages/index';
 import { AppComponent } from './app.component';
 import { HomeComponent } from '../pages/home/home';
 import { DetailComponent } from '../pages/product/detail/detail';
+import { CartComponent } from '../pages/product/cart/cart';
 import { MapComponent } from '../pages/map/map';
 import { UserComponent } from '../pages/user/user';
 
 import { AppRoutingModule } from '../routes/routes';
 import { UserInfoComponent } from '../pages/user/userInfo/userInfo';
+import { AchievementComponent } from '../pages/user/achievement/achievement';
 import { UserSellerComponent } from '../pages/user/userSeller/userSeller';
 import { CarInfoComponent } from '../pages/user/carInfo/carInfo';
 import { ContactComponent } from '../pages/user/contact/contact';
@@ -43,6 +45,8 @@ import { PayCompleteComponent } from '../pages/pay/payComplete/payComplete';
 import { ConfirmOrderComponent } from '../pages/orders/confirmOrder/confirmOrder';
 import { MailComponent } from '../pages/orders/mail/mail';
 import { OrderDetailComponent } from '../pages/orders/orderDetail/orderDetail';
+import { OrderCancelComponent } from '../pages/orders/orderCancel/orderCancel';
+import { OrderCompleteComponent } from '../pages/orders/orderComplete/orderComplete';
 
 
 import { KeysPipe } from '../pipes/keys';
@@ -82,10 +86,12 @@ import { IllegalDetailComponent } from '../pages/illegalDetail/illegalDetail';
         AppComponent,
         HomeComponent,
         DetailComponent,
+        CartComponent,
         MapComponent,
         UserComponent,
         IndexComponent,
         UserInfoComponent,
+        AchievementComponent,
         UserSellerComponent,
         CarInfoComponent,
         ContactComponent,
@@ -101,6 +107,8 @@ import { IllegalDetailComponent } from '../pages/illegalDetail/illegalDetail';
         ConfirmOrderComponent,
         MailComponent,
         OrderDetailComponent,
+        OrderCancelComponent,
+        OrderCompleteComponent,
 
         FocusBlurDirective,
 

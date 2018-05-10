@@ -1,0 +1,25 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "car_product_series_list": [
+            {
+                "car_product_series_id": "1",
+                "car_product_series_name": "三系"
+            },
+            {
+                "car_product_series_id": "2",
+                "car_product_series_name": "六系"
+            },
+            {
+                "car_product_series_id": "3",
+                "car_product_series_name": "九系"
+            },
+            {
+                "car_product_series_id": "4",
+                "car_product_series_name": "华康"
+            }
+        ]
+    }
+}

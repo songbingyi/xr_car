@@ -45,7 +45,11 @@ let apiBase : IDictionary<string> = {
     'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
     'getWorkSiteList'           : 'rescue/work_sheet/getWorkSiteList',
     'operatorWorkSheet'         : 'rescue/work_sheet/operatorWorkSheet',
-    'getCarIllegalInfo'         : 'illegal/car_illegal/getCarIllegalInfo'
+    'getCarIllegalInfo'         : 'illegal/car_illegal/getCarIllegalInfo',
+    'getRegionCoordinate'       : 'base/region/getRegionCoordinate',
+    'getRegionList'             : 'base/region/getRegionList',
+    'getCarProductCategoryList' : 'base/car_product_category/getCarProductCategoryList',
+    'getCarProductSeriesList'   : 'base/car_product_series/getCarProductSeriesList'
 };
 
 export {apiBase};

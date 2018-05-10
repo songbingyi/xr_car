@@ -13,6 +13,25 @@
     position: static;
     /*height:100%;
     padding-bottom: 15px;*/
+    .weui-flex {
+        height: 40px;
+        line-height: 40px;
+        background: #FFF;
+        border-bottom: 1px solid #efeff4;
+        margin-top: 12.5px;
+    }
+    .weui-flex__item {
+        text-align: center;
+        font-size:14px;
+        color:#2A2A2A;
+        .dropdown-icon {
+            width: 7px;
+            height: 4px;
+            position: relative;
+            top: -3px;
+            left: 3px;
+        }
+    }
 }
 
 .header-menu {
@@ -48,9 +67,59 @@
 }
 
 .item-list {
-    margin-top: 15px;
     background:#FFF;
-    ul {
+    .weui-media-box {
+        height: 112px;
+        box-sizing: border-box;
+        &:before {
+            border-top: none;
+        }
+    }
+    .weui-media-box {
+        padding: 0 15px;
+    }
+    .weui-media-box__hd {
+        width:107.5px;
+        height:107.5px;
+        margin-right:12.5px;
+        padding:7px 0;
+        .weui-media-box__thumb {
+            width:107.5px;
+            height:107.5px;
+        }
+    }
+    .weui-media-box__bd {
+        height:112px;
+        padding:7px 0;
+        border-bottom: 1px solid #EFEFF4;
+        position: relative;
+        .weui-media-box__desc {
+            font-size:14px;
+            color:#2A2A2A;
+            line-height: 1.4;
+            position: relative;
+            top: 5px;
+        }
+        .weui-media-box__footer {
+            position: absolute;
+            bottom: 10px;
+            left:0;
+            font-size:14px;
+            color:#FA9D3B;
+            width:100%;
+        }
+        .cart {
+            position: absolute;
+            bottom:0;
+            right:0;
+            height:20px;
+            width:20px;
+            background: url("/assets/images/cart.png") 0 0 no-repeat;
+            background-size: contain;
+        }
+    }
+
+    /*ul {
         overflow: hidden;
     }
     li {
@@ -78,12 +147,12 @@
             margin:0;
             font-size:14px;
         }
-    }
+    }*/
 }
 
 .empty-container {
     position: absolute;
-    top: 135px;
+    top: 173px;
     left: 0;
     right: 0;
     bottom: 65px;
@@ -94,7 +163,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -65px 0 0 -60px;
+    margin: -75px 0 0 -60px;
     width: 120px;
     height: 130px;
     font-size: 14px;

@@ -3,17 +3,188 @@
         <div class="user-bg">
             <img class="avatar" [src]="member.member_info?.icon_image?.thumb || '/assets/images/user/avatar.default.jpg'"/>
             <span class="username">{{member.member_info?.member_name}}</span>
-            <!--<a class="notification" [routerLink]="['/notify']">
+            <a class="notification" [routerLink]="['/notify']">
                 <img class="belle" src="/assets/images/icon/belle.png" />
                 <span class="weui-badge" *ngIf="member?.message_dashboard_info?.new_message_count!=='0'">{{member.message_dashboard_info.new_message_count}}</span>
-            </a>-->
+            </a>
         </div>
         <div class="information">
             <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" (click)="goNext()">车辆信息</a>
         </div>
     </div>
 
+    <a href="javascript:;" [routerLink]="['/userSeller']" class="weui-btn weui-btn_primary full-width-btn-with-padding i-want-be-seller">我要售车</a>
+
     <div class="order">
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd order-title">
+                    <p>我的购车订单</p>
+                </div>
+                <div class="weui-cell__ft order-footer">查看更多订单</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="order-status need-process">
+                    <span class="weui-badge">8</span>
+                </div>
+                <span>待处理</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status processing"></div>
+                <span>处理中</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status complete"></div>
+                <span>已完成</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status cancelled"></div>
+                <span>已取消</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd order-title">
+                    <p>我的服务订单</p>
+                </div>
+                <div class="weui-cell__ft order-footer" [routerLink]="['/orders', 0, 1]">查看更多订单</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item" [routerLink]="['/orders', 1, 1]">
+                <div class="order-status need-pay">
+                    <span class="weui-badge"*ngIf="hasNotify('order_obligation_count')">{{member.service_order_dashboard_info.order_obligation_count}}</span>
+                </div>
+                <span>待付款</span>
+            </div>
+            <div class="weui-flex__item" [routerLink]="['/orders', 2, 1]">
+                <div class="order-status need-process">
+                    <span class="weui-badge" *ngIf="hasNotify('order_pending_count')">{{member.service_order_dashboard_info.order_pending_count}}</span>
+                </div>
+                <span>待处理</span>
+            </div>
+            <div class="weui-flex__item" [routerLink]="['/orders', 3, 1]">
+                <div class="order-status processing">
+                    <span class="weui-badge" *ngIf="hasNotify('order_process_count')">{{member.service_order_dashboard_info.order_process_count}}</span>
+                </div>
+                <span>处理中</span>
+            </div>
+            <div class="weui-flex__item" [routerLink]="['/orders', 4, 1]">
+                <div class="order-status complete"> </div>
+                <span>已完成</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd order-title">
+                    <p>我的售车订单</p>
+                </div>
+                <div class="weui-cell__ft order-footer">查看更多订单</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="order-status processing"></div>
+                <span>处理中</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status complete"></div>
+                <span>已完成</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status cancelled"></div>
+                <span>已取消</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="about">
+        <!--<div class="weui-cells__title">关于我们</div>-->
+        <div class="weui-cells">
+            <!--<a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
+                <div class="weui-cell__bd">
+                    <p>联系我们</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>-->
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/achievement']">
+                <div class="weui-cell__bd">
+                    <p>销售业绩</p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+    </div>
+
+    <div class="weui-cells__title-empty"></div>
+
+    <div class="order">
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd order-title">
+                    <p>我的办事处订单</p>
+                </div>
+                <div class="weui-cell__ft order-footer">查看更多订单</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="order-status need-process"></div>
+                <span>待处理</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status processing"></div>
+                <span>处理中</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status complete"></div>
+                <span>已完成</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status cancelled"></div>
+                <span>已取消</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_access">
+                <div class="weui-cell__bd order-title">
+                    <p>我的经销商订单</p>
+                </div>
+                <div class="weui-cell__ft order-footer">查看更多订单</div>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <div class="order-status need-process"></div>
+                <span>待处理</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status processing"></div>
+                <span>处理中</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status complete"></div>
+                <span>已完成</span>
+            </div>
+            <div class="weui-flex__item">
+                <div class="order-status cancelled"></div>
+                <span>已取消</span>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="order">
         <div class="weui-cells__title">订单信息</div>
         <div class="weui-cells">
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 0, 1]">
@@ -51,17 +222,17 @@
                 <div class="weui-cell__ft"> </div>
             </a>
         </div>
-    </div>
+    </div>-->
 
     <div class="about">
-        <div class="weui-cells__title">关于我们</div>
+        <!--<div class="weui-cells__title">关于我们</div>-->
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
+            <!--<a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
                 <div class="weui-cell__bd">
                     <p>联系我们</p>
                 </div>
                 <div class="weui-cell__ft"></div>
-            </a>
+            </a>-->
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/about']">
                 <div class="weui-cell__bd">
                     <p>关于我们</p>

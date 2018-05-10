@@ -10,11 +10,13 @@ import { AuthGuard } from '../providers/auth-guard.service';
 import {AppComponent} from '../app/app.component';
 import {HomeComponent} from '../pages/home/home';
 import {DetailComponent} from '../pages/product/detail/detail';
+import {CartComponent} from '../pages/product/cart/cart';
 import {MapComponent} from '../pages/map/map';
 import {UserComponent} from '../pages/user/user';
 import {AboutComponent} from '../pages/user/about/about';
 import {ContactComponent} from '../pages/user/contact/contact';
 import {UserInfoComponent} from '../pages/user/userInfo/userInfo';
+import {AchievementComponent} from '../pages/user/achievement/achievement';
 import {UserSellerComponent} from '../pages/user/userSeller/userSeller';
 import {CarInfoComponent} from '../pages/user/carInfo/carInfo';
 import {CarListComponent} from '../pages/user/carList/carList';
@@ -32,6 +34,8 @@ import {InsuranceComponent} from '../pages/insurance/insurance';
 
 import {OrdersComponent} from '../pages/orders/orders';
 import {OrderDetailComponent} from '../pages/orders/orderDetail/orderDetail';
+import {OrderCancelComponent} from '../pages/orders/orderCancel/orderCancel';
+import { OrderCompleteComponent } from '../pages/orders/orderComplete/orderComplete';
 import {EditOrderComponent} from '../pages/orders/editOrder/editOrder';
 import {ConfirmOrderComponent} from '../pages/orders/confirmOrder/confirmOrder';
 
@@ -62,11 +66,14 @@ const appRoutes: Routes = [
     {path : 'service_car_regulations/:id', component : IllegalDetailComponent, canActivate: [AuthGuard]},
     {path : 'service_car_insurance', component : InsuranceComponent, canActivate: [AuthGuard]},
     {path : 'detail/:id', component : DetailComponent},
+    {path : 'cart/:id', component : CartComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
     {path : 'orders/:status/:page', component : OrdersComponent, canActivate: [AuthGuard]},
     {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},
     {path : 'editOrder/:id', component : EditOrderComponent, canActivate: [AuthGuard]},
+    {path : 'cancelOrder/:id', component : OrderCancelComponent, canActivate: [AuthGuard]},
+    {path : 'completeOrder/:id', component : OrderCompleteComponent, canActivate: [AuthGuard]},
     {path : 'confirmOrder/:id', component : ConfirmOrderComponent, canActivate: [AuthGuard]},
     {path : 'mail', component : MailComponent, canActivate: [AuthGuard]},
     {path : 'payment', component : PaymentComponent, canActivate: [AuthGuard]},
@@ -75,6 +82,7 @@ const appRoutes: Routes = [
     {path : 'about', component : AboutComponent, canActivate: [AuthGuard]},
     {path : 'contact', component : ContactComponent, canActivate: [AuthGuard]},
     {path : 'userInfo', component : UserInfoComponent, canActivate: [AuthGuard]},
+    {path : 'achievement', component : AchievementComponent, canActivate: [AuthGuard]},
     {path : 'userSeller', component : UserSellerComponent, canActivate: [AuthGuard]},
     {path : 'carInfo', component : CarInfoComponent, canActivate: [AuthGuard]},
     {path : 'carList', component : CarListComponent, canActivate: [AuthGuard]},

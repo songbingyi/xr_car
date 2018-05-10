@@ -1,0 +1,39 @@
+.order-detail {
+    .cancel-order {
+        margin-bottom: 20px;
+        .weui-cells__title {
+            color: #888888;
+        }
+        .weui-cell {
+            padding: 10px 15px 10px 15px;
+            font-size: 14px;
+            height: 162px;
+            line-height: unset;
+            color: #888888;
+            .weui-cell__bd {
+                height:100%;
+            }
+        }
+        textarea {
+            color:#B2B2B2;
+            height: 142px;
+        }
+    }
+
+    .full-width-btn-with-padding {
+        margin:0 15px;
+        margin-top: 55px;
+    }
+
+    .status-bar {
+        p {
+            &.text-primary {
+                margin-top: -6px;
+            }
+        }
+    }
+
+    &.order-cancel {
+
+    }
+}

@@ -1,6 +1,6 @@
 {
     "status"   : {
-        "succeed"   : 1,
+        "succeed"   : "1",
         "error_code": "",
         "error_desc": ""
     },
@@ -18,7 +18,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-1",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "2",
@@ -27,7 +28,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-2",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "0"
             },
             {
                 "product_id"       : "3",
@@ -36,7 +38,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-3",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "0"
             },
             {
                 "product_id"       : "4",
@@ -45,7 +48,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-4",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "5",
@@ -54,7 +58,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-5",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "6",
@@ -63,7 +68,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-6",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "7",
@@ -72,7 +78,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-7",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "8",
@@ -81,7 +88,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-8",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "9",
@@ -90,7 +98,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-9",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             },
             {
                 "product_id"       : "10",
@@ -99,7 +108,8 @@
                     "source": "http://oss.xrtruck.com/1.png"
                 },
                 "product_name"     : "轩德3系载货车-10",
-                "price_description": "128-150万"
+                "price_description": "128-150万",
+                "is_can_order"     : "1"
             }
         ]
     }

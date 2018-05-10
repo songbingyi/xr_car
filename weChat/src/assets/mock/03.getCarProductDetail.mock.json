@@ -1,6 +1,6 @@
 {
     "status": {
-        "succeed"   : 1,
+        "succeed"   : "1",
         "error_code": "",
         "error_desc": ""
     },
@@ -9,6 +9,7 @@
             "product_id"         : "1",
             "product_name"       : "轩德3系载货车-1",
             "price_description"  : "128-150万",
+            "is_can_order"       : "1",
             "product_image_list" : [
                 {
                     "thumb" : "/assets/images/tmp/1.jpg",

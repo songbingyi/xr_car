@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
@@ -18,6 +18,9 @@ export class DetailComponent implements OnInit {
     errorMessage: any;
     product: any = {};
     isLoaded: Boolean = false;
+    show: Boolean = false;
+
+    @ViewChild('scrollMe') private myScrollContainer : ElementRef;
 
     // @ViewChild('wuiSwiper') Swiper;
 
@@ -76,6 +79,7 @@ export class DetailComponent implements OnInit {
                     this.product = product.data.car_product_info;
                     this.getImagesList(this.product.product_image_list);
                     this.isLoaded = true;
+                    this.bindEvent();
                 } else {
                     this.errorMessage = product.status.error_desc;
                 }
@@ -100,6 +104,40 @@ export class DetailComponent implements OnInit {
         // console.log(this.Swiper.swiper);
         // console.log(imgs);
         // this.Swiper.swiper.update();
+    }
+
+    toCart() {
+        if(this.product.is_can_order !== '1'){
+            return;
+        }
+        this.router.navigate(['cart', this.product.product_id], { queryParams: { product_id: this.product.product_id } });
+    }
+
+    goTop() {
+        try {
+            this.myScrollContainer.nativeElement.scrollIntoView(); // this.myScrollContainer.nativeElement.scrollHeight;
+        } catch (err) {
+        }
+    }
+
+    bindEvent() {
+        let $body = document.querySelector('body');
+        let height = $body.clientHeight || $body.offsetHeight;
+        setTimeout(() => {
+            let content = document.querySelector('.scroll-page');
+            // console.log(content);
+            if(content) {
+                content.addEventListener('scroll', (event) => {
+                    let scrollTop = content.scrollTop;
+                    if( scrollTop > height){
+                        this.show = true;
+                    }else{
+                        this.show = false;
+                    }
+                    // console.log(content.scrollTop);
+                });
+            }
+        },0)
     }
 
 }

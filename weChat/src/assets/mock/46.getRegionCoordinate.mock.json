@@ -1,0 +1,17 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "region_list": [
+            {
+                "region_id": "610000",
+                "region_name": "陕西"
+            },
+            {
+                "region_id": "610100",
+                "region_name": "西安"
+            }
+        ]
+    }
+}

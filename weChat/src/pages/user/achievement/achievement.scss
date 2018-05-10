@@ -1,0 +1,48 @@
+.achievement {
+    background:#EFEFF4;
+    .left {
+        float: left;
+    }
+    .right {
+        float:right;
+    }
+    .bar {
+        margin-top:15px;
+        width:100%;
+        height:59px;
+        margin-bottom:15px;
+        background:#FFF;
+        line-height:59px;
+        padding:0 20px;
+        .text-grey {
+            font-size:15px;
+        }
+        .text-black {
+            font-size:24px;
+        }
+    }
+
+    .content {
+        background:#EFEFF4;
+        padding:0 15px;
+        .inner-content {
+            text-align: center;
+            height:192px;
+            width:100%;
+            background:#FFF;
+        }
+        .label-code {
+            padding-top:49px;
+            font-size:17px;
+        }
+        .body-code {
+            padding-top: 10px;
+            font-size:40px;
+        }
+        .weui-agree__text {
+            margin-top:10px;
+            font-size:13px;
+        }
+    }
+
+}

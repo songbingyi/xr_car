@@ -1,0 +1,29 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "car_product_category_list": [
+            {
+                "car_product_category_id": "6",
+                "car_product_category_name": "载货车"
+            },
+            {
+                "car_product_category_id": "7",
+                "car_product_category_name": "牵引车"
+            },
+            {
+                "car_product_category_id": "8",
+                "car_product_category_name": "自卸车"
+            },
+            {
+                "car_product_category_id": "9",
+                "car_product_category_name": "渣土车"
+            },
+            {
+                "car_product_category_id": "10",
+                "car_product_category_name": "电动轻卡"
+            }
+        ]
+    }
+}

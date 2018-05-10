@@ -41,7 +41,12 @@ let mockBase : IDictionary<string> = {
     'getMemberMessageList'      : '36.getMemberMessageList.mock.json',
     'getMemberMessageDetail'    : '37.getMemberMessageDetail.mock.json',
     'getMemberMessageTypeList'  : '38.getMemberMessageTypeList.mock.json',
-    'getCarIllegalInfo'         : '45.getCarIllegalInfo.mock.json'
+    'getCarIllegalInfo'         : '45.getCarIllegalInfo.mock.json',
+    'getRegionCoordinate'       : '46.getRegionCoordinate.mock.json',
+    'getRegionList'             : '47.getRegionList.mock.json',
+    '47-1-getRegionList'        : '47-1.getRegionList.mock.json',
+    'getCarProductCategoryList' : '48.getCarProductCategoryList.mock.json',
+    'getCarProductSeriesList'   : '49.getCarProductSeriesList.mock.json'
 };
 
 export {mockBase};

@@ -8,12 +8,37 @@
     padding-bottom: 50px;
     .weui-btn {
         line-height: 50px;
+    }
+    .call-with-phone {
+        width: 20%;
+        color: #1970A6;
+        background: #FFF;
+        left: 0;
+        right: unset;
+        font-size: 12px;
+        padding: 0;
+        line-height: normal;
         img {
-            width:22px;
-            height:22px;
+            width: 20px;
+            height: 20px;
             position: relative;
             top: 5px;
-            left: -5px;
+            /* left: -5px; */
+            display: block;
+            margin: 0 auto;
+        }
+        span {
+            position: relative;
+            top: 9px;
+        }
+    }
+    .order-now {
+        width:80%;
+        background:#1970A6;
+        color:#FFF;
+        left:20%;
+        &.disabled {
+            opacity:0.6;
         }
     }
     .empty-image {
@@ -102,4 +127,15 @@ section {
         margin-left:15px;
         list-style: circle outside;
     }
+}
+
+
+.goTop {
+    position: fixed;
+    bottom:80px;
+    right:10px;
+    height:40px;
+    width:40px;
+    background: url("/assets/images/icon/gotop.png") 0 0 no-repeat;
+    background-size: contain;
 }
