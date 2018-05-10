@@ -67,12 +67,12 @@ export class UserInfoComponent implements OnInit {
     ]);
     companyAdd    = new FormControl('', [
         Validators.minLength(2),
-        Validators.maxLength(60)
+        Validators.maxLength(30)
     ]);
     email    = new FormControl('', [
-        this.customValidators.isEmail
+        this.customValidators.isEmail,
+        Validators.maxLength(30)
     ]);
-
 
     updatePhone    = new FormControl('', [
         Validators.required,
@@ -97,10 +97,11 @@ export class UserInfoComponent implements OnInit {
     ]);
     updateCompanyAdd    = new FormControl('', [
         Validators.minLength(2),
-        Validators.maxLength(60)
+        Validators.maxLength(30)
     ]);
     updateEmail    = new FormControl('', [
-        this.customValidators.isEmail
+        this.customValidators.isEmail,
+        Validators.maxLength(30)
     ]);
 
     userInfoForm: FormGroup = this.builder.group({
@@ -149,7 +150,7 @@ export class UserInfoComponent implements OnInit {
     save() {
         let userId = this.userInfoForm.value.userId;
         let mobile = this.userInfoForm.value.phone;
-        //let regxU15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+        // let regxU15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
         let regxU18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
         let regxM = (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
 
@@ -241,6 +242,15 @@ export class UserInfoComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
+    modify() {
+        this.isModifying = !this.isModifying;
+        this.updateForm.controls.phone.setValue(this.memberDetail.member_info.mobile);
+        this.updateForm.controls.companyName.setValue(this.memberDetail.member_info.company_name);
+        this.updateForm.controls.position.setValue(this.memberDetail.member_info.job_position);
+        this.updateForm.controls.companyAdd.setValue(this.memberDetail.member_info.company_address);
+        this.updateForm.controls.email.setValue(this.memberDetail.member_info.email);
+    }
+
     update() {
         // console.log(this.updateForm);
         if (this.updateForm.invalid) {
@@ -266,7 +276,7 @@ export class UserInfoComponent implements OnInit {
         }
 
         if(this.verifyCode && this.verifyCode.verify_code && this.updateForm.value.vcode && (this.verifyCode.verify_code !== this.updateForm.value.vcode)){
-            //this.fromError = true;
+            // this.fromError = true;
             this.errorMessage = '输入的验证码不正确！';
             return ;
         }
