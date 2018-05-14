@@ -1,0 +1,293 @@
+<div class="orders">
+    <tabset (onSelect)="onTabSelect($event)" [ngClass]="{'is-seller':isSellerRole}">
+        <tab [active]="activeIndex===0">
+            <span *tabHeading class="tab-set-heading">
+                全部
+            </span>
+            <div class="scroll-page">
+                <div *ngIf="all.isLoaded && all.lists.length">
+                    <div *ngFor="let item of all.lists; let index = index">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>购车订单</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.car_product_order_status_info.car_product_order_status_name}}</span>
+                                </div>
+                            </div>
+                            <div class="weui-cell with-padding-top">
+                                <div class="weui-cell__bd">
+                                    <p>车辆信息</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>价格</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.price_description}}</div>
+                            </div>
+                            <div class="weui-cell no-border with-padding-bottom">
+                                <div class="weui-cell__bd">
+                                    <p>上牌地区</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
+                            </div>
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                                <div class="weui-cell__bd">
+                                    <span>查看详情</span>
+                                </div>
+                                <div class="weui-cell__ft"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="all.isLoaded && all.lists.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png"/>
+                        <p>没有相关订单</p>
+                    </div>
+                </div>
+
+                <weui-pagination [nextText]="'下一页'" [current]="all.pagination.page" [total]="all.pagination.total" (change)="change($event, 0)" *ngIf="all.isLoaded && all.lists.length"></weui-pagination>
+
+            </div>
+        </tab>
+        <tab [active]="activeIndex===1" *ngIf="!isSellerRole">
+            <span *tabHeading class="tab-set-heading">
+                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
+            </span>
+            <div class="scroll-page">
+                <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
+                    <div *ngFor="let item of needProcess.lists; let index = index">
+
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>购车订单</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.car_product_order_status_info.car_product_order_status_name}}</span>
+                                </div>
+                            </div>
+                            <div class="weui-cell with-padding-top">
+                                <div class="weui-cell__bd">
+                                    <p>车辆信息</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>价格</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.price_description}}</div>
+                            </div>
+                            <div class="weui-cell no-border with-padding-bottom">
+                                <div class="weui-cell__bd">
+                                    <p>上牌地区</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
+                            </div>
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                                <div class="weui-cell__bd">
+                                    <span>查看详情</span>
+                                </div>
+                                <div class="weui-cell__ft"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="needProcess.isLoaded && needProcess.lists.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png"/>
+                        <p>没有相关订单</p>
+                    </div>
+                </div>
+
+                <weui-pagination [nextText]="'下一页'" [current]="needProcess.pagination.page" [total]="needProcess.pagination.total" (change)="change($event, 2)" *ngIf="needProcess.isLoaded && needProcess.lists.length"></weui-pagination>
+
+            </div>
+        </tab>
+        <tab [active]="activeIndex=== (isSellerRole?1:2)">
+            <span *tabHeading class="tab-set-heading">
+                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count', 'processing')">{{processing.lists.length || car_product_order_dashboard_info.order_process_count}}</q>
+            </span>
+            <div class="scroll-page">
+                <div *ngIf="processing.isLoaded && processing.lists.length">
+                    <div *ngFor="let item of processing.lists; let index = index">
+
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>购车订单</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.car_product_order_status_info.car_product_order_status_name}}</span>
+                                </div>
+                            </div>
+                            <div class="weui-cell with-padding-top">
+                                <div class="weui-cell__bd">
+                                    <p>车辆信息</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>价格</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.price_description}}</div>
+                            </div>
+                            <div class="weui-cell no-border with-padding-bottom">
+                                <div class="weui-cell__bd">
+                                    <p>上牌地区</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
+                            </div>
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                                <div class="weui-cell__bd">
+                                    <span>查看详情</span>
+                                </div>
+                                <div class="weui-cell__ft"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="processing.isLoaded && processing.lists.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png"/>
+                        <p>没有相关订单</p>
+                    </div>
+                </div>
+
+                <weui-pagination [nextText]="'下一页'" [current]="processing.pagination.page" [total]="processing.pagination.total" (change)="change($event, 3)" *ngIf="processing.isLoaded && processing.lists.length"></weui-pagination>
+
+            </div>
+        </tab>
+        <tab [active]="activeIndex=== (isSellerRole?2:3)">
+            <span *tabHeading class="tab-set-heading">
+                已完成
+            </span>
+            <div class="scroll-page">
+                <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
+                    <div *ngFor="let item of hasDone.lists; let index = index">
+
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>购车订单</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.car_product_order_status_info.car_product_order_status_name}}</span>
+                                </div>
+                            </div>
+                            <div class="weui-cell with-padding-top">
+                                <div class="weui-cell__bd">
+                                    <p>车辆信息</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>价格</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.price_description}}</div>
+                            </div>
+                            <div class="weui-cell no-border with-padding-bottom">
+                                <div class="weui-cell__bd">
+                                    <p>上牌地区</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
+                            </div>
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                                <div class="weui-cell__bd">
+                                    <span>查看详情</span>
+                                </div>
+                                <div class="weui-cell__ft"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="hasDone.isLoaded && hasDone.lists.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png"/>
+                        <p>没有相关订单</p>
+                    </div>
+                </div>
+
+                <weui-pagination [nextText]="'下一页'" [current]="hasDone.pagination.page" [total]="hasDone.pagination.total" (change)="change($event, 4)" *ngIf="hasDone.isLoaded && hasDone.lists.length"></weui-pagination>
+
+            </div>
+        </tab>
+        <tab [active]="activeIndex===(isSellerRole?3:4)">
+            <span *tabHeading class="tab-set-heading">
+                已取消
+            </span>
+            <div class="scroll-page">
+                <div *ngIf="cancelled.isLoaded && cancelled.lists.length">
+                    <div *ngFor="let item of cancelled.lists; let index = index">
+
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell special-cell">
+                                <div class="weui-cell__bd">
+                                    <p>购车订单</p>
+                                </div>
+                                <div class="weui-cell__ft">
+                                    <span class="text-warning">{{item?.car_product_order_status_info.car_product_order_status_name}}</span>
+                                </div>
+                            </div>
+                            <div class="weui-cell with-padding-top">
+                                <div class="weui-cell__bd">
+                                    <p>车辆信息</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
+                            </div>
+                            <div class="weui-cell no-border">
+                                <div class="weui-cell__bd">
+                                    <p>价格</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.car_product_info?.price_description}}</div>
+                            </div>
+                            <div class="weui-cell no-border with-padding-bottom">
+                                <div class="weui-cell__bd">
+                                    <p>上牌地区</p>
+                                </div>
+                                <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
+                            </div>
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                                <div class="weui-cell__bd">
+                                    <span>查看详情</span>
+                                </div>
+                                <div class="weui-cell__ft"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="empty-container" *ngIf="cancelled.isLoaded && cancelled.lists.length===0">
+                    <div class="empty">
+                        <img src="/assets/images/empty.png"/>
+                        <p>没有相关订单</p>
+                    </div>
+                </div>
+
+                <weui-pagination [nextText]="'下一页'" [current]="cancelled.pagination.page" [total]="cancelled.pagination.total" (change)="change($event, 4)" *ngIf="cancelled.isLoaded && cancelled.lists.length"></weui-pagination>
+
+            </div>
+        </tab>
+    </tabset>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <p>{{errorMessage}}</p>
+    </div>
+
+</div>
+

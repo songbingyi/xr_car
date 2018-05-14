@@ -27,17 +27,31 @@
 
         <div class="weui-cells__title more-info-text">注：请您（填写）补全以下信息</div>
         <div class="weui-cells">
-            <div class="weui-cell weui-cell_access">
+            <!--<div class="weui-cell weui-cell_access">
                 <div class="weui-cell__bd">
                     <p>从业时长</p>
                 </div>
                 <div class="weui-cell__ft">3 年</div>
-            </div>
-            <div class="weui-cell weui-cell_access">
+            </div>-->
+            <!--<div class="weui-cell weui-cell_access">
                 <div class="weui-cell__bd">
-                    <p>所在地区</p>
+                    <p>从业时长</p>
                 </div>
-                <div class="weui-cell__ft"><span>陕西</span><span>西安</span></div>
+                <div class="weui-cell__ft station-name" (click)="showSalesYears()">
+                    <span class="for-station">{{selectedSalesYears?.sales_year_name || '请选从业时长'}}</span>
+                </div>
+            </div>-->
+            <div class="weui-cell weui-cell_access my-location">
+                <div class="weui-cell__hd"><label class="weui-label">从业时长</label></div>
+                <div class="weui-cell__bd text-right" [hidden]="!selectedSalesYears?.sales_year_name" (click)="showSalesYears()"><span>{{selectedSalesYears?.sales_year_name}}</span></div>
+                <div class="weui-cell__bd" [hidden]="selectedSalesYears?.sales_year_name" style="color:#a9a9a9;" (click)="showSalesYears()">请选从业时长</div>
+                <div class="weui-cell__ft"></div>
+            </div>
+            <div class="weui-cell weui-cell_access my-location">
+                <div class="weui-cell__hd"><label class="weui-label">所在地区</label></div>
+                <div class="weui-cell__bd text-right" [hidden]="!(selectedRegion.region_id && selectedCity.region_id)" (click)="selectArea()"><span>{{selectedRegion.region_name}}</span><span>{{selectedCity.region_name}}</span></div>
+                <div class="weui-cell__bd" [hidden]="(selectedRegion.region_id && selectedCity.region_id)" style="color:#a9a9a9;" (click)="selectArea()">请选择所在地区</div>
+                <div class="weui-cell__ft"></div>
             </div>
         </div>
 
@@ -49,12 +63,41 @@
             </span>
         </label>
 
-
     </div>
 
     <div class="error-bar" [hidden]="!errorMessage">
         <span>{{errorMessage}}</span>
     </div>
+
+    <weui-popup #full [config]="{is_full: true}">
+        <div class="weui-cells__title">当前位置</div>
+        <div class="weui-cells current-location">
+            <a class="weui-cell" href="javascript:;" (click)="selectCity()">
+                <div class="weui-cell__bd">
+                    <img src="/assets/images/icon/location.fill.png" />
+                    <span>{{currentCity[0]?.region_name}} {{currentCity[1]?.region_name}}</span>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+        <div class="weui-cells__title">全部省份</div>
+        <div class="weui-cells all-location">
+            <a *ngFor="let region of regionList" class="weui-cell weui-cell_access" href="javascript:;" (click)="selectRegion(region)">
+                <div class="weui-cell__bd"><span>{{region.region_name}}</span></div>
+                <div class="weui-cell__ft"><span [hidden]="!((selectedRegion.region_id && selectedRegion.region_id === region.region_id) && selectedCity.region_id)">当前选择地区</span></div>
+            </a>
+        </div>
+    </weui-popup>
+
+    <weui-popup #fullCity [config]="{is_full: true}">
+        <div class="weui-cells__title">全部城市</div>
+        <div class="weui-cells all-location">
+            <a *ngFor="let city of childrenRegionList" class="weui-cell" href="javascript:;" (click)="selectCity(city)">
+                <div class="weui-cell__bd"><span>{{city.region_name}}</span></div>
+                <div class="weui-cell__ft"><span [hidden]="selectedCity.region_id !== city.region_id"><i class="weui-icon-success-no-circle"></i></span></div>
+            </a>
+        </div>
+    </weui-popup>
 
     <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding modify-mobile" (click)="save()">保存</a>
 </div>

@@ -45,8 +45,21 @@ let mockBase : IDictionary<string> = {
     'getRegionCoordinate'       : '46.getRegionCoordinate.mock.json',
     'getRegionList'             : '47.getRegionList.mock.json',
     '47-1-getRegionList'        : '47-1.getRegionList.mock.json',
+    // 车辆订单开始
     'getCarProductCategoryList' : '48.getCarProductCategoryList.mock.json',
-    'getCarProductSeriesList'   : '49.getCarProductSeriesList.mock.json'
+    'getCarProductSeriesList'   : '49.getCarProductSeriesList.mock.json',
+    'addCarProductOrder'        : '50.addCarProductOrder.mock.json',
+    'getMemberRoleList'         : '51.getMemberRoleList.mock.json',
+    'getSalesCarProductOrderDashboard'  : '52.getSalesCarProductOrderDashboard.mock.json',
+    'getOfficeCarProductOrderDashboard' : '53.getOfficeCarProductOrderDashboard.mock.json',
+    'getDealerCarProductOrderDashboard' : '54.getDealerCarProductOrderDashboard.mock.json',
+    'getSalesYearList'          : '55.getSalesYearList.mock.json',
+    'applySalesMan'             : '56.applySalesMan.mock.json',
+    'gerCarProductOrderList'    : '57.gerCarProductOrderList.mock.json',
+    'gerCarProductOrderDetail'  : '58.gerCarProductOrderDetail.mock.json',
+    'operatorCarProductOrder'   : '59.operatorCarProductOrder.mock.json',
+    'getInstitutionDealerListByCarProductOrder' : '60.getInstitutionDealerListByCarProductOrder.mock.json',
+    'getSalesMemberDashboard' : '61.getSalesMemberDashboard.mock.json'
 };
 
 export {mockBase};

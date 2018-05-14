@@ -119,7 +119,7 @@ export class OrdersComponent implements OnInit {
         // this[this.key].pagination.page ++;
         //this.getInitData();
         this.activeIndex = event;
-        this.router.navigate(['/orders', event, this[this.key].pagination.page]);
+        this.router.navigate(['/serviceOrder', event, this[this.key].pagination.page]);
         // this.getInitData();
     }
 
@@ -157,7 +157,7 @@ export class OrdersComponent implements OnInit {
         this.key = this.objKey[type];
         this[this.key].pagination.page = $event;
         // this.getInitData();
-        this.router.navigate(['/orders', this.activeIndex, $event]);
+        this.router.navigate(['/serviceOrder', this.activeIndex, $event]);
         // this.getInitData();
     }
 

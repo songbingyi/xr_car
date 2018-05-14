@@ -125,7 +125,7 @@ export class CartComponent implements OnInit {
             parent_id : ''
         }).subscribe(regionList => {
             if (regionList.status.succeed === '1') {
-                console.log(regionList);
+                //console.log(regionList);
                 this.regionList = regionList.data.region_list;
                 this.fullPopup.show();
             } else {
@@ -220,31 +220,52 @@ export class CartComponent implements OnInit {
         this.submitting = true;
 
         console.log({
-            'username' : this.orderForm.value.username,
-            'code' : this.orderForm.value.code,
-            'region' : this.selectedRegion,
-            'city' : this.selectedCity
+            "submit_car_product_order_info": {
+                "car_product_info": {
+                    "product_id": this.product.product_id,
+                    "product_name": this.product.product_name,
+                    "price_description": this.product.price_description
+                },
+                "cards_region_info": {
+                    "region_id": this.selectedCity.region_id,
+                    "region_name": this.selectedCity.region_name
+                },
+                "sales_invite_code": this.orderForm.value.code,
+                'username' : this.orderForm.value.phone,
+            }
         });
         this.submitting = false;
 
-        /*this.baseService.post('order', {
-            // 'member_id' : '1',
-            'username' : this.orderForm.value.phone,
-            'code' : this.orderForm.value.code
+        this.baseService.mockGet('addCarProductOrder', {
+            "submit_car_product_order_info": {
+                "car_product_info": {
+                    "product_id": this.product.product_id,
+                    "product_name": this.product.product_name,
+                    "price_description": this.product.price_description
+                },
+                "cards_region_info": {
+                    "region_id": this.selectedCity.region_id,
+                    "region_name": this.selectedCity.region_name
+                },
+                "sales_invite_code": this.orderForm.value.code,
+                'username' : this.orderForm.value.phone,
+            }
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
                     this.orderForm.reset();
+                    this.router.navigate(['productOrderComplete', result.data.car_product_order_id]);
                 } else {
-                    if(result.status.error_code === '1012'){
+                    /*if(result.status.error_code === '1012'){
                         this.errorMessage = '验证码不正确，请重新输入！' || result.status.error_desc;
                     }else{
                         this.errorMessage = result.status.error_desc;
-                    }
+                    }*/
+                    this.errorMessage = result.status.error_desc;
                 }
                 this.submitting = false;
                 //this.updateForm.dirty = false;
-            }, error => this.errorMessage = <any>error);*/
+            }, error => this.errorMessage = <any>error);
     }
 
 }

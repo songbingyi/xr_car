@@ -51,7 +51,7 @@ export class OrderDetailComponent implements OnInit {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
                             this.goBack();
-                            // this.router.navigate(['/orders', 0]);
+                            // this.router.navigate(['/serviceOrder', 0]);
                         });
                     }
                 } else {
@@ -59,7 +59,7 @@ export class OrderDetailComponent implements OnInit {
                     if (detail.status.error_code === '4004') {
                         setTimeout(() => {
                             this.goBack();
-                            //this.router.navigate(['/orders', 0]);
+                            //this.router.navigate(['/serviceOrder', 0]);
                         }, 2000);
                     }
                 }
@@ -137,7 +137,7 @@ export class OrderDetailComponent implements OnInit {
         this.hideToast(() => {
             if (operation === 3) {
                 this.location.back();
-                // this.router.navigate(['/orders', 0]);
+                // this.router.navigate(['/serviceOrder', 0]);
             }
         });
     }

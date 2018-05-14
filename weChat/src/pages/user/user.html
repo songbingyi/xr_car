@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <a href="javascript:;" [routerLink]="['/userSeller']" class="weui-btn weui-btn_primary full-width-btn-with-padding i-want-be-seller">我要售车</a>
+    <a href="javascript:;" [routerLink]="['/userSeller']" class="weui-btn weui-btn_primary full-width-btn-with-padding i-want-be-seller" [hidden]="member.is_has_sales_button === '0'">我要售车</a>
 
     <div class="order">
         <div class="weui-cells">
@@ -21,26 +21,32 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的购车订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item">
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]">
                 <div class="order-status need-process">
-                    <span class="weui-badge">8</span>
+                    <span class="weui-badge"  *ngIf="hasNotify('order_pending_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_pending_count}}</span>
                 </div>
                 <span>待处理</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status processing"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]">
+                <div class="order-status processing">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_pending_count}}</span>
+                </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status complete"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]">
+                <div class="order-status complete">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_finish_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_finish_count}}</span>
+                </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status cancelled"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 5, 1]">
+                <div class="order-status cancelled">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_cancel_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_cancel_count}}</span>
+                </div>
                 <span>已取消</span>
             </div>
         </div>
@@ -58,7 +64,7 @@
         <div class="weui-flex">
             <div class="weui-flex__item" [routerLink]="['/orders', 1, 1]">
                 <div class="order-status need-pay">
-                    <span class="weui-badge"*ngIf="hasNotify('order_obligation_count')">{{member.service_order_dashboard_info.order_obligation_count}}</span>
+                    <span class="weui-badge" *ngIf="hasNotify('order_obligation_count')">{{member.service_order_dashboard_info.order_obligation_count}}</span>
                 </div>
                 <span>待付款</span>
             </div>
@@ -87,20 +93,26 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的售车订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item">
-                <div class="order-status processing"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]">
+                <div class="order-status processing">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_process_count}}</span>
+                </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status complete"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]">
+                <div class="order-status complete">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_finish_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_finish_count}}</span>
+                </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status cancelled"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 5, 1]">
+                <div class="order-status cancelled">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_cancel_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_cancel_count}}</span>
+                </div>
                 <span>已取消</span>
             </div>
         </div>
@@ -132,24 +144,32 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的办事处订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item">
-                <div class="order-status need-process"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]">
+                <div class="order-status need-process">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_pending_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_pending_count}}</span>
+                </div>
                 <span>待处理</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status processing"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]">
+                <div class="order-status processing">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_process_count}}</span>
+                </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status complete"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]">
+                <div class="order-status complete">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_finish_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_finish_count}}</span>
+                </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status cancelled"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 5, 1]">
+                <div class="order-status cancelled">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_cancel_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_cancel_count}}</span>
+                </div>
                 <span>已取消</span>
             </div>
         </div>
@@ -161,24 +181,32 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的经销商订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item">
-                <div class="order-status need-process"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]">
+                <div class="order-status need-process">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_pending_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_pending_count}}</span>
+                </div>
                 <span>待处理</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status processing"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]">
+                <div class="order-status processing">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_process_count}}</span>
+                </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status complete"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]">
+                <div class="order-status complete">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_finish_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_finish_count}}</span>
+                </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item">
-                <div class="order-status cancelled"></div>
+            <div class="weui-flex__item" [routerLink]="['/productOrder', 5, 1]">
+                <div class="order-status cancelled">
+                    <span class="weui-badge"  *ngIf="hasNotify('order_cancel_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_cancel_count}}</span>
+                </div>
                 <span>已取消</span>
             </div>
         </div>
@@ -187,13 +215,13 @@
     <!--<div class="order">
         <div class="weui-cells__title">订单信息</div>
         <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 0, 1]">
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 0, 1]">
                 <div class="weui-cell__bd">
                     <p>全部订单</p>
                 </div>
                 <div class="weui-cell__ft"> </div>
             </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 1, 1]">
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 1, 1]">
                 <div class="weui-cell__bd">
                     <p>待付款</p>
                 </div>
@@ -201,21 +229,21 @@
                     <span class="weui-badge" *ngIf="hasNotify('order_obligation_count')">{{member.service_order_dashboard_info.order_obligation_count}}</span>
                 </div>
             </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 2, 1]">
+            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 2, 1]">
                 <div class="weui-cell__bd">
                     <p>待处理</p>
                 </div>
                 <div class="weui-cell__ft">
                     <span class="weui-badge" *ngIf="hasNotify('order_pending_count')">{{member.service_order_dashboard_info.order_pending_count}}</span>
                 </div>
-            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 3, 1]">
+            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 3, 1]">
                 <div class="weui-cell__bd">
                     <p>处理中</p>
                 </div>
                 <div class="weui-cell__ft">
                     <span class="weui-badge" *ngIf="hasNotify('order_process_count')">{{member.service_order_dashboard_info.order_process_count}}</span>
                 </div>
-            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/orders', 4, 1]">
+            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 4, 1]">
                 <div class="weui-cell__bd">
                     <p>已完成</p>
                 </div>

@@ -1,0 +1,49 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "institution_dealer_group_by_region_list": [
+            {
+                "region_info": {
+                    "region_id": "610000",
+                    "region_name": "陕西省"
+                },
+                "institution_dealer_list": [
+                    {
+                        "institution_dealer_id": "1",
+                        "institution_dealer_name": "测试经销商-001"
+                    },
+                    {
+                        "institution_dealer_id": "2",
+                        "institution_dealer_name": "测试经销商-002"
+                    },
+                    {
+                        "institution_dealer_id": "3",
+                        "institution_dealer_name": "测试经销商-003"
+                    }
+                ]
+            },
+            {
+                "region_info": {
+                    "region_id": "110000",
+                    "region_name": "北京"
+                },
+                "institution_dealer_list": [
+                    {
+                        "institution_dealer_id": "4",
+                        "institution_dealer_name": "测试经销商-004"
+                    },
+                    {
+                        "institution_dealer_id": "5",
+                        "institution_dealer_name": "测试经销商-005"
+                    },
+                    {
+                        "institution_dealer_id": "6",
+                        "institution_dealer_name": "测试经销商-006"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -46,6 +46,9 @@
             }
         }
     }
+    .text-right {
+        text-align: right;
+    }
 }
 
 .modify-mobile {
@@ -67,5 +70,33 @@ a.full-width-btn-with-padding.disabled {
 @media (max-width:320px) {
     .phone-number {
         font-size: 10px;
+    }
+}
+
+.my-location {
+    .weui-cell__bd {
+        span:last-child {
+            margin-left:5px;
+        }
+    }
+}
+.current-location {
+    img {
+        width: 19px;
+        height: 24px;
+        position: relative;
+        top: 6px;
+    }
+    span {
+        color:#000000;
+        font-size:14px;
+        padding-left:5px;
+    }
+}
+.all-location {
+    margin-bottom: 20px;
+    span {
+        color:#000000;
+        font-size:14px;
     }
 }

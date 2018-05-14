@@ -1,0 +1,25 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "member_role_list": [
+            {
+                "member_role_id": "1",
+                "member_role_name": "普通会员"
+            },
+            {
+                "member_role_id": "2",
+                "member_role_name": "销售员"
+            },
+            {
+                "member_role_id": "3",
+                "member_role_name": "办事处人员"
+            },
+            {
+                "member_role_id": "4",
+                "member_role_name": "经销商人员"
+            }
+        ]
+    }
+}

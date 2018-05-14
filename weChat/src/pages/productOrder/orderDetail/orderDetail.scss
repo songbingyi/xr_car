@@ -1,0 +1,131 @@
+.order-detail {
+    .confirm-order {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        .weui-cell {
+            .title {
+                font-size:15px;
+                color:#000;
+                position: relative;
+                top:5px;
+            }
+        }
+        .cell-operation {
+            height: 60px;
+            line-height: 60px;
+        }
+        .special-cell {
+            margin-top:5px;
+            .weui-cell__bd {
+                border-top:1px solid #E5E5E5;
+            }
+        }
+        .with-select {
+            margin-top:0;
+            height: 46px;
+            line-height: 46px;
+            .title {
+                top:0;
+            }
+
+        }
+        .weui-cell-small {
+            height: 30px;
+            line-height: 30px;
+        }
+        .weui-cell-special {
+            height: 76px;
+            line-height: 76px;
+        }
+        .weui-cell__bd {
+            font-size: 14px;
+            color: #888888;
+        }
+        .weui-cell__ft {
+            span {
+                color: #000000;
+                font-size: 24px;
+                position: relative;
+                top: 4px;
+            }
+            .text-warning {
+                color: #FA9D3B;
+            }
+            img {
+                line-height: normal;
+                display: block;
+                float: right;
+                margin-bottom: 10px;
+            }
+            p {
+                line-height: normal;
+                clear: both;
+                font-size: 11px;
+                text-align: center;
+            }
+        }
+        .images-container {
+            margin-bottom: 0;
+        }
+        td {
+            border-bottom: none;
+            padding-top: 0;
+            padding-bottom: 10px;
+            .image {
+                margin-top: 0;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            span {
+                margin-top: 10px;
+                display: block;
+            }
+        }
+
+        .button-sp-area {
+            text-align: right;
+            height: 60px;
+        }
+    }
+
+    .status-bar {
+        p {
+            /*padding-bottom: 6px;*/
+            &.text-primary {
+                margin-top: -6px;
+            }
+        }
+    }
+}
+
+.my-location {
+    .weui-cell__bd {
+        span:last-child {
+            margin-left:5px;
+        }
+        &.text-right {
+            text-align: right;
+        }
+    }
+}
+.current-location {
+    img {
+        width: 19px;
+        height: 24px;
+        position: relative;
+        top: 6px;
+    }
+    span {
+        color:#000000;
+        font-size:14px;
+        padding-left:5px;
+    }
+}
+.all-location {
+    margin-bottom: 20px;
+    span {
+        color:#000000;
+        font-size:14px;
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "sales_year_list": [
+            {
+                "sales_year_name": "1年",
+                "sales_year_value": "1"
+            },
+            {
+                "sales_year_name": "2年",
+                "sales_year_value": "2"
+            },
+            {
+                "sales_year_name": "3年",
+                "sales_year_value": "3"
+            },
+            {
+                "sales_year_name": "4年",
+                "sales_year_value": "4"
+            },
+            {
+                "sales_year_name": "5年",
+                "sales_year_value": "5"
+            }
+        ]
+    }
+}

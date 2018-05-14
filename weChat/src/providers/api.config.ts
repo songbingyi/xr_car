@@ -49,7 +49,19 @@ let apiBase : IDictionary<string> = {
     'getRegionCoordinate'       : 'base/region/getRegionCoordinate',
     'getRegionList'             : 'base/region/getRegionList',
     'getCarProductCategoryList' : 'base/car_product_category/getCarProductCategoryList',
-    'getCarProductSeriesList'   : 'base/car_product_series/getCarProductSeriesList'
+    'getCarProductSeriesList'   : 'base/car_product_series/getCarProductSeriesList',
+    'addCarProductOrder'        :'car_product_order/car_product_order/addCarProductOrder',
+    'getMemberRoleList'         :'base/member_role/getMemberRoleList',
+    'getSalesCarProductOrderDashboard'  :'car_product_order/car_product_order/getSalesCarProductOrderDashboard',
+    'getOfficeCarProductOrderDashboard' :'car_product_order/car_product_order/getOfficeCarProductOrderDashboard',
+    'getDealerCarProductOrderDashboard' :'car_product_order/car_product_order/getDealerCarProductOrderDashboard',
+    'getSalesYearList'          :'base/sales_year/getSalesYearList',
+    'applySalesMan'             :'member/member/applySalesMan',
+    'gerCarProductOrderList'    :'car_product_order/car_product_order/gerCarProductOrderList',
+    'gerCarProductOrderDetail'  :'car_product_order/car_product_order/gerCarProductOrderDetail',
+    'operatorCarProductOrder'   :'car_product_order/car_product_order/operatorCarProductOrder',
+    "getInstitutionDealerListByCarProductOrder" : 'institution_dealer/institution_dealer/getInstitutionDealerListByCarProductOrder',
+    'getSalesMemberDashboard' : 'member/sales_member/getSalesMemberDashboard'
 };
 
 export {apiBase};

@@ -1,0 +1,29 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "car_product_order_info": {
+            "car_product_order_id": "1",
+            "car_product_order_no": "XRCPO12345678",
+            "car_product_order_status_info": {
+                "car_product_order_status_id": "1001",
+                "car_product_order_status_name": "新订单"
+            },
+            "car_product_info": {
+                "product_id": "6",
+                "product_name": "轩德6系自卸车",
+                "price_description": "100-120万"
+            },
+            "cards_region_info": {
+                "region_id": "610100",
+                "region_name": "陕西 西安"
+            }
+        }
+    },
+    "paginated": {
+        "total": "1",
+        "count": "10",
+        "more": "0"
+    }
+}

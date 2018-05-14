@@ -87,7 +87,7 @@ export class RescueSiteComponent implements OnInit {
 
     getLocation() {
         this.wxService.onGetLocation({
-            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: (res) => {
                 this.zone.run(()=>{
                     this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90

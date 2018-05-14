@@ -77,6 +77,13 @@ export class BaseProvider {
             .catch(this.handleError);
     }
 
+    mockPost(name : any, data:any){
+        let url = 'http://wx.xrtruck.com/assets/mock/' + mockBase[name];
+        return this.http.post(url, data)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     setMemberId(data) {
         let member_id = this.authService.getMemberId();
         if (member_id) {

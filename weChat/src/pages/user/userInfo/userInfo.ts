@@ -11,6 +11,9 @@ import { BaseProvider } from '../../../providers/http/base.http';
 
 import { config } from '../../../app/app.config';
 import {IdentityAuthService} from '../../../providers/identityAuth.service';
+import {Location} from '@angular/common';
+import {PickerService} from 'ngx-weui/picker';
+import {WXSDKService} from '../../../providers/wx.sdk.service';
 
 
 @Component({
@@ -23,7 +26,7 @@ export class UserInfoComponent implements OnInit {
     isModifying: boolean = false;
     verifyCode: any;
 
-    @ViewChild('full') fullPopup: PopupComponent;
+    @ViewChild('fullArguments') fullArgumentsPopup: PopupComponent;
 
     timeOut = 60;
     timing: boolean = false;
@@ -128,8 +131,31 @@ export class UserInfoComponent implements OnInit {
 
     identityAuth: boolean;
 
-    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService) {
+
+
+    sales_years:any;
+    selectedSalesYears:any;
+    salesYears:any;
+
+    @ViewChild('full') fullPopup: PopupComponent;
+    @ViewChild('fullCity') fullCityPopup: PopupComponent;
+
+    wxs: any;
+
+    // 默认经纬度，地图中心
+    longitude = 108.94075;
+    latitude = 34.341568;
+
+    currentCity:any = [];
+    regionList:any = [];
+    childrenRegionList:any = [];
+    selectedRegion:any = {};
+    selectedCity:any = {};
+
+    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
         this.getCarAndMemberInfo();
+        this.wxs = this.wxService.init();
+        this.getSalesYearList();
         this.identityAuth = config.identityAuth;
     }
 
@@ -145,6 +171,24 @@ export class UserInfoComponent implements OnInit {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    getLocation(callback?) {
+        let self = this;
+        this.wxService.onGetLocation({
+            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: (res) => {
+                self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                self.loadCurrentCity();
+            }
+        });
+    }
+
+    ngAfterContentInit(){
+        this.wxs.then(res => {
+            this.getLocation();
+        });
     }
 
     save() {
@@ -249,6 +293,8 @@ export class UserInfoComponent implements OnInit {
         this.updateForm.controls.position.setValue(this.memberDetail.member_info.job_position);
         this.updateForm.controls.companyAdd.setValue(this.memberDetail.member_info.company_address);
         this.updateForm.controls.email.setValue(this.memberDetail.member_info.email);
+        this.selectedSalesYears = this.memberDetail.member_info.sales_years || {};
+        this.selectedCity = this.memberDetail.member_info.sales_region_info || {};
     }
 
     update() {
@@ -281,6 +327,15 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
+        if(!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value)){
+            this.errorMessage = '请先选择从业时长！';
+            return ;
+        }
+        if(!this.selectedRegion.region_id || !this.selectedCity.region_id){
+            this.errorMessage = '请先选择所属地区！';
+            return ;
+        }
+
         if(this.submitting){
             return;
         }
@@ -301,7 +356,9 @@ export class UserInfoComponent implements OnInit {
             'company_name'   : this.updateForm.value.companyName,
             'job_position'   : this.updateForm.value.position,
             'company_address': this.updateForm.value.companyAdd,
-            'email'          : this.updateForm.value.email
+            'email'          : this.updateForm.value.email,
+            'sales_years'    : this.selectedSalesYears,
+            'sales_region_info'  : this.selectedCity
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
@@ -318,6 +375,8 @@ export class UserInfoComponent implements OnInit {
                     this.updateForm.controls.position.setValue('');
                     this.updateForm.controls.companyAdd.setValue('');
                     this.updateForm.controls.email.setValue('');
+                    this.selectedSalesYears = null;
+                    this.selectedCity = {};
                     this.updateForm.reset();
                     this.getCarAndMemberInfo();
                 } else {
@@ -386,6 +445,125 @@ export class UserInfoComponent implements OnInit {
         } else {
             this.timing = false;
         }
+    }
+
+    getSalesYearList(){
+        this.baseService.mockGet('getSalesYearList', {
+            // 'member_id' : '1'
+        }).subscribe(result => {
+            if (result.status.succeed === '1') {
+                let sales_year_list = result.data.sales_year_list;
+                console.log(sales_year_list);
+                this.rebuildSalesYear(sales_year_list);
+            } else {
+                this.errorMessage = result.status.error_desc;
+            }
+            this.submitting = false;
+        }, error => this.errorMessage = <any>error);
+    }
+
+    rebuildSalesYear(salesYears) {
+        let result = [];
+        salesYears.forEach(saleYear => {
+            saleYear.label = saleYear.sales_year_name;
+            saleYear.value = saleYear.sales_year_value;
+            result.push(saleYear);
+        });
+
+        if (salesYears.length) {
+            this.salesYears =  [result];
+        }else{
+            this.salesYears =  [[{
+                label : '没有年限可以选择',
+                value : '-1',
+                disabled: true
+            }]];
+        }
+    }
+
+    showSalesYears() {
+        this.pickerService.show(this.salesYears, '', [0], {
+            type: 'default',
+            separator: '|',
+            cancel: '取消',
+            confirm: '确定',
+            backdrop: false
+        }).subscribe((res: any) => {
+            //console.log(res);
+            this.selectedSalesYears = res.items[0];
+            //this.onSalesYearsChanged(res.items[0]);
+        });
+    }
+
+    /*onSalesYearsChanged(item){
+
+    }*/
+
+    loadCurrentCity() {
+        this.baseService.mockGet('getRegionCoordinate', {
+            latitude : this.latitude,
+            longitude : this.longitude
+        }).subscribe(currentCity => {
+            if (currentCity.status.succeed === '1') {
+                this.currentCity = currentCity.data.region_list;
+                // let region_list = currentCity.data.region_list;
+                // this.currentCity = ((region_list[0] && region_list[0].region_name) ? region_list[0].region_name : '') + ((region_list[1] && region_list[1].region_name) ? region_list[1].region_name : '');
+            } else {
+                this.errorMessage = currentCity.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
+    }
+
+    loadRegionList() {
+        this.baseService.mockGet('getRegionList', {
+            parent_id : ''
+        }).subscribe(regionList => {
+            if (regionList.status.succeed === '1') {
+                //console.log(regionList);
+                this.regionList = regionList.data.region_list;
+                this.fullPopup.show();
+            } else {
+                this.errorMessage = regionList.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
+    }
+
+    loadChildRegionList(id) {
+        this.baseService.mockGet('47-1-getRegionList', {
+            parent_id : id
+        }).subscribe(regionList => {
+            if (regionList.status.succeed === '1') {
+                this.childrenRegionList = regionList.data.region_list;
+                this.fullCityPopup.show();
+            } else {
+                this.errorMessage = regionList.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
+    }
+
+    selectArea() {
+        this.loadRegionList();
+    }
+
+    selectRegion(province) {
+        this.selectedRegion = province;
+        if(province.has_child){
+            this.loadChildRegionList(province.region_id);
+        }
+    }
+    selectCity(city?) {
+        if(city){
+            this.selectedCity = city;
+            this.fullCityPopup.close();
+            this.fullPopup.close();
+        }else{
+            if(this.currentCity[0] && this.currentCity[1]){
+                this.selectedRegion = this.currentCity[0];
+                this.selectedCity   = this.currentCity[1];
+            }
+            this.fullPopup.close();
+        }
+
     }
 
     ngOnInit() {

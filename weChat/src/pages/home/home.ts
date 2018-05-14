@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
             }
         });
         this.loadCategoryList();
-        //this.loadSeriesList();
+        this.loadSeriesList();
     }
 
     status : string;
@@ -83,17 +83,17 @@ export class HomeComponent implements OnInit {
             pagination: this.pagination
         };
         let selectedCarSeries = this.selectedCarSeries || {};
-        let selectedCarType = this.selectedCarType || {};
-        if(selectedCarSeries.car_product_series_id !== '-2' && selectedCarType.car_product_category_id !=='-2'){
+        let selectedCarType   = this.selectedCarType || {};
+        if(selectedCarSeries.car_product_series_id || selectedCarType.car_product_category_id){
             where = {
                 pagination: this.pagination,
                 filter_value : {
                     car_product_category_info : {
-                        car_product_category_id : selectedCarType.car_product_category_id,
+                        car_product_category_id   : selectedCarType.car_product_category_id,
                         car_product_category_name : selectedCarType.car_product_category_name
                     },
                     car_product_series_list : {
-                        car_product_series_id : selectedCarSeries.car_product_series_id,
+                        car_product_series_id   : selectedCarSeries.car_product_series_id,
                         car_product_series_name : selectedCarSeries.car_product_series_name
                     }
                 }
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
         }
         this.baseProvider.post('getCarProductList', where).subscribe(products => {
                 if (products.status.succeed === '1') {
-                    console.log(products.data.car_product_list);
+                    // console.log(products.data.car_product_list);
                     this.products = this.products.concat(products.data.car_product_list);
 
                     this.isLoading = false;
@@ -130,14 +130,14 @@ export class HomeComponent implements OnInit {
                 //console.log(categoryList);
                 let categoryLists = categoryList.data.car_product_category_list;
                 this.rebuildData(categoryLists, 'category');
-                this.loadSeriesList(categoryLists[0]);
+                //this.loadSeriesList(categoryLists[0]);
             } else {
                 this.errorMessage = categoryList.status.error_desc;
             }
         }, error => this.errorMessage = <any>error);
     }
 
-    loadSeriesList(options){
+    loadSeriesList(options?){
         this.baseProvider.mockGet('getCarProductSeriesList', options).subscribe(seriesList => {
             if (seriesList.status.succeed === '1') {
                 //console.log(seriesList);
@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
         let label = 'car_product_category_name';
         let value = 'car_product_category_id';
         let dataName = 'carTypeList';
-        let labelDefault = '类型';
+        let labelDefault = '全部';
 
         let defaultItem:any = {
             label : labelDefault,
@@ -167,7 +167,7 @@ export class HomeComponent implements OnInit {
             label = 'car_product_series_name';
             value = 'car_product_series_id';
             dataName = 'carSeriesList';
-            labelDefault = '系列';
+            labelDefault = '全部';
 
             defaultItem = {
                 label : labelDefault,
@@ -176,9 +176,9 @@ export class HomeComponent implements OnInit {
                 car_product_series_id : '-2'
             };
 
-            this.selectedCarSeries = defaultItem;
+            // this.selectedCarSeries = defaultItem;
         }else{
-            this.selectedCarType = defaultItem;
+            // this.selectedCarType = defaultItem;
         }
 
         result.push(defaultItem);
@@ -232,9 +232,15 @@ export class HomeComponent implements OnInit {
                 backdrop: false
             }).subscribe((res: any) => {
                 console.log(res);
-                this.selectedCarType = res.items[0];
+                if(res.value === '-2'){
+                    this.selectedCarType = null;
+                    this.onSelectChanged();
+                }else{
+                    this.selectedCarType = res.items[0];
+                    this.onSelectChanged();
+                }
                 //this.selectedCarSeries = null;
-                this.loadSeriesList(res.items[0]);
+                //this.loadSeriesList(res.items[0]);
             });
         }
     }
@@ -249,8 +255,13 @@ export class HomeComponent implements OnInit {
                 backdrop: false
             }).subscribe((res: any) => {
                 console.log(res);
-                this.selectedCarSeries = res.items[0];
-                this.onSelectChanged();
+                if(res.value === '-2'){
+                    this.selectedCarSeries = null;
+                    this.onSelectChanged();
+                }else{
+                    this.selectedCarSeries = res.items[0];
+                    this.onSelectChanged();
+                }
             });
         }
     }

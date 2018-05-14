@@ -32,14 +32,19 @@ import {IllegalComponent} from '../pages/illegal/illegal';
 import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
 import {InsuranceComponent} from '../pages/insurance/insurance';
 
-import {OrdersComponent} from '../pages/orders/orders';
-import {OrderDetailComponent} from '../pages/orders/orderDetail/orderDetail';
-import {OrderCancelComponent} from '../pages/orders/orderCancel/orderCancel';
-import { OrderCompleteComponent } from '../pages/orders/orderComplete/orderComplete';
-import {EditOrderComponent} from '../pages/orders/editOrder/editOrder';
-import {ConfirmOrderComponent} from '../pages/orders/confirmOrder/confirmOrder';
+import {OrdersComponent} from '../pages/serviceOrder/orders';
+import {OrderDetailComponent} from '../pages/serviceOrder/orderDetail/orderDetail';
+import {OrderCancelComponent} from '../pages/serviceOrder/orderCancel/orderCancel';
+import {OrderCompleteComponent} from '../pages/serviceOrder/orderComplete/orderComplete';
+import {EditOrderComponent} from '../pages/serviceOrder/editOrder/editOrder';
+import {ConfirmOrderComponent} from '../pages/serviceOrder/confirmOrder/confirmOrder';
 
-import {MailComponent} from '../pages/orders/mail/mail';
+import {ProductOrderComponent} from '../pages/productOrder/product.order';
+import {ProductOrderDetailComponent} from '../pages/productOrder/orderDetail/orderDetail';
+import {ProductOrderCompleteComponent} from '../pages/productOrder/orderComplete/orderComplete';
+
+
+import {MailComponent} from '../pages/serviceOrder/mail/mail';
 
 import {PaymentComponent} from '../pages/pay/payment/payment';
 import {RefundComponent} from '../pages/pay/refund/refund';
@@ -69,8 +74,11 @@ const appRoutes: Routes = [
     {path : 'cart/:id', component : CartComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
-    {path : 'orders/:status/:page', component : OrdersComponent, canActivate: [AuthGuard]},
+    {path : 'serviceOrder/:status/:page', component : OrdersComponent, canActivate: [AuthGuard]},
+    {path : 'productOrder/:status/:page', component : ProductOrderComponent, canActivate: [AuthGuard]},
     {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},
+    {path : 'productOrderDetail/:id', component : ProductOrderDetailComponent, canActivate: [AuthGuard]},
+    {path : 'productOrderComplete/:id', component : ProductOrderCompleteComponent, canActivate: [AuthGuard]},
     {path : 'editOrder/:id', component : EditOrderComponent, canActivate: [AuthGuard]},
     {path : 'cancelOrder/:id', component : OrderCancelComponent, canActivate: [AuthGuard]},
     {path : 'completeOrder/:id', component : OrderCompleteComponent, canActivate: [AuthGuard]},

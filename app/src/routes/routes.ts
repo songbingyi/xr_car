@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     {path : 'detail/:id', component : DetailComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent},
-    {path : 'orders/:status', component : OrdersComponent},
+    {path : 'serviceOrder/:status', component : OrdersComponent},
     {path : 'orderDetail/:id', component : OrderDetailComponent},
     {path : 'confirmOrder/:id', component : ConfirmOrderComponent},
     {path : 'mail', component : MailComponent},

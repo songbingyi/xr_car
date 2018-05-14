@@ -52,7 +52,7 @@ export class AchievementComponent implements OnInit {
                     if (detail.status.error_code === '4004') {
                         setTimeout(() => {
                             this.goBack();
-                            //this.router.navigate(['/orders', 0]);
+                            //this.router.navigate(['/serviceOrder', 0]);
                         }, 2000);
                     }
                 }

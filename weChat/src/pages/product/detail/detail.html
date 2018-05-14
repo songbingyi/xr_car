@@ -35,6 +35,6 @@
             <img src="/assets/images/icon/phone.blue.png">
             <span>电话咨询</span>
         </a>
-        <a href="javascript:;" class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [ngClass]="{'disabled':product.is_can_order!=='1'}" (click)="toCart()">在线订购</a>
+        <a href="javascript:;" class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [ngClass]="{'disabled':product.is_can_order==='0'}" (click)="toCart()">在线订购</a>
     </div>
 </div>

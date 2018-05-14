@@ -107,7 +107,7 @@ export class DetailComponent implements OnInit {
     }
 
     toCart() {
-        if(this.product.is_can_order !== '1'){
+        if(this.product.is_can_order === '0'){
             return;
         }
         this.router.navigate(['cart', this.product.product_id], { queryParams: { product_id: this.product.product_id } });
