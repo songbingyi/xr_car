@@ -2,12 +2,12 @@
     <div class="scroll-page">
         <div class="bar">
             <span class="left text-grey">我的积分</span>
-            <span class="right text-black">13560</span>
+            <span class="right text-black">{{memberScore?.member_score_dashboard?.score_total}}</span>
         </div>
         <div class="content">
             <div class="inner-content">
                 <p class="text-black label-code">我的邀请码</p>
-                <p class="text-black body-code">123456</p>
+                <p class="text-black body-code">{{memberScore?.sales_member_dashboard?.sales_invite_code}}</p>
             </div>
             <span class="weui-agree__text right">
                 <a href="javascript:void(0);" class="text-blue" (click)="fullPopup.show()">《销售员规则》</a>

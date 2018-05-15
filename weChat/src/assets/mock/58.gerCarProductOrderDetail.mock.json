@@ -7,7 +7,7 @@
             "car_product_order_id": "1",
             "car_product_order_no": "XRCPO12345678",
             "car_product_order_status_info": {
-                "car_product_order_status_id": "1001",
+                "car_product_order_status_id": "1002",
                 "car_product_order_status_name": "新订单"
             },
             "car_product_info": {
@@ -18,6 +18,14 @@
             "cards_region_info": {
                 "region_id": "610100",
                 "region_name": "陕西 西安"
+            },
+            "car_product_order_create_date" : "2018-05-20 14:23:25",
+            "car_product_order_finish_date" : "",
+            "car_product_order_cancel_date" : "",
+            "buyer_member_info" : {
+                "member_id": "1",
+                "member_name":"张三四",
+                "mobile":"18629315233"
             }
         }
     },

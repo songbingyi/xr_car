@@ -1,0 +1,13 @@
+{
+    "status": {
+        "succeed": "1"
+    },
+    "data": {
+        "member_score_dashboard": {
+            "score_total": "100"
+        },
+        "sales_member_dashboard": {
+            "sales_invite_code": "A1B2"
+        }
+    }
+}

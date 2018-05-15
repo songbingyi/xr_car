@@ -4,11 +4,11 @@
     },
     "data": {
         "office_car_product_order_dashboard_info": {
-            "order_total_count": "6",
-            "order_pending_count": "0",
-            "order_process_count": "1",
-            "order_finish_count": "2",
-            "order_cancel_count": "3"
+            "order_total_count": "3",
+            "order_pending_count": "3",
+            "order_process_count": "3",
+            "order_finish_count": "3",
+            "order_cancel_count": "8"
         }
     }
 }

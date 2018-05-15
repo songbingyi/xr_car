@@ -28,6 +28,24 @@ export class UserComponent implements OnInit {
     carList: any = [];
     errorMessage: any;
 
+    role_ids:any = [];
+
+    memberRoles = {
+        '2':'getSalesCarProductOrderDashboard',
+        '3':'getOfficeCarProductOrderDashboard',
+        '4':'getDealerCarProductOrderDashboard'
+    };
+    dataNames = {
+        '2':'sales_car_product_order_dashboard_info',
+        '3':'office_car_product_order_dashboard_info',
+        '4':'dealer_car_product_order_dashboard_info'
+    };
+    dataItems:any = {
+        'role2' : {},
+        'role3' : {},
+        'role4' : {}
+    };
+
     constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private localStorage: LocalStorage) {
         this.hasCar();
         this.getMemberDetail();
@@ -62,8 +80,26 @@ export class UserComponent implements OnInit {
             .subscribe(member => {
                     if (member.status.succeed === '1') {
                         this.member.member_auth_info = member.data.member_auth_info;
-                        this.member.member_role_list = member.data.member_role_list || [];
-                        this.isSeller(this.member.member_role_list);
+                        this.member.member_role_list = member.data.member_role_list || [
+                            {
+                                "member_role_id": "1",
+                                "member_role_name": "普通会员"
+                            },
+                            {
+                                "member_role_id": "2",
+                                "member_role_name": "销售员"
+                            },
+                            {
+                                "member_role_id": "3",
+                                "member_role_name": "办事处人员"
+                            },
+                            {
+                                "member_role_id": "4",
+                                "member_role_name": "经销商人员"
+                            }
+                        ];
+                        this.getRoleIds();
+                        //this.isRole(this.member.member_role_list);
                         if(this.member.member_role_list) {
                             this.localStorage.setObject('member_role_list', this.member.member_role_list);
                         }
@@ -75,12 +111,38 @@ export class UserComponent implements OnInit {
             );
     }
 
-    isSeller(memberRoleList){
-        let ids = [];
+    getOrderCount(role) {
+        let path = this.memberRoles[role];
+        if(path){
+            this.baseService.mockGet(path, {
+
+            }).subscribe(orderDashboard => {
+                        if (orderDashboard.status.succeed === '1') {
+                            this.dataItems['role' + role] = orderDashboard.data[this.dataNames[role]];
+                        } else {
+                            this.errorMessage = orderDashboard.status.error_desc;
+                        }
+                    },
+                    error => this.errorMessage = <any>error
+                );
+        }
+    }
+
+    getRoleIds(){
+        let memberRoleList = this.member.member_role_list || [];
+        this.role_ids = [];
         memberRoleList.forEach(role=>{
-            ids.push(role.member_role_id);
+            this.role_ids.push(role.member_role_id);
         });
-        //this.isSellerRole = ids.indexOf('2') > -1;
+        this.role_ids.forEach((role)=>{
+            if(this.isRole(role)){
+                this.getOrderCount(role);
+            }
+        });
+    }
+
+    isRole(role){
+        return this.role_ids.indexOf(role) > -1;
     }
 
     hasCar() {
@@ -104,6 +166,10 @@ export class UserComponent implements OnInit {
             orderTypeObj = this.member.service_order_dashboard_info;
         }
         return orderTypeObj && orderTypeObj[key] !== '0';
+    }
+
+    hasBadge(count){
+        return count && count !== '0';
     }
 
     refresh() {

@@ -4,10 +4,10 @@
     },
     "data": {
         "sales_car_product_order_dashboard_info": {
-            "order_total_count": "6",
-            "order_process_count": "1",
+            "order_total_count": "2",
+            "order_process_count": "2",
             "order_finish_count": "2",
-            "order_cancel_count": "3"
+            "order_cancel_count": "1"
         }
     }
 }

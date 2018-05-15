@@ -7,7 +7,7 @@
             <div class="scroll-page">
                 <div *ngIf="all.isLoaded && all.lists.length">
                     <div *ngFor="let item of all.lists; let index = index">
-                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>购车订单</p>
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
                             </div>
-                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                                 <div class="weui-cell__bd">
                                     <span>查看详情</span>
                                 </div>
@@ -63,7 +63,7 @@
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
                     <div *ngFor="let item of needProcess.lists; let index = index">
 
-                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>购车订单</p>
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
                             </div>
-                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                                 <div class="weui-cell__bd">
                                     <span>查看详情</span>
                                 </div>
@@ -112,7 +112,7 @@
 
             </div>
         </tab>
-        <tab [active]="activeIndex=== (isSellerRole?1:2)">
+        <tab [active]="activeIndex=== 2">
             <span *tabHeading class="tab-set-heading">
                 处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count', 'processing')">{{processing.lists.length || car_product_order_dashboard_info.order_process_count}}</q>
             </span>
@@ -120,7 +120,7 @@
                 <div *ngIf="processing.isLoaded && processing.lists.length">
                     <div *ngFor="let item of processing.lists; let index = index">
 
-                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>购车订单</p>
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
                             </div>
-                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                                 <div class="weui-cell__bd">
                                     <span>查看详情</span>
                                 </div>
@@ -169,15 +169,15 @@
 
             </div>
         </tab>
-        <tab [active]="activeIndex=== (isSellerRole?2:3)">
+        <tab [active]="activeIndex=== 3">
             <span *tabHeading class="tab-set-heading">
-                已完成
+                已完成<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
                     <div *ngFor="let item of hasDone.lists; let index = index">
 
-                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>购车订单</p>
@@ -204,7 +204,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
                             </div>
-                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                                 <div class="weui-cell__bd">
                                     <span>查看详情</span>
                                 </div>
@@ -226,15 +226,15 @@
 
             </div>
         </tab>
-        <tab [active]="activeIndex===(isSellerRole?3:4)">
+        <tab [active]="activeIndex===4">
             <span *tabHeading class="tab-set-heading">
-                已取消
+                已取消<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="cancelled.isLoaded && cancelled.lists.length">
                     <div *ngFor="let item of cancelled.lists; let index = index">
 
-                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                        <div class="weui-cells" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                             <div class="weui-cell special-cell">
                                 <div class="weui-cell__bd">
                                     <p>购车订单</p>
@@ -261,7 +261,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.cards_region_info.region_name}}</div>
                             </div>
-                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]">
+                            <div class="weui-cell cell-operation weui-cell_access" [routerLink]="['/productOrderDetail', item.car_product_order_id]" [queryParams]="{role: role}">
                                 <div class="weui-cell__bd">
                                     <span>查看详情</span>
                                 </div>

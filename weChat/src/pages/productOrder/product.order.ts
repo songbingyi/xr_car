@@ -18,10 +18,13 @@ export class ProductOrderComponent implements OnInit {
     activeIndex: any;
     isLoaded: boolean;
 
+    role:any;
+
     memberRoleList:any = [];
     isSellerRole:boolean = false;
 
     subscribe: any;
+    roleSubscribe: any;
 
     order_type: Number;
 
@@ -89,31 +92,40 @@ export class ProductOrderComponent implements OnInit {
     objName: any = ['全部订单', '待处理', '处理中', '已完成', '已取消'];
     objKey: any = ['all', 'needProcess', 'processing', 'hasDone', 'cancelled'];
 
+    roleMap = {
+        '1':'普通会员',
+        '2':'销售员',
+        '3':'办事处人员',
+        '4':'经销商人员',
+    };
+
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
-        this.getMemberDetail();
-        //this.memberRoleList = this.localStorage.getObject('member_role_list');
+        // this.getMemberDetail();
+        // this.memberRoleList = this.localStorage.getObject('member_role_list');
 
     }
 
     ngOnInit() {
-        // let activeIndex: string = this.route.snapshot.paramMap.get('status');
-        // let page: string = this.route.snapshot.paramMap.get('page');
-        this.getCar_product_order_dashboard_info();
-
+        this.getCarProductOrderDashboardInfo();
         this.subscribe = this.route.params.subscribe(params => {
-            // console.log(params);
             let activeIndex: string = params.status;
             let page: string = params.page;
             this.activeIndex = parseInt(activeIndex, 10);
             this.order_type = this.activeIndex;
             this.key = this.objKey[this.activeIndex];
             this[this.key].pagination.page = page;
-            this.getInitData();
+
+            this.roleSubscribe = this.route.queryParams.subscribe(queryParams => {
+                this.role = queryParams.role || '1';
+                this.getInitData();
+                this.isSeller();
+            });
+
         });
     }
 
-    getMemberDetail() {
+    /*getMemberDetail() {
         this.baseService.post('getMemberDetail', {})
             .subscribe(member => {
                     if (member.status.succeed === '1') {
@@ -126,18 +138,19 @@ export class ProductOrderComponent implements OnInit {
                 },
                 error => this.errorMessage = <any>error
             );
-    }
+    }*/
 
-    getCar_product_order_dashboard_info() {
+    getCarProductOrderDashboardInfo() {
         this.car_product_order_dashboard_info = this.localStorage.getObject('car_product_order_dashboard_info');
     }
 
     isSeller(){
-        let ids = [];
+        /*let ids = [];
         this.memberRoleList.forEach(role=>{
             ids.push(role.member_role_id);
         });
-        this.isSellerRole = ids.indexOf('2') > -1;
+        this.isSellerRole = ids.indexOf('2') > -1;*/
+        this.isSellerRole = this.role === '2';
     }
     hasNotify(key, type) {
         /*if(type){
@@ -151,12 +164,17 @@ export class ProductOrderComponent implements OnInit {
     }
 
     onTabSelect(event) {
+
+        if(this.isSellerRole && event !== 0){
+            event = event + 1;
+        }
+        //console.log(event);
         this.order_type = event;
         this.key = this.objKey[event];
         // this[this.key].pagination.page ++;
         //this.getInitData();
         this.activeIndex = event;
-        this.router.navigate(['/productOrder', event, this[this.key].pagination.page]);
+        this.router.navigate(['/productOrder', event, this[this.key].pagination.page], {queryParams:{role:this.role}});
         // this.getInitData();
     }
 
@@ -167,29 +185,17 @@ export class ProductOrderComponent implements OnInit {
             'filter_value': {
                 order_type: this.order_type,
                 member_role_info : {
-                    member_role_id : '',
-                    member_role_name : ''
+                    member_role_id : this.role,
+                    member_role_name : this.roleMap[this.role]
                 }
             }
-        })
-            .subscribe(lists => {
+        }).subscribe(lists => {
                 if (lists.status.succeed === '1') {
                     let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.car_product_order_list;
                     this.car_product_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
-                    /*{
-                        "order_total_count":"3",
-                        "order_obligation_count":"3",
-                        "order_pending_count":"0",
-                        "order_process_count":"0",
-                        "order_finish_count":"0"
-                    }*/
-                    // this[this.key].lists[0].car_product_order_status_info.car_product_order_status_id = '61';
-                    // this[this.key].lists[1].car_product_order_status_info.car_product_order_status_id = '62';
                     this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);
-                    // console.log(this.key);
-                    // console.log(this[this.key]);
                 } else {
                     this.errorMessage = lists.status.error_desc;
                 }
@@ -200,7 +206,7 @@ export class ProductOrderComponent implements OnInit {
         this.key = this.objKey[type];
         this[this.key].pagination.page = $event;
         // this.getInitData();
-        this.router.navigate(['/productOrder', this.activeIndex, $event]);
+        this.router.navigate(['/productOrder', this.activeIndex, $event], {queryParams:{role:this.role}});
         // this.getInitData();
     }
 
@@ -245,6 +251,7 @@ export class ProductOrderComponent implements OnInit {
 
     ngOnDestroy() {
         this.subscribe.unsubscribe();
+        //this.roleSubscribe.unsubscribe();
     }
 
 }

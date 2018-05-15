@@ -25,7 +25,8 @@ export class ProductOrderDetailComponent implements OnInit {
     isLoaded: Boolean = false;
     dialogConfig: DialogConfig;
     isShowImage:Boolean = false;
-    largerImg: String = '';
+    roleId: String = '';
+    orderId: String = '';
 
     institutionDealer:any = [];
 
@@ -35,13 +36,16 @@ export class ProductOrderDetailComponent implements OnInit {
 
     selectedDealer:any = {};
 
+    canCloseOrderStatus = ["1002", "1003"];
+
     constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
     }
 
     ngOnInit() {
-        let id: string = this.route.snapshot.paramMap.get('id');
-        this.getInitData(id);
+        this.orderId = this.route.snapshot.paramMap.get('id');
+        this.roleId = this.route.snapshot.queryParams.role;
+        this.getInitData(this.orderId, this.roleId);
     }
 
     getInitData(id?, roleId?) {
@@ -110,12 +114,29 @@ export class ProductOrderDetailComponent implements OnInit {
     }
 
     showDealer() {
-        this.getInstitutionDealerListByCarProductOrder();
+        this.getInstitutionDealerListByCarProductOrder(this.orderId, this.roleId);
     }
 
     goBack() {
         if(!config.identityAuth){
             this.location.back();
+        }
+    }
+
+    canCloseOrder() {
+        // 角色为 3 时的待分配或者待处理，可以关闭
+        let orderStatus = this.detail && this.detail.car_product_order_status_info;
+        return this.roleId === '3' && orderStatus && this.canCloseOrderStatus.indexOf(orderStatus.car_product_order_status_id) > -1;
+    }
+
+    canSubmitOrder(role) {
+        let orderStatus = this.detail && this.detail.car_product_order_status_info;
+        // 角色为 2 时的待分配，角色为 3 时的待处理可以修改订单。
+        if(role === '3'){
+            return this.roleId === '3' && orderStatus && orderStatus.car_product_order_status_id === '1002';
+        }
+        if(role === '4'){
+            return this.roleId === '4' && orderStatus && orderStatus.car_product_order_status_id === '1003';
         }
     }
 
@@ -126,13 +147,12 @@ export class ProductOrderDetailComponent implements OnInit {
 
 
     /**
-     * "操作类型
-     * 1-付款
-     * 2-修改订单
-     * 3-删除订单 就是取消
-     * 4-申请退款"
+     * 1-取消订单
+     * 2-删除订单
+     * 3-分配给经销商
+     * 4-经销商确认订单
      */
-    // 取消
+    // 删除
     cancelOrder(id) {
         this.dialogConfig = {
             skin: 'ios',
@@ -141,21 +161,21 @@ export class ProductOrderDetailComponent implements OnInit {
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
-                this.operation(id, 3);
+                this.operation(id, 2);
             }
         });
         return false;
     }
-    // 退款
-    refundOrder(id) {
+    // 提交订单
+    submitOrder(id) {
         this.dialogConfig = {
             skin: 'ios',
             backdrop: false,
-            content: '您确定要退款吗？'
+            content: '您确定要提交此订单吗？'
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
-                this.operation(id, 4);
+                this.operation(id, 3);
             }
         });
         return false;
@@ -165,7 +185,11 @@ export class ProductOrderDetailComponent implements OnInit {
     operation(id, operation) {
         this.baseService.post('operatorServiceOrder', {
             'operator_type': operation,
-            'submit_service_order_info' : {'service_order_id' : id }
+            'submit_car_product_order_info' : {
+                'institution_dealer_info' : id
+            },
+            'outer_dms_no' : '',
+            'car_product_order_description' : ''
         })
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {
@@ -184,7 +208,7 @@ export class ProductOrderDetailComponent implements OnInit {
     }
 
     showResult(operation) {
-        let msg = operation === 3 ? '删除订单成功' : '退款申请已提交请耐心等待';
+        let msg = operation === 3 ? '删除订单成功' : '提交订单成功';
         this.showToast(msg);
         this.hideToast(() => {
             if (operation === 3) {
@@ -194,15 +218,7 @@ export class ProductOrderDetailComponent implements OnInit {
         });
     }
 
-    goPayment($event, service_order_id) {
-        $event.stopPropagation();
-        if(service_order_id){
-            window.location.href = '/payment?oid=' + service_order_id;
-        }
-    }
-
     showToast(msg) {
-        // let msg = operation === 3 ? '删除订单成功' : '退款申请已提交请耐心等待';
         this.toastService.success(msg);
     }
 
@@ -218,88 +234,5 @@ export class ProductOrderDetailComponent implements OnInit {
             }
         }, 2000);
         // this.toastService.hide();
-    }
-
-    showImage(img?) {
-        /*if(img){
-            this.largerImg = img;
-        }
-        this.isShowImage = !this.isShowImage;*/
-    }
-
-    changeMode(type) {
-        this.mode = type;
-    }
-
-    getServiceProductSpecTypeInfoByKey(key) {
-        let detail = this.detail;
-        let productSpecTypes = (detail && detail.service_order_product_info) ? detail.service_order_product_info.service_order_product_extend_list : [];
-        let length = productSpecTypes.length;
-        for ( let i = 0; i < length; i++) {
-            let productSpecType = productSpecTypes[i];
-            if (productSpecType.service_product_spec_type_info.service_product_spec_type_key === key) {
-                return productSpecType || {};
-            }
-        }
-        return {};
-    }
-
-    shouldShowPlaceholderBtn(item) {
-        let total = 0;
-        let obj: any = {};
-
-        if (item.car_product_order_status_info) {
-            obj = item.car_product_order_status_info;
-        }
-
-        if (obj.is_pay) {
-            total ++ ;
-        }
-
-        if (obj.is_edit) {
-            total ++ ;
-        }
-
-        if (obj.is_delete) {
-            total ++ ;
-        }
-
-        if (obj.is_return) {
-            total ++ ;
-        }
-
-        return total > 1;
-    }
-
-
-    showText(detail?) {
-        let status_id = detail.car_product_order_status_info.car_product_order_status_id || this.detail.car_product_order_status_info.car_product_order_status_id;
-        let text = ['实付款', '应付款'];
-        let status = ['21', '22', '31', '32', '41', '51', '61', '62'];
-        return status.indexOf(status_id) > -1 ? text[0] : text[1];
-    }
-
-    showFinalText(detail) {
-        let status_id = detail.car_product_order_status_info.car_product_order_status_id || this.detail.car_product_order_status_info.car_product_order_status_id;
-        let text = {'51':'完成时间','61':'申请退款时间','62':'退款时间'};
-        return text[status_id];
-    }
-
-    shouldShowPayMethod(detail) {
-        let status_id = detail.car_product_order_status_info.car_product_order_status_id || this.detail.car_product_order_status_info.car_product_order_status_id;
-        let status = ['21', '22', '31', '32', '41', '51', '61', '62'];
-        return status.indexOf(status_id) < 0;
-    }
-
-    shouldShowOperation(detail) {
-        let status_id = detail.car_product_order_status_info.car_product_order_status_id || this.detail.car_product_order_status_info.car_product_order_status_id;
-        let status = ['21', '41', '61'];
-        return status.indexOf(status_id) < 0;
-    }
-
-    shouldShowDate(detail) {
-        /*let status_id = detail.car_product_order_status_info.car_product_order_status_id || this.detail.car_product_order_status_info.car_product_order_status_id;
-        let status = ['51', '61', '62'];
-        return status.indexOf(status_id) > -1;*/
     }
 }

@@ -402,6 +402,7 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
     background:#FFF;
     font-size:13px;
     color:#4A4A4A;
+    position: relative;
     h4 {
         font-size:17px;
         color:#000000;
@@ -424,5 +425,10 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
         margin: 0 auto;
         padding: 15px 0;
         width: 60%;
+    }
+    .icon-close-btn {
+        position: absolute;
+        right: 5px;
+        top: 5px;
     }
 }

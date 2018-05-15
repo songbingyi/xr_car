@@ -19,13 +19,9 @@ import {PopupComponent} from 'ngx-weui/popup';
 })
 export class AchievementComponent implements OnInit {
 
-    mode : String = 'cert';
     errorMessage: any;
-    detail: any;
+    memberScore: any;
     isLoaded: Boolean = false;
-    dialogConfig: DialogConfig;
-    isShowImage:Boolean = false;
-    largerImg: String = '';
 
     @ViewChild('full') fullPopup: PopupComponent;
 
@@ -34,27 +30,19 @@ export class AchievementComponent implements OnInit {
     }
 
     ngOnInit() {
-        let id: string = this.route.snapshot.paramMap.get('id');
-        this.getInitData(id);
+        this.getInitData();
     }
 
-    getInitData(id?) {
+    getInitData() {
         this.isLoaded = false;
-        this.baseService.post('getServiceOrderDetail', {
-            'service_order_id' : id
-        })
-            .subscribe(detail => {
-                if (detail.status.succeed === '1') {
+        this.baseService.mockGet('getSalesMemberDashboard', {
+
+        }).subscribe(memberScore => {
+                if (memberScore.status.succeed === '1') {
                     this.isLoaded = true;
-                    this.detail = detail.data.service_order_info;
+                    this.memberScore = memberScore.data;
                 } else {
-                    this.errorMessage = detail.status.error_desc;
-                    if (detail.status.error_code === '4004') {
-                        setTimeout(() => {
-                            this.goBack();
-                            //this.router.navigate(['/serviceOrder', 0]);
-                        }, 2000);
-                    }
+                    this.errorMessage = memberScore.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
