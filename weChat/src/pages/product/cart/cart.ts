@@ -197,7 +197,7 @@ export class CartComponent implements OnInit {
             return ;
         }
 
-        if((this.orderForm.value.code && this.orderForm.value.code.length !== 6)){
+        if((this.orderForm.value.code && this.orderForm.value.code.length !== 4)){
             //this.fromError = true;
             this.errorMessage = '请输入有效的邀请码！';
             return ;
