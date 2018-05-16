@@ -1,21 +1,23 @@
 <div class="page order-detail order-cancel">
     <div class="scroll-page">
         <div class="order-bar">
-            <span class="left">订单号：{{detail?.service_order_no}}</span>
-            <span class="right">下单时间：{{detail?.service_order_date}}</span>
+            <span class="left">订单号：{{detail?.car_product_order_no}}</span>
+            <span class="right">下单时间：{{detail?.car_product_order_create_date}}</span>
         </div>
+        <form [formGroup]="orderForm" (ngSubmit)="cancelOrder()" [ngClass]="{'ng-from-error':fromError}">
         <div class="cancel-order">
             <div class="weui-cells__title">关闭该订单原因</div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <textarea class="weui-textarea" placeholder="请输入订单关闭原因" rows="3"></textarea>
+                        <textarea class="weui-textarea" placeholder="请输入订单关闭原因" [formControl]="comments" (focus)="focused()" rows="3"></textarea>
                         <!--<div class="weui-textarea-counter"><span>0</span>/200</div>-->
                     </div>
                 </div>
             </div>
         </div>
-        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" (click)="cancelOrder(detail?.service_order_id)">确认提交</a>
+        </form>
+        <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" *ngIf="canCloseOrder()" (click)="cancelOrder(detail?.car_product_order_id)">确认提交</a>
     </div>
     <!--<a href="javascript:;" class="weui-btn weui-btn_primary" (click)="cancelOrder(detail?.service_order_id)">确认提交</a>-->
 

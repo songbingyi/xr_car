@@ -49,8 +49,8 @@
             </div>
             <div class="weui-cell weui-cell_access my-location">
                 <div class="weui-cell__hd"><label class="weui-label">所在地区</label></div>
-                <div class="weui-cell__bd text-right" [hidden]="!(selectedRegion.region_id && selectedCity.region_id)" (click)="selectArea()"><span>{{selectedRegion.region_name}}</span><span>{{selectedCity.region_name}}</span></div>
-                <div class="weui-cell__bd" [hidden]="(selectedRegion.region_id && selectedCity.region_id)" style="color:#a9a9a9;" (click)="selectArea()">请选择所在地区</div>
+                <div class="weui-cell__bd text-right" [hidden]="!(selectedCity.region_id)" (click)="selectArea()"><span>{{selectedRegion.region_name}}</span><span>{{selectedCity.region_name}}</span></div>
+                <div class="weui-cell__bd" [hidden]="(selectedCity.region_id)" style="color:#a9a9a9;" (click)="selectArea()">请选择所在地区</div>
                 <div class="weui-cell__ft"></div>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <a class="weui-cell" href="javascript:;" (click)="selectCity()">
                 <div class="weui-cell__bd">
                     <img src="/assets/images/icon/location.fill.png" />
-                    <span>{{currentCity[0]?.region_name}} {{currentCity[1]?.region_name}}</span>
+                    <span>{{currentCity?.region_name}}</span>
                 </div>
                 <div class="weui-cell__ft"></div>
             </a>

@@ -185,7 +185,7 @@ export class UserSellerComponent implements OnInit {
             longitude : this.longitude
         }).subscribe(currentCity => {
             if (currentCity.status.succeed === '1') {
-                this.currentCity = currentCity.data.region_list;
+                this.currentCity = currentCity.data.region_info;
                 // let region_list = currentCity.data.region_list;
                 // this.currentCity = ((region_list[0] && region_list[0].region_name) ? region_list[0].region_name : '') + ((region_list[1] && region_list[1].region_name) ? region_list[1].region_name : '');
             } else {
@@ -195,7 +195,7 @@ export class UserSellerComponent implements OnInit {
     }
 
     loadRegionList() {
-        this.baseService.mockGet('getRegionList', {
+        this.baseService.post('getRegionList', {
             parent_id : ''
         }).subscribe(regionList => {
             if (regionList.status.succeed === '1') {
@@ -209,7 +209,7 @@ export class UserSellerComponent implements OnInit {
     }
 
     loadChildRegionList(id) {
-        this.baseService.mockGet('47-1-getRegionList', {
+        this.baseService.post('getRegionList', {
             parent_id : id
         }).subscribe(regionList => {
             if (regionList.status.succeed === '1') {
@@ -228,6 +228,7 @@ export class UserSellerComponent implements OnInit {
     selectRegion(province) {
         this.selectedRegion = province;
         if(province.has_child){
+            this.selectedCity = {};
             this.loadChildRegionList(province.region_id);
         }
     }
@@ -237,9 +238,9 @@ export class UserSellerComponent implements OnInit {
             this.fullCityPopup.close();
             this.fullPopup.close();
         }else{
-            if(this.currentCity[0] && this.currentCity[1]){
-                this.selectedRegion = this.currentCity[0];
-                this.selectedCity   = this.currentCity[1];
+            if(this.currentCity){
+                this.selectedRegion = {};
+                this.selectedCity   = this.currentCity;
             }
             this.fullPopup.close();
         }

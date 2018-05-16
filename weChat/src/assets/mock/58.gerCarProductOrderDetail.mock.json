@@ -7,7 +7,7 @@
             "car_product_order_id": "1",
             "car_product_order_no": "XRCPO12345678",
             "car_product_order_status_info": {
-                "car_product_order_status_id": "1002",
+                "car_product_order_status_id": "1003",
                 "car_product_order_status_name": "新订单"
             },
             "car_product_info": {

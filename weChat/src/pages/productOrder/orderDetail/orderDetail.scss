@@ -10,6 +10,10 @@
                 top:5px;
             }
         }
+        .weui-cell:before {
+            transform: scaleY(1);
+            right: 15px;
+        }
         .cell-operation {
             height: 60px;
             line-height: 60px;
@@ -95,6 +99,25 @@
             &.text-primary {
                 margin-top: -6px;
             }
+        }
+    }
+
+    .weui-cell__bd.dealer-select {
+        color:#a9a9a9;
+        &.error {
+            color:#E64340;
+        }
+    }
+    .weui-cell__bd.error {
+        input::placeholder {
+            color:#E64340;
+        }
+    }
+    .with-border {
+        border-top: 1px solid #E5E5E5;
+        margin-top: 5px;
+        .weui-btn.weui-btn_mini {
+            margin-top:12px;
         }
     }
 }

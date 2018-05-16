@@ -11,6 +11,7 @@ import {IdentityAuthService} from '../../../providers/identityAuth.service';
 
 import { config } from '../../../app/app.config';
 import {PopupComponent} from 'ngx-weui/popup';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector    : 'app-product-order-detail',
@@ -38,7 +39,15 @@ export class ProductOrderDetailComponent implements OnInit {
 
     canCloseOrderStatus = ["1002", "1003"];
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
+
+    submitting:boolean = false;
+    outerDmsNo   = new FormControl('', []);
+    orderForm: FormGroup = this.builder.group({
+        outerDmsNo     : this.outerDmsNo
+    });
+    fromError: Boolean = false;
+
+    constructor(private builder: FormBuilder, private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private toastService: ToastService, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
     }
 
@@ -90,7 +99,7 @@ export class ProductOrderDetailComponent implements OnInit {
                     this.isLoaded = true;
                     this.institutionDealer = institutionDealer.data.institution_dealer_group_by_region_list;
                     this.fullDealerPopup.show();
-                    console.log(this.institutionDealer);
+                    // console.log(this.institutionDealer);
                     // this.detail.car_product_order_status_info.car_product_order_status_id = '32';
                     // this.detail.car_product_order_status_info.service_order_status_name = '未到站';
                     // this.detail.service_order_comment = "经服务人员反馈，您在预约时间内未到站进行审车。您可修改预约时间，并重新提交审核。在通知后72小时未进行操作，该订单将自动取消并退款。";
@@ -114,7 +123,12 @@ export class ProductOrderDetailComponent implements OnInit {
     }
 
     showDealer() {
+        this.errorMessage = null;
         this.getInstitutionDealerListByCarProductOrder(this.orderId, this.roleId);
+    }
+
+    dmsFocused() {
+        this.errorMessage = null;
     }
 
     goBack() {
@@ -153,29 +167,41 @@ export class ProductOrderDetailComponent implements OnInit {
      * 4-经销商确认订单
      */
     // 删除
-    cancelOrder(id) {
-        this.dialogConfig = {
+    cancelOrder(id?) {
+        this.router.navigate(['/cancelOrder',this.detail.car_product_order_id], {queryParams:{role:this.roleId}});
+        /*this.dialogConfig = {
             skin: 'ios',
             backdrop: false,
             content: '您确定要删除此订单吗？'
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
-                this.operation(id, 2);
+                this.operation(this.detail.car_product_order_id, 2);
             }
-        });
+        });*/
         return false;
     }
     // 提交订单
-    submitOrder(id) {
+    submitOrder(id?) {
+        if(this.roleId === '3' && !this.selectedDealer.institution_dealer_id){
+            this.errorMessage = '请先选择经销商！';
+            return;
+        }
+        if(this.roleId === '4' && !this.orderForm.controls.outerDmsNo.value){
+            this.errorMessage = '请先输入订单编码信息！';
+            return;
+        }
+        // 3 角色是 3 的分配给经销商，角色是 4 的经销商确认订单。
+        let operationType = this.roleId === '3' ? 3 : 4;
+        let msg = this.roleId === '3' ? '您确定要分配此订单吗？' : '您确定要确认此订单吗？';
         this.dialogConfig = {
             skin: 'ios',
             backdrop: false,
-            content: '您确定要提交此订单吗？'
+            content: msg
         };
         this.dialogService.show(this.dialogConfig).subscribe((res: any) => {
             if (res.value) {
-                this.operation(id, 3);
+                this.operation(this.detail.car_product_order_id, operationType);
             }
         });
         return false;
@@ -183,19 +209,21 @@ export class ProductOrderDetailComponent implements OnInit {
 
 
     operation(id, operation) {
-        this.baseService.post('operatorServiceOrder', {
+        this.baseService.post('operatorCarProductOrder', {
             'operator_type': operation,
             'submit_car_product_order_info' : {
-                'institution_dealer_info' : id
+                'institution_dealer_info' : this.selectedDealer,
+                'outer_dms_no' : this.orderForm.controls.outerDmsNo.value,
+                'car_product_order_description' : '' // 订单描述(1-取消原因)
             },
-            'outer_dms_no' : '',
-            'car_product_order_description' : ''
+            'car_product_order_id' : id
         })
             .subscribe(detail => {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
+                    this.getInitData(this.orderId, this.roleId);
                     // this.detail = detail.data.service_order_info;
-                    this.showResult(operation);
+                    // this.showResult(operation);
                 } else {
                     this.errorMessage = detail.status.error_desc;
                 }

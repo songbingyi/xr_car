@@ -34,7 +34,7 @@ import {InsuranceComponent} from '../pages/insurance/insurance';
 
 import {OrdersComponent} from '../pages/serviceOrder/orders';
 import {OrderDetailComponent} from '../pages/serviceOrder/orderDetail/orderDetail';
-import {OrderCancelComponent} from '../pages/serviceOrder/orderCancel/orderCancel';
+import {OrderCancelComponent} from '../pages/productOrder/orderCancel/orderCancel';
 import {OrderCompleteComponent} from '../pages/serviceOrder/orderComplete/orderComplete';
 import {EditOrderComponent} from '../pages/serviceOrder/editOrder/editOrder';
 import {ConfirmOrderComponent} from '../pages/serviceOrder/confirmOrder/confirmOrder';

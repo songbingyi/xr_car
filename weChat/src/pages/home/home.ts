@@ -125,7 +125,9 @@ export class HomeComponent implements OnInit {
     }
 
     loadCategoryList(){
-        this.baseProvider.mockGet('getCarProductCategoryList', {}).subscribe(categoryList => {
+        this.baseProvider.post('getCarProductCategoryList', {
+
+        }).subscribe(categoryList => {
             if (categoryList.status.succeed === '1') {
                 //console.log(categoryList);
                 let categoryLists = categoryList.data.car_product_category_list;
@@ -138,7 +140,8 @@ export class HomeComponent implements OnInit {
     }
 
     loadSeriesList(options?){
-        this.baseProvider.mockGet('getCarProductSeriesList', options).subscribe(seriesList => {
+        options = options || {};
+        this.baseProvider.post('getCarProductSeriesList', options).subscribe(seriesList => {
             if (seriesList.status.succeed === '1') {
                 //console.log(seriesList);
                 let seriesLists = seriesList.data.car_product_series_list;

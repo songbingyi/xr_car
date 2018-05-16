@@ -50,7 +50,7 @@ import {PayCompleteComponent} from '../pages/pay/payComplete/payComplete';
 import {ConfirmOrderComponent} from '../pages/serviceOrder/confirmOrder/confirmOrder';
 import {MailComponent} from '../pages/serviceOrder/mail/mail';
 import {OrderDetailComponent} from '../pages/serviceOrder/orderDetail/orderDetail';
-import {OrderCancelComponent} from '../pages/serviceOrder/orderCancel/orderCancel';
+import {OrderCancelComponent} from '../pages/productOrder/orderCancel/orderCancel';
 import {OrderCompleteComponent} from '../pages/serviceOrder/orderComplete/orderComplete';
 
 

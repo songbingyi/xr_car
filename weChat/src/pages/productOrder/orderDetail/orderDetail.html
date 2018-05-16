@@ -123,70 +123,72 @@
                     </div>
                 </div>
 
-                <!--编辑服务商信息-->
-                <div class="order-info" *ngIf="canSubmitOrder('3') || canCloseOrder()">
-                    <div class="weui-cell special-cell with-select" *ngIf="canSubmitOrder('3')">
-                        <div class="weui-cell__bd">
-                            <p class="title">服务商信息</p>
+                <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" [ngClass]="{'ng-from-error':fromError}">
+                    <!--编辑服务商信息-->
+                    <div class="order-info" *ngIf="canSubmitOrder('3') || canCloseOrder()">
+                        <div class="weui-cell special-cell with-select" *ngIf="canSubmitOrder('3')">
+                            <div class="weui-cell__bd">
+                                <p class="title">服务商信息</p>
+                            </div>
+                            <div class="weui-cell__ft"><span></span></div>
                         </div>
-                        <div class="weui-cell__ft"><span></span></div>
-                    </div>
-                    <!--<div class="weui-cell weui-cell_access">
-                        <div class="weui-cell__hd">
-                            <p>服务商</p>
+                        <!--<div class="weui-cell weui-cell_access">
+                            <div class="weui-cell__hd">
+                                <p>服务商</p>
+                            </div>
+                            <div class="weui-cell__bd" [hidden]="!(selectedDealer.dealer_id)" (click)="selectDealer()">
+                                <p>请选择服务商</p>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <p>请选择服务商</p>
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </div>-->
+                        <div class="weui-cell weui-cell_access my-location" *ngIf="canSubmitOrder('3')">
+                            <div class="weui-cell__hd"><label class="weui-label">服务商</label></div>
+                            <div class="weui-cell__bd text-right" [hidden]="!selectedDealer?.institution_dealer_id" (click)="showDealer()"><span>{{selectedDealer?.institution_dealer_name}}</span></div>
+                            <div class="weui-cell__bd dealer-select" [ngClass]="{'error':errorMessage}" [hidden]="selectedDealer?.institution_dealer_id" (click)="showDealer()">请选择服务商</div>
+                            <div class="weui-cell__ft"></div>
                         </div>
-                        <div class="weui-cell__bd" [hidden]="!(selectedDealer.dealer_id)" (click)="selectDealer()">
-                            <p>请选择服务商</p>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p>请选择服务商</p>
-                        </div>
-                        <div class="weui-cell__ft"></div>
-                    </div>-->
-                    <div class="weui-cell weui-cell_access my-location" *ngIf="canSubmitOrder('3')">
-                        <div class="weui-cell__hd"><label class="weui-label">服务商</label></div>
-                        <div class="weui-cell__bd text-right" [hidden]="!selectedDealer?.institution_dealer_id" (click)="showDealer()"><span>{{selectedDealer?.institution_dealer_name}}</span></div>
-                        <div class="weui-cell__bd" [hidden]="selectedDealer?.institution_dealer_id" style="color:#a9a9a9;" (click)="showDealer()">请选择服务商</div>
-                        <div class="weui-cell__ft"></div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" *ngIf="canSubmitOrder('3')" (click)="submitOrder()">确认提交</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" *ngIf="canCloseOrder()" (click)="cancelOrder()">关闭订单</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!--编辑订单编码信息-->
-                <div class="order-info" *ngIf="canSubmitOrder('4')">
-                    <div class="weui-cell special-cell with-select">
-                        <div class="weui-cell__bd">
-                            <p class="title">订单编码信息</p>
-                        </div>
-                        <div class="weui-cell__ft"><span></span></div>
-                    </div>
-                    <div class="weui-cell my-location">
-                        <div class="weui-cell__hd"><label class="weui-label">订单编号</label></div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入订单编号">
-                        </div>
-                        <div class="weui-cell__ft"></div>
-                    </div>
-                    <div class="weui-cell cell-operation">
-                        <div class="weui-cell__bd button-sp-area">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" (click)="submitOrder()">确认提交</a>
+                        <div class="weui-cell cell-operation">
+                            <div class="weui-cell__bd button-sp-area" [ngClass]="{'with-border':canCloseOrder() && !canSubmitOrder('3')}">
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" *ngIf="canSubmitOrder('3')" (click)="submitOrder()">确认提交</a>
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_default" *ngIf="canCloseOrder()" (click)="cancelOrder()">关闭订单</a>
+                            </div>
                         </div>
                     </div>
 
-                </div>
+                    <!--编辑订单编码信息-->
+                    <div class="order-info" *ngIf="canSubmitOrder('4')">
+                        <div class="weui-cell special-cell with-select">
+                            <div class="weui-cell__bd">
+                                <p class="title">订单编码信息</p>
+                            </div>
+                            <div class="weui-cell__ft"><span></span></div>
+                        </div>
+                        <div class="weui-cell my-location">
+                            <div class="weui-cell__hd"><label class="weui-label">订单编号</label></div>
+                            <div class="weui-cell__bd" [ngClass]="{'error':errorMessage}">
+                                <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="outerDmsNo" (focus)="dmsFocused()" placeholder="请输入订单编码信息">
+                            </div>
+                            <div class="weui-cell__ft"></div>
+                        </div>
+                        <div class="weui-cell cell-operation">
+                            <div class="weui-cell__bd button-sp-area">
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_placeholder">占位</a>
+                                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default weui-btn_mini_primary" (click)="submitOrder()">确认提交</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
 
                 <weui-popup #fullDealer [config]="{is_full: true}">
                     <div class="list-item" *ngFor="let dealerList of institutionDealer">
                         <div class="weui-cells__title">{{dealerList.region_info?.region_name}}</div>
                         <div class="weui-cells all-location">
-                            <a  *ngFor="let dealer of dealerList.institution_dealer_list" class="weui-cell" href="javascript:;" (click)="selectDealer(dealer)">
+                            <a *ngFor="let dealer of dealerList.institution_dealer_list" class="weui-cell" href="javascript:;" (click)="selectDealer(dealer)">
                                 <div class="weui-cell__bd"><span>{{dealer.institution_dealer_name}}</span></div>
                                 <div class="weui-cell__ft"><span [hidden]="selectedDealer.institution_dealer_id !== dealer.institution_dealer_id"><i class="weui-icon-success-no-circle"></i></span></div>
                             </a>
