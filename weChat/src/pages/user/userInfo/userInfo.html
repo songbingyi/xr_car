@@ -53,25 +53,25 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="companyName" placeholder="{{companyName.invalid && (companyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="companyName" (change)="changed('companyName', 'userInfoForm')" placeholder="{{companyName.invalid && (companyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">职位</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="position" placeholder="{{position.invalid && (position.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="position" (change)="changed('position', 'userInfoForm')" placeholder="{{position.invalid && (position.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">公司地址</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="companyAdd" placeholder="{{companyAdd.invalid && (companyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="companyAdd" (change)="changed('companyAdd', 'userInfoForm')" placeholder="{{companyAdd.invalid && (companyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="email" placeholder="{{email.invalid && (email.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="email" (change)="changed('email', 'userInfoForm')" placeholder="{{email.invalid && (email.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
                 </div>
             </div>
         </div>
@@ -217,25 +217,25 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">公司名称</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="updateCompanyName" placeholder="{{updateCompanyName.invalid && (updateCompanyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
+                        <input class="weui-input" type="text" [formControl]="updateCompanyName" (change)="changed('companyName', 'updateForm')" placeholder="{{updateCompanyName.invalid && (updateCompanyName.dirty || errorMessage) ? '请填写公司名称！' : '请填写您的公司全称'}}" appFocusBlur />
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">职位</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="updatePosition" placeholder="{{updatePosition.invalid && (updatePosition.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
+                        <input class="weui-input" type="text" [formControl]="updatePosition" (change)="changed('position', 'updateForm')" placeholder="{{updatePosition.invalid && (updatePosition.dirty || errorMessage) ? '请填写职位！' : '请输入您的职位'}}" appFocusBlur />
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">公司地址</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="updateCompanyAdd" placeholder="{{updateCompanyAdd.invalid && (updateCompanyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
+                        <input class="weui-input" type="text" [formControl]="updateCompanyAdd" (change)="changed('companyAdd', 'updateForm')" placeholder="{{updateCompanyAdd.invalid && (updateCompanyAdd.dirty || errorMessage) ? '请填写公司地址！' : '请填写您的公司地址'}}" appFocusBlur />
                     </div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="updateEmail" placeholder="{{updateEmail.invalid && (updateEmail.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
+                        <input class="weui-input" type="text" [formControl]="updateEmail" (change)="changed('email', 'updateForm')" placeholder="{{updateEmail.invalid && (updateEmail.dirty || errorMessage) ? '请填写邮箱！' : '请填写您的邮箱'}}" appFocusBlur />
                     </div>
                 </div>
             </div>
@@ -315,6 +315,9 @@
             <p>第五条 会员同意并保证不得利用平台服务从事侵害他人权益或违法之行为，若有违反者应负所有法律责任。上述行为包括但不限于：1、反对宪法所确定的基本原则，危害国家安全、泄漏国家秘密、颠覆国家政权、破坏国家统一的；2、侵害他人名誉、隐私权、商业秘密、商标权、著作权、专利权、其他知识产权及其他权益；3、违反依法律或合约所应负之保密义务；4、冒用他人名义使用平台服务；5、从事任何不法交易行为，如贩卖枪支、毒品、禁药、盗版软件或其他违禁物；6、提供赌博资讯或以任何方式引诱他人参与赌博；7、涉嫌洗钱、套现或进行传销活动的；8、从事任何可能含有电脑病毒或是可能侵害平台服务系统、资料等行为；9、利用平台服务系统进行可能对互联网或移动网正常运转造成不利影响之行为；10、侵犯平台的商业利益，包括但不限于发布非经平台许可的商业广告11、利用平台服务上传、展示或传播虚假的、骚扰性的、中伤他人的、辱骂性的、恐吓性的、庸俗淫秽的或其他任何非法的信息资料；12、其他平台有正当理由认为不适当之行为。</p>
             <div class="button-sp-area">
                 <button weui-button [weui-plain]="true" [weui-type]="'default'" (click)="fullArgumentsPopup.close()">关闭</button>
+            </div>
+            <div class="icon-close-btn" (click)="fullArgumentsPopup.close()">
+                <i class="weui-icon-cancel"></i>
             </div>
         </div>
     </weui-popup>

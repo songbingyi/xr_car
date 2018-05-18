@@ -267,6 +267,10 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
+        if(!this.canSubmit('userInfoForm')){
+            return ;
+        }
+
         if (this.userInfoForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
             this.errorMessage = '';
@@ -318,6 +322,7 @@ export class UserInfoComponent implements OnInit {
                     this.errorMessage = result.status.error_desc;
                 }
                 this.submitting = false;
+                this.router.navigate(['/success']);
             }, error => this.errorMessage = <any>error);
     }
 
@@ -368,6 +373,10 @@ export class UserInfoComponent implements OnInit {
         }
         if(!this.selectedRegion.region_id || !this.selectedCity.region_id){
             this.errorMessage = '请先选择所属地区！';
+            return ;
+        }
+
+        if(!this.canSubmit('updateForm')){
             return ;
         }
 
@@ -601,6 +610,80 @@ export class UserInfoComponent implements OnInit {
             this.fullPopup.close();
         }
 
+    }
+
+    focused() {
+        //this.errorMessage = '';
+    }
+
+    changed(type, form, length){
+        length = length || 30;
+        let email = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+        let keys = ['companyName', 'position', 'companyAdd', 'email'];
+        let types = {
+            'companyName':'公司名称超过30个字，请重新填写！',
+            'position':'职位超过30个字，请重新填写！',
+            'companyAdd':'公司地址超过30个字，请重新填写！',
+            'email':'邮箱格式错误，请检查，重新填写！'
+        };
+        let value = this[form].value[type];
+        if(type === 'email'){
+            if(value){
+                if(!email.test(value)){
+                    this.errorMessage = types.email;
+                }else{
+                    this.errorMessage = '';
+                }
+            }else{
+                this.errorMessage = '';
+            }
+        }else{
+            if(value && value.length > length){
+                this.errorMessage = types[type];
+            }else{
+                this.errorMessage = '';
+            }
+        }
+
+    }
+
+    canSubmit(form){
+        let length = 30;
+        let email = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+        let keys = ['companyName', 'position', 'companyAdd', 'email'];
+        let types = {
+            'companyName':'公司名称超过30个字，请重新填写！',
+            'position':'职位超过30个字，请重新填写！',
+            'companyAdd':'公司地址超过30个字，请重新填写！',
+            'email':'邮箱格式错误，请检查，重新填写！'
+        };
+        let canSubmit = true;
+        for(let key in types){
+            let value = this[form].value[key];
+            if(key === 'email'){
+                if(value){
+                    if(!email.test(value)){
+                        this.errorMessage = types.email;
+                    }
+                }
+            }else{
+                if(value && value.length > length){
+                    canSubmit = false;
+                }
+            }
+        }
+        /*keys.forEach((key)=>{
+            if(key === 'email'){
+                if(this.updateForm.value.email){
+
+                }
+            }else{
+                let value = this.updateForm.value[key];
+                if(value && value.length > length){
+                    this.errorMessage = types[key];
+                }
+            }
+        });*/
     }
 
     ngOnInit() {

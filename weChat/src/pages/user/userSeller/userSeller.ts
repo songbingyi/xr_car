@@ -37,6 +37,7 @@ export class UserSellerComponent implements OnInit {
 
     @ViewChild('full') fullPopup: PopupComponent;
     @ViewChild('fullCity') fullCityPopup: PopupComponent;
+    @ViewChild('fullArguments') fullArgumentsPopup: PopupComponent;
 
     wxs: any;
 
