@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
                         car_product_category_id   : selectedCarType.car_product_category_id,
                         car_product_category_name : selectedCarType.car_product_category_name
                     },
-                    car_product_series_list : {
+                    car_product_series_info : {
                         car_product_series_id   : selectedCarSeries.car_product_series_id,
                         car_product_series_name : selectedCarSeries.car_product_series_name
                     }

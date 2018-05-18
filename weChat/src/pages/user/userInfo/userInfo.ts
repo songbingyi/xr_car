@@ -14,6 +14,7 @@ import {IdentityAuthService} from '../../../providers/identityAuth.service';
 import {Location} from '@angular/common';
 import {PickerService} from 'ngx-weui/picker';
 import {WXSDKService} from '../../../providers/wx.sdk.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -152,7 +153,9 @@ export class UserInfoComponent implements OnInit {
     selectedRegion:any = {};
     selectedCity:any = {};
 
-    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
+    role_ids:any = [];
+
+    constructor(private router : Router,private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
         this.getCarAndMemberInfo();
         this.wxs = this.wxService.init();
         this.getSalesYearList();
@@ -165,12 +168,43 @@ export class UserInfoComponent implements OnInit {
         })
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
-                    this.memberDetail = memberDetail.data;
+                    this.memberDetail = memberDetail.data || {};
+                    this.memberDetail.member_role_list = [
+                        {
+                            "member_role_id": "1",
+                            "member_role_name": "普通会员"
+                        },
+                        {
+                            "member_role_id": "2",
+                            "member_role_name": "销售员"
+                        },
+                        {
+                            "member_role_id": "3",
+                            "member_role_name": "办事处人员"
+                        },
+                        {
+                            "member_role_id": "4",
+                            "member_role_name": "经销商人员"
+                        }
+                    ];
+                    this.getRoleIds();
                     this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
+    }
+
+    getRoleIds(){
+        let memberRoleList = this.memberDetail.member_role_list || [];
+        this.role_ids = [];
+        memberRoleList.forEach(role=>{
+            this.role_ids.push(role.member_role_id);
+        });
+    }
+
+    isRole(role){
+        return this.role_ids.indexOf(role) > -1;
     }
 
     getLocation(callback?) {
@@ -265,6 +299,7 @@ export class UserInfoComponent implements OnInit {
                     if(config.identityAuth){
                         this.identityAuthService.goHome();
                     }else{
+                        this.router.navigate(['/success']);
                         this.getCarAndMemberInfo();
                         this.userInfoForm.controls.phone.setValue('');
                         this.userInfoForm.controls.username.setValue('');
@@ -366,6 +401,7 @@ export class UserInfoComponent implements OnInit {
                     this.timeOut = 60;
                     this.timing = true;
                     this.timeLeft();*/
+                    this.router.navigate(['/success']);
                     this.timeOut = 60;
                     this.timing = false;
                     this.isModifying = false;
@@ -448,7 +484,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     getSalesYearList(){
-        this.baseService.mockGet('getSalesYearList', {
+        this.baseService.post('getSalesYearList', {
             // 'member_id' : '1'
         }).subscribe(result => {
             if (result.status.succeed === '1') {

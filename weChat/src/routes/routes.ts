@@ -43,6 +43,7 @@ import {ProductOrderComponent} from '../pages/productOrder/product.order';
 import {ProductOrderDetailComponent} from '../pages/productOrder/orderDetail/orderDetail';
 import {ProductOrderCompleteComponent} from '../pages/productOrder/orderComplete/orderComplete';
 
+import {SuccessComponent} from '../pages/success/success';
 
 import {MailComponent} from '../pages/serviceOrder/mail/mail';
 
@@ -100,7 +101,8 @@ const appRoutes: Routes = [
     {path : 'rescueRank/:id', component : RescueRankComponent, canActivate: [AuthGuard]},
     {path : 'notify', component : NotifyComponent, canActivate: [AuthGuard]},
     {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},
-    {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]}
+    {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]},
+    {path : 'success', component : SuccessComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

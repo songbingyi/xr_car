@@ -39,6 +39,8 @@ import {ProductOrderDetailComponent} from '../pages/productOrder/orderDetail/ord
 import {ProductOrderCompleteComponent} from '../pages/productOrder/orderComplete/orderComplete';
 
 
+import {SuccessComponent} from '../pages/success/success';
+
 import {NotifyComponent} from '../pages/notify/notify';
 import {CategoryComponent} from '../pages/notify/category/category';
 import {NotifyDetailComponent} from '../pages/notify/detail/detail';
@@ -119,6 +121,8 @@ import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
         ProductOrderComponent,
         ProductOrderDetailComponent,
         ProductOrderCompleteComponent,
+
+        SuccessComponent,
 
         FocusBlurDirective,
 

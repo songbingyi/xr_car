@@ -154,8 +154,8 @@
             </div>
         </div>
 
-        <div class="weui-cells__title">销售相关</div>
-        <div class="weui-cells">
+        <div class="weui-cells__title" *ngIf="isRole('1')">销售相关</div>
+        <div class="weui-cells" *ngIf="isRole('1')">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>从业时长</p>
@@ -240,20 +240,8 @@
                 </div>
             </div>
 
-            <div class="weui-cells__title">销售相关</div>
-            <div class="weui-cells">
-                <!--<div class="weui-cell weui-cell_access">
-                    <div class="weui-cell__bd">
-                        <p>从业时长</p>
-                    </div>
-                    <div class="weui-cell__ft">3 年</div>
-                </div>
-                <div class="weui-cell weui-cell_access">
-                    <div class="weui-cell__bd">
-                        <p>所在地区</p>
-                    </div>
-                    <div class="weui-cell__ft"><span>陕西</span><span>西安</span></div>
-                </div>-->
+            <div class="weui-cells__title" *ngIf="isRole('1')">销售相关</div>
+            <div class="weui-cells" *ngIf="isRole('1')">
                 <div class="weui-cell weui-cell_access my-location">
                     <div class="weui-cell__hd"><label class="weui-label">从业时长</label></div>
                     <div class="weui-cell__bd text-right" [hidden]="!selectedSalesYears?.sales_year_name" (click)="showSalesYears()"><span>{{selectedSalesYears?.sales_year_name}}</span></div>

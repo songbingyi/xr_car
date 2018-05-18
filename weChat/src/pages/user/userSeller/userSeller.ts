@@ -13,6 +13,7 @@ import {PopupComponent} from 'ngx-weui/popup';
 import {WXSDKService} from '../../../providers/wx.sdk.service';
 import {PickerService} from 'ngx-weui/picker';
 import {Location} from '@angular/common';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class UserSellerComponent implements OnInit {
         Validators.required
     ]);
 
-    constructor(private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
+    constructor(private router : Router, private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
         this.identityAuthService.check();
         this.wxs = this.wxService.init();
         this.getCarAndMemberInfo();
@@ -119,7 +120,8 @@ export class UserSellerComponent implements OnInit {
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
-                    this.location.back();
+                    //this.location.back();
+                    this.router.navigate(['/success']);
                 } else {
                     this.errorMessage = result.status.error_desc;
                 }
@@ -128,12 +130,11 @@ export class UserSellerComponent implements OnInit {
     }
 
     getSalesYearList(){
-        this.baseService.mockGet('getSalesYearList', {
+        this.baseService.post('getSalesYearList', {
             // 'member_id' : '1'
         }).subscribe(result => {
                 if (result.status.succeed === '1') {
                     let sales_year_list = result.data.sales_year_list;
-                    console.log(sales_year_list);
                     this.rebuildSalesYear(sales_year_list);
                 } else {
                     this.errorMessage = result.status.error_desc;

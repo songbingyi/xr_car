@@ -1,0 +1,17 @@
+<div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">提交成功</h2>
+        <p class="weui-msg__desc">您的信息已经提交成功</p>
+    </div>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [routerLink]="['/userInfo']">查看个人信息</a>
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" [routerLink]="['/']">返回首页</a>
+        </p>
+    </div>
+</div>
+
+<div class="error-bar" [hidden]="!errorMessage">
+    <p>{{errorMessage}}</p>
+</div>
