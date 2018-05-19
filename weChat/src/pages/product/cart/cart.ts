@@ -105,9 +105,9 @@ export class CartComponent implements OnInit {
     }
 
     loadCurrentCity() {
-        this.baseProvider.mockGet('getRegionCoordinate', {
-            latitude : this.latitude,
-            longitude : this.longitude
+        this.baseProvider.post('getRegionCoordinate', {
+            latitude_num : this.latitude,
+            longitude_num : this.longitude
         }).subscribe(currentCity => {
             if (currentCity.status.succeed === '1') {
                 this.currentCity = currentCity.data.region_info;

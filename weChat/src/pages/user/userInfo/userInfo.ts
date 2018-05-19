@@ -187,7 +187,7 @@ export class UserInfoComponent implements OnInit {
                         }
                     ];*/
                     this.getRoleIds();
-                    this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
+                    this.identityAuthStatus = false; // this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
@@ -548,9 +548,9 @@ export class UserInfoComponent implements OnInit {
     }*/
 
     loadCurrentCity() {
-        this.baseService.mockGet('getRegionCoordinate', {
-            latitude : this.latitude,
-            longitude : this.longitude
+        this.baseService.post('getRegionCoordinate', {
+            latitude_num : this.latitude,
+            longitude_num : this.longitude
         }).subscribe(currentCity => {
             if (currentCity.status.succeed === '1') {
                 this.currentCity = currentCity.data.region_info;
