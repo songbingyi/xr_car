@@ -187,7 +187,7 @@ export class UserInfoComponent implements OnInit {
                         }
                     ];*/
                     this.getRoleIds();
-                    this.identityAuthStatus = false; // this.memberDetail.member_auth_info.identity_auth_status !== '0';
+                    this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
                 }
