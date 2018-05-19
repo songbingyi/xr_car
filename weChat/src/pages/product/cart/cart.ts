@@ -237,7 +237,7 @@ export class CartComponent implements OnInit {
         });
         this.submitting = false;
 
-        this.baseService.mockGet('addCarProductOrder', {
+        this.baseService.post('addCarProductOrder', {
             "submit_car_product_order_info": {
                 "car_product_info": {
                     "product_id": this.product.product_id,

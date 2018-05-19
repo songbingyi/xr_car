@@ -99,7 +99,7 @@ export class UserSellerComponent implements OnInit {
             this.errorMessage = '请先选择从业时长！';
             return ;
         }
-        if(!this.selectedRegion.region_id || !this.selectedCity.region_id){
+        if(!this.selectedCity.region_id){
             this.errorMessage = '请先选择所属地区！';
             return ;
         }
@@ -114,9 +114,9 @@ export class UserSellerComponent implements OnInit {
         }
         //console.log(this.userInfoForm);
         this.submitting = true;
-        this.baseService.mockGet('applySalesMan', {
+        this.baseService.post('applySalesMan', {
             // 'member_id' : '1',
-            'sales_years' : this.selectedSalesYears,
+            'sales_years' : this.selectedSalesYears.sales_year_value,
             'sales_region_info'  : this.selectedCity
         })
             .subscribe(result => {

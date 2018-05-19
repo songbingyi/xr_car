@@ -132,11 +132,10 @@ export class UserInfoComponent implements OnInit {
 
     identityAuth: boolean;
 
-
-
     sales_years:any;
     selectedSalesYears:any;
     salesYears:any;
+    salesYearList = [];
 
     @ViewChild('full') fullPopup: PopupComponent;
     @ViewChild('fullCity') fullCityPopup: PopupComponent;
@@ -169,7 +168,7 @@ export class UserInfoComponent implements OnInit {
             .subscribe(memberDetail => {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data || {};
-                    this.memberDetail.member_role_list = [
+                    /*this.memberDetail.member_role_list = [
                         {
                             "member_role_id": "1",
                             "member_role_name": "普通会员"
@@ -186,7 +185,7 @@ export class UserInfoComponent implements OnInit {
                             "member_role_id": "4",
                             "member_role_name": "经销商人员"
                         }
-                    ];
+                    ];*/
                     this.getRoleIds();
                     this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
@@ -367,11 +366,13 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
-        if(this.isRole('1') && (!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value))){
+
+        // 只有 role 是 2 的才会编辑销售信息。role:2 销售员
+        if(this.isRole('2') && (!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value))){
             this.errorMessage = '请先选择从业时长！';
             return ;
         }
-        if(this.isRole('1') && (!this.selectedRegion.region_id || !this.selectedCity.region_id)){
+        if(this.isRole('2') && !this.selectedCity.region_id){
             this.errorMessage = '请先选择所属地区！';
             return ;
         }
@@ -401,7 +402,7 @@ export class UserInfoComponent implements OnInit {
             'job_position'   : this.updateForm.value.position,
             'company_address': this.updateForm.value.companyAdd,
             'email'          : this.updateForm.value.email,
-            'sales_years'    : this.selectedSalesYears,
+            'sales_years'    : this.selectedSalesYears.sales_year_value,
             'sales_region_info'  : this.selectedCity
         })
             .subscribe(result => {
@@ -498,6 +499,7 @@ export class UserInfoComponent implements OnInit {
         }).subscribe(result => {
             if (result.status.succeed === '1') {
                 let sales_year_list = result.data.sales_year_list;
+                this.salesYearList = sales_year_list;
                 console.log(sales_year_list);
                 this.rebuildSalesYear(sales_year_list);
             } else {
@@ -688,6 +690,17 @@ export class UserInfoComponent implements OnInit {
                 }
             }
         });*/
+    }
+
+    salesYearName(salesYears){
+        let salesYearList = this.salesYearList || [];
+        let name = '';
+        salesYearList.forEach((year)=>{
+            if(year.sales_year_value === salesYears){
+                name = year.sales_year_name;
+            }
+        });
+        return name;
     }
 
     ngOnInit() {

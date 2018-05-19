@@ -61,6 +61,7 @@ export class UserComponent implements OnInit {
             .subscribe(member => {
                     if (member.status.succeed === '1') {
                         this.member = member.data;
+                        //this.member.is_has_sales_button = '1';
                         if(this.member.service_order_dashboard_info) {
                             this.localStorage.setObject('service_order_dashboard_info', this.member.service_order_dashboard_info);
                         }
@@ -80,7 +81,7 @@ export class UserComponent implements OnInit {
             .subscribe(member => {
                     if (member.status.succeed === '1') {
                         this.member.member_auth_info = member.data.member_auth_info;
-                        this.member.member_role_list = member.data.member_role_list || [
+                        this.member.member_role_list = member.data.member_role_list || [/*
                             {
                                 "member_role_id": "1",
                                 "member_role_name": "普通会员"
@@ -96,11 +97,11 @@ export class UserComponent implements OnInit {
                             {
                                 "member_role_id": "4",
                                 "member_role_name": "经销商人员"
-                            }
+                            }*/
                         ];
                         this.getRoleIds();
                         //this.isRole(this.member.member_role_list);
-                        if(this.member.member_role_list) {
+                        if(this.member.member_role_list && this.member.member_role_list.length) {
                             this.localStorage.setObject('member_role_list', this.member.member_role_list);
                         }
                     } else {
