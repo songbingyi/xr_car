@@ -367,11 +367,11 @@ export class UserInfoComponent implements OnInit {
             return ;
         }
 
-        if(!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value)){
+        if(this.isRole('1') && (!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value))){
             this.errorMessage = '请先选择从业时长！';
             return ;
         }
-        if(!this.selectedRegion.region_id || !this.selectedCity.region_id){
+        if(this.isRole('1') && (!this.selectedRegion.region_id || !this.selectedCity.region_id)){
             this.errorMessage = '请先选择所属地区！';
             return ;
         }
@@ -527,7 +527,8 @@ export class UserInfoComponent implements OnInit {
     }
 
     showSalesYears() {
-        this.pickerService.show(this.salesYears, '', [0], {
+        this.errorMessage = null;
+            this.pickerService.show(this.salesYears, '', [0], {
             type: 'default',
             separator: '|',
             cancel: '取消',
@@ -587,6 +588,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     selectArea() {
+        this.errorMessage = null;
         this.loadRegionList();
     }
 
@@ -664,6 +666,7 @@ export class UserInfoComponent implements OnInit {
                 if(value){
                     if(!email.test(value)){
                         this.errorMessage = types.email;
+                        canSubmit = false;
                     }
                 }
             }else{
@@ -672,6 +675,7 @@ export class UserInfoComponent implements OnInit {
                 }
             }
         }
+        return canSubmit;
         /*keys.forEach((key)=>{
             if(key === 'email'){
                 if(this.updateForm.value.email){
