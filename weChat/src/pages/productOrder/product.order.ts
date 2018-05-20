@@ -180,7 +180,7 @@ export class ProductOrderComponent implements OnInit {
 
     getInitData() {
         this[this.key].isLoaded = false;
-        this.baseService.mockGet('gerCarProductOrderList', {
+        this.baseService.post('gerCarProductOrderList', {
             'pagination': this[this.key].pagination,
             'filter_value': {
                 order_type: this.order_type,

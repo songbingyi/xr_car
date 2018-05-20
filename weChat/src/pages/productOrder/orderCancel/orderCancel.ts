@@ -50,7 +50,7 @@ export class OrderCancelComponent implements OnInit {
 
     getInitData(id?, roleId?) {
         this.isLoaded = false;
-        this.baseService.mockGet('gerCarProductOrderDetail', {
+        this.baseService.post('gerCarProductOrderDetail', {
             'car_product_order_id' : id,
             'member_role_id' : roleId
         })

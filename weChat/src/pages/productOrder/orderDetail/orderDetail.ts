@@ -59,7 +59,7 @@ export class ProductOrderDetailComponent implements OnInit {
 
     getInitData(id?, roleId?) {
         this.isLoaded = false;
-        this.baseService.mockGet('gerCarProductOrderDetail', {
+        this.baseService.post('gerCarProductOrderDetail', {
             'car_product_order_id' : id,
             'member_role_id' : roleId
         })
@@ -67,9 +67,6 @@ export class ProductOrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.car_product_order_info;
-                    // this.detail.car_product_order_status_info.car_product_order_status_id = '32';
-                    // this.detail.car_product_order_status_info.service_order_status_name = '未到站';
-                    // this.detail.service_order_comment = "经服务人员反馈，您在预约时间内未到站进行审车。您可修改预约时间，并重新提交审核。在通知后72小时未进行操作，该订单将自动取消并退款。";
                     if (!this.detail.car_product_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
@@ -90,7 +87,7 @@ export class ProductOrderDetailComponent implements OnInit {
     }
 
     getInstitutionDealerListByCarProductOrder(id?, roleId?) {
-        this.baseService.mockGet('getInstitutionDealerListByCarProductOrder', {
+        this.baseService.post('getInstitutionDealerListByCarProductOrder', {
             'member_role_id' : roleId,
             'car_product_order_id' : id
         })
@@ -145,7 +142,7 @@ export class ProductOrderDetailComponent implements OnInit {
 
     canSubmitOrder(role) {
         let orderStatus = this.detail && this.detail.car_product_order_status_info;
-        // 角色为 2 时的待分配，角色为 3 时的待处理可以修改订单。
+        // 角色为 3 时的待分配，角色为 4 时的待处理可以修改订单。
         if(role === '3'){
             return this.roleId === '3' && orderStatus && orderStatus.car_product_order_status_id === '1002';
         }
