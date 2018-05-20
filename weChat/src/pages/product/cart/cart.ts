@@ -193,7 +193,7 @@ export class CartComponent implements OnInit {
             return ;
         }
 
-        if(!this.selectedRegion.region_id || !this.selectedCity.region_id){
+        if(!this.selectedCity.region_id){
             this.errorMessage = '请先选择地区！';
             return ;
         }
@@ -220,7 +220,7 @@ export class CartComponent implements OnInit {
         //console.log(this.userInfoForm);
         this.submitting = true;
 
-        console.log({
+        /*console.log({
             "submit_car_product_order_info": {
                 "car_product_info": {
                     "product_id": this.product.product_id,
@@ -234,7 +234,7 @@ export class CartComponent implements OnInit {
                 "sales_invite_code": this.orderForm.value.code,
                 'username' : this.orderForm.value.phone,
             }
-        });
+        });*/
         this.submitting = false;
 
         this.baseService.post('addCarProductOrder', {
