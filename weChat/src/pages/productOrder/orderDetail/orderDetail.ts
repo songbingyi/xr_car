@@ -30,6 +30,7 @@ export class ProductOrderDetailComponent implements OnInit {
     orderId: String = '';
 
     institutionDealer:any = [];
+    isInstitutionDealerLoad = false;
 
     @ViewChild('fullDealer') fullDealerPopup: PopupComponent;
 
@@ -87,6 +88,7 @@ export class ProductOrderDetailComponent implements OnInit {
     }
 
     getInstitutionDealerListByCarProductOrder(id?, roleId?) {
+        this.isInstitutionDealerLoad = false;
         this.baseService.post('getInstitutionDealerListByCarProductOrder', {
             'member_role_id' : roleId,
             'car_product_order_id' : id
@@ -96,6 +98,7 @@ export class ProductOrderDetailComponent implements OnInit {
                     this.isLoaded = true;
                     this.institutionDealer = institutionDealer.data.institution_dealer_group_by_region_list;
                     this.fullDealerPopup.show();
+                    this.isInstitutionDealerLoad = true;
                     // console.log(this.institutionDealer);
                     // this.detail.car_product_order_status_info.car_product_order_status_id = '32';
                     // this.detail.car_product_order_status_info.service_order_status_name = '未到站';

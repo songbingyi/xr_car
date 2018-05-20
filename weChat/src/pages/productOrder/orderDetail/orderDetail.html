@@ -185,7 +185,7 @@
                 </form>
 
                 <weui-popup #fullDealer [config]="{is_full: true}">
-                    <div class="list-item" *ngFor="let dealerList of institutionDealer">
+                    <div class="list-item" *ngFor="let dealerList of institutionDealer" [hidden]="institutionDealer.length===0">
                         <div class="weui-cells__title">{{dealerList.region_info?.region_name}}</div>
                         <div class="weui-cells all-location">
                             <a *ngFor="let dealer of dealerList.institution_dealer_list" class="weui-cell" href="javascript:;" (click)="selectDealer(dealer)">
@@ -193,6 +193,10 @@
                                 <div class="weui-cell__ft"><span [hidden]="selectedDealer.institution_dealer_id !== dealer.institution_dealer_id"><i class="weui-icon-success-no-circle"></i></span></div>
                             </a>
                         </div>
+                    </div>
+                    <div [hidden]="isInstitutionDealerLoad && institutionDealer.length>0" style="text-align: center;padding-top:50px;">
+                        <p>暂无服务商可选</p>
+                        <p style="padding-top:50px;" class="text-warning"><span (click)="fullDealerPopup.close();">点击关闭</span></p>
                     </div>
                 </weui-popup>
 
