@@ -332,8 +332,18 @@ export class UserInfoComponent implements OnInit {
         this.updateForm.controls.position.setValue(this.memberDetail.member_info.job_position);
         this.updateForm.controls.companyAdd.setValue(this.memberDetail.member_info.company_address);
         this.updateForm.controls.email.setValue(this.memberDetail.member_info.email);
-        this.selectedSalesYears = this.memberDetail.member_info.sales_years || {};
+        // this.selectedSalesYears = this.memberDetail.member_info.sales_years || {};
         this.selectedCity = this.memberDetail.member_info.sales_region_info || {};
+        let salesYearList = this.salesYearList || [];
+        let length = salesYearList.length;
+        for(let i=0; i < length; i++){
+            if(salesYearList[i].sales_year_value === this.memberDetail.member_info.sales_years){
+                this.selectedSalesYears = salesYearList[i];
+                //console.log(this.selectedSalesYears);
+                return ;
+            }
+        }
+
     }
 
     update() {
