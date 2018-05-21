@@ -38,6 +38,9 @@
     }
     .text-right {
         text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
 

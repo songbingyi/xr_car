@@ -58,6 +58,9 @@ a.full-width-btn-with-padding.disabled {
 
 .my-location {
     .weui-cell__bd {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         span:last-child {
             margin-left:5px;
         }
