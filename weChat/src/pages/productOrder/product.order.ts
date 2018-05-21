@@ -151,6 +151,10 @@ export class ProductOrderComponent implements OnInit {
         });
         this.isSellerRole = ids.indexOf('2') > -1;*/
         this.isSellerRole = this.role === '2';
+        console.log("this.role");
+        console.log(this.role);
+        console.log(this.isSellerRole);
+        console.log("this.isSellerRole");
     }
     hasNotify(key, type) {
         /*if(type){
