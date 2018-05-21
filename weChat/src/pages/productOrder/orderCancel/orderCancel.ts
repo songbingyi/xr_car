@@ -130,6 +130,7 @@ export class OrderCancelComponent implements OnInit {
                 'outer_dms_no' : '',
                 'car_product_order_description' : this.orderForm.controls.comments.value // 订单描述(1-取消原因)
             },
+            'member_role_id' : this.roleId,
             'car_product_order_id' : id
         })
             .subscribe(detail => {
