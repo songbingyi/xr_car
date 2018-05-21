@@ -300,10 +300,11 @@ export class UserInfoComponent implements OnInit {
                 if (result.status.succeed === '1') {
                     this.isModifying = false;
                     if(config.identityAuth){
-                        this.identityAuthService.goHome();
+                        this.router.navigate(['/success']);
+                        //this.identityAuthService.goHome();
                     }else{
                         this.router.navigate(['/success']);
-                        this.getCarAndMemberInfo();
+                        /*this.getCarAndMemberInfo();
                         this.userInfoForm.controls.phone.setValue('');
                         this.userInfoForm.controls.username.setValue('');
                         this.userInfoForm.controls.userId.setValue('');
@@ -311,7 +312,7 @@ export class UserInfoComponent implements OnInit {
                         this.userInfoForm.controls.companyName.setValue('');
                         this.userInfoForm.controls.position.setValue('');
                         this.userInfoForm.controls.companyAdd.setValue('');
-                        this.userInfoForm.controls.email.setValue('');
+                        this.userInfoForm.controls.email.setValue('');*/
                     }
                 } else {
                     if(result.status.error_code === '1012'){
