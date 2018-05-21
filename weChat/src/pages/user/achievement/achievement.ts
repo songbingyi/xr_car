@@ -35,7 +35,7 @@ export class AchievementComponent implements OnInit {
 
     getInitData() {
         this.isLoaded = false;
-        this.baseService.mockGet('getSalesMemberDashboard', {
+        this.baseService.post('getSalesMemberDashboard', {
 
         }).subscribe(memberScore => {
                 if (memberScore.status.succeed === '1') {
