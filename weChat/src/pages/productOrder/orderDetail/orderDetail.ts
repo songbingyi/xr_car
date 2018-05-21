@@ -216,6 +216,7 @@ export class ProductOrderDetailComponent implements OnInit {
                 'outer_dms_no' : this.orderForm.controls.outerDmsNo.value,
                 'car_product_order_description' : '' // 订单描述(1-取消原因)
             },
+            'member_role_id' : this.roleId,
             'car_product_order_id' : id
         })
             .subscribe(detail => {
