@@ -18,6 +18,8 @@
 .user-info {
     background: #EFEFF4;
     padding-bottom: 45px;
+    height: 100%;
+    position: relative;
     .weui-vcode-btn {
         padding-right:0;
     }
@@ -53,6 +55,9 @@
 
 a.full-width-btn-with-padding.disabled {
     opacity:0.6;
+}
+.cart-page .full-width-btn {
+    position: fixed;
 }
 
 
