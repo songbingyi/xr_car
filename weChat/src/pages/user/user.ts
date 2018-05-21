@@ -115,7 +115,7 @@ export class UserComponent implements OnInit {
     getOrderCount(role) {
         let path = this.memberRoles[role];
         if(path){
-            this.baseService.mockGet(path, {
+            this.baseService.post(path, {
 
             }).subscribe(orderDashboard => {
                         if (orderDashboard.status.succeed === '1') {
