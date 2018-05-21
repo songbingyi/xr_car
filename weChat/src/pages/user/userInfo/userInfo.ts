@@ -631,7 +631,7 @@ export class UserInfoComponent implements OnInit {
         //this.errorMessage = '';
     }
 
-    changed(type, form, length){
+    changed(type, form, length?){
         length = length || 30;
         let email = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
         let keys = ['companyName', 'position', 'companyAdd', 'email'];

@@ -171,7 +171,7 @@
         </tab>
         <tab [active]="activeIndex=== 3">
             <span *tabHeading class="tab-set-heading">
-                已完成<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
+                已完成<q class="weui-badge" *ngIf="hasNotify('order_finish_count', 'hasDone')">{{needProcess.lists.length || car_product_order_dashboard_info.order_finish_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
@@ -228,7 +228,7 @@
         </tab>
         <tab [active]="activeIndex===4">
             <span *tabHeading class="tab-set-heading">
-                已取消<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
+                已取消<q class="weui-badge" *ngIf="hasNotify('order_cancel_count', 'cancelled')">{{needProcess.lists.length || car_product_order_dashboard_info.order_cancel_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="cancelled.isLoaded && cancelled.lists.length">

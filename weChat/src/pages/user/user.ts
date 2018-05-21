@@ -159,7 +159,7 @@ export class UserComponent implements OnInit {
             });
     }
 
-    hasNotify(key, orderType) {
+    hasNotify(key, orderType?) {
         let orderTypeObj = {};
         if(orderType){
             orderTypeObj = this.member[orderType];
