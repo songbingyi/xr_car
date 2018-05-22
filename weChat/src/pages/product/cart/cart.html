@@ -1,46 +1,48 @@
 <div class="user-info cart-page">
-    <form [formGroup]="orderForm" (ngSubmit)="orderNow()" [ngClass]="{'ng-from-error':fromError}">
-        <div class="has-phone">
-            <!--<div class="weui-cells__title-empty"></div>-->
-            <div class="weui-cells__title">车辆信息</div>
-            <div class="weui-cells head-cell">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">车辆名称</label></div>
-                    <div class="weui-cell__bd"><span class="car-name">{{product.product_name}}</span></div>
-                </div>
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">价格</label></div>
-                    <div class="weui-cell__bd"><span class="car-price">￥{{product.price_description}}</span></div>
-                </div>
-            </div>
-
-            <div class="weui-cells__title">我的信息</div>
-            <div class="weui-cells">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写您的姓名' : '请填写您的姓名'}}" appFocusBlur/>
+    <div class="scroll-page">
+        <form [formGroup]="orderForm" (ngSubmit)="orderNow()" [ngClass]="{'ng-from-error':fromError}">
+            <div class="has-phone">
+                <!--<div class="weui-cells__title-empty"></div>-->
+                <div class="weui-cells__title">车辆信息</div>
+                <div class="weui-cells head-cell">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">车辆名称</label></div>
+                        <div class="weui-cell__bd"><span class="car-name">{{product.product_name}}</span></div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">价格</label></div>
+                        <div class="weui-cell__bd"><span class="car-price">￥{{product.price_description}}</span></div>
                     </div>
                 </div>
-                <div class="weui-cell weui-cell_access my-location">
-                    <div class="weui-cell__hd"><label class="weui-label">上牌地区</label></div>
-                    <div class="weui-cell__bd" [hidden]="!(selectedCity.region_id)" (click)="selectArea()"><span>{{selectedRegion.region_name}}</span><span>{{selectedCity.region_name}}</span></div>
-                    <div class="weui-cell__bd" [hidden]="(selectedCity.region_id)" style="color:#a9a9a9;" (click)="selectArea()">请选择上牌区域</div>
-                    <div class="weui-cell__ft"></div>
-                </div>
-            </div>
 
-            <div class="weui-cells__title-empty"></div>
-            <div class="weui-cells">
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">邀请码</label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" type="text" [formControl]="code" placeholder="请输入4位邀请码（没有可不填）" appFocusBlur/>
+                <div class="weui-cells__title">我的信息</div>
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写您的姓名' : '请填写您的姓名'}}" appFocusBlur/>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_access my-location">
+                        <div class="weui-cell__hd"><label class="weui-label">上牌地区</label></div>
+                        <div class="weui-cell__bd" [hidden]="!(selectedCity.region_id)" (click)="selectArea()"><span>{{selectedRegion.region_name}}</span><span>{{selectedCity.region_name}}</span></div>
+                        <div class="weui-cell__bd" [hidden]="(selectedCity.region_id)" style="color:#a9a9a9;" (click)="selectArea()">请选择上牌区域</div>
+                        <div class="weui-cell__ft"></div>
+                    </div>
+                </div>
+
+                <div class="weui-cells__title-empty"></div>
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">邀请码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" [formControl]="code" placeholder="请输入4位邀请码（没有可不填）" appFocusBlur/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
     <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="orderNow()">确认提交</a>
 
     <div class="error-bar" [hidden]="!errorMessage">

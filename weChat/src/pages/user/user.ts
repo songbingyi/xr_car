@@ -178,6 +178,16 @@ export class UserComponent implements OnInit {
         this.hasCar();
     }
 
+    goToCarOrderList(status, page, query?, path?){
+        path = '/' + (path || 'productOrder');
+        query = query || {role: '1'};
+        let orderCont = this.dataItems['role' + query.role];
+        if(orderCont) {
+            this.localStorage.setObject('car_product_order_dashboard_info', orderCont);
+        }
+        this.router.navigate([path, status, page], {queryParams:query});
+    }
+
     goNext() {
         if (this.carList.length) {
             this.router.navigate(['/carList']);

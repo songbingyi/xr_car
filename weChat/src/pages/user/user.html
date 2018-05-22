@@ -34,7 +34,7 @@
             </div>
             <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]">
                 <div class="order-status processing">
-                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_pending_count}}</span>
+                    <span class="weui-badge"  *ngIf="hasNotify('order_process_count', 'car_product_order_dashboard_info')">{{member.car_product_order_dashboard_info.order_process_count}}</span>
                 </div>
                 <span>处理中</span>
             </div>
@@ -94,23 +94,23 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的售车订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]" [queryParams]="{role: '2'}">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" (click)="goToCarOrderList(0, 1, {role: '2'})">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]" [queryParams]="{role: '2'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(2, 1, {role: '2'})">
                 <div class="order-status processing">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_process_count)">{{dataItems.role2.order_process_count}}</span>
                 </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]" [queryParams]="{role: '2'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(3, 1, {role: '2'})">
                 <div class="order-status complete">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_finish_count)">{{dataItems.role2.order_finish_count}}</span>
                 </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]" [queryParams]="{role: '2'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(4, 1, {role: '2'})">
                 <div class="order-status cancelled">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_cancel_count)">{{dataItems.role2.order_cancel_count}}</span>
                 </div>
@@ -120,14 +120,7 @@
     </div>
 
     <div class="about" *ngIf="isRole('2')">
-        <!--<div class="weui-cells__title">关于我们</div>-->
         <div class="weui-cells">
-            <!--<a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
-                <div class="weui-cell__bd">
-                    <p>联系我们</p>
-                </div>
-                <div class="weui-cell__ft"></div>
-            </a>-->
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/achievement']">
                 <div class="weui-cell__bd">
                     <p>销售业绩</p>
@@ -145,29 +138,29 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的办事处订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]" [queryParams]="{role: '3'}">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" (click)="goToCarOrderList(0, 1, {role: '3'})">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 1, 1]" [queryParams]="{role: '3'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(1, 1, {role: '3'})">
                 <div class="order-status need-process">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role3.order_pending_count)">{{dataItems.role3.order_pending_count}}</span>
                 </div>
                 <span>待处理</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]" [queryParams]="{role: '3'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(2, 1, {role: '3'})">
                 <div class="order-status processing">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role3.order_process_count)">{{dataItems.role3.order_process_count}}</span>
                 </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]" [queryParams]="{role: '3'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(3, 1, {role: '3'})">
                 <div class="order-status complete">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role3.order_finish_count)">{{dataItems.role3.order_finish_count}}</span>
                 </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]" [queryParams]="{role: '3'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(4, 1, {role: '3'})">
                 <div class="order-status cancelled">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role3.order_cancel_count)">{{dataItems.role3.order_cancel_count}}</span>
                 </div>
@@ -182,29 +175,29 @@
                 <div class="weui-cell__bd order-title">
                     <p>我的经销商订单</p>
                 </div>
-                <div class="weui-cell__ft order-footer" [routerLink]="['/productOrder', 0, 1]" [queryParams]="{role: '4'}">查看更多订单</div>
+                <div class="weui-cell__ft order-footer" (click)="goToCarOrderList(0, 1, {role: '4'})">查看更多订单</div>
             </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 1, 1]" [queryParams]="{role: '4'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(1, 1, {role: '4'})">
                 <div class="order-status need-process">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role4.order_pending_count)">{{dataItems.role4.order_pending_count}}</span>
                 </div>
                 <span>待处理</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 2, 1]" [queryParams]="{role: '4'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(2, 1, {role: '4'})">
                 <div class="order-status processing">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role4.order_process_count)">{{dataItems.role4.order_process_count}}</span>
                 </div>
                 <span>处理中</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 3, 1]" [queryParams]="{role: '4'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(3, 1, {role: '4'})">
                 <div class="order-status complete">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role4.order_finish_count)">{{dataItems.role4.order_finish_count}}</span>
                 </div>
                 <span>已完成</span>
             </div>
-            <div class="weui-flex__item" [routerLink]="['/productOrder', 4, 1]" [queryParams]="{role: '4'}">
+            <div class="weui-flex__item" (click)="goToCarOrderList(4, 1, {role: '4'})">
                 <div class="order-status cancelled">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role4.order_cancel_count)">{{dataItems.role4.order_cancel_count}}</span>
                 </div>
@@ -213,55 +206,8 @@
         </div>
     </div>
 
-    <!--<div class="order">
-        <div class="weui-cells__title">订单信息</div>
-        <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 0, 1]">
-                <div class="weui-cell__bd">
-                    <p>全部订单</p>
-                </div>
-                <div class="weui-cell__ft"> </div>
-            </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 1, 1]">
-                <div class="weui-cell__bd">
-                    <p>待付款</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <span class="weui-badge" *ngIf="hasNotify('order_obligation_count')">{{member.service_order_dashboard_info.order_obligation_count}}</span>
-                </div>
-            </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 2, 1]">
-                <div class="weui-cell__bd">
-                    <p>待处理</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <span class="weui-badge" *ngIf="hasNotify('order_pending_count')">{{member.service_order_dashboard_info.order_pending_count}}</span>
-                </div>
-            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 3, 1]">
-                <div class="weui-cell__bd">
-                    <p>处理中</p>
-                </div>
-                <div class="weui-cell__ft">
-                    <span class="weui-badge" *ngIf="hasNotify('order_process_count')">{{member.service_order_dashboard_info.order_process_count}}</span>
-                </div>
-            </a><a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/serviceOrder', 4, 1]">
-                <div class="weui-cell__bd">
-                    <p>已完成</p>
-                </div>
-                <div class="weui-cell__ft"> </div>
-            </a>
-        </div>
-    </div>-->
-
     <div class="about">
-        <!--<div class="weui-cells__title">关于我们</div>-->
         <div class="weui-cells">
-            <!--<a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/contact']">
-                <div class="weui-cell__bd">
-                    <p>联系我们</p>
-                </div>
-                <div class="weui-cell__ft"></div>
-            </a>-->
             <a class="weui-cell weui-cell_access" href="javascript:;" [routerLink]="['/about']">
                 <div class="weui-cell__bd">
                     <p>关于我们</p>
