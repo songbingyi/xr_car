@@ -413,8 +413,8 @@ export class UserInfoComponent implements OnInit {
             'job_position'   : this.updateForm.value.position,
             'company_address': this.updateForm.value.companyAdd,
             'email'          : this.updateForm.value.email,
-            'sales_years'    : this.selectedSalesYears.sales_year_value,
-            'sales_region_info'  : this.selectedCity
+            'sales_years'    : (this.isRole('2') && this.selectedSalesYears) ? this.selectedSalesYears.sales_year_value : '',
+            'sales_region_info'  : this.isRole('2') ? this.selectedCity : {}
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
