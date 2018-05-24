@@ -235,7 +235,6 @@ export class CartComponent implements OnInit {
                 'username' : this.orderForm.value.phone,
             }
         });*/
-        this.submitting = false;
 
         this.baseService.post('addCarProductOrder', {
             "submit_car_product_order_info": {
