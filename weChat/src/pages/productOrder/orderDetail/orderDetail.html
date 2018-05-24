@@ -170,7 +170,7 @@
                         <div class="weui-cell my-location">
                             <div class="weui-cell__hd"><label class="weui-label">订单编号</label></div>
                             <div class="weui-cell__bd" [ngClass]="{'error':errorMessage}">
-                                <input class="weui-input" type="number" pattern="[0-9]*" [formControl]="outerDmsNo" (focus)="dmsFocused()" placeholder="请输入订单编码信息">
+                                <input class="weui-input" type="text" pattern="[0-9]*" [formControl]="outerDmsNo" (focus)="dmsFocused()" placeholder="请输入订单编码信息">
                             </div>
                             <div class="weui-cell__ft"></div>
                         </div>

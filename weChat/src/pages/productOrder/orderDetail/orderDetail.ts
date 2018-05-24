@@ -68,6 +68,7 @@ export class ProductOrderDetailComponent implements OnInit {
                 if (detail.status.succeed === '1') {
                     this.isLoaded = true;
                     this.detail = detail.data.car_product_order_info;
+                    //this.detail.outer_dms_no = this.detail.outer_dms_no ? (this.detail.outer_dms_no + '') : '';
                     if (!this.detail.car_product_order_id) {
                         this.showToast('没有找到此订单！');
                         this.hideToast(() => {
@@ -213,7 +214,7 @@ export class ProductOrderDetailComponent implements OnInit {
             'operator_type': operation,
             'submit_car_product_order_info' : {
                 'institution_dealer_info' : this.selectedDealer,
-                'outer_dms_no' : this.orderForm.controls.outerDmsNo.value,
+                'outer_dms_no' : (this.orderForm.controls.outerDmsNo.value + ''),
                 'car_product_order_description' : '' // 订单描述(1-取消原因)
             },
             'member_role_id' : this.roleId,
