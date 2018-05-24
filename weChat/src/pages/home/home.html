@@ -53,10 +53,10 @@
                         <!--<h4 class="weui-media-box__title">{{product.product_name}}</h4>-->
                         <p class="weui-media-box__desc">{{product.product_name}}</p>
                         <div class="weui-media-box__footer">
-                            {{product.price_description}}
-                            <span class="cart" (click)="toCart($event, product)" [hidden]="product.is_can_order==='0'"></span>
+                            {{product.product_summary}}
                         </div>
                     </div>
+                    <div class="cart" (click)="toCart($event, product)" [hidden]="product.is_can_order==='0'"></div>
                 </div>
             </div>
             <div class="empty-container" *ngIf="isLoaded && products.length===0">

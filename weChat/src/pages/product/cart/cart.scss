@@ -5,13 +5,28 @@
         line-height: 46px;
     }
     .head-cell {
+        .weui-cell {
+            height:auto;
+            line-height: normal;
+            padding: 0 15px 20px 15px;
+            align-items: flex-start;
+            .weui-cell__hd{
+                position: relative;
+                top: 12px;
+            }
+            .weui-cell__bd{
+                position: relative;
+                top: 10px;
+            }
+        }
         .car-name {
             font-size: 17px;
             color:#000000;
         }
-        .car-price {
-            font-size: 24px;
-            color:#FA9D3B;
+        .product_summary {
+            padding-top: 5px;
+            font-size: 12px;
+            color:#888888;
         }
     }
 }
