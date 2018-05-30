@@ -134,7 +134,7 @@ export class OrdersComponent implements OnInit {
                     let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.service_order_list;
-                    this.service_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
+                    //this.service_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
                     /*{
                         "order_total_count":"3",
                         "order_obligation_count":"3",

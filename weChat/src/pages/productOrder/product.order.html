@@ -57,7 +57,7 @@
         </tab>
         <tab [active]="activeIndex===1" *ngIf="!isSellerRole">
             <span *tabHeading class="tab-set-heading">
-                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{needProcess.lists.length || car_product_order_dashboard_info.order_pending_count}}</q>
+                待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{car_product_order_dashboard_info.order_pending_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="needProcess.isLoaded && needProcess.lists.length">
@@ -114,7 +114,7 @@
         </tab>
         <tab [active]="activeIndex=== 2">
             <span *tabHeading class="tab-set-heading">
-                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count', 'processing')">{{processing.lists.length || car_product_order_dashboard_info.order_process_count}}</q>
+                处理中<q class="weui-badge" *ngIf="hasNotify('order_process_count', 'processing')">{{car_product_order_dashboard_info.order_process_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="processing.isLoaded && processing.lists.length">
@@ -171,7 +171,7 @@
         </tab>
         <tab [active]="activeIndex=== 3">
             <span *tabHeading class="tab-set-heading">
-                已完成<q class="weui-badge" *ngIf="hasNotify('order_finish_count', 'hasDone')">{{hasDone.lists.length || car_product_order_dashboard_info.order_finish_count}}</q>
+                已完成<q class="weui-badge" *ngIf="hasNotify('order_finish_count', 'hasDone')">{{car_product_order_dashboard_info.order_finish_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="hasDone.isLoaded && hasDone.lists.length">
@@ -228,7 +228,7 @@
         </tab>
         <tab [active]="activeIndex===4">
             <span *tabHeading class="tab-set-heading">
-                已取消<q class="weui-badge" *ngIf="hasNotify('order_cancel_count', 'cancelled')">{{cancelled.lists.length || car_product_order_dashboard_info.order_cancel_count}}</q>
+                已取消<q class="weui-badge" *ngIf="hasNotify('order_cancel_count', 'cancelled')">{{car_product_order_dashboard_info.order_cancel_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="cancelled.isLoaded && cancelled.lists.length">

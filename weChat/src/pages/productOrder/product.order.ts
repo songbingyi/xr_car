@@ -198,7 +198,7 @@ export class ProductOrderComponent implements OnInit {
                     let paginated = lists.paginated;
                     this[this.key].isLoaded = true;
                     this[this.key].lists = lists.data.car_product_order_list;
-                    this.car_product_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
+                    //this.car_product_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
                     this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);
                 } else {
                     this.errorMessage = lists.status.error_desc;
