@@ -205,6 +205,12 @@ export class HomeComponent implements OnInit {
 
     refresh() {
         this.pagination.page = 1;
+        this.products = [];
+        this.isLoaded = false;
+        this.isLoading = true;
+        if(this.comp){
+            this.comp.restart();
+        }
         this.goTop();
         this.loadProducts();
     }
