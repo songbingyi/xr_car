@@ -93,7 +93,7 @@ export class OrdersComponent implements OnInit {
             this.activeIndex = parseInt(activeIndex, 10);
             this.order_type = this.activeIndex;
             this.key = this.objKey[this.activeIndex];
-            this[this.key].pagination.page = page;
+            this[this.key].pagination.page = parseInt(page, 10);
             this.getInitData();
         });
     }
