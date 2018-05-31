@@ -79,6 +79,7 @@ export class HomeComponent implements OnInit {
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
+        console.log("loadProducts");
         let where:any = {
             pagination: this.pagination
         };
@@ -204,18 +205,21 @@ export class HomeComponent implements OnInit {
     }
 
     refresh() {
+        //this.onSelectChanged();
         this.pagination.page = 1;
         this.products = [];
         this.isLoaded = false;
         this.isLoading = true;
-        if(this.comp){
-            this.comp.restart();
-        }
         this.goTop();
-        this.loadProducts();
+        setTimeout(()=>{
+            this.il.restart();
+            this.loadProducts();
+        },300);
+
     }
 
     onLoadMore(comp : InfiniteLoaderComponent) {
+        console.log("this.isLoading:" + this.isLoading);
         if (this.isLoading) {
             return;
         }

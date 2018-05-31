@@ -51,11 +51,13 @@ export class IndexComponent implements OnInit {
     }
 
     selected(item, index) {
+        if(item.selected){
+            this.refresh(item, index);
+        }
         this.tabs.forEach(tab => {
             tab.selected = '';
         });
         item.selected = 'weui-bar__item_on';
-        this.refresh(item, index);
         // 调用该服务的方法，发送信息；
         // this.message.sendImages('www.baidu.com'); // 发送图片地址
         // this.message.sendMessage(index);
