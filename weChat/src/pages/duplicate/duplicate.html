@@ -1,0 +1,22 @@
+<div class="weui-msg">
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">您已成功提交您的救援信息</h2>
+        <p class="weui-msg__desc">请勿重复提交</p>
+    </div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">　</h2>
+        <p class="weui-msg__desc">我们会尽快与您联系</p>
+    </div>
+    <h2 class="weui-msg__title">　</h2>
+    <h2 class="weui-msg__title">　</h2>
+    <h2 class="weui-msg__title">　</h2>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+            <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [routerLink]="['/']">我知道了</a>
+        </p>
+    </div>
+</div>
+
+<div class="error-bar" [hidden]="!errorMessage">
+    <p>{{errorMessage}}</p>
+</div>

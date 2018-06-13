@@ -65,6 +65,13 @@
             </div>
             <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
         </div>
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">车辆流水号</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" placeholder="请输入车辆流水号" [formControl]="cardSerialNo" (blur)="setItem('h', cardSerialNo)" appFocusBlur/>
+            </div>
+            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
     </div>
     </form>
 

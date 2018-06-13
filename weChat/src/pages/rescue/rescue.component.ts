@@ -154,6 +154,11 @@ export class RescueComponent implements OnInit {
                     this.shouldReservationBox = true;
                     //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
                 } else {
+                    if (result.status.error_code === '11009') {
+                        setTimeout(() => {
+                            this.router.navigate(['/duplicate', 0]);
+                        }, 2000);
+                    }
                     this.error_desc = result.status.error_desc;
                 }
             }, error => {

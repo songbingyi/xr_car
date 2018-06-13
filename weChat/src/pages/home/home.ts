@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     }
 
     loadProducts(callbackDone?, callbackOnce?) {
-        console.log("loadProducts");
+        //console.log("loadProducts");
         let where:any = {
             pagination: this.pagination
         };

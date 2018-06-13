@@ -6,6 +6,8 @@ import {LocalStorage} from '../../providers/localStorage';
 import {AuthService} from '../../providers/auth.service';
 import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
 import {IdentityAuthService} from '../../providers/identityAuth.service';
+import {Router} from '@angular/router';
+import {BaseProvider} from '../../providers/http/base.http';
 
 @Component({
     selector    : 'app-index',
@@ -39,8 +41,13 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    constructor(private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
+    shouldShowWarningBox = true;
+    errorMessage:any;
+    wechatClientConfig:any = {};
+
+    constructor(private baseService : BaseProvider, private router : Router, private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
         // this.identityAuthService.check();
+        this.getWechatClientConfig();
     }
 
     ngOnInit() : void {
@@ -48,6 +55,16 @@ export class IndexComponent implements OnInit {
         this.activeTabIndex = activeTabIndex ? (activeTabIndex - 0) : 0;
         this.setSelected();
         this.isLoggedIn(this.activeTabIndex);
+    }
+
+    getWechatClientConfig() {
+        this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
+            if (wechatClientConfig.status.succeed === '1') {
+                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_bind_car_notice !== '1';
+            } else {
+                this.errorMessage = wechatClientConfig.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
     }
 
     selected(item, index) {
@@ -102,6 +119,13 @@ export class IndexComponent implements OnInit {
                 this.refreshMemberInfoService.refreshMemberInfo();
             }
         }
+    }
+
+    iSee(){
+        this.shouldShowWarningBox = !this.shouldShowWarningBox;
+    }
+    goToCarList(){
+        this.router.navigate(['/carList']);
     }
 
 }

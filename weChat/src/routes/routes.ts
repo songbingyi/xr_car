@@ -44,6 +44,7 @@ import {ProductOrderDetailComponent} from '../pages/productOrder/orderDetail/ord
 import {ProductOrderCompleteComponent} from '../pages/productOrder/orderComplete/orderComplete';
 
 import {SuccessComponent} from '../pages/success/success';
+import {DuplicateComponent} from '../pages/duplicate/duplicate';
 
 import {MailComponent} from '../pages/serviceOrder/mail/mail';
 
@@ -102,7 +103,8 @@ const appRoutes: Routes = [
     {path : 'notify', component : NotifyComponent, canActivate: [AuthGuard]},
     {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},
     {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]},
-    {path : 'success', component : SuccessComponent, canActivate: [AuthGuard]}
+    {path : 'success', component : SuccessComponent, canActivate: [AuthGuard]},
+    {path : 'duplicate', component : DuplicateComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

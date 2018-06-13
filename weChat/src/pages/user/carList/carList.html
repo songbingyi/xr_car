@@ -38,6 +38,12 @@
                 </div>
                 <div class="weui-cell__ft">{{item.engine_no | uppercase}}</div>
             </div>
+            <div class="weui-cell no-border">
+                <div class="weui-cell__bd">
+                    <p>车辆流水号</p>
+                </div>
+                <div class="weui-cell__ft">{{item.car_serial_no | uppercase}}</div>
+            </div>
             <div class="weui-cell cell-operation">
                 <div class="weui-cell__bd">
                     <a [ngClass]="item.is_modify === '1' ? '' : 'disabled text-info'" (click)="modify(item)">修改</a>

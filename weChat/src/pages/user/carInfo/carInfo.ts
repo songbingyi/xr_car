@@ -70,13 +70,17 @@ export class CarInfoComponent implements OnInit {
     cardIdx = new FormControl('', [
         Validators.required
     ]);
+    cardSerialNo = new FormControl('', [
+        Validators.required
+    ]);
 
 
-    carInfoForm: FormGroup = this.builder.group({
+    carInfoForm: any = this.builder.group({
         cardId: this.cardId,
         companyName: this.companyName,
         cardIdv: this.cardIdv,
-        cardIdx: this.cardIdx
+        cardIdx: this.cardIdx,
+        cardSerialNo: this.cardSerialNo
     });
 
     result: any = {
@@ -99,6 +103,9 @@ export class CarInfoComponent implements OnInit {
             valid: true
         },
         g: {
+            valid: true
+        },
+        h: {
             valid: true
         }
     };
@@ -211,7 +218,8 @@ export class CarInfoComponent implements OnInit {
             cardId: item ? item.plate_no : '',
             companyName: (item && item.company_info) ? item.company_info.company_name : '',
             cardIdv: (item && item.vin_no) ? item.vin_no : '',
-            cardIdx: (item && item.engine_no) ? item.engine_no : ''
+            cardIdx: (item && item.engine_no) ? item.engine_no : '',
+            cardSerialNo: (item && item.cardSerialNo) ? item.cardSerialNo : ''
         });
 
         this.result = {
@@ -245,6 +253,10 @@ export class CarInfoComponent implements OnInit {
             },
             g: {
                 value: item ? item.engine_no : '',
+                valid: true
+            },
+            h: {
+                value: item ? item.car_serial_no : '',
                 valid: true
             }
         };
@@ -365,7 +377,8 @@ export class CarInfoComponent implements OnInit {
                     'car_type_name': result.e.car_type_name
                 },
                 'vin_no': result.f.value,
-                'engine_no': result.g.value
+                'engine_no': result.g.value,
+                'car_serial_no' : result.h.value
             }
         };
     }

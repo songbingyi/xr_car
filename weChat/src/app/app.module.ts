@@ -40,6 +40,7 @@ import {ProductOrderCompleteComponent} from '../pages/productOrder/orderComplete
 
 
 import {SuccessComponent} from '../pages/success/success';
+import {DuplicateComponent} from '../pages/duplicate/duplicate';
 
 import {NotifyComponent} from '../pages/notify/notify';
 import {CategoryComponent} from '../pages/notify/category/category';
@@ -123,6 +124,7 @@ import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
         ProductOrderCompleteComponent,
 
         SuccessComponent,
+        DuplicateComponent,
 
         FocusBlurDirective,
 

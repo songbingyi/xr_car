@@ -61,7 +61,8 @@ let apiBase : IDictionary<string> = {
     'gerCarProductOrderDetail'  :'car_product_order/car_product_order/gerCarProductOrderDetail',
     'operatorCarProductOrder'   :'car_product_order/car_product_order/operatorCarProductOrder',
     "getInstitutionDealerListByCarProductOrder" : 'institution_dealer/institution_dealer/getInstitutionDealerListByCarProductOrder',
-    'getSalesMemberDashboard' : 'member/sales_member/getSalesMemberDashboard'
+    'getSalesMemberDashboard' : 'member/sales_member/getSalesMemberDashboard',
+    'getWechatClientConfig'   : 'base/client_config/getWechatClientConfig'
 };
 
 export {apiBase};
