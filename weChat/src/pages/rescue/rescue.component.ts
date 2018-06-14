@@ -156,10 +156,11 @@ export class RescueComponent implements OnInit {
                 } else {
                     if (result.status.error_code === '11009') {
                         setTimeout(() => {
-                            this.router.navigate(['/duplicate', 0]);
-                        }, 2000);
+                            this.router.navigate(['/duplicate']);
+                        }, 100);
+                    }else{
+                        this.error_desc = result.status.error_desc;
                     }
-                    this.error_desc = result.status.error_desc;
                 }
             }, error => {
                 this.errorMessage = <any>error;

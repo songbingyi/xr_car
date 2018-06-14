@@ -219,7 +219,7 @@ export class CarInfoComponent implements OnInit {
             companyName: (item && item.company_info) ? item.company_info.company_name : '',
             cardIdv: (item && item.vin_no) ? item.vin_no : '',
             cardIdx: (item && item.engine_no) ? item.engine_no : '',
-            cardSerialNo: (item && item.cardSerialNo) ? item.cardSerialNo : ''
+            cardSerialNo: (item && item.car_serial_no) ? item.car_serial_no : ''
         });
 
         this.result = {
