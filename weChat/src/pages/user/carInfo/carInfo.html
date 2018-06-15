@@ -70,7 +70,7 @@
             <div class="weui-cell__bd">
                 <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" placeholder="请输入车辆流水号" [formControl]="cardSerialNo" (blur)="setItem('h', cardSerialNo)" appFocusBlur/>
             </div>
-            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+            <span (click)="showListImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
         </div>
     </div>
     </form>
@@ -84,6 +84,23 @@
             <a href="javascript:" class="weui-gallery__del" (click)="showImage()">
                 <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>
             </a>
+        </div>
+    </div>
+
+    <div class="weui-gallery" [hidden]="!isShowListImage">
+        <div class="slider">
+        <weui-swiper [options]="options" #wuiSwiper>
+            <div class="swiper-container">
+                <!-- 容器（必选） -->
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let image of images">
+                        <img [src]="image"/>
+                    </div>
+                </div>
+                <!-- 分页（可选） -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </weui-swiper>
         </div>
     </div>
 

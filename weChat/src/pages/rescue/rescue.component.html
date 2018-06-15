@@ -86,6 +86,8 @@
 
     <div class="showResult error-result" [hidden]="!error_desc">
         <p class="title">{{error_desc}}</p>
+        <p style="font-size: 14px;" *ngIf="error_code === '3029'">修改方式：轩仁车务-我的-车辆信息-修改</p>
+        <p>　</p>
         <p>欢迎拨打总部救援电话：<a href="tel:4008876108">400-887-6108</a></p>
         <p>　</p>
         <p>　</p>

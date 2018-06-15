@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Validators, FormGroup, FormControl, FormBuilder} from '@angular/forms';
 import {Router, ActivatedRoute, ParamMap} from '@angular/router';
 
@@ -13,12 +13,17 @@ import {Location} from '@angular/common';
 import {IdentityAuthService} from '../../../providers/identityAuth.service';
 // import { ToastComponent, ToastService } from 'ngx-weui/toast';
 
+declare const Swiper: any;
+
 @Component({
     selector: 'app-car-info',
     templateUrl: './carInfo.html',
-    styleUrls: ['./carInfo.scss']
+    styleUrls: ['./carInfo.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CarInfoComponent implements OnInit {
+
+    @ViewChild('wuiSwiper') Swiper;
 
     dialogConfig: DialogConfig;
 
@@ -29,6 +34,27 @@ export class CarInfoComponent implements OnInit {
 
     showPanel: Boolean = false;
     isShowImage: Boolean = false;
+    isShowListImage: Boolean = true;
+    images = ['/assets/images/serialNo/1.jpg', '/assets/images/serialNo/2.jpg', '/assets/images/serialNo/3.jpg'];
+
+    options: any = {
+        roundLengths : true,
+        initialSlide : 0,
+        speed: 300,
+        slidesPerView: 'auto',
+        centeredSlides : true,
+        followFinger : false,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        onInit: () => {
+            console.log("Loaded");
+        },
+        onSlideChangeEnd: (swiper: any) => {
+
+        }
+    };
 
     showIdType: Boolean = false;
     showCarType: Boolean = false;
@@ -121,6 +147,13 @@ export class CarInfoComponent implements OnInit {
 
     ngOnInit() {
         this.getCarDetail();
+        setTimeout(()=>{
+            this.isShowListImage = false;
+        }, 200);
+    }
+
+    loadSwiper () {
+        //new Swiper('.swiper-container', this.options);
     }
 
     getInitData() {
@@ -291,6 +324,13 @@ export class CarInfoComponent implements OnInit {
 
     showImage() {
         this.isShowImage = !this.isShowImage;
+    }
+
+    showListImage(){
+        this.isShowListImage = !this.isShowListImage;
+        if(this.isShowListImage){
+            this.loadSwiper();
+        }
     }
 
     showIdTypeBox() {

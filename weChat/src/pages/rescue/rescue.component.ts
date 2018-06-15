@@ -16,6 +16,8 @@ export class RescueComponent implements OnInit {
     member_car_list:any = [];
 
     errorMessage:any;
+    error_code:any;
+
 
     result:any = {};
 
@@ -154,6 +156,7 @@ export class RescueComponent implements OnInit {
                     this.shouldReservationBox = true;
                     //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
                 } else {
+                    this.error_code = result.status.error_code;
                     if (result.status.error_code === '11009') {
                         setTimeout(() => {
                             this.router.navigate(['/duplicate']);
