@@ -34,7 +34,7 @@ export class CarInfoComponent implements OnInit {
 
     showPanel: Boolean = false;
     isShowImage: Boolean = false;
-    isShowListImage: Boolean = true;
+    isShowListImage: Boolean = false;
     images = ['/assets/images/serialNo/1.jpg', '/assets/images/serialNo/2.jpg', '/assets/images/serialNo/3.jpg'];
 
     options: any = {
@@ -147,13 +147,24 @@ export class CarInfoComponent implements OnInit {
 
     ngOnInit() {
         this.getCarDetail();
-        setTimeout(()=>{
+        /*setTimeout(()=>{
             this.isShowListImage = false;
-        }, 200);
+        }, 200);*/
     }
 
     loadSwiper () {
-        //new Swiper('.swiper-container', this.options);
+        //this.Swiper.swiper.update();
+        new Swiper('.swiper-container',{
+            roundLengths : true,
+            initialSlide : 0,
+            speed: 300,
+            slidesPerView: 'auto',
+            centeredSlides : true,
+            followFinger : false,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination'
+            }});
     }
 
     getInitData() {
@@ -328,8 +339,11 @@ export class CarInfoComponent implements OnInit {
 
     showListImage(){
         this.isShowListImage = !this.isShowListImage;
+        //console.log(this.isShowListImage);
         if(this.isShowListImage){
-            this.loadSwiper();
+            setTimeout(()=>{
+                this.loadSwiper();
+            },100);
         }
     }
 
@@ -535,7 +549,7 @@ export class CarInfoComponent implements OnInit {
                         if(list.length > 1){
                             this.location.back();
                         }else{
-                            this.router.navigate(['/carList']);
+                            this.router.navigate(['/']);
                         }
                     });
                     // this.carInfo = carList.data.member_car_list;
