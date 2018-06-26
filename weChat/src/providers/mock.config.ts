@@ -38,8 +38,8 @@ let mockBase : IDictionary<string> = {
     'getServiceProductSpecType' : '33.getServiceProductSpecType.mock.json',
     'operatorServiceOrder'      : '34.operatorServiceOrder.mock.json',
     'getMemberMessageDashboard' : '35.getMemberMessageDashboard.mock.json',
-    'getMemberMessageList'      : '36.getMemberMessageList.mock.json',
-    'getMemberMessageDetail'    : '37.getMemberMessageDetail.mock.json',
+    /*'getMemberMessageList'      : '36.getMemberMessageList.mock.json',
+    'getMemberMessageDetail'    : '37.getMemberMessageDetail.mock.json',*/
     'getMemberMessageTypeList'  : '38.getMemberMessageTypeList.mock.json',
     'getCarIllegalInfo'         : '45.getCarIllegalInfo.mock.json',
     'getRegionCoordinate'       : '46.getRegionCoordinate.mock.json',
@@ -59,7 +59,14 @@ let mockBase : IDictionary<string> = {
     'gerCarProductOrderDetail'  : '58.gerCarProductOrderDetail.mock.json',
     'operatorCarProductOrder'   : '59.operatorCarProductOrder.mock.json',
     'getInstitutionDealerListByCarProductOrder' : '60.getInstitutionDealerListByCarProductOrder.mock.json',
-    'getSalesMemberDashboard' : '61.getSalesMemberDashboard.mock.json'
+    'getSalesMemberDashboard' : '61.getSalesMemberDashboard.mock.json',
+    'getWechatClientConfig'   : '62.getWechatClientConfig.mock.json',
+    'getMemberMessageList'    : '36.getMemberMessageList.mock.json',
+    'getMemberMessageDetail'  : '37.getMemberMessageDetail.mock.json',
+    'getSystemMessageList'    : '63.getSystemMessageList.mock.json',
+    'getSystemMessageDetail'  : '64.getSystemMessageDetail.mock.json',
+    'operatorMemberMessage'   : '65.operatorMemberMessage.mock.json',
+    'operatorSystemMessage'   : '66.operatorSystemMessage.mock.json'
 };
 
 export {mockBase};

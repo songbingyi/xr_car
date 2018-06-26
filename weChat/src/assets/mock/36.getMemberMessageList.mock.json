@@ -1,10 +1,44 @@
 {
     "status": {
-        "succeed"   : 1,
+        "succeed"   : "1",
         "error_code": "",
         "error_desc": ""
     },
     "data"  : {
-        "" : ""
+        "member_message_list" : [
+            {
+                "member_message_id":"1",
+                "member_message_title":"个人消息1",
+                "member_message_content":"个人消息1内容",
+                "is_read":"1",
+                "member_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "member_message_id":"2",
+                "member_message_title":"个人消息2",
+                "member_message_content":"个人消息2内容",
+                "is_read":"0",
+                "member_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "member_message_id":"3",
+                "member_message_title":"个人消息3",
+                "member_message_content":"个人消息3内容",
+                "is_read":"1",
+                "member_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "member_message_id":"3",
+                "member_message_title":"个人消息3",
+                "member_message_content":"个人消息3内容",
+                "is_read":"0",
+                "member_message_date_format":"2018-02-03 19:23:34"
+            }
+        ]
+    },
+    "paginated" : {
+        "total":"50",
+        "count":"10",
+        "more":"1"
     }
 }

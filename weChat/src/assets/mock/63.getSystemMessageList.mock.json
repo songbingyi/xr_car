@@ -1,0 +1,44 @@
+{
+    "status": {
+        "succeed"   : "1",
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "system_message_list" : [
+            {
+                "system_message_id":"1",
+                "system_message_title":"系统消息1",
+                "system_message_content":"系统消息1内容",
+                "is_read":"0",
+                "system_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "system_message_id":"2",
+                "system_message_title":"系统消息2",
+                "system_message_content":"系统消息2内容",
+                "is_read":"1",
+                "system_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "system_message_id":"3",
+                "system_message_title":"系统消息3",
+                "system_message_content":"系统消息3内容",
+                "is_read":"0",
+                "system_message_date_format":"2018-02-03 19:23:34"
+            },
+            {
+                "system_message_id":"4",
+                "system_message_title":"系统消息3",
+                "system_message_content":"系统消息3内容",
+                "is_read":"1",
+                "system_message_date_format":"2018-02-03 19:23:34"
+            }
+        ]
+    },
+    "paginated" : {
+        "total":"50",
+        "count":"10",
+        "more":"1"
+    }
+}

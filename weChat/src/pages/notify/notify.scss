@@ -1,16 +1,75 @@
 .notify {
-    margin-top : 10px;
-    margin-bottom : 20px;
+    .scroll-page {
+        background: #EFEFF4;
+        width: 100%;
+    }
+    .tabset {
+        ul.nav-tabs {
+            overflow: hidden;
+            li {
+                float: left;
+                font-size: 14px;
+                width: 20%;
+                height: 47px;
+                line-height: 47px;
+                margin: 0 auto;
+                background: #FAFAFA;
+                padding: 0 8px;
+                position: relative;
+                a {
+                    display: block;
+                    width:100%;
+                    margin:0;
+                    text-align: center;
+                    height:47px;
+                    border-bottom:3px solid #FAFAFA;
+                }
+
+                .weui-badge {
+                    top: -10px;
+                    right: -15px;
+                }
+                &.active {
+                    a {
+                        border-bottom:3px solid #1970A6;
+                        color:#1970A6;
+                    }
+
+                }
+            }
+        }
+        .tab-content {
+            .weui-cells__title {
+                height:auto;
+                background: #FFF;
+            }
+        }
+    }
+    .marked-as-read {
+        height:50px;
+        line-height:50px;
+        font-size:13px;
+        color:#1970A6;
+        text-align: center;
+    }
     .left {
         float: left;
     };
     .right {
         float: right;
     }
+    .weui-panel {
+        margin-bottom: 10px;
+    }
     .weui-badge {
-        position: absolute;
-        bottom: 10px;
-        right: 15px;
+        height: 13px;
+        width: 13px;
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: baseline;
+        &[hidden] {
+            display: none;
+        }
     }
     .weui-media-box {
         padding:0 15px;
@@ -22,8 +81,12 @@
         padding: 9px 0 4px 0;
         margin-bottom: 0;
         .h4 {
-            font-size:18px;
-            color:#000000;
+            font-size: 18px;
+            color: #000000;
+            width: 52%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
     .weui-media-box__desc {
@@ -31,6 +94,9 @@
         color:#9B9B9B;
         line-height:20px;
         padding-bottom:9px;
+        display: block;
+        -webkit-box-orient: unset;
+        white-space: nowrap;
     }
 }
 

@@ -1,0 +1,22 @@
+{
+    "status": {
+        "succeed"   : "1",
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "system_message_info" : {
+            "system_message_id":"2",
+            "system_message_title":"系统消息2",
+            "system_message_content":"系统消息2内容",
+            "is_read":"1",
+            "system_message_date_format":"2018-02-03 19:23:34",
+            "system_message_detail" : "<p>这是一段产品特点的描述文字</p><p>这是一段产品特点的描述文字</p><img src='/assets/images/tmp/detail.content.png'>",
+            "link_info" : {
+                "link_route":"",
+                "link_value":""
+            },
+            "is_link" : "0"
+        }
+    }
+}

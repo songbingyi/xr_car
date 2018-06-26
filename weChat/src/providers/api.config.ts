@@ -36,10 +36,10 @@ let apiBase : IDictionary<string> = {
     'addCompany'                : 'company/company/addCompany',
     'getServiceProductSpecType' : 'base/service_product_spec_type/getServiceProductSpecType',
     'operatorServiceOrder'      : 'service_order/service_order/operatorServiceOrder',
-    'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',
+    /*'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',
     'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
     'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
-    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',
+    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',*/
     'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity',
     'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
     'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
@@ -62,7 +62,13 @@ let apiBase : IDictionary<string> = {
     'operatorCarProductOrder'   :'car_product_order/car_product_order/operatorCarProductOrder',
     "getInstitutionDealerListByCarProductOrder" : 'institution_dealer/institution_dealer/getInstitutionDealerListByCarProductOrder',
     'getSalesMemberDashboard' : 'member/sales_member/getSalesMemberDashboard',
-    'getWechatClientConfig'   : 'base/client_config/getWechatClientConfig'
+    'getWechatClientConfig'   : 'base/client_config/getWechatClientConfig',
+    'getMemberMessageList'    : 'message/member_message/getMemberMessageList',
+    'getMemberMessageDetail'  : 'message/member_message/getMemberMessageDetail',
+    'getSystemMessageList'    : 'message/system_message/getSystemMessageList',
+    'getSystemMessageDetail'  : 'message/system_message/getSystemMessageDetail',
+    'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage',
+    'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage'
 };
 
 export {apiBase};
