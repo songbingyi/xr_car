@@ -2,7 +2,7 @@
     <tabset (onSelect)="onTabSelect($event)">
         <tab [active]="activeIndex===0">
             <span *tabHeading class="tab-set-heading">
-                个人消息
+                个人消息<q class="weui-badge" *ngIf="memberNotify.new_member_message_count>0">{{memberNotify.new_member_message_count}}</q>
             </span>
             <div class="scroll-page">
 
@@ -48,7 +48,7 @@
         </tab>
         <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
-                系统消息<!--<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{notify_dashboard_info}}</q>-->
+                系统消息<q class="weui-badge" *ngIf="memberNotify.new_system_message_count>0">{{memberNotify.new_system_message_count}}</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="system.isLoaded && system.lists.length">

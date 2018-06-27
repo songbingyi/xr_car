@@ -16,6 +16,7 @@ export class NotifyComponent implements OnInit {
     activeIndex = 0;
     notify_dashboard_info: any;
     subscribe: any;
+    memberNotify: any ={};
 
     personal: any = {
         pagination: {
@@ -55,6 +56,7 @@ export class NotifyComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider) {
         this.identityAuthService.check();
+        this.getMemberDashboard();
     }
 
     ngOnInit() {
@@ -69,6 +71,19 @@ export class NotifyComponent implements OnInit {
             this.getInitData();
 
         });
+    }
+
+    getMemberDashboard(){
+        this.baseService.post('getMemberDashboard', {})
+            .subscribe(member => {
+                    if (member.status.succeed === '1') {
+                        this.memberNotify = member.data.message_dashboard_info || {};
+                    } else {
+                        this.errorMessage = member.status.error_desc;
+                    }
+                },
+                error => this.errorMessage = <any>error
+            );
     }
 
     hasNotify(key, type) {
