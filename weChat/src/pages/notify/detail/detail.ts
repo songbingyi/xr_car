@@ -52,6 +52,7 @@ export class NotifyDetailComponent implements OnInit {
             if (notify.status.succeed === '1') {
                 this.isLoaded = true;
                 this.notify = notify.data[this.data[category]];
+                this.redirectTo();
                 //console.log(this.notify);
             } else {
                 this.errorMessage = notify.status.error_desc;
@@ -62,7 +63,7 @@ export class NotifyDetailComponent implements OnInit {
     redirectTo(){
         if(this.notify.is_link === '1'){
             console.log(this.notify.link_info);
-            this.router.navigate(['/notify', ''], {queryParams: {}});
+            this.router.navigate(['/redirect'], {queryParams: this.notify.link_info});
         }
     }
 

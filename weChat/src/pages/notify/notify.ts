@@ -153,7 +153,7 @@ export class NotifyComponent implements OnInit {
             };
         }
         this.baseService.mockGet(path, {
-            'ext_data': data,
+            //'ext_data': data,
             'operator_type': '11'
         }).subscribe(lists => {
             if (lists.status.succeed === '1') {
@@ -186,6 +186,15 @@ export class NotifyComponent implements OnInit {
         });
         return results;
     }
+
+    /*redirectTo(notify, id, type){
+        if(notify.is_link === '1'){
+            console.log(notify.link_info);
+            this.router.navigate(['/redirect', ''], {queryParams: notify.link_info});
+        }else{
+            this.router.navigate(['/notifyDetail', id, type]);
+        }
+    }*/
 
     ngOnDestroy() {
         this.subscribe.unsubscribe();

@@ -64,6 +64,7 @@ import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
+    {path : 'redirect', component : RedirectComponent},
     {path : 'login', component : LoginComponent},
     {path : '', component : IndexComponent},
     {path : 'service_operation_certificate', component : CertificateComponent, canActivate: [AuthGuard]},

@@ -11,33 +11,35 @@ import {WXSDKService} from '../../providers/wx.sdk.service';
 })
 export class RescueComponent implements OnInit {
 
-    MAX_CAR_NUMBER:number = 3;
+    MAX_CAR_NUMBER: number = 3;
 
-    member_car_list:any = [];
+    member_car_list: any = [];
 
-    errorMessage:any;
-    error_code:any;
+    errorMessage: any;
+    error_code: any;
 
 
-    result:any = {};
+    result: any = {};
 
-    loaded:boolean = false;
+    loaded: boolean = false;
 
-    shouldReservationBox : Boolean = true;
+    shouldReservationBox: Boolean = true;
     identityAuth: boolean;
 
-    memberDetail : any;
+    memberDetail: any;
 
-    wxs:any;
+    wxs: any;
 
-    isNotDone:boolean = true;
-    error_desc:boolean = false;
+    isNotDone: boolean = true;
+    error_desc: boolean = false;
 
 
-    latitude:any;
-    longitude:any;
+    latitude: any;
+    longitude: any;
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseService: BaseProvider, private wxService: WXSDKService) {
+    saving = false;
+
+    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private wxService: WXSDKService) {
         this.wxs = this.wxService.init();
         this.wxs.then(res => {
             this.getLocation();
@@ -97,8 +99,8 @@ export class RescueComponent implements OnInit {
         this.member_car_list.push(car2);
         console.log(this.member_car_list);*/
         let length = this.member_car_list.length;
-        if(length !== this.MAX_CAR_NUMBER){
-            new Array(this.MAX_CAR_NUMBER - length + 1).join(',').split('').forEach(()=>{
+        if (length !== this.MAX_CAR_NUMBER) {
+            new Array(this.MAX_CAR_NUMBER - length + 1).join(',').split('').forEach(() => {
                 this.member_car_list.push({});
             });
         }
@@ -127,13 +129,13 @@ export class RescueComponent implements OnInit {
 
     save(e) {
         e.stopPropagation();
-        if(!this.result.selected){
+        if (!this.result.selected) {
             this.errorMessage = '请选择要救援的车辆！';
             this.clearError();
             return false;
         }
 
-        if(!this.latitude || !this.longitude){
+        if (!this.latitude || !this.longitude) {
             this.errorMessage = '未获取到地理信息，请同意获取地理信息或重试！';
             this.clearError();
             return false;
@@ -144,46 +146,54 @@ export class RescueComponent implements OnInit {
             longitude_num : this.longitude,
         });*/
 
+        if (this.saving) {
+            console.log(this.saving);
+            return;
+        }
+
+        this.saving = true;
         this.baseService.post('addWorkSheet', {
-            submit_work_sheet_info : {
-                car_id : this.result.selected.car_id,
-                latitude_num : this.latitude,
-                longitude_num : this.longitude,
+            submit_work_sheet_info: {
+                car_id: this.result.selected.car_id,
+                latitude_num: this.latitude,
+                longitude_num: this.longitude,
             }
         }).subscribe(result => {
-                if (result.status.succeed === '1') {
-                    this.isNotDone = false;
-                    this.shouldReservationBox = true;
-                    //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
+            if (result.status.succeed === '1') {
+                this.isNotDone = false;
+                this.shouldReservationBox = true;
+                //this.router.navigate(['/rescueDetail', result.data.work_sheet_id]);
+            } else {
+                this.error_code = result.status.error_code;
+                if (result.status.error_code === '11009') {
+                    setTimeout(() => {
+                        this.router.navigate(['/duplicate']);
+                    }, 100);
                 } else {
-                    this.error_code = result.status.error_code;
-                    if (result.status.error_code === '11009') {
-                        setTimeout(() => {
-                            this.router.navigate(['/duplicate']);
-                        }, 100);
-                    }else{
-                        this.error_desc = result.status.error_desc;
-                    }
+                    this.error_desc = result.status.error_desc;
                 }
-            }, error => {
-                this.errorMessage = <any>error;
-            });
+            }
+            this.saving = false;
+        }, error => {
+            this.errorMessage = <any>error;
+            this.saving = false;
+        });
 
         return false;
     }
 
     cancel(e) {
         e.stopPropagation();
-        this.wxs.then((wx)=>{
+        this.wxs.then((wx) => {
             wx.closeWindow();
         });
         return false;
     }
 
     clearError() {
-        setTimeout(()=>{
+        setTimeout(() => {
             this.errorMessage = '';
-        },3000);
+        }, 3000);
     }
 
 }

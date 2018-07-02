@@ -47,8 +47,8 @@
                 <span>加载中...</span>
             </div>
             <div class="weui-dialog__ft">
-                <a href="#" class="weui-dialog__btn weui-dialog__btn_default" (click)="cancel($event)">取消</a>
-                <a href="#" class="weui-dialog__btn weui-dialog__btn_primary" (click)="save($event)">确定</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" (click)="cancel($event)">取消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="save($event)"><i class="weui-loading" [hidden]="!saving"></i>确定</a>
             </div>
         </div>
     </div>
