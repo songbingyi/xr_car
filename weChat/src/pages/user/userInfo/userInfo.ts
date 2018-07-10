@@ -238,7 +238,7 @@ export class UserInfoComponent implements OnInit {
         }
 
         // 手机号格式验证
-        if(mobile && (mobile[0] !== 1)){
+        if(mobile && ((mobile + '')[0] !== '1')){
             this.errorMessage = '手机号格式不正确';
             return ;
         }
@@ -457,7 +457,7 @@ export class UserInfoComponent implements OnInit {
         }
 
         // 手机号格式验证
-        if(phone && (!regxM.test(phone))){
+        if(phone && ((phone + '')[0] !== '1')){
             this.errorMessage = '手机号格式不正确';
             return ;
         }
