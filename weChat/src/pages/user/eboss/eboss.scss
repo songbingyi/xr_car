@@ -1,0 +1,33 @@
+.top-tips {
+    padding-bottom:0;
+}
+.weui-picker__bd {
+    height:auto;
+    width:100%;
+    .weui-cells {
+        width:100%;
+    }
+}
+
+.eboss-page {
+    .ng-from-error {
+        input.ng-invalid {
+            color:#E64340;
+        }
+    }
+    .eboss-form {
+        .weui-cell__bd {
+            text-align: right;
+        }
+    }
+    .sale-area {
+        .weui-cell__bd {
+            span {
+                padding-left:5px;
+            }
+        }
+    }
+    .error-bar {
+        z-index: 99999;
+    }
+}

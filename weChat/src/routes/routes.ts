@@ -62,6 +62,9 @@ import { RescueSiteComponent } from '../pages/rescueSite/rescue-site.component';
 import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 
+import { EbossComponent } from '../pages/user/eboss/eboss';
+
+
 const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
     {path : 'redirect', component : RedirectComponent},
@@ -106,7 +109,10 @@ const appRoutes: Routes = [
     {path : 'notify/:category/:page', component : NotifyComponent, canActivate: [AuthGuard]},
     {path : 'notifyDetail/:id/:category', component : NotifyDetailComponent, canActivate: [AuthGuard]},
     {path : 'success', component : SuccessComponent, canActivate: [AuthGuard]},
-    {path : 'duplicate', component : DuplicateComponent, canActivate: [AuthGuard]}
+    {path : 'duplicate', component : DuplicateComponent, canActivate: [AuthGuard]},
+
+
+    {path : 'eboss', component : EbossComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -90,6 +90,8 @@ import {IllegalComponent} from '../pages/illegal/illegal';
 import {InsuranceComponent} from '../pages/insurance/insurance';
 import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
 
+import {EbossComponent} from '../pages/user/eboss/eboss';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -145,7 +147,9 @@ import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
         RescueSiteComponent,
         IllegalComponent,
         InsuranceComponent,
-        IllegalDetailComponent
+        IllegalDetailComponent,
+
+        EbossComponent
     ],
     imports: [
         AppRoutingModule,

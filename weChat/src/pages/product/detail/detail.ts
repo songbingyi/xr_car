@@ -20,6 +20,9 @@ export class DetailComponent implements OnInit {
     isLoaded: Boolean = false;
     show: Boolean = false;
 
+    shouldShowWarningBox:Boolean = true;
+    wechatClientConfig:any = {};
+
     @ViewChild('scrollMe') private myScrollContainer : ElementRef;
 
     // @ViewChild('wuiSwiper') Swiper;
@@ -45,8 +48,9 @@ export class DetailComponent implements OnInit {
 
     images: any = [];
 
-    constructor(private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService) {
+    constructor(private route : ActivatedRoute, private router : Router, private baseService : BaseProvider, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
+        this.getWechatClientConfig();
     }
 
     ngOnInit() {
@@ -56,6 +60,17 @@ export class DetailComponent implements OnInit {
         /*this.routes.paramMap.switchMap((params : ParamMap) => {
             console.log(params.get('id'));
         });*/
+    }
+
+    getWechatClientConfig() {
+        this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
+            if (wechatClientConfig.status.succeed === '1') {
+                this.wechatClientConfig = wechatClientConfig.data.wechat_client_config;
+                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_bind_car_notice !== '1';
+            } else {
+                this.errorMessage = wechatClientConfig.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
     }
 
     /*loadSwiper () {
@@ -74,7 +89,7 @@ export class DetailComponent implements OnInit {
     }*/
 
     loadProduct(id) {
-        this.baseProvider.post('getCarProductDetail', {'product_id': id}).subscribe(product => {
+        this.baseService.post('getCarProductDetail', {'product_id': id}).subscribe(product => {
                 if (product.status.succeed === '1') {
                     this.product = product.data.car_product_info;
                     this.getImagesList(this.product.product_image_list);
@@ -110,6 +125,10 @@ export class DetailComponent implements OnInit {
         if(this.product.is_can_order === '0'){
             return;
         }
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '0'){
+            this.shouldShowWarningBox = false;
+            return;
+        }
         this.router.navigate(['cart', this.product.product_id], { queryParams: { product_id: this.product.product_id } });
     }
 
@@ -138,6 +157,22 @@ export class DetailComponent implements OnInit {
                 });
             }
         },0)
+    }
+
+    iSee(){
+        this.shouldShowWarningBox = !this.shouldShowWarningBox;
+    }
+    goToCarList(){
+        this.router.navigate(['/carList']);
+    }
+    goToEBoss(){
+        // 如果是销售员(不提示成为 Eboss )则跳转到 E04-2，否则跳转到 E11-1
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '0'){
+            this.router.navigate(['/userInfo']);
+        }else{
+            this.router.navigate(['/eboss']);
+        }
+
     }
 
 }

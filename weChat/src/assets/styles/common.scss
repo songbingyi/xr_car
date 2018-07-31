@@ -432,3 +432,37 @@ input.ng-invalid.ng-touched.ng-dirty.ng-blur {
         top: 5px;
     }
 }
+
+
+.my-location {
+    .weui-cell__bd {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        span:last-child {
+            margin-left: 5px;
+        }
+    }
+}
+
+.current-location {
+    img {
+        width: 19px;
+        height: 24px;
+        position: relative;
+        top: 6px;
+    }
+    span {
+        color: #000000;
+        font-size: 14px;
+        padding-left: 5px;
+    }
+}
+
+.all-location {
+    margin-bottom: 20px;
+    span {
+        color: #000000;
+        font-size: 14px;
+    }
+}

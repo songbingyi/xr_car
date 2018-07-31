@@ -41,7 +41,8 @@ export class IndexComponent implements OnInit {
         }
     ];
 
-    shouldShowWarningBox = true;
+    shouldShowWarningNoticeBox = true;
+    shouldShowWarningSaleBox = true;
     errorMessage:any;
     wechatClientConfig:any = {};
 
@@ -60,7 +61,9 @@ export class IndexComponent implements OnInit {
     getWechatClientConfig() {
         this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
             if (wechatClientConfig.status.succeed === '1') {
-                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_bind_car_notice !== '1';
+                this.wechatClientConfig = wechatClientConfig.data.wechat_client_config;
+                this.shouldShowWarningNoticeBox = wechatClientConfig.data.wechat_client_config.is_tips_bind_car_notice !== '1';
+                this.shouldShowWarningSaleBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
             } else {
                 this.errorMessage = wechatClientConfig.status.error_desc;
             }
@@ -122,10 +125,19 @@ export class IndexComponent implements OnInit {
     }
 
     iSee(){
-        this.shouldShowWarningBox = !this.shouldShowWarningBox;
+        this.shouldShowWarningSaleBox = !this.shouldShowWarningSaleBox;
     }
     goToCarList(){
         this.router.navigate(['/carList']);
+    }
+    goToEBoss(){
+        // 如果是销售员(不提示成为 Eboss )则跳转到 E04-2，否则跳转到 E11-1
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '0'){
+            this.router.navigate(['/userInfo']);
+        }else{
+            this.router.navigate(['/eboss']);
+        }
+
     }
 
 }

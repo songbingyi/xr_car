@@ -66,7 +66,10 @@ let mockBase : IDictionary<string> = {
     'getSystemMessageList'    : '63.getSystemMessageList.mock.json',
     'getSystemMessageDetail'  : '64.getSystemMessageDetail.mock.json',
     'operatorMemberMessage'   : '65.operatorMemberMessage.mock.json',
-    'operatorSystemMessage'   : '66.operatorSystemMessage.mock.json'
+    'operatorSystemMessage'   : '66.operatorSystemMessage.mock.json',
+    // 年限 品牌
+    'getSalesYearTypeList'    : '67.getSalesYearTypeList.mock.json',
+    'getCarBrandList'         : '68.getCarBrandList.mock.json'
 };
 
 export {mockBase};

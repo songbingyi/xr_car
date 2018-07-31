@@ -23,7 +23,13 @@
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写您的姓名' : '请填写您的姓名'}}" appFocusBlur/>
+                            <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写购车人姓名' : '请填写购车人姓名'}}" appFocusBlur/>
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" [formControl]="telephone" placeholder="{{telephone.invalid && (telephone.dirty || errorMessage) ? '请填写购车人联系电话' : '请填写购车人联系电话'}}" appFocusBlur/>
                         </div>
                     </div>
                     <div class="weui-cell weui-cell_access my-location">
@@ -34,15 +40,24 @@
                     </div>
                 </div>
 
-                <div class="weui-cells__title-empty"></div>
-                <div class="weui-cells">
+                <div class="weui-cells__title">备注信息</div>
+                <div class="weui-cells weui-cells_form">
                     <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">邀请码</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" [formControl]="code" placeholder="请输入4位邀请码（没有可不填）" appFocusBlur/>
+                            <textarea class="weui-textarea" [formControl]="comment" placeholder="填写关于用户的详细信息可以提高订单成交率哦~" appFocusBlur rows="3"></textarea>
+                            <div class="weui-textarea-counter" [ngClass]="{'error':count()>200}"><span>{{count()}}</span>/200</div>
                         </div>
                     </div>
                 </div>
+                <!--<div class="weui-cells__title-empty"></div>
+                <div class="weui-cells">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">备注信息</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="text" [formControl]="remark" placeholder="请输入4位邀请码（没有可不填）" appFocusBlur/>
+                        </div>
+                    </div>
+                </div>-->
             </div>
         </form>
     </div>

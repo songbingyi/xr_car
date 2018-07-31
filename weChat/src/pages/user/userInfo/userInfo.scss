@@ -52,6 +52,9 @@
         white-space: nowrap;
         overflow: hidden;
     }
+    .error-bar {
+        z-index: 99999;
+    }
 }
 
 .modify-mobile {

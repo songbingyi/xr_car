@@ -1,32 +1,50 @@
 .has-phone {
-    margin-bottom:25px;
+    margin-bottom: 25px;
     .weui-cell {
         height: 46px;
         line-height: 46px;
     }
     .head-cell {
         .weui-cell {
-            height:auto;
+            height: auto;
             line-height: normal;
             padding: 0 15px 20px 15px;
             align-items: flex-start;
-            .weui-cell__hd{
+            .weui-cell__hd {
                 position: relative;
                 top: 12px;
             }
-            .weui-cell__bd{
+            .weui-cell__bd {
                 position: relative;
                 top: 10px;
             }
         }
         .car-name {
             font-size: 17px;
-            color:#000000;
+            color: #000000;
         }
         .product_summary {
             padding-top: 5px;
             font-size: 12px;
-            color:#888888;
+            color: #888888;
+        }
+    }
+    .weui-cells_form {
+        .weui-cell {
+            height: auto;
+            padding: 0;
+            textarea {
+                padding: 0 15px;
+            }
+            .weui-textarea-counter {
+                background: #EFEFF4;
+                padding: 0 15px;
+                line-height: normal;
+                padding-top: 5px;
+                &.error {
+                    color:#E64340;
+                }
+            }
         }
     }
 }
@@ -37,73 +55,43 @@
     height: 100%;
     position: relative;
     .weui-vcode-btn {
-        padding-right:0;
+        padding-right: 0;
     }
 
     .ng-from-error {
         input.ng-invalid {
-            color:#E64340;
+            color: #E64340;
         }
     }
     .weui-cells__title-empty {
-        height:18px;
+        height: 18px;
     }
     .weui-cell__ft {
         span:last-child {
-            margin-left:5px;
+            margin-left: 5px;
         }
     }
-    .weui-agree[hidden]{
+    .weui-agree[hidden] {
         display: none;
     }
 }
 
 .modify-mobile {
-    margin-top:75px;
+    margin-top: 75px;
 }
 
 .weui-vcode-btn[hidden] {
     display: none;
 }
-.weui-vcode-btn.disabled{
-    color:#bcc2c5;
+
+.weui-vcode-btn.disabled {
+    color: #bcc2c5;
 }
 
 a.full-width-btn-with-padding.disabled {
-    opacity:0.6;
+    opacity: 0.6;
 }
+
 .cart-page .full-width-btn {
     position: fixed;
-}
-
-
-.my-location {
-    .weui-cell__bd {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        span:last-child {
-            margin-left:5px;
-        }
-    }
-}
-.current-location {
-    img {
-        width: 19px;
-        height: 24px;
-        position: relative;
-        top: 6px;
-    }
-    span {
-        color:#000000;
-        font-size:14px;
-        padding-left:5px;
-    }
-}
-.all-location {
-    margin-bottom: 20px;
-    span {
-        color:#000000;
-        font-size:14px;
-    }
 }

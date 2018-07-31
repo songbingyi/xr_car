@@ -37,11 +37,19 @@ export class CartComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(6)
     ]);
-    code   = new FormControl('', []);
+    telephone = new FormControl('', [
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11)
+    ]);
+    comment   = new FormControl('', [
+        Validators.maxLength(200)
+    ]);
 
     orderForm: FormGroup = this.builder.group({
         username : this.username,
-        code     : this.code
+        telephone : this.telephone,
+        comment     : this.comment
     });
 
     fromError: Boolean = false;
@@ -198,11 +206,11 @@ export class CartComponent implements OnInit {
             return ;
         }
 
-        if((this.orderForm.value.code && this.orderForm.value.code.length !== 4)){
+        /*if((this.orderForm.value.code && this.orderForm.value.code.length !== 4)){
             //this.fromError = true;
             this.errorMessage = '请输入有效的邀请码！';
             return ;
-        }
+        }*/
 
         if (this.orderForm.invalid) {
             // this.errorMessage = '请修改红色错误信息后再提交';
@@ -247,8 +255,10 @@ export class CartComponent implements OnInit {
                     "region_id": this.selectedCity.region_id,
                     "region_name": this.selectedCity.region_name
                 },
-                "sales_invite_code": this.orderForm.value.code,
-                'username' : this.orderForm.value.phone,
+                //"sales_invite_code": this.orderForm.value.code,
+                'username' : this.orderForm.value.username,
+                'phone' : this.orderForm.value.telephone,
+                'car_product_comment' : this.orderForm.value.comment
             }
         })
             .subscribe(result => {
@@ -266,6 +276,15 @@ export class CartComponent implements OnInit {
                 this.submitting = false;
                 //this.updateForm.dirty = false;
             }, error => this.errorMessage = <any>error);
+    }
+
+    count(){
+        let remark = this.orderForm.value.remark;
+        if(remark){
+            return String(remark).length;
+        }else{
+            return 0;
+        }
     }
 
 }

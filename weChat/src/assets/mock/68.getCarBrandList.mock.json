@@ -1,0 +1,23 @@
+{
+    "status": {
+        "succeed"   : "1",
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "car_brand_list": [
+            {
+                "car_brand_id":"1",
+                "car_brand_name":"陕汽1"
+            },
+            {
+                "car_brand_id":"2",
+                "car_brand_name":"陕汽2"
+            },
+            {
+                "car_brand_id":"3",
+                "car_brand_name":"陕汽3"
+            }
+        ]
+    }
+}

@@ -68,7 +68,9 @@ let apiBase : IDictionary<string> = {
     'getSystemMessageList'    : 'message/system_message/getSystemMessageList',
     'getSystemMessageDetail'  : 'message/system_message/getSystemMessageDetail',
     'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage',
-    'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage'
+    'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage',
+    'getSalesYearTypeList'    : 'base/sales_year_type/getSalesYearTypeList',
+    'getCarBrandList'         : 'base/car_brand/getCarBrandList'
 };
 
 export {apiBase};

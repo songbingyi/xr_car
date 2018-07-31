@@ -13,9 +13,9 @@
         </div>
     </div>
 
-    <a href="javascript:;" [routerLink]="['/userSeller']" class="weui-btn weui-btn_primary full-width-btn-with-padding i-want-be-seller" [hidden]="member.is_has_sales_button !== '1'">我要售车</a>
+    <a href="javascript:;" [routerLink]="['/eboss']" class="weui-btn weui-btn_primary full-width-btn-with-padding i-want-be-seller" [hidden]="member.is_has_sales_button !== '1'">成为E老板</a>
 
-    <div class="weui-cells__title-empty"></div>
+    <!--<div class="weui-cells__title-empty"></div>
     <div class="order">
         <div class="weui-cells">
             <div class="weui-cell weui-cell_access">
@@ -51,8 +51,9 @@
                 <span>已取消</span>
             </div>
         </div>
-    </div>
+    </div>-->
 
+    <div class="weui-cells__title-empty"></div>
     <div class="order">
         <div class="weui-cells">
             <div class="weui-cell weui-cell_access">
@@ -98,6 +99,12 @@
             </div>
         </div>
         <div class="weui-flex">
+            <div class="weui-flex__item" (click)="goToCarOrderList(1, 1, {role: '2'})">
+                <div class="order-status processing">
+                    <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_pending_count)">{{dataItems.role2.order_pending_count}}</span>
+                </div>
+                <span>待处理</span>
+            </div>
             <div class="weui-flex__item" (click)="goToCarOrderList(2, 1, {role: '2'})">
                 <div class="order-status processing">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_process_count)">{{dataItems.role2.order_process_count}}</span>

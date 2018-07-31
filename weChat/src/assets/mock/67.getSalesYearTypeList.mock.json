@@ -1,0 +1,27 @@
+{
+    "status": {
+        "succeed"   : "1",
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data"  : {
+        "sales_year_type_list": [
+            {
+                "sales_year_type_id":"1",
+                "sales_year_type_name":"销售新手"
+            },
+            {
+                "sales_year_type_id":"2",
+                "sales_year_type_name":"一年"
+            },
+            {
+                "sales_year_type_id":"3",
+                "sales_year_type_name":"二年"
+            },
+            {
+                "sales_year_type_id":"4",
+                "sales_year_type_name":"三年"
+            }
+        ]
+    }
+}

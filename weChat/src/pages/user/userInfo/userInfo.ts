@@ -137,6 +137,10 @@ export class UserInfoComponent implements OnInit {
     salesYears:any;
     salesYearList = [];
 
+    brands = [];
+    brandList = [];
+    selectedBrands:any= {};
+
     @ViewChild('full') fullPopup: PopupComponent;
     @ViewChild('fullCity') fullCityPopup: PopupComponent;
 
@@ -152,12 +156,16 @@ export class UserInfoComponent implements OnInit {
     selectedRegion:any = {};
     selectedCity:any = {};
 
+    showBrandType:boolean = false;
+    selectedBrandsName:any = '';
+
     role_ids:any = [];
 
     constructor(private router : Router,private builder: FormBuilder, private baseService: BaseProvider, private customValidators: CustomValidators, private localStorage: LocalStorage, private zone: NgZone, private identityAuthService:IdentityAuthService, private wxService: WXSDKService, private pickerService: PickerService, private location: Location) {
         this.getCarAndMemberInfo();
         this.wxs = this.wxService.init();
-        this.getSalesYearList();
+        this.getSalesYearTypeList();
+        this.getCarBrandList();
         this.identityAuth = config.identityAuth;
     }
 
@@ -190,6 +198,17 @@ export class UserInfoComponent implements OnInit {
                     this.identityAuthStatus = this.memberDetail.member_auth_info.identity_auth_status !== '0';
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+    }
+
+    getCarBrandList() {
+        this.baseService.mockGet('getCarBrandList', {})
+            .subscribe(brandList => {
+                if (brandList.status.succeed === '1') {
+                    this.brandList = brandList.data.car_brand_list;
+                } else {
+                    this.errorMessage = brandList.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
     }
@@ -379,12 +398,16 @@ export class UserInfoComponent implements OnInit {
 
 
         // 只有 role 是 2 的才会编辑销售信息。role:2 销售员
-        if(this.isRole('2') && (!this.selectedSalesYears || (this.selectedSalesYears &&!this.selectedSalesYears.sales_year_value))){
+        if(this.isRole('2') && (!this.selectedSalesYears || (this.selectedSalesYears && !this.selectedSalesYears.sales_year_type_id))){
             this.errorMessage = '请先选择从业时长！';
             return ;
         }
-        if(this.isRole('2') && !this.selectedCity.region_id){
+        if(this.isRole('2') && (!this.selectedCity || !this.selectedCity.region_id)){
             this.errorMessage = '请先选择所属地区！';
+            return ;
+        }
+        if(this.isRole('2') && (!this.selectedBrands || this.selectedBrands && !this.selectedBrands.length)){
+            this.errorMessage = '请先选择主卖品牌！';
             return ;
         }
 
@@ -413,8 +436,9 @@ export class UserInfoComponent implements OnInit {
             'job_position'   : this.updateForm.value.position,
             'company_address': this.updateForm.value.companyAdd,
             'email'          : this.updateForm.value.email,
-            'sales_years'    : (this.isRole('2') && this.selectedSalesYears) ? this.selectedSalesYears.sales_year_value : '',
-            'sales_region_info'  : this.isRole('2') ? this.selectedCity : {}
+            'sales_year_type_info'    : (this.isRole('2') && this.selectedSalesYears) ? this.selectedSalesYears : {},
+            'sales_region_info'  : this.isRole('2') ? this.selectedCity : {},
+            'sales_car_brand_list'  : this.selectedBrands
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
@@ -504,15 +528,13 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    getSalesYearList(){
-        this.baseService.post('getSalesYearList', {
+    getSalesYearTypeList(){
+        this.baseService.mockGet('getSalesYearTypeList', {
             // 'member_id' : '1'
         }).subscribe(result => {
             if (result.status.succeed === '1') {
-                let sales_year_list = result.data.sales_year_list;
-                this.salesYearList = sales_year_list;
-                console.log(sales_year_list);
-                this.rebuildSalesYear(sales_year_list);
+                let sales_year_type_list = result.data.sales_year_type_list;
+                this.rebuildSalesYearType(sales_year_type_list);
             } else {
                 this.errorMessage = result.status.error_desc;
             }
@@ -520,15 +542,15 @@ export class UserInfoComponent implements OnInit {
         }, error => this.errorMessage = <any>error);
     }
 
-    rebuildSalesYear(salesYears) {
+    rebuildSalesYearType(salesTypeYears) {
         let result = [];
-        salesYears.forEach(saleYear => {
-            saleYear.label = saleYear.sales_year_name;
-            saleYear.value = saleYear.sales_year_value;
+        salesTypeYears.forEach(saleYear => {
+            saleYear.label = saleYear.sales_year_type_name;
+            saleYear.value = saleYear.sales_year_type_id;
             result.push(saleYear);
         });
 
-        if (salesYears.length) {
+        if (salesTypeYears.length) {
             this.salesYears =  [result];
         }else{
             this.salesYears =  [[{
@@ -552,6 +574,41 @@ export class UserInfoComponent implements OnInit {
             this.selectedSalesYears = res.items[0];
             //this.onSalesYearsChanged(res.items[0]);
         });
+    }
+
+    showBrand(){
+        this.showBrandType = !this.showBrandType;
+    }
+
+    cancelBox() {
+        this.showBrandType = false;
+    }
+
+    toggleChecked($event, brand){
+        $event.stopPropagation();
+        let selectedBrands = this.brandList.filter((brand)=>{
+            return brand.checked;
+        });
+        if(!brand.checked && selectedBrands.length > 1){
+            this.errorMessage = '最多只可选择两个品牌！';
+            this.clearError();
+            $event.preventDefault();
+            return;
+        }
+        brand.checked = !brand.checked;
+
+    }
+    selectBrandType() {
+        this.selectedBrands = this.brandList.filter((brand)=>{
+            return brand.checked;
+        });
+        console.log(this.selectedBrands);
+        let selectedBrandsName = [];
+        this.selectedBrands.forEach(brand=>{
+            selectedBrandsName.push(brand.car_brand_name);
+        });
+        this.selectedBrandsName = selectedBrandsName.join(" ");
+        this.cancelBox();
     }
 
     /*onSalesYearsChanged(item){
@@ -714,6 +771,21 @@ export class UserInfoComponent implements OnInit {
         return name;
     }
 
+    getBrandList(){
+        let salesCarBrandList = this.memberDetail && this.memberDetail.member_info && this.memberDetail.member_info.sals_car_brand_list || [];
+        let result = [] ;
+        salesCarBrandList.forEach((item)=>{
+           result.push(item.car_brand_name);
+        });
+        return result.join(" ");
+    }
+
     ngOnInit() {
+    }
+
+    clearError(){
+        setTimeout(()=>{
+            this.errorMessage = '';
+        },2000);
     }
 }
