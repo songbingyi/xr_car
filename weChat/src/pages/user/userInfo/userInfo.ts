@@ -203,7 +203,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     getCarBrandList() {
-        this.baseService.mockGet('getCarBrandList', {})
+        this.baseService.post('getCarBrandList', {})
             .subscribe(brandList => {
                 if (brandList.status.succeed === '1') {
                     this.brandList = brandList.data.car_brand_list;
@@ -352,24 +352,36 @@ export class UserInfoComponent implements OnInit {
         this.updateForm.controls.position.setValue(this.memberDetail.member_info.job_position);
         this.updateForm.controls.companyAdd.setValue(this.memberDetail.member_info.company_address);
         this.updateForm.controls.email.setValue(this.memberDetail.member_info.email);
-        // this.selectedSalesYears = this.memberDetail.member_info.sales_years || {};
+
         this.selectedCity = this.memberDetail.member_info.sales_region_info || {};
-        let salesYearList = this.salesYearList || [];
+
+        let brandList = this.memberDetail.member_info.sales_car_brand_list || [];
+        console.log(brandList);
+        console.log(this.brandList);
+        this.brandList.forEach((brand)=>{
+            brandList.forEach((item)=>{
+                if(brand.car_brand_id === item.car_brand_id){
+                    brand.checked = true;
+                }
+            });
+        });
+        this.selectBrandType();
+
+        let salesYearList = this.salesYears[0] || [];
         let length = salesYearList.length;
+        //console.log(salesYearList);
+        //console.log(this.memberDetail.member_info.sales_year_type_info);
         for(let i=0; i < length; i++){
-            if(salesYearList[i].sales_year_value === this.memberDetail.member_info.sales_years){
+            if(salesYearList[i].sales_year_type_id === this.memberDetail.member_info.sales_year_type_info.sales_year_type_id){
                 this.selectedSalesYears = salesYearList[i];
                 //console.log(this.selectedSalesYears);
                 return ;
             }
         }
-
     }
 
     update() {
-        // console.log(this.updateForm);
         if (this.updateForm.invalid) {
-            // this.errorMessage = '请修改红色错误信息后再提交';
             this.errorMessage = '';
             this.fromError = true;
             return ;
@@ -391,11 +403,9 @@ export class UserInfoComponent implements OnInit {
         }
 
         if(this.verifyCode && this.verifyCode.verify_code && this.updateForm.value.vcode && (this.verifyCode.verify_code !== this.updateForm.value.vcode)){
-            // this.fromError = true;
             this.errorMessage = '输入的验证码不正确！';
             return ;
         }
-
 
         // 只有 role 是 2 的才会编辑销售信息。role:2 销售员
         if(this.isRole('2') && (!this.selectedSalesYears || (this.selectedSalesYears && !this.selectedSalesYears.sales_year_type_id))){
@@ -442,10 +452,6 @@ export class UserInfoComponent implements OnInit {
         })
             .subscribe(result => {
                 if (result.status.succeed === '1') {
-                    /*this.verifyCode = result.data;
-                    this.timeOut = 60;
-                    this.timing = true;
-                    this.timeLeft();*/
                     this.router.navigate(['/success']);
                     this.timeOut = 60;
                     this.timing = false;
@@ -468,7 +474,6 @@ export class UserInfoComponent implements OnInit {
                     }
                 }
                 this.submitting = false;
-                //this.updateForm.dirty = false;
             }, error => this.errorMessage = <any>error);
     }
 
@@ -510,15 +515,6 @@ export class UserInfoComponent implements OnInit {
     }
 
     timeLeft() {
-        /*this.zone.run(() => {
-            if (this.timeOut > 0) {
-                this.timeOut --;
-                this.timing = true;
-                setTimeout(() => { this.timeLeft(); }, 1000);
-            } else {
-                this.timing = false;
-            }
-        });*/
         if (this.timeOut > 0) {
             this.timeOut --;
             this.timing = true;
@@ -529,7 +525,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     getSalesYearTypeList(){
-        this.baseService.mockGet('getSalesYearTypeList', {
+        this.baseService.post('getSalesYearTypeList', {
             // 'member_id' : '1'
         }).subscribe(result => {
             if (result.status.succeed === '1') {
@@ -684,10 +680,6 @@ export class UserInfoComponent implements OnInit {
 
     }
 
-    focused() {
-        //this.errorMessage = '';
-    }
-
     changed(type, form, length?){
         length = length || 30;
         let email = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
@@ -746,33 +738,10 @@ export class UserInfoComponent implements OnInit {
             }
         }
         return canSubmit;
-        /*keys.forEach((key)=>{
-            if(key === 'email'){
-                if(this.updateForm.value.email){
-
-                }
-            }else{
-                let value = this.updateForm.value[key];
-                if(value && value.length > length){
-                    this.errorMessage = types[key];
-                }
-            }
-        });*/
-    }
-
-    salesYearName(salesYears){
-        let salesYearList = this.salesYearList || [];
-        let name = '';
-        salesYearList.forEach((year)=>{
-            if(year.sales_year_value === salesYears){
-                name = year.sales_year_name;
-            }
-        });
-        return name;
     }
 
     getBrandList(){
-        let salesCarBrandList = this.memberDetail && this.memberDetail.member_info && this.memberDetail.member_info.sals_car_brand_list || [];
+        let salesCarBrandList = this.memberDetail && this.memberDetail.member_info && this.memberDetail.member_info.sales_car_brand_list || [];
         let result = [] ;
         salesCarBrandList.forEach((item)=>{
            result.push(item.car_brand_name);

@@ -61,7 +61,7 @@
             </div>
         </form>
     </div>
-    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="orderNow()">确认提交</a>
+    <a href="javascript:;" class="weui-btn weui-btn_primary full-width-btn with-no-radius" (click)="iSee()">确认提交</a>
 
     <div class="error-bar" [hidden]="!errorMessage">
         <span>{{errorMessage}}</span>
@@ -96,4 +96,16 @@
             </a>
         </div>
     </weui-popup>
+</div>
+
+<div [hidden]="shouldConfirmBox" class="warning-box">
+    <div class="weui-mask weui-animate-fade-in"></div>
+    <div class="weui-dialog" style="opacity: 1;visibility: visible;">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认</strong></div>
+        <div class="weui-dialog__bd">是否确认提交？</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" (click)="iSee()">我再想想</a>
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="orderNow()">确认</a>
+        </div>
+    </div>
 </div>

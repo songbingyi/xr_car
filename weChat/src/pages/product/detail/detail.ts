@@ -125,7 +125,7 @@ export class DetailComponent implements OnInit {
         if(this.product.is_can_order === '0'){
             return;
         }
-        if(this.wechatClientConfig.is_tips_join_user_salesman === '0'){
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
             this.shouldShowWarningBox = false;
             return;
         }

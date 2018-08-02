@@ -135,7 +135,7 @@ export class EbossComponent implements OnInit {
     }
 
     getCarBrandList() {
-        this.baseService.mockGet('getCarBrandList', {})
+        this.baseService.post('getCarBrandList', {})
             .subscribe(brandList => {
                 if (brandList.status.succeed === '1') {
                     this.brandList = brandList.data.car_brand_list;
@@ -147,7 +147,7 @@ export class EbossComponent implements OnInit {
 
 
     getSalesYearTypeList(){
-        this.baseService.mockGet('getSalesYearTypeList', {
+        this.baseService.post('getSalesYearTypeList', {
             // 'member_id' : '1'
         }).subscribe(result => {
             if (result.status.succeed === '1') {
@@ -264,7 +264,7 @@ export class EbossComponent implements OnInit {
         }
         //console.log(this.userInfoForm);
         this.submitting = true;
-        this.baseService.mockGet('applySalesMan', {
+        this.baseService.post('applySalesMan', {
             // 'member_id' : '1',
             'sales_year_type_info' : this.selectedSalesYears,
             'sales_region_info'  : this.selectedCity,

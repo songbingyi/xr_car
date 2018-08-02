@@ -68,6 +68,8 @@ export class CartComponent implements OnInit {
     selectedRegion:any = {};
     selectedCity:any = {};
 
+    shouldConfirmBox:boolean = true;
+
     constructor(private builder: FormBuilder, private baseService: BaseProvider, private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService, private customValidators: CustomValidators, private wxService: WXSDKService) {
         this.identityAuthService.check();
         this.wxs = this.wxService.init();
@@ -186,6 +188,10 @@ export class CartComponent implements OnInit {
             this.myScrollContainer.nativeElement.scrollIntoView(); // this.myScrollContainer.nativeElement.scrollHeight;
         } catch (err) {
         }
+    }
+
+    iSee(){
+        this.shouldConfirmBox = !this.shouldConfirmBox;
     }
 
     orderNow() {

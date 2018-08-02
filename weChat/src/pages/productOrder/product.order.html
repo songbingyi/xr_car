@@ -1,5 +1,5 @@
 <div class="orders">
-    <tabset (onSelect)="onTabSelect($event)" [ngClass]="{'is-seller':isSellerRole}">
+    <tabset (onSelect)="onTabSelect($event)"><!-- [ngClass]="{'is-seller':isSellerRole}"-->
         <tab [active]="activeIndex===0">
             <span *tabHeading class="tab-set-heading">
                 全部
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
                             </div>
-                            <div class="weui-cell no-border">
+                            <div class="weui-cell no-border" *ngIf="item?.car_product_info?.price_description">
                                 <div class="weui-cell__bd">
                                     <p>价格</p>
                                 </div>
@@ -55,7 +55,7 @@
 
             </div>
         </tab>
-        <tab [active]="activeIndex===1" *ngIf="!isSellerRole">
+        <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
                 待处理<q class="weui-badge" *ngIf="hasNotify('order_pending_count', 'needProcess')">{{car_product_order_dashboard_info.order_pending_count}}</q>
             </span>
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
                             </div>
-                            <div class="weui-cell no-border">
+                            <div class="weui-cell no-border" *ngIf="item?.car_product_info?.price_description">
                                 <div class="weui-cell__bd">
                                     <p>价格</p>
                                 </div>
@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
                             </div>
-                            <div class="weui-cell no-border">
+                            <div class="weui-cell no-border" *ngIf="item?.car_product_info?.price_description">
                                 <div class="weui-cell__bd">
                                     <p>价格</p>
                                 </div>
@@ -192,7 +192,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
                             </div>
-                            <div class="weui-cell no-border">
+                            <div class="weui-cell no-border" *ngIf="item?.car_product_info?.price_description">
                                 <div class="weui-cell__bd">
                                     <p>价格</p>
                                 </div>
@@ -249,7 +249,7 @@
                                 </div>
                                 <div class="weui-cell__ft">{{item?.car_product_info?.product_name}}</div>
                             </div>
-                            <div class="weui-cell no-border">
+                            <div class="weui-cell no-border" *ngIf="item?.car_product_info?.price_description">
                                 <div class="weui-cell__bd">
                                     <p>价格</p>
                                 </div>
