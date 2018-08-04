@@ -43,10 +43,10 @@ export class UserInfoComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(6)
     ]);
-    userId   = new FormControl('', [
+    /*userId   = new FormControl('', [
         Validators.required,
         this.customValidators.eq(18)
-    ]);
+    ]);*/
     phone    = new FormControl('', [
         Validators.required,
         this.customValidators.eq(11),
@@ -110,7 +110,7 @@ export class UserInfoComponent implements OnInit {
 
     userInfoForm: FormGroup = this.builder.group({
         username: this.username,
-        userId: this.userId,
+        //userId: this.userId,
         phone: this.phone,
         vcode: this.vcode,
         companyName  : this.companyName,
@@ -244,17 +244,17 @@ export class UserInfoComponent implements OnInit {
     }
 
     save() {
-        let userId = this.userInfoForm.value.userId;
+        //let userId = this.userInfoForm.value.userId;
         let mobile = this.userInfoForm.value.phone;
         // let regxU15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-        let regxU18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+        //let regxU18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
         let regxM = (/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
 
         // 身份证号格式验证
-        if(userId && (/*!regxU15.test(userId) && */!regxU18.test(userId))){
+        /*if(userId && (/!*!regxU15.test(userId) && *!/!regxU18.test(userId))){
             this.errorMessage = '身份证号格式不正确';
             return ;
-        }
+        }*/
 
         // 手机号格式验证
         if(mobile && ((mobile + '')[0] !== '1')){
@@ -308,7 +308,7 @@ export class UserInfoComponent implements OnInit {
             // 'member_id' : '1',
             'mobile'         : this.userInfoForm.value.phone,
             'real_name'      : this.userInfoForm.value.username,
-            'id_number'      : this.userInfoForm.value.userId,
+            //'id_number'      : this.userInfoForm.value.userId,
             'verify_code'    : Md5.hashStr(this.verifyCode.code + config.salt_key),
             'company_name'   : this.userInfoForm.value.companyName,
             'job_position'   : this.userInfoForm.value.position,

@@ -15,15 +15,15 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写姓名！' : '与身份证姓名一致'}}" appFocusBlur />
+                    <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写姓名！' : '请填写您的姓名'}}" appFocusBlur />
                 </div>
             </div>
-            <div class="weui-cell">
+            <!--<div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
                 <div class="weui-cell__bd">
                     <input class="weui-input" type="text" [formControl]="userId" placeholder="{{userId.invalid && (userId.dirty || errorMessage) ? '请填写身份证号！' : '与填写姓名的身份证号码一致'}}" appFocusBlur />
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div class="weui-cells__title-empty" [hidden]="identityAuthStatus"></div>
