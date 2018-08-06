@@ -50,6 +50,7 @@ export class EbossComponent implements OnInit {
     submitting:boolean = false;
     sales_years:any;
     selectedSalesYears:any;
+    selectedSaleYear:any;
     salesYears:any;
 
 
@@ -152,7 +153,8 @@ export class EbossComponent implements OnInit {
         }).subscribe(result => {
             if (result.status.succeed === '1') {
                 let sales_year_type_list = result.data.sales_year_type_list;
-                this.rebuildSalesYearType(sales_year_type_list);
+                this.sales_years = sales_year_type_list;
+                //this.rebuildSalesYearType(sales_year_type_list);
             } else {
                 this.errorMessage = result.status.error_desc;
             }
@@ -160,7 +162,7 @@ export class EbossComponent implements OnInit {
         }, error => this.errorMessage = <any>error);
     }
 
-    rebuildSalesYearType(salesTypeYears) {
+    /*rebuildSalesYearType(salesTypeYears) {
         let result = [];
         salesTypeYears.forEach(saleYear => {
             saleYear.label = saleYear.sales_year_type_name;
@@ -191,7 +193,7 @@ export class EbossComponent implements OnInit {
             this.selectedSalesYears = res.items[0];
             //this.onSalesYearsChanged(res.items[0]);
         });
-    }
+    }*/
 
 
     validators(result) {
@@ -199,7 +201,24 @@ export class EbossComponent implements OnInit {
         return this.customValidators.isValid(result || this.result);
     }
 
+    showSalesYears(){
+        this.errorMessage = '';
+        this.showDurationType = !this.showDurationType;
+    }
+    selectDurationType(){
+        if (!this.selectedSalesYears) {
+            return;
+        }
+        this.selectedSaleYear = this.selectedSalesYears;
+        /*this.result.a = this.selectedSalesYears;
+        this.result.a.valid = true;
+        this.validators(this.result);
+        this.selectedSalesYears = null;*/
+        this.cancelBox();
+    }
+
     showBrandTypeBox() {
+        this.errorMessage = '';
         this.showBrandType = !this.showBrandType;
     }
 
@@ -244,18 +263,19 @@ export class EbossComponent implements OnInit {
             this.errorMessage = '请先选择售车年限！';
             return ;
         }
-        if(!this.selectedCity || !this.selectedCity.region_id){
-            this.errorMessage = '请先选择售车区域！';
-            return ;
-        }
 
         if(!this.selectedBrands || !this.selectedBrands.length){
             this.errorMessage = '请先选择主卖品牌！';
             return ;
         }
 
+        if(!this.selectedCity || !this.selectedCity.region_id){
+            this.errorMessage = '请先选择售车区域！';
+            return ;
+        }
+
         if(!this.userAgree.value){
-            this.errorMessage = '请先选择销售员协议！';
+            this.errorMessage = '请先选择同意E老板协议！';
             return ;
         }
 
@@ -324,6 +344,7 @@ export class EbossComponent implements OnInit {
     }
 
     selectArea() {
+        this.errorMessage = '';
         this.loadRegionList();
     }
 

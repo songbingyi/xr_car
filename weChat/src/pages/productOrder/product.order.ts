@@ -116,6 +116,9 @@ export class ProductOrderComponent implements OnInit {
             this.key = this.objKey[this.activeIndex];
             this[this.key].pagination.page = parseInt(page, 10);
 
+            console.log(`activeIndex : ${activeIndex}`);
+            console.log(`this.activeIndex : ${this.activeIndex}`);
+
             this.roleSubscribe = this.route.queryParams.subscribe(queryParams => {
                 this.role = queryParams.role || '1';
                 this.getInitData();
@@ -169,9 +172,9 @@ export class ProductOrderComponent implements OnInit {
 
     onTabSelect(event) {
 
-        if(this.isSellerRole && event !== 0){
+        /*if(this.isSellerRole && event !== 0){
             event = event + 1;
-        }
+        }*/
         //console.log(event);
         this.order_type = event;
         this.key = this.objKey[event];
