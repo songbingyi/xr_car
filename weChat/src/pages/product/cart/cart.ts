@@ -285,9 +285,9 @@ export class CartComponent implements OnInit {
     }
 
     count(){
-        let remark = this.orderForm.value.remark;
-        if(remark){
-            return String(remark).length;
+        let comment = this.orderForm.value.comment;
+        if(comment){
+            return String(comment).length;
         }else{
             return 0;
         }
