@@ -63,6 +63,7 @@ import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 
 import { EbossComponent } from '../pages/user/eboss/eboss';
+import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 
 
 const appRoutes: Routes = [
@@ -112,7 +113,8 @@ const appRoutes: Routes = [
     {path : 'duplicate', component : DuplicateComponent, canActivate: [AuthGuard]},
 
 
-    {path : 'eboss', component : EbossComponent, canActivate: [AuthGuard]}
+    {path : 'eboss', component : EbossComponent, canActivate: [AuthGuard]},
+    {path : 'qrcode', component : QrcodeInfoComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
