@@ -262,8 +262,10 @@ export class CartComponent implements OnInit {
                     "region_name": this.selectedCity.region_name
                 },
                 //"sales_invite_code": this.orderForm.value.code,
-                'username' : this.orderForm.value.username,
-                'phone' : this.orderForm.value.telephone,
+                'buyer_member_info' : {
+                    'member_name' : this.orderForm.value.username,
+                    'mobile' : this.orderForm.value.telephone
+                },
                 'car_product_comment' : this.orderForm.value.comment
             }
         })
