@@ -135,6 +135,7 @@ export class UserInfoComponent implements OnInit {
     sales_years:any;
     selectedSalesYears:any;
     salesYears:any;
+    selectedSaleYear:any;
     salesYearList = [];
 
     brands = [];
@@ -156,6 +157,7 @@ export class UserInfoComponent implements OnInit {
     selectedRegion:any = {};
     selectedCity:any = {};
 
+    showDurationType: Boolean = false;
     showBrandType:boolean = false;
     selectedBrandsName:any = '';
 
@@ -356,8 +358,8 @@ export class UserInfoComponent implements OnInit {
         this.selectedCity = this.memberDetail.member_info.sales_region_info || {};
 
         let brandList = this.memberDetail.member_info.sales_car_brand_list || [];
-        console.log(brandList);
-        console.log(this.brandList);
+        /*console.log(brandList);
+        console.log(this.brandList);*/
         this.brandList.forEach((brand)=>{
             brandList.forEach((item)=>{
                 if(brand.car_brand_id === item.car_brand_id){
@@ -367,13 +369,13 @@ export class UserInfoComponent implements OnInit {
         });
         this.selectBrandType();
 
-        let salesYearList = this.salesYears[0] || [];
-        let length = salesYearList.length;
-        //console.log(salesYearList);
+        //console.log(this.sales_years);
         //console.log(this.memberDetail.member_info.sales_year_type_info);
+        let salesYearList = this.sales_years || [];
+        let length = salesYearList.length;
         for(let i=0; i < length; i++){
             if(salesYearList[i].sales_year_type_id === this.memberDetail.member_info.sales_year_type_info.sales_year_type_id){
-                this.selectedSalesYears = salesYearList[i];
+                this.selectedSaleYear = salesYearList[i];
                 //console.log(this.selectedSalesYears);
                 return ;
             }
@@ -530,7 +532,8 @@ export class UserInfoComponent implements OnInit {
         }).subscribe(result => {
             if (result.status.succeed === '1') {
                 let sales_year_type_list = result.data.sales_year_type_list;
-                this.rebuildSalesYearType(sales_year_type_list);
+                this.sales_years = sales_year_type_list;
+                //this.rebuildSalesYearType(sales_year_type_list);
             } else {
                 this.errorMessage = result.status.error_desc;
             }
@@ -538,7 +541,7 @@ export class UserInfoComponent implements OnInit {
         }, error => this.errorMessage = <any>error);
     }
 
-    rebuildSalesYearType(salesTypeYears) {
+    /*rebuildSalesYearType(salesTypeYears) {
         let result = [];
         salesTypeYears.forEach(saleYear => {
             saleYear.label = saleYear.sales_year_type_name;
@@ -555,10 +558,12 @@ export class UserInfoComponent implements OnInit {
                 disabled: true
             }]];
         }
-    }
+    }*/
 
     showSalesYears() {
-        this.errorMessage = null;
+        this.errorMessage = '';
+        this.showDurationType = !this.showDurationType;
+        /*this.errorMessage = null;
             this.pickerService.show(this.salesYears, '', [0], {
             type: 'default',
             separator: '|',
@@ -569,14 +574,27 @@ export class UserInfoComponent implements OnInit {
             //console.log(res);
             this.selectedSalesYears = res.items[0];
             //this.onSalesYearsChanged(res.items[0]);
-        });
+        });*/
+    }
+    selectDurationType(){
+        if (!this.selectedSalesYears) {
+            return;
+        }
+        this.selectedSaleYear = this.selectedSalesYears;
+        /*this.result.a = this.selectedSalesYears;
+        this.result.a.valid = true;
+        this.validators(this.result);
+        this.selectedSalesYears = null;*/
+        this.cancelBox();
     }
 
     showBrand(){
+        this.errorMessage = '';
         this.showBrandType = !this.showBrandType;
     }
 
     cancelBox() {
+        this.showDurationType = false;
         this.showBrandType = false;
     }
 
@@ -598,7 +616,7 @@ export class UserInfoComponent implements OnInit {
         this.selectedBrands = this.brandList.filter((brand)=>{
             return brand.checked;
         });
-        console.log(this.selectedBrands);
+        //console.log(this.selectedBrands);
         let selectedBrandsName = [];
         this.selectedBrands.forEach(brand=>{
             selectedBrandsName.push(brand.car_brand_name);

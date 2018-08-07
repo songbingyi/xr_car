@@ -100,7 +100,7 @@
         </div>
         <div class="weui-flex">
             <div class="weui-flex__item" (click)="goToCarOrderList(1, 1, {role: '2'})">
-                <div class="order-status processing">
+                <div class="order-status need-process">
                     <span class="weui-badge" *ngIf="hasBadge(dataItems.role2.order_pending_count)">{{dataItems.role2.order_pending_count}}</span>
                 </div>
                 <span>待处理</span>
