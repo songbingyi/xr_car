@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="service-info" *ngIf="detail?.institution_dealer_info">
+                <!--<div class="service-info" *ngIf="detail?.institution_dealer_info">
                     <div class="weui-cell special-cell">
                         <div class="weui-cell__bd">
                             <p class="title">服务商信息</p>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="weui-cell__ft">{{detail?.institution_dealer_member_info?.mobile}}</div>
                     </div>
-                </div>
+                </div>-->
 
                 <div class=" order-info" *ngIf="detail?.outer_dms_no">
                     <div class="weui-cell special-cell">
@@ -120,6 +120,21 @@
                             <p>订单编码信息</p>
                         </div>
                         <div class="weui-cell__ft">{{detail?.outer_dms_no}}</div>
+                    </div>
+                </div>
+
+                <div class=" order-info" *ngIf="detail?.car_product_order_tips">
+                    <div class="weui-cell special-cell">
+                        <div class="weui-cell__bd">
+                            <p class="title">订单提示信息</p>
+                        </div>
+                        <div class="weui-cell__ft"><span></span></div>
+                    </div>
+                    <div class="weui-cell no-border weui-cell-small">
+                        <div class="weui-cell__bd">
+                            <p>信息内容</p>
+                        </div>
+                        <div class="weui-cell__ft">{{detail?.car_product_order_tips}}</div>
                     </div>
                 </div>
 
