@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <!--<div class="service-info" *ngIf="detail?.institution_dealer_info">
+                <div class="service-info" *ngIf="(detail?.institution_dealer_info && (roleId === '3' || roleId === '4'))">
                     <div class="weui-cell special-cell">
                         <div class="weui-cell__bd">
                             <p class="title">服务商信息</p>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="weui-cell__ft">{{detail?.institution_dealer_member_info?.mobile}}</div>
                     </div>
-                </div>-->
+                </div>
 
                 <div class=" order-info" *ngIf="detail?.outer_dms_no">
                     <div class="weui-cell special-cell">

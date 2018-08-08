@@ -26,7 +26,7 @@ export class ProductOrderDetailComponent implements OnInit {
     isLoaded: Boolean = false;
     dialogConfig: DialogConfig;
     isShowImage:Boolean = false;
-    roleId: String = '';
+    roleId: any = '';
     orderId: String = '';
 
     institutionDealer:any = [];
