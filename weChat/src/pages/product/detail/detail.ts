@@ -70,7 +70,8 @@ export class DetailComponent implements OnInit {
         this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
             if (wechatClientConfig.status.succeed === '1') {
                 this.wechatClientConfig = wechatClientConfig.data.wechat_client_config;
-                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_bind_car_notice !== '1';
+                //this.wechatClientConfig.is_tips_join_user_salesman = '1';
+                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
             } else {
                 this.errorMessage = wechatClientConfig.status.error_desc;
             }
@@ -203,8 +204,13 @@ export class DetailComponent implements OnInit {
         }else{
             this.router.navigate(['/eboss']);
         }*/
+        if(this.memberDetail.member_auth_info && this.memberDetail.member_auth_info.identity_auth_status === '0'){
+            this.router.navigate(['/userInfo']);
+            return false;
+        }
         if(this.wechatClientConfig.is_tips_join_user_salesman === '1' && this.isRole('2')){
             this.router.navigate(['/userInfo']);
+            return false;
         }
         if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
             this.router.navigate(['/eboss']);
