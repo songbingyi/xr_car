@@ -45,9 +45,12 @@ export class IndexComponent implements OnInit {
     shouldShowWarningSaleBox = true;
     errorMessage:any;
     wechatClientConfig:any = {};
+    memberDetail:any = {};
+    role_ids:any = [];
 
     constructor(private baseService : BaseProvider, private router : Router, private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
         // this.identityAuthService.check();
+        this.getMemberDetail();
         this.getWechatClientConfig();
     }
 
@@ -68,6 +71,33 @@ export class IndexComponent implements OnInit {
                 this.errorMessage = wechatClientConfig.status.error_desc;
             }
         }, error => this.errorMessage = <any>error);
+    }
+
+    getMemberDetail() {
+        this.baseService.post('getMemberDetail', {})
+            .subscribe(member => {
+                    if (member.status.succeed === '1') {
+                        this.memberDetail.member_auth_info = member.data.member_auth_info;
+                        this.memberDetail.member_role_list = member.data.member_role_list || [];
+                        this.getRoleIds();
+                    } else {
+                        this.errorMessage = member.status.error_desc;
+                    }
+                },
+                error => this.errorMessage = <any>error
+            );
+    }
+
+    getRoleIds(){
+        let memberRoleList = this.memberDetail.member_role_list;
+        this.role_ids = [];
+        memberRoleList.forEach(role=> {
+            this.role_ids.push(role.member_role_id);
+        });
+    }
+
+    isRole(role){
+        return this.role_ids.indexOf(role) > -1;
     }
 
     selected(item, index) {
@@ -127,14 +157,17 @@ export class IndexComponent implements OnInit {
     iSee(){
         this.shouldShowWarningSaleBox = !this.shouldShowWarningSaleBox;
     }
+
     goToCarList(){
         this.router.navigate(['/carList']);
     }
+
     goToEBoss(){
         // 如果是销售员(不提示成为 Eboss )则跳转到 E04-2，否则跳转到 E11-1
-        if(this.wechatClientConfig.is_tips_join_user_salesman === '0'){
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '1' && this.isRole('2')){
             this.router.navigate(['/userInfo']);
-        }else{
+        }
+        if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
             this.router.navigate(['/eboss']);
         }
 

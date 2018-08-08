@@ -6,7 +6,7 @@
         <div class="weui-cells__title">1. 您的售车年限？</div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd"><label class="weui-label">售车年限</label></div>
+                <div class="weui-cell__hd"><label class="weui-label">从业时长</label></div>
                 <div class="weui-cell__bd text-right" [hidden]="!selectedSaleYear?.sales_year_type_name" (click)="showSalesYears()"><span>{{selectedSaleYear?.sales_year_type_name}}</span></div>
                 <div class="weui-cell__bd" [hidden]="selectedSaleYear?.sales_year_type_name" style="color:#a9a9a9;" (click)="showSalesYears()">请选择</div>
                 <!--<div class="weui-cell__bd">
