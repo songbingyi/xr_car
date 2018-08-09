@@ -71,7 +71,7 @@ export class DetailComponent implements OnInit {
             if (wechatClientConfig.status.succeed === '1') {
                 this.wechatClientConfig = wechatClientConfig.data.wechat_client_config;
                 //this.wechatClientConfig.is_tips_join_user_salesman = '1';
-                this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
+                //this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
             } else {
                 this.errorMessage = wechatClientConfig.status.error_desc;
             }
