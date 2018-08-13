@@ -70,7 +70,9 @@ let apiBase : IDictionary<string> = {
     'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage',
     'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage',
     'getSalesYearTypeList'    : 'base/sales_year_type/getSalesYearTypeList',
-    'getCarBrandList'         : 'base/car_brand/getCarBrandList'
+    'getCarBrandList'         : 'base/car_brand/getCarBrandList',
+    'getMemberAgencyInfo'     : 'member/member_agency/getMemberAgencyInfo',
+    'submitMemberAgency'      : 'member/member_agency/submitMemberAgency'
 };
 
 export {apiBase};
