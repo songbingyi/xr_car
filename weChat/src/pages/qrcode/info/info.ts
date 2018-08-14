@@ -88,6 +88,7 @@ export class QrcodeInfoComponent implements OnInit {
                 if (memberDetail.status.succeed === '1') {
                     this.memberDetail = memberDetail.data || {};
                     this.shouldShowWarningBox = this.memberDetail.member_auth_info.identity_auth_status === '0';
+                    //this.shouldShowWarningBox = this.memberDetail.member_auth_info.member_auth_status === '0';
                     this.getMemberAgencyInfo();
                 } else {
                     this.errorMessage = memberDetail.status.error_desc;
