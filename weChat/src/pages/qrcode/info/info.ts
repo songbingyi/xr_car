@@ -72,7 +72,7 @@ export class QrcodeInfoComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService, private location: Location, private identityAuthService: IdentityAuthService) {
         this.getMemberDetail();
-        this.identityAuthService.check();
+        //this.identityAuthService.check();
     }
 
     ngOnInit() {
