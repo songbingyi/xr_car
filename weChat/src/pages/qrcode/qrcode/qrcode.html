@@ -1,0 +1,242 @@
+<div class="car-info">
+    <div class="top-tips">
+        <p>注：最多可绑定3辆车的信息<!-- | <a [routerLink]="['/carList']">列表</a>--></p>
+    </div>
+    <form [formGroup]="carInfoForm" (ngSubmit)="save()" [ngClass]="{'ng-from-error':fromError}">
+    <div class="weui-cells__title">车牌号码</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd labels">
+                <label class="weui-label label-one">车牌号码</label><label class="weui-label label-two" (click)="showPanelBox()">{{result.a.province_code_name}}<i class="icon-triangle"></i></label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" [formControl]="cardId" (blur)="setItem('b', cardId)" (input)="hasCar($event.target.value)" placeholder="{{cardId.invalid && (cardId.dirty || errorMessage) ? '请填写车牌号码！' : '例如：A567R3'}}" appFocusBlur />
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">车辆信息</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">所属公司</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入公司名称" [attr.disabled]="(hasCarInfo?.is_modify === '0' || (company_id && company_id !== '0')) ? '' : null" [formControl]="companyName"  (blur)="setItem('c', companyName)" appFocusBlur/>
+            </div>
+        </div>
+        <!--<div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">车辆性质</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="选择车辆性质"/>
+            </div>
+        </div>-->
+        <div class="weui-cell" [ngClass]="hasCarInfo?.is_modify === '0' ? '' : 'weui-cell_access'" (click)="showIdTypeBox()">
+            <div class="weui-cell__hd"><label class="weui-label">车辆性质</label></div>
+            <div class="weui-cell__bd">
+                <span class="placeholder" [ngClass]="{'error':!result.d.valid}">{{result.d.car_property_name || '选择车辆性质'}}</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+
+        <div class="weui-cell" [ngClass]="hasCarInfo?.is_modify === '0' ? '' : 'weui-cell_access'" (click)="showCarTypeBox()">
+            <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
+            <div class="weui-cell__bd">
+                <span class="placeholder" [ngClass]="{'error':!result.e.valid}">{{result.e.car_type_name || '选择车辆类型'}}</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+
+        <!--<div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">车辆类型</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="选择车辆类型"/>
+            </div>
+        </div>-->
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">车架号码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" placeholder="请输入车架号码" [formControl]="cardIdv" (blur)="setItem('f', cardIdv)" appFocusBlur/>
+            </div>
+            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">发动机号</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" placeholder="请输入发动机号" [formControl]="cardIdx" (blur)="setItem('g', cardIdx)" appFocusBlur/>
+            </div>
+            <span (click)="showImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
+        <div class="weui-cell weui-cell_access">
+            <div class="weui-cell__hd"><label class="weui-label">车辆流水号</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" [attr.disabled]="hasCarInfo?.is_modify === '0' ? '' : null" placeholder="请输入车辆流水号" [formControl]="cardSerialNo" (blur)="setItem('h', cardSerialNo)" appFocusBlur/>
+            </div>
+            <span (click)="showListImage()"><i class="weui-icon weui-icon-info-circle"></i></span>
+        </div>
+    </div>
+    </form>
+
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_primary full-width-btn-with-padding" [ngClass]="{'disabled':carInfoForm.invalid&&carInfoForm.dirty}" (click)="submit()" *ngIf="!enoughCar || (operationType === 'edit')">确定</a>
+    <a href="javascript:;" class="weui-btn weui-btn_passive weui-btn_default full-width-btn-with-padding" (click)="delete()" *ngIf="shouldDelete">删除</a>
+
+    <div class="weui-gallery" [hidden]="!isShowImage">
+        <span class="weui-gallery__img" style="background-image: url('/assets/images/tmp/vin.jpg');"></span>
+        <div class="weui-gallery__opr">
+            <a href="javascript:" class="weui-gallery__del" (click)="showImage()">
+                <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="weui-gallery" [hidden]="!isShowListImage">
+        <div class="slider">
+        <div>
+            <div class="swiper-container">
+                <!-- 容器（必选） -->
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let image of images">
+                        <img [src]="image"/>
+                    </div>
+                </div>
+                <!-- 分页（可选） -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        </div>
+        <div class="weui-gallery__opr">
+            <a href="javascript:" class="weui-gallery__del" (click)="showListImage()">
+                <i class="weui-icon-cancel weui-icon_gallery-cancel"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="" [hidden]="!showIdType">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-picker weui-animate-slide-up">
+            <div class="weui-picker__hd">
+                <a href="javascript:;" data-action="cancel" class="weui-picker__action" (click)="cancelTypeBox()">取消</a>
+                <a href="javascript:;" data-action="select" class="weui-picker__action" (click)="selectIdType()">确定</a>
+            </div>
+            <div class="weui-picker__bd">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label" for="carProperty-{{carProperty.car_property_id}}" *ngFor="let carProperty of carProperties; index as index">
+                        <div class="weui-cell__bd">
+                            <p>{{carProperty.car_property_name}}</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedCarProperty" [value]="carProperty" name="carProperty" id="carProperty-{{carProperty.car_property_id}}">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="" [hidden]="!showCarType">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-picker weui-animate-slide-up">
+            <div class="weui-picker__hd">
+                <a href="javascript:;" data-action="cancel" class="weui-picker__action" (click)="cancelTypeBox()">取消</a>
+                <a href="javascript:;" data-action="select" class="weui-picker__action" (click)="selectCarType()">确定</a>
+            </div>
+            <div class="weui-picker__bd">
+                <div class="weui-cells weui-cells_radio">
+                    <label class="weui-cell weui-check__label" for="carType-{{carType.car_type_id}}" *ngFor="let carType of carTypes; index as index">
+                        <div class="weui-cell__bd">
+                            <p>{{carType.car_type_name}}</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" class="weui-check" [(ngModel)]="selectedCarType" [value]="carType" name="carType" id="carType-{{carType.car_type_id}}">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <!--<label class="weui-cell weui-check__label" for="x12">
+                        <div class="weui-cell__bd">
+                            <p>重型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x12">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x13">
+                        <div class="weui-cell__bd">
+                            <p>中型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x13">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>
+                    <label class="weui-cell weui-check__label" for="x14">
+                        <div class="weui-cell__bd">
+                            <p>小型汽车</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                            <input type="radio" name="radio2" class="weui-check" id="x14">
+                            <span class="weui-icon-checked"></span>
+                        </div>
+                    </label>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="province-select-panel" [hidden]="!showPanel">
+        <table>
+            <tr *ngFor="let groups of groupedProvince; index as index">
+                <td *ngFor="let province of groups;">
+                    <span (click)="selected(province)" [ngClass]="{'selected': province.selected}">{{province.province_code_name}}</span>
+                </td>
+                <!--<td><span>津</span></td>
+                <td><span>翼</span></td>
+                <td><span>晋</span></td>
+                <td><span>蒙</span></td>
+                <td><span>辽</span></td>
+                <td><span>吉</span></td>
+                <td><span>黑</span></td>
+                <td><span>沪</span></td>
+                <td><span>苏</span></td>-->
+            </tr>
+            <!--<tr>
+                <td><span>浙</span></td>
+                <td><span>皖</span></td>
+                <td><span>闽</span></td>
+                <td><span>赣</span></td>
+                <td><span>鲁</span></td>
+                <td><span>豫</span></td>
+                <td><span>鄂</span></td>
+                <td><span>湘</span></td>
+                <td><span>粤</span></td>
+                <td><span>桂</span></td>
+            </tr>
+            <tr>
+                <td><span>琼</span></td>
+                <td><span>渝</span></td>
+                <td><span>川</span></td>
+                <td><span>贵</span></td>
+                <td><span>云</span></td>
+                <td><span class="selected">藏</span></td>
+                <td><span>陕</span></td>
+                <td><span>甘</span></td>
+                <td><span>青</span></td>
+                <td><span>宁</span></td>
+            </tr>
+            <tr>
+                <td><span>新</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="4"></td>
+            </tr>-->
+        </table>
+        <div class="confirm-btn"><span class="return" (click)="confirmSelect()">完成</span></div>
+    </div>
+
+    <div class="error-bar" [hidden]="!errorMessage">
+        <span>{{errorMessage}}</span>
+    </div>
+
+</div>

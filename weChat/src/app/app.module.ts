@@ -91,6 +91,7 @@ import {InsuranceComponent} from '../pages/insurance/insurance';
 import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
 
 import {EbossComponent} from '../pages/user/eboss/eboss';
+import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 
 @NgModule({
     declarations: [
@@ -149,7 +150,9 @@ import {EbossComponent} from '../pages/user/eboss/eboss';
         InsuranceComponent,
         IllegalDetailComponent,
 
-        EbossComponent
+        EbossComponent,
+
+        QrcodeInfoComponent
     ],
     imports: [
         AppRoutingModule,

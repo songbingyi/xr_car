@@ -1,0 +1,16 @@
+{
+    "status": {
+        "succeed": "1",
+        "error_code": "",
+        "error_desc": ""
+    },
+    "data": {
+        "member_agency_info": {
+            "agency_id": "1",
+            "agency_company_name": "公司名称",
+            "agency_name": "姓名",
+            "agency_mobile": "18629315637",
+            "agency_mp_qr_code_url": "https://qr.api.cli.im/qr?data=%25E8%25BF%2599%25E9%2587%258C%25E6%2598%25AF%25E4%25B8%2580%25E4%25B8%25AA%25E7%25A4%25BA%25E4%25BE%258B%25E7%259A%2584%25E4%25BA%258C%25E7%25BB%25B4%25E7%25A0%2581%25E3%2580%2582&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=c873d4dd85eea8a2d643c1d5535fd6c7"
+        }
+    }
+}
