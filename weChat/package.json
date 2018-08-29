@@ -30,13 +30,14 @@
         "ngx-amap": "^1.0.1",
         "ngx-tabs": "0.0.13",
         "ngx-weui": "^1.1.0",
+        "node-sass": "^4.9.0",
         "rxjs": "^5.4.2",
         "swiper": "^4.0.3",
         "weui": "^1.1.2",
         "zone.js": "^0.8.14"
     },
     "devDependencies": {
-        "@angular/cli": "1.4.4",
+        "@angular/cli": "1.7.4",
         "@angular/compiler-cli": "^4.2.4",
         "@angular/language-service": "^4.2.4",
         "@types/jasmine": "~2.5.53",
