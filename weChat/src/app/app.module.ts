@@ -92,6 +92,8 @@ import {IllegalDetailComponent} from '../pages/illegalDetail/illegalDetail';
 
 import {EbossComponent} from '../pages/user/eboss/eboss';
 import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
+import { HandyTraffiComponent } from '../pages/handy-traffi/handy-traffi.component';
+import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
 
 @NgModule({
     declarations: [
@@ -152,7 +154,12 @@ import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 
         EbossComponent,
 
-        QrcodeInfoComponent
+        QrcodeInfoComponent,
+
+        HandyTraffiComponent,
+
+        BuyIndexComponent,
+
     ],
     imports: [
         AppRoutingModule,

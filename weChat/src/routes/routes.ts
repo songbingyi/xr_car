@@ -1,3 +1,4 @@
+
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -64,13 +65,17 @@ import { RescueRankComponent } from '../pages/rescueRank/rescue-rank.component';
 
 import { EbossComponent } from '../pages/user/eboss/eboss';
 import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
+import { HandyTraffiComponent } from '../pages/handy-traffi/handy-traffi.component';
+import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
 
 
 const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
     {path : 'redirect', component : RedirectComponent},
     {path : 'login', component : LoginComponent},
-    {path : '', component : IndexComponent},
+    {path : '', component : IndexComponent},//个人中心按钮
+    {path : 'buyIndex', component : BuyIndexComponent},//在线购车按钮
+    {path : 'handyTraffic', component :  HandyTraffiComponent},//便民车务按钮
     {path : 'service_operation_certificate', component : CertificateComponent, canActivate: [AuthGuard]},
     {path : 'service_driving_license', component : LicenseComponent, canActivate: [AuthGuard]},
     {path : 'service_audit_car', component : ReviewComponent, canActivate: [AuthGuard]},

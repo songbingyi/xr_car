@@ -50,7 +50,7 @@ export class AuthService {
     isLoggedIn() {
         return !!this.getSession();
     }
-
+    /**@name 跳转微信登录页面 */
     redirect() {
         let path = window.location.href;
         window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + config.appid + '&redirect_uri=' + encodeURIComponent(config.url + 'login/') + '&response_type=code&scope=snsapi_userinfo&state=' + encodeURIComponent(path) + '#wechat_redirect';

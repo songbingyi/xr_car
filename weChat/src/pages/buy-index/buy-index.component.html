@@ -1,0 +1,14 @@
+<div class="slider">
+<weui-swiper [options]="options" *ngIf="images.length>1" #wuiSwiper>
+  <div class="swiper-container">
+      <!-- 容器（必选） -->
+      <div class="swiper-wrapper">
+          <div class="swiper-slide" *ngFor="let image of images">
+              <img [src]="image"/>
+          </div>
+      </div>
+      <!-- 分页（可选） -->
+      <div class="swiper-pagination"></div>
+  </div>
+</weui-swiper>
+</div>
