@@ -173,14 +173,15 @@ export class DetailComponent implements OnInit {
 
     bindEvent() {
         let $body = document.querySelector('body');
-        let height = $body.clientHeight || $body.offsetHeight;
+        // let height = $body.clientHeight || $body.offsetHeight;
         setTimeout(() => {
             let content = document.querySelector('.scroll-page');
             // console.log(content);
             if(content) {
                 content.addEventListener('scroll', (event) => {
                     let scrollTop = content.scrollTop;
-                    if( scrollTop > height){
+                    // console.log("scrollTop:"+scrollTop)
+                    if( scrollTop > 200){
                         this.show = true;
                     }else{
                         this.show = false;

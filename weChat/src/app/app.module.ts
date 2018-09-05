@@ -94,6 +94,8 @@ import {EbossComponent} from '../pages/user/eboss/eboss';
 import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 import { HandyTraffiComponent } from '../pages/handy-traffi/handy-traffi.component';
 import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
+import { IntentionBuyComponent } from '../pages/buy-index/intention-buy/intention-buy.component';
+
 
 @NgModule({
     declarations: [
@@ -159,6 +161,8 @@ import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
         HandyTraffiComponent,
 
         BuyIndexComponent,
+
+        IntentionBuyComponent,
 
     ],
     imports: [

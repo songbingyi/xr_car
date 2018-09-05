@@ -17,15 +17,15 @@ export class BuyIndexComponent implements OnInit {
     this.options = {
       pagination: {
         el: '.swiper-pagination',
-        bulletClass : 'my-bullet',
       },
       onInit: () => {
-
+        console.log('11')
       },
       onSlideChangeEnd: (swiper: any) => {
+        console.log('22')
       }
     };
-    this.images = ['http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg','https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3246517076,2158128194&fm=58&s=06C3D9169CF012902B94BDCE030070A1&bpow=121&bpoh=75']
+    this.images = ['http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg']
   }
 
 }

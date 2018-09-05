@@ -4,14 +4,14 @@
             <div class="empty-image" *ngIf="images.length===0"></div>
             <div class="slider" *ngIf="images.length">
                 <div *ngIf="images.length===1">
-                    <img [src]="images[0].url || ''"/>
+                    <img [src]="images[0].url || ''" />
                 </div>
                 <weui-swiper [options]="options" *ngIf="images.length>1" #wuiSwiper>
                     <div class="swiper-container">
                         <!-- 容器（必选） -->
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" *ngFor="let image of images">
-                                <img [src]="image.url"/>
+                                <img [src]="image.url" />
                             </div>
                         </div>
                         <!-- 分页（可选） -->
@@ -30,11 +30,16 @@
 
         <div class="goTop" (click)="goTop();" [hidden]="!show"></div>
 
-        <a class="call-with-phone weui-btn weui-btn_primary full-width-btn with-no-radius" href="tel:4008876108">
+        <!-- <a class="call-with-phone weui-btn weui-btn_primary full-width-btn with-no-radius" href="tel:4008876108">
             <img src="/assets/images/icon/phone.blue.png">
             <span>电话咨询</span>
+        </a> -->
+        <a class="call-with-phone weui-btn weui-btn_primary full-width-btn with-no-radius" href="tel:4008876108">
+            <img src="/assets/images/icon/phone.blue.png">
+            <span>在线订购</span>
         </a>
-        <a href="javascript:;" class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [ngClass]="{'disabled':product.is_can_order==='0'}" (click)="toCart()">在线订购</a>
+        <a href="javascript:;" class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [ngClass]="{'disabled':product.is_can_order==='0'}"
+            (click)="toCart()">在线订购</a>
     </div>
 </div>
 
@@ -49,3 +54,4 @@
         </div>
     </div>
 </div>
+<app-intention-buy></app-intention-buy>
