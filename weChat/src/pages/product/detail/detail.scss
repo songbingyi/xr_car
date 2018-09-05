@@ -32,10 +32,9 @@
         }
     }
     .order-now {
-        width: 80%;
+        width: 100%;
         background: #1970A6;
         color: #FFF;
-        left: 20%;
         &.disabled {
             opacity: 0.6;
         }
@@ -131,7 +130,7 @@ section {
 
 .goTop {
     position: fixed;
-    bottom: 80px;
+    bottom: 70px;
     right: 10px;
     height: 40px;
     width: 40px;

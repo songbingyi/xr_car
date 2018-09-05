@@ -19,7 +19,7 @@ export class DetailComponent implements OnInit {
     product: any = {};
     isLoaded: Boolean = false;
     show: Boolean = false;
-
+    /**@name 不显示成为E老板警告 */
     shouldShowWarningBox:Boolean = true;
     wechatClientConfig:any = {};
 
@@ -152,15 +152,15 @@ export class DetailComponent implements OnInit {
         // console.log(imgs);
         // this.Swiper.swiper.update();
     }
-
+    /**@name 验证产品是否可以购买=>是否提示成为销售员=>转到cart页面 */
     toCart() {
-        if(this.product.is_can_order === '0'){
-            return;
-        }
-        if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
-            this.shouldShowWarningBox = false;
-            return;
-        }
+        // if(this.product.is_can_order === '0'){
+        //     return;
+        // }
+        // if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
+        //     this.shouldShowWarningBox = false;
+        //     return;
+        // }
         this.router.navigate(['cart', this.product.product_id], { queryParams: { product_id: this.product.product_id } });
     }
 

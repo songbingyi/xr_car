@@ -6,11 +6,7 @@
     height: 100%;
 }
 
-app-intention-buy {
-    .intention-page {
-        top: 510px
-    }
-}
+
 
 .slider {
     height: 200px;
@@ -75,5 +71,10 @@ app-intention-buy {
                 }
             }
         }
+    }
+}
+app-intention-buy {
+    .intention-page {
+        top: 510px
     }
 }
