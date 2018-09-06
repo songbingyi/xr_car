@@ -72,7 +72,8 @@ let apiBase : IDictionary<string> = {
     'getSalesYearTypeList'    : 'base/sales_year_type/getSalesYearTypeList',
     'getCarBrandList'         : 'base/car_brand/getCarBrandList',
     'getMemberAgencyInfo'     : 'member/member_agency/getMemberAgencyInfo',
-    'submitMemberAgency'      : 'member/member_agency/submitMemberAgency'
+    'submitMemberAgency'      : 'member/member_agency/submitMemberAgency',
+    'getCarProductPurposeList': 'base/car_product_purpose/getCarProductPurposeList'
 };
 
 export {apiBase};

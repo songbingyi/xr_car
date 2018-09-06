@@ -65,7 +65,6 @@ export class DetailComponent implements OnInit {
             console.log(params.get('id'));
         });*/
     }
-
     getWechatClientConfig() {
         this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
             if (wechatClientConfig.status.succeed === '1') {
@@ -152,16 +151,13 @@ export class DetailComponent implements OnInit {
         // console.log(imgs);
         // this.Swiper.swiper.update();
     }
-    /**@name 验证产品是否可以购买=>是否提示成为销售员=>转到cart页面 */
+    /**@name 是否提示成为销售员=>转到cart页面 */
     toCart() {
-        // if(this.product.is_can_order === '0'){
-        //     return;
-        // }
         // if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
         //     this.shouldShowWarningBox = false;
         //     return;
         // }
-        this.router.navigate(['cart', this.product.product_id], { queryParams: { product_id: this.product.product_id } });
+        this.router.navigate(['cart']);
     }
 
     goTop() {

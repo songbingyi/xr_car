@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { BaseProvider } from '../../providers/http/base.http';
 
 @Component({
   selector: 'app-buy-index',
@@ -10,9 +11,22 @@ import { Router } from '@angular/router';
 export class BuyIndexComponent implements OnInit {
   /**@name swiper设置参数 */
   options: object;
+
   /**@name swiper图片url */
   images: string[];
-  constructor(private router: Router) { }
+
+  /**@name  是否出现加入销售员通知*/
+  tipsJoinSalesman:string;
+
+  /**@name  隐藏销售员通知控制器*/
+  shouldShowWarningBox:Boolean = true;
+
+  /**@name 错误信息 */
+  errorMessage: any;
+
+  constructor(private router: Router, private baseService: BaseProvider) {
+    this.getWechatClientConfig()
+  }
 
   ngOnInit() {
 
@@ -27,17 +41,28 @@ export class BuyIndexComponent implements OnInit {
         console.log('22')
       }
     };
-    this.images = ['http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg','http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg']
+    this.images = ['http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg', 'http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg']
+
   }
-    /**@name 验证产品是否可以购买=>是否提示成为销售员=>转到cart页面 */
-    toCart() {
-      // if(this.product.is_can_order === '0'){
-      //     return;
-      // }
-      // if(this.wechatClientConfig.is_tips_join_user_salesman === '1'){
-      //     this.shouldShowWarningBox = false;
-      //     return;
-      // }
-      this.router.navigate(['cart', 0], { queryParams: { product_id: 0 } });
+  /**@name 获取是否弹出成为销售员通知信息 */
+  getWechatClientConfig() {
+    this.baseService.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
+      if (wechatClientConfig.status.succeed === '1') {
+        this.tipsJoinSalesman = wechatClientConfig.data.wechat_client_config;
+        //this.wechatClientConfig.is_tips_join_user_salesman = '1';
+        //this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
+      } else {
+        this.errorMessage = wechatClientConfig.status.error_desc;
+      }
+    }, error => this.errorMessage = <any>error);
+  }
+
+  /**@name 是否隐藏成为销售员=>转到cart页面 */
+  toCart() {
+    // if (this.tipsJoinSalesman === '1') {
+    //   this.shouldShowWarningBox = false;
+    //   return;
+    // }
+    this.router.navigate(['cart']);
   }
 }

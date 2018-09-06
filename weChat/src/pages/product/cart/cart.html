@@ -1,21 +1,34 @@
-<div class="user-info cart-page">
+<a class="user-info cart-page">
     <div class="scroll-page">
         <form [formGroup]="orderForm" (ngSubmit)="orderNow()" [ngClass]="{'ng-from-error':fromError}">
             <div class="has-phone">
                 <!--<div class="weui-cells__title-empty"></div>-->
                 <div class="weui-cells__title">车辆信息</div>
-                <div class="weui-cells head-cell">
+                <div class="weui-cells">
+                    <!-- 车辆用途 -->
+                    <div class="weui-cell weui-cell_access my-location">
+                        <div class="weui-cell__hd"><label class="weui-label">车辆用途</label></div>
+                       
+                        <div class="weui-cell__bd" (click)="selectPurpose()" [ngStyle]="{'color':currentPurpose.car_product_purpose_id ? '' : '#a9a9a9' }">
+                         {{currentPurpose.car_product_purpose_name?currentPurpose.car_product_purpose_name:'请选择车辆用途'}}
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </div>
+
+                    <!-- 购车数量 -->
                     <div class="weui-cell">
-                        <div class="weui-cell__hd"><label class="weui-label">车辆名称</label></div>
+                        <div class="weui-cell__hd"><label class="weui-label">购车数量</label></div>
                         <div class="weui-cell__bd">
-                            <span class="car-name">{{product.product_name}}</span>
-                            <p class="product_summary">{{product.product_summary}}</p>
+                            <input class="weui-input" type="text" [formControl]="carscount" placeholder="{{carscount.invalid && (carscount.dirty || errorMessage) ? '请填写购车数量' : '请填写购车数量'}}"
+                                appFocusBlur />
                         </div>
                     </div>
-                    <!--<div class="weui-cell">
+
+                    <!-- 价格 -->
+                    <!-- <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">价格</label></div>
                         <div class="weui-cell__bd"><span class="car-price">￥{{product.price_description}}</span></div>
-                    </div>-->
+                    </div> -->
                 </div>
 
                 <div class="weui-cells__title">购车人信息</div>
@@ -23,13 +36,15 @@
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写购车人姓名' : '请填写购车人姓名'}}" appFocusBlur/>
+                            <input class="weui-input" type="text" [formControl]="username" placeholder="{{username.invalid && (username.dirty || errorMessage) ? '请填写购车人姓名' : '请填写购车人姓名'}}"
+                                appFocusBlur />
                         </div>
                     </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">联系电话</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" [formControl]="telephone" placeholder="{{telephone.invalid && (telephone.dirty || errorMessage) ? '请填写购车人联系电话' : '请填写购车人联系电话'}}" appFocusBlur/>
+                            <input class="weui-input" type="text" [formControl]="telephone" placeholder="{{telephone.invalid && (telephone.dirty || errorMessage) ? '请填写购车人联系电话' : '请填写购车人联系电话'}}"
+                                appFocusBlur />
                         </div>
                     </div>
                     <div class="weui-cell weui-cell_access my-location">
@@ -44,7 +59,8 @@
                 <div class="weui-cells weui-cells_form">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <textarea class="weui-textarea" [formControl]="comment" placeholder="填写关于用户的详细信息可以提高订单成交率哦~" appFocusBlur rows="3"></textarea>
+                            <textarea class="weui-textarea" [formControl]="comment" placeholder="填写关于用户的详细信息可以提高订单成交率哦~"
+                                appFocusBlur rows="3"></textarea>
                             <div class="weui-textarea-counter" [ngClass]="{'error':count()>200}"><span>{{count()}}</span>/200</div>
                         </div>
                     </div>
@@ -96,16 +112,30 @@
             </a>
         </div>
     </weui-popup>
-</div>
+    <!-- 购车用途候选单 -->
+    <weui-popup #simple   [config]="{is_full: false}" >
+        <section *ngFor="let item of purposeList" class="weui-cell purpose-btn" href="javascript:;" (click)="selectCurrentPurpose(item)">
+            {{item.car_product_purpose_name}}
+        </section>
 
-<div [hidden]="shouldConfirmBox" class="warning-box">
-    <div class="weui-mask weui-animate-fade-in"></div>
-    <div class="weui-dialog" style="opacity: 1;visibility: visible;">
-        <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认</strong></div>
-        <div class="weui-dialog__bd">是否确认提交？</div>
-        <div class="weui-dialog__ft">
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" (click)="iSee()">我再想想</a>
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="orderNow()">确认</a>
+        <!-- <div class="weui-cells__title"></div>
+        <div class="weui-cells all-location">
+            <a *ngFor="let city of childrenRegionList" class="weui-cell" href="javascript:;" (click)="selectCity(city)">
+                <div class="weui-cell__bd"><span>{{city.region_name}}</span></div>
+                <div class="weui-cell__ft"><span [hidden]="selectedCity.region_id !== city.region_id"><i class="weui-icon-success-no-circle"></i></span></div>
+            </a>
+        </div> -->
+    </weui-popup>
+  
+
+    <div [hidden]="shouldConfirmBox" class="warning-box">
+        <div class="weui-mask weui-animate-fade-in"></div>
+        <div class="weui-dialog" style="opacity: 1;visibility: visible;">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认</strong></div>
+            <div class="weui-dialog__bd">是否确认提交？</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" (click)="iSee()">我再想想</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" (click)="orderNow()">确认</a>
+            </div>
         </div>
     </div>
-</div>

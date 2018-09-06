@@ -95,3 +95,11 @@ a.full-width-btn-with-padding.disabled {
 .cart-page .full-width-btn {
     position: fixed;
 }
+weui-popup {
+    .weui-popup__hd {
+        display: none
+    }
+    .purpose-btn {
+        justify-content:center;
+    }
+}

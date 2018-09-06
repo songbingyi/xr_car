@@ -10,6 +10,7 @@ import {Md5} from '../../../providers/md5/md5';
 import {config} from '../../../app/app.config';
 import {PopupComponent} from 'ngx-weui/popup';
 import {WXSDKService} from '../../../providers/wx.sdk.service';
+import { PopupModule } from 'ngx-weui';
 
 // declare const Swiper: any;
 
@@ -29,6 +30,7 @@ export class CartComponent implements OnInit {
 
     @ViewChild('full') fullPopup: PopupComponent;
     @ViewChild('fullCity') fullCityPopup: PopupComponent;
+    @ViewChild('simple') simplePopup: PopupComponent;
 
     submitting:boolean = false;
 
@@ -42,6 +44,10 @@ export class CartComponent implements OnInit {
         Validators.minLength(11),
         Validators.maxLength(11)
     ]);
+    carscount = new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+    ]);
     comment   = new FormControl('', [
         Validators.maxLength(200)
     ]);
@@ -49,7 +55,8 @@ export class CartComponent implements OnInit {
     orderForm: FormGroup = this.builder.group({
         username : this.username,
         telephone : this.telephone,
-        comment     : this.comment
+        comment     : this.comment,
+        carscount  : this.carscount
     });
 
     fromError: Boolean = false;
@@ -69,6 +76,11 @@ export class CartComponent implements OnInit {
     selectedCity:any = {};
 
     shouldConfirmBox:boolean = true;
+    /**@name车辆用途列表 */
+    purposeList:any = [];
+    /**@name被选择的车辆用途 */
+    currentPurpose:any = {} ;
+
 
     constructor(private builder: FormBuilder, private baseService: BaseProvider, private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService, private customValidators: CustomValidators, private wxService: WXSDKService) {
         this.identityAuthService.check();
@@ -78,7 +90,8 @@ export class CartComponent implements OnInit {
     ngOnInit() {
 
         let id = this.route.snapshot.paramMap.get('id');
-        this.loadProduct(id);
+        
+        // this.loadProduct(id);一进入就获取商品信息 暂时注掉
         /*this.routes.paramMap.switchMap((params : ParamMap) => {
             console.log(params.get('id'));
         });*/
@@ -160,6 +173,27 @@ export class CartComponent implements OnInit {
     selectArea() {
         this.loadRegionList();
     }
+    /**@name 点击选择车辆用途 */
+    selectPurpose() {
+        this.baseService.post('getCarProductPurposeList', {})
+        .subscribe(PurposeList => {
+            if (PurposeList.status.succeed === '1') {
+                this.purposeList = PurposeList.data.car_product_purpose_list;
+                this.simplePopup.show()
+                
+            } else {
+                this.errorMessage = PurposeList.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
+    }
+    /**@name 选择某个车辆用途 */
+    selectCurrentPurpose(item) {
+        console.log(item)
+        this.simplePopup.close()
+        this.currentPurpose = item;
+       
+    }
+
 
     selectRegion(province) {
         this.selectedRegion = province;
@@ -193,6 +227,8 @@ export class CartComponent implements OnInit {
     iSee(){
         this.shouldConfirmBox = !this.shouldConfirmBox;
     }
+
+
 
     orderNow() {
         /*if(!this.orderForm.value.code){
