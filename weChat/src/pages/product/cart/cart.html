@@ -19,7 +19,7 @@
                     <div class="weui-cell">
                         <div class="weui-cell__hd"><label class="weui-label">购车数量</label></div>
                         <div class="weui-cell__bd">
-                            <input class="weui-input" type="text" [formControl]="carscount" placeholder="{{carscount.invalid && (carscount.dirty || errorMessage) ? '请填写购车数量' : '请填写购车数量'}}"
+                            <input class="weui-input" type="number" [formControl]="carscount" placeholder="{{carscount.invalid && (carscount.dirty || errorMessage) ? '请填写购车数量' : '请填写购车数量'}}"
                                 appFocusBlur />
                         </div>
                     </div>
@@ -117,14 +117,6 @@
         <section *ngFor="let item of purposeList" class="weui-cell purpose-btn" href="javascript:;" (click)="selectCurrentPurpose(item)">
             {{item.car_product_purpose_name}}
         </section>
-
-        <!-- <div class="weui-cells__title"></div>
-        <div class="weui-cells all-location">
-            <a *ngFor="let city of childrenRegionList" class="weui-cell" href="javascript:;" (click)="selectCity(city)">
-                <div class="weui-cell__bd"><span>{{city.region_name}}</span></div>
-                <div class="weui-cell__ft"><span [hidden]="selectedCity.region_id !== city.region_id"><i class="weui-icon-success-no-circle"></i></span></div>
-            </a>
-        </div> -->
     </weui-popup>
   
 

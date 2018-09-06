@@ -76,6 +76,7 @@ const appRoutes: Routes = [
     {path : '', component : IndexComponent},//个人中心按钮
     {path : 'buyIndex', component : BuyIndexComponent},//在线购车按钮
     {path : 'handyTraffic', component :  HandyTraffiComponent},//便民车务按钮
+    {path : 'classifyList/:id', component :  HomeComponent},//在线购车=>分类
     {path : 'service_operation_certificate', component : CertificateComponent, canActivate: [AuthGuard]},
     {path : 'service_driving_license', component : LicenseComponent, canActivate: [AuthGuard]},
     {path : 'service_audit_car', component : ReviewComponent, canActivate: [AuthGuard]},

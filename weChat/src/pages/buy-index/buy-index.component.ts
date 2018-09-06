@@ -9,20 +9,24 @@ import { BaseProvider } from '../../providers/http/base.http';
   encapsulation: ViewEncapsulation.None//允许外部封装
 })
 export class BuyIndexComponent implements OnInit {
+  
   /**@name swiper设置参数 */
   options: object;
 
   /**@name swiper图片url */
-  images: string[];
+  homeBannerList: object[] = [];
 
-  /**@name  是否出现加入销售员通知*/
+  /**@name 是否出现加入销售员通知*/
   tipsJoinSalesman:string;
 
-  /**@name  隐藏销售员通知控制器*/
+  /**@name 隐藏销售员通知控制器*/
   shouldShowWarningBox:Boolean = true;
 
   /**@name 错误信息 */
   errorMessage: any;
+
+  /**@name 商品分类列表*/ 
+  categoryLists: object[]
 
   constructor(private router: Router, private baseService: BaseProvider) {
     this.getWechatClientConfig()
@@ -35,14 +39,14 @@ export class BuyIndexComponent implements OnInit {
         el: '.swiper-pagination',
       },
       onInit: () => {
-        console.log('11')
       },
       onSlideChangeEnd: (swiper: any) => {
-        console.log('22')
       }
     };
-    this.images = ['http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg', 'http://www.songluosuan.com/uploads/allimg/180124/1_1150455801.jpg']
 
+    this.getHomeBannerList()
+    this.loadCategoryList()
+   
   }
   /**@name 获取是否弹出成为销售员通知信息 */
   getWechatClientConfig() {
@@ -65,4 +69,29 @@ export class BuyIndexComponent implements OnInit {
     // }
     this.router.navigate(['cart']);
   }
+  /**@name获取首页广告图 */
+  getHomeBannerList() {
+    this.baseService.post('getHomeBannerList', {}).subscribe(homeBannerList => {
+      if (homeBannerList.status.succeed === '1') {
+          this.homeBannerList = homeBannerList.data.banner_list;
+      } else {
+          this.errorMessage = homeBannerList.status.error_desc;
+      }
+  },
+  error => this.errorMessage = <any>error
+);
+  }
+
+  /**@name 获取车辆商品分类列表 */
+  loadCategoryList(){
+    this.baseService.post('getCarProductCategoryList', {}).subscribe(categoryList => {
+        if (categoryList.status.succeed === '1') {
+            //console.log(categoryList);
+            this.categoryLists = categoryList.data.car_product_category_list;
+            //this.loadSeriesList(categoryLists[0]);
+        } else {
+            this.errorMessage = categoryList.status.error_desc;
+        }
+    }, error => this.errorMessage = <any>error);
+}
 }

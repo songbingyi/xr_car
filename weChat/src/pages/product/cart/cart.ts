@@ -1,23 +1,23 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import {BaseProvider} from '../../../providers/http/base.http';
-import {IdentityAuthService} from '../../../providers/identityAuth.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CustomValidators} from '../../../providers/custom.validators';
-import {Md5} from '../../../providers/md5/md5';
-import {config} from '../../../app/app.config';
-import {PopupComponent} from 'ngx-weui/popup';
-import {WXSDKService} from '../../../providers/wx.sdk.service';
+import { BaseProvider } from '../../../providers/http/base.http';
+import { IdentityAuthService } from '../../../providers/identityAuth.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from '../../../providers/custom.validators';
+import { Md5 } from '../../../providers/md5/md5';
+import { config } from '../../../app/app.config';
+import { PopupComponent } from 'ngx-weui/popup';
+import { WXSDKService } from '../../../providers/wx.sdk.service';
 import { PopupModule } from 'ngx-weui';
 
 // declare const Swiper: any;
 
 @Component({
-    selector    : 'app-cart',
-    templateUrl : './cart.html',
-    styleUrls   : ['./cart.scss'],
+    selector: 'app-cart',
+    templateUrl: './cart.html',
+    styleUrls: ['./cart.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CartComponent implements OnInit {
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
     @ViewChild('fullCity') fullCityPopup: PopupComponent;
     @ViewChild('simple') simplePopup: PopupComponent;
 
-    submitting:boolean = false;
+    submitting: boolean = false;
 
     username = new FormControl('', [
         Validators.required,
@@ -48,20 +48,20 @@ export class CartComponent implements OnInit {
         Validators.required,
         Validators.minLength(1),
     ]);
-    comment   = new FormControl('', [
+    comment = new FormControl('', [
         Validators.maxLength(200)
     ]);
 
     orderForm: FormGroup = this.builder.group({
-        username : this.username,
-        telephone : this.telephone,
-        comment     : this.comment,
-        carscount  : this.carscount
+        username: this.username,
+        telephone: this.telephone,
+        comment: this.comment,
+        carscount: this.carscount
     });
 
     fromError: Boolean = false;
 
-    @ViewChild('scrollMe') private myScrollContainer : ElementRef;
+    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
     wxs: any;
 
@@ -69,20 +69,20 @@ export class CartComponent implements OnInit {
     longitude = 108.94075;
     latitude = 34.341568;
 
-    currentCity:any = [];
-    regionList:any = [];
-    childrenRegionList:any = [];
-    selectedRegion:any = {};
-    selectedCity:any = {};
+    currentCity: any = [];
+    regionList: any = [];
+    childrenRegionList: any = [];
+    selectedRegion: any = {};
+    selectedCity: any = {};
 
-    shouldConfirmBox:boolean = true;
+    shouldConfirmBox: boolean = true;
     /**@name车辆用途列表 */
-    purposeList:any = [];
+    purposeList: any = [];
     /**@name被选择的车辆用途 */
-    currentPurpose:any = {} ;
+    currentPurpose: any = {};
 
 
-    constructor(private builder: FormBuilder, private baseService: BaseProvider, private route : ActivatedRoute, private router : Router, private baseProvider : BaseProvider, private identityAuthService:IdentityAuthService, private customValidators: CustomValidators, private wxService: WXSDKService) {
+    constructor(private builder: FormBuilder, private baseService: BaseProvider, private route: ActivatedRoute, private router: Router, private baseProvider: BaseProvider, private identityAuthService: IdentityAuthService, private customValidators: CustomValidators, private wxService: WXSDKService) {
         this.identityAuthService.check();
         this.wxs = this.wxService.init();
     }
@@ -90,7 +90,17 @@ export class CartComponent implements OnInit {
     ngOnInit() {
 
         let id = this.route.snapshot.paramMap.get('id');
-        
+        this.baseService.post('getCarProductPurposeList', {})
+            .subscribe(PurposeList => {
+                if (PurposeList.status.succeed === '1') {
+                    this.purposeList = PurposeList.data.car_product_purpose_list;
+
+
+                } else {
+                    this.errorMessage = PurposeList.status.error_desc;
+                }
+            }, error => this.errorMessage = <any>error);
+
         // this.loadProduct(id);一进入就获取商品信息 暂时注掉
         /*this.routes.paramMap.switchMap((params : ParamMap) => {
             console.log(params.get('id'));
@@ -109,28 +119,28 @@ export class CartComponent implements OnInit {
         });
     }
 
-    ngAfterContentInit(){
+    ngAfterContentInit() {
         this.wxs.then(res => {
             this.getLocation();
         });
     }
 
-    loadProduct(id) {
-        this.baseProvider.post('getCarProductDetail', {'product_id': id}).subscribe(product => {
-                if (product.status.succeed === '1') {
-                    this.product = product.data.car_product_info;
-                    //this.getImagesList(this.product.product_image_list);
-                    this.isLoaded = true;
-                } else {
-                    this.errorMessage = product.status.error_desc;
-                }
-            }, error => this.errorMessage = <any>error);
-    }
+    // loadProduct(id) {//一进入就获取商品信息 暂时注掉
+    //     this.baseProvider.post('getCarProductDetail', { 'product_id': id }).subscribe(product => {
+    //         if (product.status.succeed === '1') {
+    //             this.product = product.data.car_product_info;
+    //             //this.getImagesList(this.product.product_image_list);
+    //             this.isLoaded = true;
+    //         } else {
+    //             this.errorMessage = product.status.error_desc;
+    //         }
+    //     }, error => this.errorMessage = <any>error);
+    // }
 
     loadCurrentCity() {
         this.baseProvider.post('getRegionCoordinate', {
-            latitude_num : this.latitude,
-            longitude_num : this.longitude
+            latitude_num: this.latitude,
+            longitude_num: this.longitude
         }).subscribe(currentCity => {
             if (currentCity.status.succeed === '1') {
                 this.currentCity = currentCity.data.region_info;
@@ -145,7 +155,7 @@ export class CartComponent implements OnInit {
 
     loadRegionList() {
         this.baseProvider.post('getRegionList', {
-            parent_id : ''
+            parent_id: ''
         }).subscribe(regionList => {
             if (regionList.status.succeed === '1') {
                 //console.log(regionList);
@@ -159,7 +169,7 @@ export class CartComponent implements OnInit {
 
     loadChildRegionList(id) {
         this.baseProvider.post('getRegionList', {
-            parent_id : id
+            parent_id: id
         }).subscribe(regionList => {
             if (regionList.status.succeed === '1') {
                 this.childrenRegionList = regionList.data.region_list;
@@ -175,42 +185,34 @@ export class CartComponent implements OnInit {
     }
     /**@name 点击选择车辆用途 */
     selectPurpose() {
-        this.baseService.post('getCarProductPurposeList', {})
-        .subscribe(PurposeList => {
-            if (PurposeList.status.succeed === '1') {
-                this.purposeList = PurposeList.data.car_product_purpose_list;
-                this.simplePopup.show()
-                
-            } else {
-                this.errorMessage = PurposeList.status.error_desc;
-            }
-        }, error => this.errorMessage = <any>error);
+        this.simplePopup.show()
+
     }
     /**@name 选择某个车辆用途 */
     selectCurrentPurpose(item) {
         console.log(item)
         this.simplePopup.close()
         this.currentPurpose = item;
-       
+
     }
 
 
     selectRegion(province) {
         this.selectedRegion = province;
-        if(province.has_child){
+        if (province.has_child) {
             this.selectedCity = {};
             this.loadChildRegionList(province.region_id);
         }
     }
     selectCity(city?) {
-        if(city){
+        if (city) {
             this.selectedCity = city;
             this.fullCityPopup.close();
             this.fullPopup.close();
-        }else{
-            if(this.currentCity){
+        } else {
+            if (this.currentCity) {
                 this.selectedRegion = {};
-                this.selectedCity   = this.currentCity;
+                this.selectedCity = this.currentCity;
             }
             this.fullPopup.close();
         }
@@ -224,12 +226,12 @@ export class CartComponent implements OnInit {
         }
     }
 
-    iSee(){
+    iSee() {
         this.shouldConfirmBox = !this.shouldConfirmBox;
     }
 
 
-
+    /**提交订单 */
     orderNow() {
         /*if(!this.orderForm.value.code){
             this.fromError = true;
@@ -237,15 +239,26 @@ export class CartComponent implements OnInit {
             return ;
         }*/
 
-        if(!this.orderForm.value.username){
+        if (!this.orderForm.value.username) {
             //this.fromError = true;
             this.errorMessage = '请输入有效的姓名！';
-            return ;
+            return;
         }
 
-        if(!this.selectedCity.region_id){
+        if (!this.selectedCity.region_id) {
             this.errorMessage = '请先选择地区！';
-            return ;
+            return;
+        }
+
+
+        if (!this.currentPurpose.car_product_purpose_id) {
+            this.errorMessage = '请先选择车辆用途！';
+            return;
+        }
+
+        if (!this.orderForm.value.carscount) {
+            this.errorMessage = '请输入购车数量！';
+            return;
         }
 
         /*if((this.orderForm.value.code && this.orderForm.value.code.length !== 4)){
@@ -258,13 +271,13 @@ export class CartComponent implements OnInit {
             // this.errorMessage = '请修改红色错误信息后再提交';
             this.errorMessage = '';
             this.fromError = true;
-            return ;
+            return;
         } else {
             this.errorMessage = '';
             this.fromError = false;
         }
 
-        if(this.submitting){
+        if (this.submitting) {
             return;
         }
         //console.log(this.userInfoForm);
@@ -288,21 +301,24 @@ export class CartComponent implements OnInit {
 
         this.baseService.post('addCarProductOrder', {
             "submit_car_product_order_info": {
-                "car_product_info": {
-                    "product_id": this.product.product_id,
-                    "product_name": this.product.product_name,
-                    "price_description": this.product.price_description
-                },
+                // "car_product_info": {
+                //     "product_id": this.product.product_id,
+                //     "product_name": this.product.product_name,
+                //     "price_description": this.product.price_description
+                // },
                 "cards_region_info": {
                     "region_id": this.selectedCity.region_id,
                     "region_name": this.selectedCity.region_name
                 },
                 //"sales_invite_code": this.orderForm.value.code,
-                'buyer_member_info' : {
-                    'member_name' : this.orderForm.value.username,
-                    'mobile' : this.orderForm.value.telephone
+                'buyer_member_info': {
+                    'member_name': this.orderForm.value.username,
+                    'mobile': this.orderForm.value.telephone
                 },
-                'car_product_comment' : this.orderForm.value.comment
+                'car_product_comment': this.orderForm.value.comment,
+                'car_product_purpose_info': this.currentPurpose,
+                'car_product_count': this.orderForm.value.carscount.toString()
+
             }
         })
             .subscribe(result => {
@@ -322,11 +338,11 @@ export class CartComponent implements OnInit {
             }, error => this.errorMessage = <any>error);
     }
 
-    count(){
+    count() {
         let comment = this.orderForm.value.comment;
-        if(comment){
+        if (comment) {
             return String(comment).length;
-        }else{
+        } else {
             return 0;
         }
     }

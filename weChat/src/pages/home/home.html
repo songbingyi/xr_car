@@ -1,6 +1,6 @@
 <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
     <div class="home-page" #scrollMe>
-        <div class="full-with-page header-menu">
+        <!-- <div class="full-with-page header-menu">
             <ul>
                 <li *ngFor="let serviceType of serviceTypes; index as index">
                     <div class="header-menu-item" (click)="goModule(serviceType)" *ngIf="serviceType.service_type_status === '1' || serviceType.service_type_status === '2'">
@@ -8,40 +8,33 @@
                         <h3>{{serviceType.service_type_name}}</h3>
                     </div>
                 </li>
-                <!--<li>
-                    <div class="header-menu-item" [routerLink]="['/certificate']">
-                        <img src="/assets/images/menu/certificate.png"/>
-                        <h3>营运证</h3>
-                    </div>
-                </li>
-                <li>
-                    <div class="header-menu-item" [routerLink]="['/review']">
-                        <img src="/assets/images/menu/review.png"/>
-                        <h3>审车</h3>
-                    </div>
-                </li>
-                <li>
-                    <div class="header-menu-item">
-                        <img src="/assets/images/menu/insurance.grey.png"/>
-                        <h3>保险</h3>
-                    </div>
-                </li>
-                <li>
-                    <div class="header-menu-item">
-                        <img src="/assets/images/menu/violate.grey.png"/>
-                        <h3>违章</h3>
-                    </div>
-                </li>-->
             </ul>
-        </div>
+        </div> -->
 
         <div class="weui-flex">
-            <div class="weui-flex__item">
+            <!-- <div class="weui-flex__item">
                 <div class="placeholder" (click)="showCarTypePop()">{{selectedCarType?.car_product_category_name || '类型'}}<img class="dropdown-icon" src="/assets/images/dropdown.png" /></div>
+            </div> -->
+            <!-- <div class="weui-flex__item">
+                <div class="placeholder" (click)="showCarSeriesPop()">{{selectedCarSeries?.car_product_series_name || '系列'}}<img class="dropdown-icon" src="/assets/images/dropdown.png" /></div>
+            </div> -->
+
+            <div class="weui-flex__item">
+                <div class="placeholder" (click)="showCarSeriesPop()">全部</div>
             </div>
             <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">{{selectedCarSeries?.car_product_series_name || '系列'}}<img class="dropdown-icon" src="/assets/images/dropdown.png" /></div>
+                <div class="placeholder" (click)="showCarSeriesPop()">3系</div>
             </div>
+            <div class="weui-flex__item">
+                <div class="placeholder" (click)="showCarSeriesPop()">6系</div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder" (click)="showCarSeriesPop()">9系</div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="placeholder" (click)="showCarSeriesPop()">华康</div>
+            </div>
+
         </div>
         <div class="product-list">
             <div class="item-list" *ngIf="isLoaded && products.length">
@@ -56,7 +49,7 @@
                             {{product.product_summary}}
                         </div>
                     </div>
-                    <div class="cart" (click)="toCart($event, product)" [hidden]="product.is_can_order==='0'"></div>
+                    <!-- <div class="cart" (click)="toCart($event, product)" [hidden]="product.is_can_order==='0'"></div> -->
                 </div>
             </div>
             <div class="empty-container" *ngIf="isLoaded && products.length===0">

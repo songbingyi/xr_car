@@ -1,16 +1,16 @@
 <div class="buy-index">
     <div class="slider">
         <!-- 如果轮播图只有一张图 -->
-        <div *ngIf="images.length===1">
-            <div class="swiper-img" [style.background-image]="'url(' + images[0]+ ')'"></div>
+        <div *ngIf="homeBannerList.length ==1">
+            <div class="swiper-img" [style.background-image]="'url(' + homeBannerList[0].image.source + ')'"></div>
         </div>
         <!-- 如果轮播图大于一张图 -->
-        <weui-swiper [options]="options" *ngIf="images.length>1" #wuiSwiper>
+        <weui-swiper [options]="options" *ngIf="homeBannerList.length > 1" #wuiSwiper>
             <div class="swiper-container">
                 <!-- 容器（必选） -->
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" *ngFor="let image of images">
-                        <div class="swiper-img" [style.background-image]="'url(' + image+ ')'"></div>
+                    <div class="swiper-slide" *ngFor="let item of homeBannerList">
+                        <div class="swiper-img" [style.background-image]="'url(' + item.image.source + ')'"></div>
                     </div>
                 </div>
                 <!-- 分页（可选） -->
@@ -20,42 +20,10 @@
     </div>
     <div class="classify">
         <div class="weui-flex">
-            <div class="weui-flex__item">
-                <!-- <div class="content-space"></div> -->
+            <div class="weui-flex__item" *ngFor="let item of categoryLists" [routerLink]="['/classifyList', item.car_product_category_id]">
                 <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列</span>
-                </div>
-                <!-- <div class="content-space"></div> -->
-            </div>
-            <div class="weui-flex__item">
-                <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列123</span>
-                </div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列123</span>
-                </div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列123</span>
-                </div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列123</span>
-                </div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="classify-content-box">
-                    <img src="../../assets/images/tmp/zhatuche.png">
-                    <span class="title">自卸系列系列123</span>
+                    <img [src]="item.car_product_category_image.thumb">
+                    <span class="title">{{item.car_product_category_name}}</span>
                 </div>
             </div>
         </div>
