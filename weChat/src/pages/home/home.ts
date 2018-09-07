@@ -10,7 +10,7 @@ import { ProductsModel } from '../../models/product.model';
 import { ProductModel } from '../../models/product.model';
 
 import { InfiniteLoaderComponent } from 'ngx-weui/infiniteloader';
-import {IdentityAuthService} from '../../providers/identityAuth.service';
+import { IdentityAuthService } from '../../providers/identityAuth.service';
 
 import { Observable } from 'rxjs/Rx';
 import { MessageService } from '../../providers/messageService';
@@ -57,21 +57,25 @@ export class HomeComponent implements OnInit {
     seriesLists: Array<any> = [];
     /**@name 被选中的系列 */
     currentSeries: any;
-      /**@name 是否出现加入销售员通知*/
-  tipsJoinSalesman:string;
+    /**@name 是否出现加入销售员通知*/
+    wechatClientConfig: any;
     /**@name 隐藏销售员通知控制器*/
-    shouldShowWarningBox:Boolean = true;
+    shouldShowWarningBox: Boolean = true;
+
+    /**@name 用户信息 */
+    memberDetail: any = {};
+    role_ids: any = [];
 
 
-    constructor(private baseProvider: BaseProvider, private router: Router, private localStorage: LocalStorage, private message: MessageService, private pickerService: PickerService, private routeInfo: ActivatedRoute,private identityAuthService:IdentityAuthService) {
+    constructor(private baseProvider: BaseProvider, private router: Router, private localStorage: LocalStorage, private message: MessageService, private pickerService: PickerService, private routeInfo: ActivatedRoute, private identityAuthService: IdentityAuthService) {
         this.message.getMessage().subscribe(msg => {
             if (msg.type === 'refresh') {
                 this.refresh();
             }
         });
         // this.loadCategoryList();
-        this.getWechatClientConfig()
-
+        this.getWechatClientConfig();
+        // identityAuthService.check();
 
     }
 
@@ -88,16 +92,13 @@ export class HomeComponent implements OnInit {
         //     }, error => this.errorMessage = <any>error);
         // this.categoryId = this.routeInfo.snapshot.paramMap.get('id');
         // console.log(this.categoryId)
-
         this.routeInfo.params.subscribe(params => {
-            console.log('params',params)
+            console.log('params', params)
             this.categoryInfo = params;
         });
-
-        
         this.loadSeriesList();
-  
-
+        this.getWechatClientConfig()
+        this.getMemberDetail()
     }
     /**@name 选择某个系列 */
     selectedSeries(item) {
@@ -112,7 +113,7 @@ export class HomeComponent implements OnInit {
                     console.log(seriesList);
                     let oSeriesLists = seriesList.data.car_product_series_list;
                     oSeriesLists.unshift(0);
-                    oSeriesLists[0] = {car_product_series_name:'全部'}
+                    oSeriesLists[0] = { car_product_series_name: '全部' }
                     this.seriesLists = oSeriesLists
                     // this.rebuildData(seriesLists, 'series');
                     this.loadProducts();
@@ -130,8 +131,8 @@ export class HomeComponent implements OnInit {
     /**@name 获取商品列表 */
     loadProducts(callbackDone?, callbackOnce?) {
         console.log("loadProducts");
-        console.log('categoryInfo',this.categoryInfo)
-        console.log('currentSeries',this.currentSeries)
+        console.log('categoryInfo', this.categoryInfo)
+        console.log('currentSeries', this.currentSeries)
         let where = {
             pagination: this.pagination,
             filter_value: {
@@ -140,8 +141,8 @@ export class HomeComponent implements OnInit {
                     car_product_category_name: this.categoryInfo.name
                 },
                 car_product_series_info: {
-                    car_product_series_id: this.currentSeries ? this.currentSeries.car_product_series_id :'',
-                    car_product_series_name: this.currentSeries ? this.currentSeries.car_product_series_name:''
+                    car_product_series_id: this.currentSeries ? this.currentSeries.car_product_series_id : '',
+                    car_product_series_name: this.currentSeries ? this.currentSeries.car_product_series_name : ''
                 }
             }
         }
@@ -173,15 +174,15 @@ export class HomeComponent implements OnInit {
     /**@name 获取基本信息 */
     getWechatClientConfig() {
         this.baseProvider.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
-          if (wechatClientConfig.status.succeed === '1') {
-            this.tipsJoinSalesman = wechatClientConfig.data.wechat_client_config;
-            //this.wechatClientConfig.is_tips_join_user_salesman = '1';
-            //this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
-          } else {
-            this.errorMessage = wechatClientConfig.status.error_desc;
-          }
+            if (wechatClientConfig.status.succeed === '1') {
+                this.wechatClientConfig = wechatClientConfig.data.wechat_client_config;
+                //this.wechatClientConfig.is_tips_join_user_salesman = '1';
+                //this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
+            } else {
+                this.errorMessage = wechatClientConfig.status.error_desc;
+            }
         }, error => this.errorMessage = <any>error);
-      }
+    }
 
     // loadProducts(callbackDone?, callbackOnce?) {
     //     //console.log("loadProducts");
@@ -339,50 +340,6 @@ export class HomeComponent implements OnInit {
 
     }
 
-    // 类型
-    // showCarTypePop(){
-    //     if(this.carTypeList.length){
-    //         this.pickerService.show(this.carTypeList, '', [0], {
-    //             type: 'default',
-    //             separator: '|',
-    //             cancel: '取消',
-    //             confirm: '确定',
-    //             backdrop: false
-    //         }).subscribe((res: any) => {
-    //             console.log(res);
-    //             if(res.value === '-2'){
-    //                 this.selectedCarType = null;
-    //                 this.onSelectChanged();
-    //             }else{
-    //                 this.selectedCarType = res.items[0];
-    //                 this.onSelectChanged();
-    //             }
-    //             //this.selectedCarSeries = null;
-    //             //this.loadSeriesList(res.items[0]);
-    //         });
-    //     }
-    // }
-    // 系列
-    // showCarSeriesPop(){
-    //     if(this.carSeriesList.length){
-    //         this.pickerService.show(this.carSeriesList, '', [0], {
-    //             type: 'default',
-    //             separator: '|',
-    //             cancel: '取消',
-    //             confirm: '确定',
-    //             backdrop: false
-    //         }).subscribe((res: any) => {
-    //             console.log(res);
-    //             if(res.value === '-2'){
-    //                 this.selectedCarSeries = null;
-    //                 this.onSelectChanged();
-    //             }else{
-    //                 this.selectedCarSeries = res.items[0];
-    //                 this.onSelectChanged();
-    //             }
-    //         });
-    //     }
-    // }
 
     onSelectChanged() {
         // let selectedCarSeries = this.selectedCarSeries ;
@@ -428,13 +385,14 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    toCart($event, product) {
-        if (this.tipsJoinSalesman === '1') {
+    toCart() {
+        if (this.wechatClientConfig.is_tips_join_user_salesman === '1') {
             this.shouldShowWarningBox = false;
             return;
-          }
-          this.router.navigate(['cart']);
+        }
+        this.router.navigate(['cart']);
     }
+
 
     goTop() {
         try {
@@ -462,5 +420,57 @@ export class HomeComponent implements OnInit {
             }
         }, 0)
     }
+    /**@name 我知道提示了 */
+    iSeeTips() {
+        this.shouldShowWarningBox = !this.shouldShowWarningBox;
+    }
+
+  goToEBoss() {
+
+    if (this.memberDetail.member_auth_info && this.memberDetail.member_auth_info.identity_auth_status === '0') {
+      this.router.navigate(['/userInfo']);
+
+      return false;
+
+    }
+    // 如果是销售员(不提示成为 Eboss )则跳转到 E04-2，否则跳转到 E11-1
+    if (this.wechatClientConfig.is_tips_join_user_salesman === '1' && this.isRole('2')) {
+      this.router.navigate(['/userInfo']);
+
+      return false;
+    }
+
+    if (this.wechatClientConfig.is_tips_join_user_salesman === '1') {
+      this.router.navigate(['/eboss']);
+
+    }
+
+  }
+    getMemberDetail() {
+        this.baseProvider.post('getMemberDetail', {})
+            .subscribe(member => {
+                if (member.status.succeed === '1') {
+                    this.memberDetail.member_auth_info = member.data.member_auth_info;
+                    this.memberDetail.member_role_list = member.data.member_role_list || [];
+                    this.getRoleIds();
+                } else {
+                    this.errorMessage = member.status.error_desc;
+                }
+            },
+                error => this.errorMessage = <any>error
+            );
+    }
+    getRoleIds() {
+        let memberRoleList = this.memberDetail.member_role_list;
+        this.role_ids = [];
+        memberRoleList.forEach(role => {
+          this.role_ids.push(role.member_role_id);
+        });
+      }
+    
+      isRole(role) {
+        console.log(this.role_ids);
+        return this.role_ids.indexOf(role) > -1;
+      }
 
 }

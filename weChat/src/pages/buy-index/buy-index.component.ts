@@ -35,7 +35,6 @@ export class BuyIndexComponent implements OnInit {
   memberDetail: any = {};
   wechatClientConfig: any;
   role_ids: any = [];
-  activeTabIndex: any = 0;
 
   constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService,) {
     this.getWechatClientConfig()
@@ -107,7 +106,7 @@ export class BuyIndexComponent implements OnInit {
   iSeeTips() {
     this.shouldShowWarningBox = !this.shouldShowWarningBox;
   }
-
+  
   goToEBoss() {
 
     if (this.memberDetail.member_auth_info && this.memberDetail.member_auth_info.identity_auth_status === '0') {
@@ -153,7 +152,7 @@ export class BuyIndexComponent implements OnInit {
       );
   }
 
-  /**@name 是否隐藏成为销售员=>转到cart页面 */
+  /**@name 是否提示成为销售员=>转到cart页面 */
   toCart() {
     if (this.wechatClientConfig.is_tips_join_user_salesman === '1') {
       this.shouldShowWarningBox = false;
