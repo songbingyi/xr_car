@@ -1,48 +1,49 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import {WXService} from '../../providers/wx.service';
+import { WXService } from '../../providers/wx.service';
 
-import {BaseProvider} from '../../providers/http/base.http';
-import {LocalStorage} from '../../providers/localStorage';
+import { BaseProvider } from '../../providers/http/base.http';
+import { LocalStorage } from '../../providers/localStorage';
 
-import {ProductsModel} from '../../models/product.model';
-import {ProductModel} from '../../models/product.model';
+import { ProductsModel } from '../../models/product.model';
+import { ProductModel } from '../../models/product.model';
 
-import {InfiniteLoaderComponent} from 'ngx-weui/infiniteloader';
+import { InfiniteLoaderComponent } from 'ngx-weui/infiniteloader';
+import {IdentityAuthService} from '../../providers/identityAuth.service';
 
-import {Observable} from 'rxjs/Rx';
-import {MessageService} from '../../providers/messageService';
-import {PickerService} from 'ngx-weui/picker';
+import { Observable } from 'rxjs/Rx';
+import { MessageService } from '../../providers/messageService';
+import { PickerService } from 'ngx-weui/picker';
 
 @Component({
-    selector    : 'app-home',
-    templateUrl : './home.html',
-    styleUrls   : ['./home.scss'],
-    providers   : [BaseProvider]
+    selector: 'app-home',
+    templateUrl: './home.html',
+    styleUrls: ['./home.scss'],
+    providers: [BaseProvider]
 })
 export class HomeComponent implements OnInit {
-    pagination= {
-        page : 1,
+    pagination = {
+        page: 1,
         count: 10
     };
-    products : any = [];
-    errorMessage : any;
-    isLoading : Boolean = false;
-    isLoaded : Boolean = false;
+    products: any = [];
+    errorMessage: any;
+    isLoading: Boolean = false;
+    isLoaded: Boolean = false;
 
     show: Boolean = false;
 
-    serviceTypes: any = [];
+    serviceTypes: any;
 
     @ViewChild(InfiniteLoaderComponent) il;
-    @ViewChild('scrollMe') private myScrollContainer : ElementRef;
+    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
     // 选择弹框
-    showCarType:boolean = false;
-    showCarSeries:boolean = false;
-    selectedCarType :any;
-    selectedCarSeries :any;
+    showCarType: boolean = false;
+    showCarSeries: boolean = false;
+
+    selectedCarSeries: any;
 
     comp: InfiniteLoaderComponent;
 
@@ -50,108 +51,212 @@ export class HomeComponent implements OnInit {
     carTypeList: Array<any> = [];
     carSeriesList: Array<any> = [];
 
-    constructor(private baseProvider: BaseProvider, private router : Router, private localStorage: LocalStorage, private message: MessageService, private pickerService: PickerService) {
+    /**@name 路由catch进来的商品分类ID和name*/
+    categoryInfo: any;
+    /**@name 商品分类列表*/
+    seriesLists: Array<any> = [];
+    /**@name 被选中的系列 */
+    currentSeries: any;
+      /**@name 是否出现加入销售员通知*/
+  tipsJoinSalesman:string;
+    /**@name 隐藏销售员通知控制器*/
+    shouldShowWarningBox:Boolean = true;
+
+
+    constructor(private baseProvider: BaseProvider, private router: Router, private localStorage: LocalStorage, private message: MessageService, private pickerService: PickerService, private routeInfo: ActivatedRoute,private identityAuthService:IdentityAuthService) {
         this.message.getMessage().subscribe(msg => {
-            if(msg.type === 'refresh'){
+            if (msg.type === 'refresh') {
                 this.refresh();
             }
         });
-        this.loadCategoryList();
-        this.loadSeriesList();
+        // this.loadCategoryList();
+        this.getWechatClientConfig()
+
+
     }
 
-    status : string;
+    status: string;
 
     ngOnInit() {
-        this.baseProvider.post('getServiceTypeList', {})
-            .subscribe(serviceTypes => {
-                if (serviceTypes.status.succeed === '1') {
-                    this.serviceTypes = serviceTypes.data.service_type_list;
+        // this.baseProvider.post('getServiceTypeList', {})
+        //     .subscribe(serviceTypes => {
+        //         if (serviceTypes.status.succeed === '1') {
+        //             this.serviceTypes = serviceTypes.data.service_type_list;
+        //         } else {
+        //             this.errorMessage = serviceTypes.status.error_desc;
+        //         }
+        //     }, error => this.errorMessage = <any>error);
+        // this.categoryId = this.routeInfo.snapshot.paramMap.get('id');
+        // console.log(this.categoryId)
+
+        this.routeInfo.params.subscribe(params => {
+            console.log('params',params)
+            this.categoryInfo = params;
+        });
+
+        
+        this.loadSeriesList();
+  
+
+    }
+    /**@name 选择某个系列 */
+    selectedSeries(item) {
+        this.currentSeries = item;
+        this.loadProducts()
+    }
+    /**@name 根据商品分类get系列列表 */
+    loadSeriesList() {
+        this.baseProvider.post('getCarProductSeriesList', { 'car_product_category_id': this.categoryInfo.id })
+            .subscribe(seriesList => {
+                if (seriesList.status.succeed === '1') {
+                    console.log(seriesList);
+                    let oSeriesLists = seriesList.data.car_product_series_list;
+                    oSeriesLists.unshift(0);
+                    oSeriesLists[0] = {car_product_series_name:'全部'}
+                    this.seriesLists = oSeriesLists
+                    // this.rebuildData(seriesLists, 'series');
+                    this.loadProducts();
+                    console.log(this.seriesLists)
                 } else {
-                    this.errorMessage = serviceTypes.status.error_desc;
+                    this.errorMessage = seriesList.status.error_desc;
                 }
             }, error => this.errorMessage = <any>error);
-        this.loadProducts();
     }
+
 
     ngAfterViewInit() {
         // this.bindEvent();
     }
-
+    /**@name 获取商品列表 */
     loadProducts(callbackDone?, callbackOnce?) {
-        //console.log("loadProducts");
-        let where:any = {
-            pagination: this.pagination
-        };
-        let selectedCarSeries = this.selectedCarSeries || {};
-        let selectedCarType   = this.selectedCarType || {};
-        if(selectedCarSeries.car_product_series_id || selectedCarType.car_product_category_id){
-            where = {
-                pagination: this.pagination,
-                filter_value : {
-                    car_product_category_info : {
-                        car_product_category_id   : selectedCarType.car_product_category_id,
-                        car_product_category_name : selectedCarType.car_product_category_name
-                    },
-                    car_product_series_info : {
-                        car_product_series_id   : selectedCarSeries.car_product_series_id,
-                        car_product_series_name : selectedCarSeries.car_product_series_name
-                    }
+        console.log("loadProducts");
+        console.log('categoryInfo',this.categoryInfo)
+        console.log('currentSeries',this.currentSeries)
+        let where = {
+            pagination: this.pagination,
+            filter_value: {
+                car_product_category_info: {
+                    car_product_category_id: this.categoryInfo.id,
+                    car_product_category_name: this.categoryInfo.name
+                },
+                car_product_series_info: {
+                    car_product_series_id: this.currentSeries ? this.currentSeries.car_product_series_id :'',
+                    car_product_series_name: this.currentSeries ? this.currentSeries.car_product_series_name:''
                 }
             }
         }
         this.baseProvider.post('getCarProductList', where).subscribe(products => {
-                if (products.status.succeed === '1') {
-                    // console.log(products.data.car_product_list);
-                    this.products = this.products.concat(products.data.car_product_list);
+            if (products.status.succeed === '1') {
+                // console.log(products.data.car_product_list);
+                // this.products = this.products.concat(products.data.car_product_list);
+                this.products = products.data.car_product_list
 
-                    this.isLoading = false;
-                    this.isLoaded = true;
+                this.isLoading = false;
+                this.isLoaded = true;
 
-                    this.bindEvent();
+                this.bindEvent();
 
-                    if ((products.paginated.more === '0') && !!callbackDone) {
-                        return callbackDone();
-                    }
-
-                    if (callbackOnce) {
-                        callbackOnce();
-                    }
-                } else {
-                    this.errorMessage = products.status.error_desc;
+                if ((products.paginated.more === '0') && !!callbackDone) {
+                    return callbackDone();
                 }
-            },
+
+                if (callbackOnce) {
+                    callbackOnce();
+                }
+            } else {
+                this.errorMessage = products.status.error_desc;
+            }
+        },
             error => this.errorMessage = <any>error
         );
     }
-
-    loadCategoryList(){
-        this.baseProvider.post('getCarProductCategoryList', {
-
-        }).subscribe(categoryList => {
-            if (categoryList.status.succeed === '1') {
-                //console.log(categoryList);
-                let categoryLists = categoryList.data.car_product_category_list;
-                this.rebuildData(categoryLists, 'category');
-                //this.loadSeriesList(categoryLists[0]);
-            } else {
-                this.errorMessage = categoryList.status.error_desc;
-            }
+    /**@name 获取基本信息 */
+    getWechatClientConfig() {
+        this.baseProvider.post('getWechatClientConfig', {}).subscribe(wechatClientConfig => {
+          if (wechatClientConfig.status.succeed === '1') {
+            this.tipsJoinSalesman = wechatClientConfig.data.wechat_client_config;
+            //this.wechatClientConfig.is_tips_join_user_salesman = '1';
+            //this.shouldShowWarningBox = wechatClientConfig.data.wechat_client_config.is_tips_join_user_salesman !== '1';
+          } else {
+            this.errorMessage = wechatClientConfig.status.error_desc;
+          }
         }, error => this.errorMessage = <any>error);
-    }
+      }
 
-    loadSeriesList(options?){
-        options = options || {};
-        this.baseProvider.post('getCarProductSeriesList', options).subscribe(seriesList => {
-            if (seriesList.status.succeed === '1') {
-                //console.log(seriesList);
-                let seriesLists = seriesList.data.car_product_series_list;
-                this.rebuildData(seriesLists, 'series');
-            } else {
-                this.errorMessage = seriesList.status.error_desc;
-            }
-        }, error => this.errorMessage = <any>error);
-    }
+    // loadProducts(callbackDone?, callbackOnce?) {
+    //     //console.log("loadProducts");
+    //     let where:any = {
+    //         pagination: this.pagination
+    //     };
+    //     let selectedCarSeries = this.selectedCarSeries || {};
+    //     let selectedCarType   = this.selectedCarType || {};
+    //     if(selectedCarSeries.car_product_series_id || selectedCarType.car_product_category_id){
+    //         where = {
+    //             pagination: this.pagination,
+    //             filter_value : {
+    //                 car_product_category_info : {
+    //                     car_product_category_id   : selectedCarType.car_product_category_id,
+    //                     car_product_category_name : selectedCarType.car_product_category_name
+    //                 },
+    //                 car_product_series_info : {
+    //                     car_product_series_id   : selectedCarSeries.car_product_series_id,
+    //                     car_product_series_name : selectedCarSeries.car_product_series_name
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     this.baseProvider.post('getCarProductList', where).subscribe(products => {
+    //             if (products.status.succeed === '1') {
+    //                 // console.log(products.data.car_product_list);
+    //                 this.products = this.products.concat(products.data.car_product_list);
+
+    //                 this.isLoading = false;
+    //                 this.isLoaded = true;
+
+    //                 this.bindEvent();
+
+    //                 if ((products.paginated.more === '0') && !!callbackDone) {
+    //                     return callbackDone();
+    //                 }
+
+    //                 if (callbackOnce) {
+    //                     callbackOnce();
+    //                 }
+    //             } else {
+    //                 this.errorMessage = products.status.error_desc;
+    //             }
+    //         },
+    //         error => this.errorMessage = <any>error
+    //     );
+    // }
+
+    // loadCategoryList(){
+    //     this.baseProvider.post('getCarProductCategoryList', {
+
+    //     }).subscribe(categoryList => {
+    //         if (categoryList.status.succeed === '1') {
+    //             //console.log(categoryList);
+    //             let categoryLists = categoryList.data.car_product_category_list;
+    //             this.rebuildData(categoryLists, 'category');
+    //             //this.loadSeriesList(categoryLists[0]);
+    //         } else {
+    //             this.errorMessage = categoryList.status.error_desc;
+    //         }
+    //     }, error => this.errorMessage = <any>error);
+    // }
+
+    // loadSeriesList(options?){
+    //     options = options || {};
+    //     this.baseProvider.post('getCarProductSeriesList', options).subscribe(seriesList => {
+    //         if (seriesList.status.succeed === '1') {
+    //             //console.log(seriesList);
+    //             let seriesLists = seriesList.data.car_product_series_list;
+    //             this.rebuildData(seriesLists, 'series');
+    //         } else {
+    //             this.errorMessage = seriesList.status.error_desc;
+    //         }
+    //     }, error => this.errorMessage = <any>error);
+    // }
 
     rebuildData(data, keyName) {
         let result = [];
@@ -160,28 +265,28 @@ export class HomeComponent implements OnInit {
         let dataName = 'carTypeList';
         let labelDefault = '全部';
 
-        let defaultItem:any = {
-            label : labelDefault,
-            value : '-2',
+        let defaultItem: any = {
+            label: labelDefault,
+            value: '-2',
             car_product_category_name: labelDefault,
-            car_product_category_id : '-2'
+            car_product_category_id: '-2'
         };
 
-        if(keyName === 'series'){
+        if (keyName === 'series') {
             label = 'car_product_series_name';
             value = 'car_product_series_id';
             dataName = 'carSeriesList';
             labelDefault = '全部';
 
             defaultItem = {
-                label : labelDefault,
-                value : '-2',
+                label: labelDefault,
+                value: '-2',
                 car_product_series_name: labelDefault,
-                car_product_series_id : '-2'
+                car_product_series_id: '-2'
             };
 
             // this.selectedCarSeries = defaultItem;
-        }else{
+        } else {
             // this.selectedCarType = defaultItem;
         }
 
@@ -194,11 +299,11 @@ export class HomeComponent implements OnInit {
         });
 
         if (data.length) {
-            this[dataName] =  [result];
-        }else{
-            this[dataName] =  [[{
-                label : '暂无分类',
-                value : '-1',
+            this[dataName] = [result];
+        } else {
+            this[dataName] = [[{
+                label: '暂无分类',
+                value: '-1',
                 disabled: true
             }]];
         }
@@ -211,20 +316,20 @@ export class HomeComponent implements OnInit {
         this.isLoaded = false;
         this.isLoading = true;
         this.goTop();
-        setTimeout(()=>{
+        setTimeout(() => {
             this.il.restart();
             this.loadProducts();
-        },300);
+        }, 300);
 
     }
 
-    onLoadMore(comp : InfiniteLoaderComponent) {
+    onLoadMore(comp: InfiniteLoaderComponent) {
         console.log("this.isLoading:" + this.isLoading);
         if (this.isLoading) {
             return;
         }
         this.isLoading = true;
-        this.pagination.page ++ ;
+        this.pagination.page++;
         this.comp = comp;
         this.loadProducts(() => {
             comp.setFinished();
@@ -235,55 +340,55 @@ export class HomeComponent implements OnInit {
     }
 
     // 类型
-    showCarTypePop(){
-        if(this.carTypeList.length){
-            this.pickerService.show(this.carTypeList, '', [0], {
-                type: 'default',
-                separator: '|',
-                cancel: '取消',
-                confirm: '确定',
-                backdrop: false
-            }).subscribe((res: any) => {
-                console.log(res);
-                if(res.value === '-2'){
-                    this.selectedCarType = null;
-                    this.onSelectChanged();
-                }else{
-                    this.selectedCarType = res.items[0];
-                    this.onSelectChanged();
-                }
-                //this.selectedCarSeries = null;
-                //this.loadSeriesList(res.items[0]);
-            });
-        }
-    }
+    // showCarTypePop(){
+    //     if(this.carTypeList.length){
+    //         this.pickerService.show(this.carTypeList, '', [0], {
+    //             type: 'default',
+    //             separator: '|',
+    //             cancel: '取消',
+    //             confirm: '确定',
+    //             backdrop: false
+    //         }).subscribe((res: any) => {
+    //             console.log(res);
+    //             if(res.value === '-2'){
+    //                 this.selectedCarType = null;
+    //                 this.onSelectChanged();
+    //             }else{
+    //                 this.selectedCarType = res.items[0];
+    //                 this.onSelectChanged();
+    //             }
+    //             //this.selectedCarSeries = null;
+    //             //this.loadSeriesList(res.items[0]);
+    //         });
+    //     }
+    // }
     // 系列
-    showCarSeriesPop(){
-        if(this.carSeriesList.length){
-            this.pickerService.show(this.carSeriesList, '', [0], {
-                type: 'default',
-                separator: '|',
-                cancel: '取消',
-                confirm: '确定',
-                backdrop: false
-            }).subscribe((res: any) => {
-                console.log(res);
-                if(res.value === '-2'){
-                    this.selectedCarSeries = null;
-                    this.onSelectChanged();
-                }else{
-                    this.selectedCarSeries = res.items[0];
-                    this.onSelectChanged();
-                }
-            });
-        }
-    }
+    // showCarSeriesPop(){
+    //     if(this.carSeriesList.length){
+    //         this.pickerService.show(this.carSeriesList, '', [0], {
+    //             type: 'default',
+    //             separator: '|',
+    //             cancel: '取消',
+    //             confirm: '确定',
+    //             backdrop: false
+    //         }).subscribe((res: any) => {
+    //             console.log(res);
+    //             if(res.value === '-2'){
+    //                 this.selectedCarSeries = null;
+    //                 this.onSelectChanged();
+    //             }else{
+    //                 this.selectedCarSeries = res.items[0];
+    //                 this.onSelectChanged();
+    //             }
+    //         });
+    //     }
+    // }
 
-    onSelectChanged(){
+    onSelectChanged() {
         // let selectedCarSeries = this.selectedCarSeries ;
         // let selectedCarType = this.selectedCarType;
         this.pagination = {
-            page : 1,
+            page: 1,
             count: 10
         };
         this.products = [];
@@ -324,9 +429,11 @@ export class HomeComponent implements OnInit {
     }
 
     toCart($event, product) {
-        $event.stopPropagation();
-        //$event;
-        this.router.navigate(['cart', product.product_id], { queryParams: { product_id: product.product_id } });
+        if (this.tipsJoinSalesman === '1') {
+            this.shouldShowWarningBox = false;
+            return;
+          }
+          this.router.navigate(['cart']);
     }
 
     goTop() {
@@ -341,19 +448,19 @@ export class HomeComponent implements OnInit {
         let height = $body.clientHeight || $body.offsetHeight;
         setTimeout(() => {
             let content = document.querySelector('.weui-infiniteloader__content');
-             // console.log(content);
-            if(content) {
+            // console.log(content);
+            if (content) {
                 content.addEventListener('scroll', (event) => {
                     let scrollTop = content.scrollTop;
-                    if( scrollTop > height){
+                    if (scrollTop > height) {
                         this.show = true;
-                    }else{
+                    } else {
                         this.show = false;
                     }
                     // console.log(content.scrollTop);
                 });
             }
-        },0)
+        }, 0)
     }
 
 }

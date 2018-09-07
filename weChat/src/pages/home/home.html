@@ -11,7 +11,7 @@
             </ul>
         </div> -->
 
-        <div class="weui-flex">
+        <div class="weui-flex" *ngIf="seriesLists.length > 0">
             <!-- <div class="weui-flex__item">
                 <div class="placeholder" (click)="showCarTypePop()">{{selectedCarType?.car_product_category_name || '类型'}}<img class="dropdown-icon" src="/assets/images/dropdown.png" /></div>
             </div> -->
@@ -19,22 +19,12 @@
                 <div class="placeholder" (click)="showCarSeriesPop()">{{selectedCarSeries?.car_product_series_name || '系列'}}<img class="dropdown-icon" src="/assets/images/dropdown.png" /></div>
             </div> -->
 
-            <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">全部</div>
+            <!-- <div class="weui-flex__item"  >
+                <div class="placeholder" class="active"  (click)="selectedSeries()" >全部</div>
+            </div> -->
+            <div class="weui-flex__item" *ngFor="let item of seriesLists" (click)="selectedSeries(item)">
+                <div class="placeholder" *ngIf="seriesLists.length !== 1" >{{item.car_product_series_name}}</div>
             </div>
-            <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">3系</div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">6系</div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">9系</div>
-            </div>
-            <div class="weui-flex__item">
-                <div class="placeholder" (click)="showCarSeriesPop()">华康</div>
-            </div>
-
         </div>
         <div class="product-list">
             <div class="item-list" *ngIf="isLoaded && products.length">
@@ -55,7 +45,7 @@
             <div class="empty-container" *ngIf="isLoaded && products.length===0">
                 <div class="empty">
                     <img src="/assets/images/empty.png" />
-                    <p>内容突然就没有了</p>
+                    <p>暂无商品</p>
                 </div>
             </div>
         </div>
@@ -81,4 +71,8 @@
         </div>-->
         <div class="goTop" (click)="goTop();" [hidden]="(products.length && !show) || products.length===0"></div>
     </div>
+
+
+    
 </weui-infiniteloader>
+<app-intention-buy (click)="toCart()"></app-intention-buy >
