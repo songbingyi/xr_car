@@ -19,7 +19,8 @@ export class BuyIndexComponent implements OnInit {
   /**@name swiper图片url */
   homeBannerList: object[] = [];
 
-
+  /**@name 单数 */
+  odd: boolean = true;
 
   /**@name 错误信息 */
   errorMessage: any;
@@ -36,7 +37,7 @@ export class BuyIndexComponent implements OnInit {
   wechatClientConfig: any;
   role_ids: any = [];
 
-  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService,) {
+  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService, ) {
     this.getWechatClientConfig()
     this.getMemberDetail()
   }
@@ -80,6 +81,8 @@ export class BuyIndexComponent implements OnInit {
       if (categoryList.status.succeed === '1') {
         //console.log(categoryList);
         this.categoryLists = categoryList.data.car_product_category_list;
+        //服务数量是奇数，显示最后一个;
+        this.odd = (this.categoryLists.length % 2 !== 0) ? false : true
         //this.loadSeriesList(categoryLists[0]);
       } else {
         this.errorMessage = categoryList.status.error_desc;
@@ -106,7 +109,7 @@ export class BuyIndexComponent implements OnInit {
   iSeeTips() {
     this.shouldShowWarningBox = !this.shouldShowWarningBox;
   }
-  
+
   goToEBoss() {
 
     if (this.memberDetail.member_auth_info && this.memberDetail.member_auth_info.identity_auth_status === '0') {

@@ -1,3 +1,30 @@
-<p>
-  handy-traffi works!
-</p>
+<weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
+    <div class="home-page" #scrollMe>
+        <div class="classify">
+            <div class="weui-flex" *ngIf="serviceTypes.length  >  0">
+                <div class="weui-flex__item" 
+                *ngFor="let serviceType of serviceTypes; index as index" 
+                (click)="goModule(serviceType)"
+               >
+                    <div class="classify-content-box">
+                        <img 
+                        [src]="'/assets/images/menu/' + serviceType.service_type_key + (serviceType.service_type_status === '2' ? '.grey.png' : '.png')">
+                        <!-- <span class="title">{{item.car_product_category_name}}</span> -->
+                        <span class="title">{{serviceType.service_type_name}}</span>
+                    </div>
+                </div>
+                <!-- 单数服务情况，补一个 -->
+                <div class="weui-flex__item" [hidden]="odd"></div>
+            </div>
+            <!-- 没有服务 -->
+            <div class="empty-container" *ngIf="serviceTypes.length === 0">
+                <div class="empty">
+                    <img src="/assets/images/empty.png" />
+                    <p>暂时没有相关服务</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</weui-infiniteloader>
+

@@ -87,7 +87,7 @@
     }
 }
 app-intention-buy {
-    .intention-page {
-        top: 510px
-    }
+    position: fixed;
+    bottom:80px;
+    right:8px;
 }

@@ -7,6 +7,7 @@ import {MessageService} from '../../providers/messageService';
 import {LocalStorage} from '../../providers/localStorage';
 
 import {RefreshMemberInfoService} from '../../providers/refresh.member.info.service';
+import { IdentityAuthService } from '../../providers/identityAuth.service';
 
 @Component({
     selector    : 'app-user',
@@ -46,7 +47,8 @@ export class UserComponent implements OnInit {
         'role4' : {}
     };
 
-    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private localStorage: LocalStorage) {
+    constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private localStorage: LocalStorage,private identityAuthService: IdentityAuthService) {
+        this.identityAuthService.check();//没有注册不进入
         this.hasCar();
         this.getMemberDetail();
         this.message.getMessage().subscribe(msg => {

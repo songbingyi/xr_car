@@ -193,14 +193,32 @@
         margin: 0 auto;
     }
 }
+.warning-box {
+    .weui-dialog__bd {
+        text-align: left;
+        font-size:16px;
+        line-height:1.4;
+    }
+    .weui-dialog__btn_default {
+        color:#FA9D3B;
+    }
+    .weui-dialog__btn_primary {
+        color:#B2B2B2;
+    }
+}
 
 
 .goTop {
     position: fixed;
-    bottom:80px;
+    bottom:40px;
     right:10px;
     height:40px;
     width:40px;
     background: url("/assets/images/icon/gotop.png") 0 0 no-repeat;
     background-size: contain;
+}
+app-intention-buy {
+    position: fixed;
+    bottom:80px;
+    right:8px;
 }

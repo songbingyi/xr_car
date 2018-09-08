@@ -1,0 +1,97 @@
+@import "../../assets/styles/variables";
+.weui-infiniteloader {
+    height: 100% !important;
+    background: #FAFAFA;
+}
+
+.home-page {
+    position: static; // /*height:100%;
+    // padding-bottom: 15px;*/
+    // .weui-flex {
+    //     // height: 48px;
+    //     line-height: 46px;
+    //     // border-bottom: 1px solid #efeff4;
+    //     // margin-bottom: 14px;
+    //     // box-shadow: inset 0 -1px 0 0 #E5E5E5;
+    // }
+    // .weui-flex__item {
+    //     text-align: center;
+    //     font-size:14px;
+    //     color:#2A2A2A;
+    //     box-sizing: border-box;
+    //     overflow: hidden;
+    //     padding: 0 4px;
+    //     // .dropdown-icon {
+    //     //     width: 7px;
+    //     //     height: 4px;
+    //     //     position: relative;
+    //     //     top: -3px;
+    //     //     left: 3px;
+    //     // }
+    //     .active {
+    //         border-bottom: 3px solid #1970A6;
+    // color: #1970A6;
+    //     }
+    // }
+    .classify {
+        .weui-flex {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            .weui-flex__item {
+                flex: none;
+                width: 46%;
+                padding-top: 2%;
+                .classify-content-box {
+                    border: 1px solid #eff5f9;
+                    border-radius: 6px;
+                    box-shadow: 0 0 10px 0 rgba(25, 112, 166, 0.15);
+                    text-align: center;
+                    img {
+                        width: 50%;
+                    }
+                    .title {
+                        font-size: 14px;
+                        display: block;
+                        max-width: 120px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        line-height: 14px;
+                        margin: 0 auto;
+                        margin-bottom: 14px;
+                    }
+                }
+            }
+        }
+    }
+    .empty-container {
+        // position: absolute;
+        // top: 173px;
+        // left: 0;
+        // right: 0;
+        // bottom: 65px;
+        background: #FFF;
+    }
+    
+    .empty {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -75px 0 0 -60px;
+        width: 120px;
+        height: 130px;
+        font-size: 14px;
+        p {
+            text-align: center;
+            color:#333333;
+            margin-top:10px;
+        }
+        img {
+            width:100px;
+            height:100px;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

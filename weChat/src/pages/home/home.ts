@@ -57,6 +57,8 @@ export class HomeComponent implements OnInit {
     seriesLists: Array<any> = [];
     /**@name 被选中的系列 */
     currentSeries: any;
+    /**@name 进入页面初始ID */
+    seriesId:string = '1'
     /**@name 是否出现加入销售员通知*/
     wechatClientConfig: any;
     /**@name 隐藏销售员通知控制器*/
@@ -93,7 +95,6 @@ export class HomeComponent implements OnInit {
         // this.categoryId = this.routeInfo.snapshot.paramMap.get('id');
         // console.log(this.categoryId)
         this.routeInfo.params.subscribe(params => {
-            console.log('params', params)
             this.categoryInfo = params;
         });
         this.loadSeriesList();
@@ -103,7 +104,8 @@ export class HomeComponent implements OnInit {
     /**@name 选择某个系列 */
     selectedSeries(item) {
         this.currentSeries = item;
-        this.loadProducts()
+        console.log(this.currentSeries)
+        this.onSelectChanged()
     }
     /**@name 根据商品分类get系列列表 */
     loadSeriesList() {
@@ -114,10 +116,10 @@ export class HomeComponent implements OnInit {
                     let oSeriesLists = seriesList.data.car_product_series_list;
                     oSeriesLists.unshift(0);
                     oSeriesLists[0] = { car_product_series_name: '全部' }
-                    this.seriesLists = oSeriesLists
+                    this.seriesLists = oSeriesLists;
+                    this.currentSeries = this.seriesLists[0];//进来默认选中全部
                     // this.rebuildData(seriesLists, 'series');
                     this.loadProducts();
-                    console.log(this.seriesLists)
                 } else {
                     this.errorMessage = seriesList.status.error_desc;
                 }
@@ -130,9 +132,6 @@ export class HomeComponent implements OnInit {
     }
     /**@name 获取商品列表 */
     loadProducts(callbackDone?, callbackOnce?) {
-        console.log("loadProducts");
-        console.log('categoryInfo', this.categoryInfo)
-        console.log('currentSeries', this.currentSeries)
         let where = {
             pagination: this.pagination,
             filter_value: {
@@ -146,11 +145,12 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+        console.log('this.pagination',this.pagination)
         this.baseProvider.post('getCarProductList', where).subscribe(products => {
             if (products.status.succeed === '1') {
                 // console.log(products.data.car_product_list);
-                // this.products = this.products.concat(products.data.car_product_list);
-                this.products = products.data.car_product_list
+                this.products = this.products.concat(products.data.car_product_list);
+                // this.products = products.data.car_product_list
 
                 this.isLoading = false;
                 this.isLoaded = true;

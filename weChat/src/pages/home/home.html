@@ -70,6 +70,7 @@
             </div>
         </div>-->
         <div class="goTop" (click)="goTop();" [hidden]="(products.length && !show) || products.length===0"></div>
+        <app-intention-buy (click)="toCart()"></app-intention-buy>
     </div>
 
     <!-- 成为E老板提示 -->
@@ -86,4 +87,3 @@
     </div>
 
 </weui-infiniteloader>
-<app-intention-buy (click)="toCart()"></app-intention-buy>

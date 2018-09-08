@@ -18,12 +18,19 @@ export class IndexComponent implements OnInit {
 
     activeTabIndex : any = 0;
     tabs : any = [
+        // {
+        //     title      : '首页',
+        //     selected   : 'weui-bar__item_on',
+        //     sizeClass  : 'home',
+        //     icon       : '/assets/images/icon/home.png',
+        //     activeIcon : '/assets/images/icon/home.blue.png'
+        // },
         {
-            title      : '首页',
-            selected   : 'weui-bar__item_on',
-            sizeClass  : 'home',
-            icon       : '/assets/images/icon/home.png',
-            activeIcon : '/assets/images/icon/home.blue.png'
+            title      : '我的',
+            selected   : '',
+            sizeClass  : 'my',
+            icon       : '/assets/images/icon/my.png',
+            activeIcon : '/assets/images/icon/my.blue.png'
         },
         {
             title      : '站点',
@@ -32,13 +39,7 @@ export class IndexComponent implements OnInit {
             icon       : '/assets/images/icon/map.png',
             activeIcon : '/assets/images/icon/map.blue.png'
         },
-        {
-            title      : '我的',
-            selected   : '',
-            sizeClass  : 'my',
-            icon       : '/assets/images/icon/my.png',
-            activeIcon : '/assets/images/icon/my.blue.png'
-        }
+
     ];
 
     shouldShowWarningNoticeBox = true;

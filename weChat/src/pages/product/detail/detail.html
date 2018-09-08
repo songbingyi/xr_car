@@ -39,6 +39,7 @@
         <!-- <a href="javascript:;" class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [ngClass]="{'disabled':product.is_can_order==='0'}"
             (click)="toCart()">在线咨询</a> -->
     </div>
+    <app-intention-buy (click)="toCart()"></app-intention-buy>
 </div>
 
 <div [hidden]="shouldShowWarningBox" class="warning-box">
@@ -52,4 +53,3 @@
         </div>
     </div>
 </div>
-<app-intention-buy (click)="toCart()"></app-intention-buy>

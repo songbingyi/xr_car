@@ -52,7 +52,7 @@ export class DetailComponent implements OnInit {
     role_ids:any = [];
 
     constructor(private route : ActivatedRoute, private router : Router, private baseService : BaseProvider, private identityAuthService:IdentityAuthService) {
-        this.identityAuthService.check();
+        this.identityAuthService.check();//没有注册不进入
         this.getMemberDetail();
         this.getWechatClientConfig();
     }
