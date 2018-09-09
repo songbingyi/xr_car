@@ -89,6 +89,7 @@ const appRoutes: Routes = [
     {path : 'cart', component : CartComponent},
     {path : 'maps', component : MapComponent},
     {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
+    // {path : 'user', component : UserComponent,},
     {path : 'serviceOrder/:status/:page', component : OrdersComponent, canActivate: [AuthGuard]},
     {path : 'productOrder/:status/:page', component : ProductOrderComponent, canActivate: [AuthGuard]},
     {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},

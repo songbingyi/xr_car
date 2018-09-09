@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
     };
 
     constructor(private zone : NgZone, private baseService : BaseProvider, private router: Router, private message: MessageService, private localStorage: LocalStorage,private identityAuthService: IdentityAuthService) {
-        this.identityAuthService.check();//没有注册不进入
+        // this.identityAuthService.check();//没有注册不进入
         this.hasCar();
         this.getMemberDetail();
         this.message.getMessage().subscribe(msg => {

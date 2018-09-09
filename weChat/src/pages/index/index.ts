@@ -147,7 +147,8 @@ export class IndexComponent implements OnInit {
     }
 
     isLoggedIn(index) {
-        if (index === 2) {
+        console.log('index',index)
+        if (index === 0) {
             if (!this.authService.isLoggedIn()) {
                 this.localStorage.remove('activeTabIndex');
                 this.authService.redirect();
