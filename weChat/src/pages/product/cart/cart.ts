@@ -301,11 +301,14 @@ export class CartComponent implements OnInit {
 
         this.baseService.post('addCarProductOrder', {
             "submit_car_product_order_info": {
-                // "car_product_info": {
-                //     "product_id": this.product.product_id,
-                //     "product_name": this.product.product_name,
-                //     "price_description": this.product.price_description
-                // },
+                "car_product_info": {
+                    // "product_id": this.product.product_id,
+                    // "product_name": this.product.product_name,
+                    // "price_description": this.product.price_description
+                    "product_id": '',
+                    "product_name": '',
+                    "price_description": ''
+                },
                 "cards_region_info": {
                     "region_id": this.selectedCity.region_id,
                     "region_name": this.selectedCity.region_name

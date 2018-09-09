@@ -58,6 +58,6 @@ export class LoginComponent implements OnInit {
 
     goHome() {
         this.localStorage.setS('activeTabIndex', '0');
-        this.router.navigate(['']);
+        this.router.navigate(['buyIndex']);
     }
 }

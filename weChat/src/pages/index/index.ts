@@ -50,7 +50,7 @@ export class IndexComponent implements OnInit {
     role_ids:any = [];
 
     constructor(private baseService : BaseProvider, private router : Router, private localStorage : LocalStorage, private titleService : Title, private authService: AuthService, private message: MessageService, private refreshMemberInfoService: RefreshMemberInfoService, private identityAuthService:IdentityAuthService) {
-        // this.identityAuthService.check();
+        this.identityAuthService.check();
         this.getMemberDetail();
         this.getWechatClientConfig();
     }

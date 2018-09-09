@@ -44,7 +44,7 @@ export class HandyTraffiComponent implements OnInit {
         this.refresh();
       }
     });
-    this.identityAuthService.check();
+    // this.identityAuthService.check();
 
   }
 
