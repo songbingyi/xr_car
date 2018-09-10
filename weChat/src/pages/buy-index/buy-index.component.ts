@@ -4,12 +4,13 @@ import { BaseProvider } from '../../providers/http/base.http';
 import { LocalStorage } from '../../providers/localStorage';
 import { AuthService } from '../../providers/auth.service';
 import { RefreshMemberInfoService } from '../../providers/refresh.member.info.service';
+import { ElementRef} from '@angular/core';
 
 @Component({
   selector: 'app-buy-index',
   templateUrl: './buy-index.component.html',
   styleUrls: ['./buy-index.component.scss'],
-  encapsulation: ViewEncapsulation.None//允许外部封装
+  // encapsulation: ViewEncapsulation.None//允许外部封装
 })
 export class BuyIndexComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class BuyIndexComponent implements OnInit {
   errorMessage: any;
 
   /**@name 商品分类列表*/
-  categoryLists: object[];
+  categoryLists: any[];
 
   /**@name 隐藏成为E老板通知*/
   shouldShowWarningSaleBox = true;
@@ -37,7 +38,7 @@ export class BuyIndexComponent implements OnInit {
   wechatClientConfig: any;
   role_ids: any = [];
 
-  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService, ) {
+  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService, private el: ElementRef ) {
     this.getWechatClientConfig()
     this.getMemberDetail()
   }
@@ -56,6 +57,7 @@ export class BuyIndexComponent implements OnInit {
 
     this.getHomeBannerList()
     this.loadCategoryList()
+    
 
   }
 

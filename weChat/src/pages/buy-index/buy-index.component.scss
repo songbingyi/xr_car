@@ -55,6 +55,7 @@
 }
 
 .classify {
+    position: relative;
     .weui-flex {
         display: flex;
         justify-content: space-evenly;
@@ -85,9 +86,17 @@
             }
         }
     }
+
 }
 app-intention-buy {
-    position: fixed;
-    bottom:80px;
+    position: absolute;
+    bottom:0px;
     right:8px;
+}
+@media (max-width: 350px) {
+    app-intention-buy {
+        position: fixed;
+        bottom:10px;
+        right:8px;
+    }
 }

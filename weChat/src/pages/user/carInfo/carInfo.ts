@@ -445,10 +445,13 @@ export class CarInfoComponent implements OnInit {
         if (this.operationType === 'add') {
             this.save();
         }
+        console.log( this.operationType)
     }
 
     save() {
         let result = this.result;
+        console.log(this.result)
+        console.log('this.carInfoForm',this.carInfoForm)
         let map = this.validators(result);
         if (!map.valid || this.carInfoForm.invalid) {
             // this.errorMessage = '所有信息为必填！';
@@ -458,7 +461,7 @@ export class CarInfoComponent implements OnInit {
         this.errorMessage = '';
         this.fromError = false;
 
-        // console.log(result);
+        console.log(result);
 
         let car_info = this.filterData(result, this.hasCarInfo.car_id || '');
 
@@ -514,8 +517,8 @@ export class CarInfoComponent implements OnInit {
             item.car_info.car_id = this.car_id;
             item.car_info.company_info.company_id = '0'; // this.company_id;
         }
-        // console.log(path);
-        // console.log(item);
+        console.log(path);
+        console.log(item);
 
         this.baseService.post(path, item /*{
             'member_id' : '1',
@@ -593,7 +596,7 @@ export class CarInfoComponent implements OnInit {
                     /*this.errorMessage = <any>error*/
                 });
         } else {
-            console.log(this.hasCarInfo.car_id);
+            console.log('this.hasCarInfo.car_id',this.hasCarInfo.car_id);
             if(this.hasCarInfo.car_id){
                 this.hasCarInfo = {};
                 this.setCarDetail({

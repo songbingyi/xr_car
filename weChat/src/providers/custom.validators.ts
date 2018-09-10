@@ -28,7 +28,7 @@ export class CustomValidators {
 
     public isValid(map: any, number?) {
         let result = true;
-
+        console.log('map',map)
         for (let key in map) {
             if (map.hasOwnProperty(key) && key !== 'valid') {
                 map[key].valid = Object.keys(map[key]).length > (number || 1);
