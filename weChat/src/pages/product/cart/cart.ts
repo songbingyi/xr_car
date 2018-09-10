@@ -228,7 +228,6 @@ export class CartComponent implements OnInit {
     }
     /**@name 判断提交信息是否合法，合法后弹出提示确认提交 */
     iWangSub(){
-        console.log(this.selectedCity.region_id)
         if (this.orderForm.invalid || this.selectedCity.region_id == undefined) {
             // this.errorMessage = '请修改红色错误信息后再提交';
             if (!this.currentPurpose.car_product_purpose_id) {
@@ -257,7 +256,6 @@ export class CartComponent implements OnInit {
 
             return;
         } else {
-            console.log('this.orderForm',this.orderForm)
             this.shouldConfirmBox = !this.shouldConfirmBox;
             this.errorMessage = '';
             this.fromError = false;
@@ -266,7 +264,7 @@ export class CartComponent implements OnInit {
     }
 
     iSee() {
-        this.shouldConfirmBox = !this.shouldConfirmBox;
+        this.shouldConfirmBox = true;
     }
 
 
