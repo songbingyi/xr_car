@@ -105,6 +105,7 @@ export class CartComponent implements OnInit {
         /*this.routes.paramMap.switchMap((params : ParamMap) => {
             console.log(params.get('id'));
         });*/
+
     }
 
     getLocation(callback?) {
@@ -225,6 +226,44 @@ export class CartComponent implements OnInit {
         } catch (err) {
         }
     }
+    /**@name 判断提交信息是否合法，合法后弹出提示确认提交 */
+    iWangSub(){
+        console.log(this.selectedCity.region_id)
+        if (this.orderForm.invalid || this.selectedCity.region_id == undefined) {
+            // this.errorMessage = '请修改红色错误信息后再提交';
+            if (!this.currentPurpose.car_product_purpose_id) {
+                this.errorMessage = '请先选择车辆用途！';
+                return;
+            }
+            if (!this.orderForm.value.carscount) {
+                this.errorMessage = '请输入购车数量！';
+                return;
+            }
+            if (!this.orderForm.value.username) {
+                //this.fromError = true;
+                this.errorMessage = '请输入有效的姓名！';
+                return;
+            }
+            if (!this.orderForm.value.telephone) {
+                this.errorMessage = '请输入正确的电话！';
+                return;
+            }
+            if (this.selectedCity.region_id == undefined) {
+                this.errorMessage = '请先选择地区！';
+                return;
+            }
+            this.errorMessage = '';
+            this.fromError = true;
+
+            return;
+        } else {
+            console.log('this.orderForm',this.orderForm)
+            this.shouldConfirmBox = !this.shouldConfirmBox;
+            this.errorMessage = '';
+            this.fromError = false;
+        }
+
+    }
 
     iSee() {
         this.shouldConfirmBox = !this.shouldConfirmBox;
@@ -239,27 +278,7 @@ export class CartComponent implements OnInit {
             return ;
         }*/
 
-        if (!this.orderForm.value.username) {
-            //this.fromError = true;
-            this.errorMessage = '请输入有效的姓名！';
-            return;
-        }
-
-        if (!this.selectedCity.region_id) {
-            this.errorMessage = '请先选择地区！';
-            return;
-        }
-
-
-        if (!this.currentPurpose.car_product_purpose_id) {
-            this.errorMessage = '请先选择车辆用途！';
-            return;
-        }
-
-        if (!this.orderForm.value.carscount) {
-            this.errorMessage = '请输入购车数量！';
-            return;
-        }
+   
 
         /*if((this.orderForm.value.code && this.orderForm.value.code.length !== 4)){
             //this.fromError = true;

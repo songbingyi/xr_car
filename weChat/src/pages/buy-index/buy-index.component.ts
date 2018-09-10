@@ -18,7 +18,7 @@ export class BuyIndexComponent implements OnInit {
   options: object;
 
   /**@name swiper图片url */
-  homeBannerList: object[] = [];
+  homeBannerList: any[] = [];
 
   /**@name 单数 */
   odd: boolean = true;
