@@ -29,7 +29,7 @@
             <!-- 单数服务情况，补一个 -->
             <div class="weui-flex__item" [hidden]="odd"></div>
         </div>
-        <app-intention-buy (click)="toCart()"></app-intention-buy>
+
     </div>
     <!-- 成为E老板通知 -->
     <div [hidden]="shouldShowWarningSaleBox" class="warning-box">
@@ -58,4 +58,6 @@
         </div>
     </div>
 
+
 </div>
+<app-intention-buy (click)="toCart()"></app-intention-buy>
