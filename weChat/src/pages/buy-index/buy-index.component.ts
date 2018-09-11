@@ -58,6 +58,8 @@ export class BuyIndexComponent implements OnInit {
     this.getHomeBannerList()
     this.loadCategoryList()
     
+    var device_type = navigator.userAgent;//获取userAgent信息  
+    console.log(device_type);//打印到页面 
 
   }
 

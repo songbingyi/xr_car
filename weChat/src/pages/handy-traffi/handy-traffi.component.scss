@@ -36,8 +36,9 @@
     .classify {
         .weui-flex {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-around;
             flex-wrap: wrap;
+            padding: 0 1%;
             .weui-flex__item {
                 flex: none;
                 width: 46%;

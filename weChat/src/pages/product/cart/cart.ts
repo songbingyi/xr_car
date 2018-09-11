@@ -47,6 +47,7 @@ export class CartComponent implements OnInit {
     carscount = new FormControl('', [
         Validators.required,
         Validators.minLength(1),
+        Validators.min(0)
     ]);
     comment = new FormControl('', [
         Validators.maxLength(200)
@@ -234,7 +235,7 @@ export class CartComponent implements OnInit {
                 this.errorMessage = '请先选择车辆用途！';
                 return;
             }
-            if (!this.orderForm.value.carscount) {
+            if (this.orderForm.value.carscount <= 0) {
                 this.errorMessage = '请输入购车数量！';
                 return;
             }

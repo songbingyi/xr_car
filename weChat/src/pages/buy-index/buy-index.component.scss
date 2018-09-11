@@ -57,11 +57,13 @@
     position: relative;
     .weui-flex {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
+        -webkit-justify-content: space-around;
+        padding: 0 1%;
         flex-wrap: wrap;
         .weui-flex__item {
             flex: none;
-            width: 46%;
+            width: 47%;
             padding-top: 2%;
             .classify-content-box {
                 border: 1px solid #eff5f9;
