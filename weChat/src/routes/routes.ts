@@ -73,7 +73,8 @@ const appRoutes: Routes = [
     {path : 'wx', component : RedirectComponent},
     {path : 'redirect', component : RedirectComponent},
     {path : 'login', component : LoginComponent},
-    {path : '', component : IndexComponent},//个人中心按钮
+    {path : 'userIndex', component : IndexComponent},//个人中心按钮
+    {path : '', component : IndexComponent},
     {path : 'buyIndex', component : BuyIndexComponent,},//在线购车首页按钮
     {path : 'handyTraffic', component :  HandyTraffiComponent},//便民车务按钮
     {path : 'classifyList/:id/:name', component : HomeComponent},//在线购车=>分类

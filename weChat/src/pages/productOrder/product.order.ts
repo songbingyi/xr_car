@@ -10,7 +10,7 @@ import {IdentityAuthService} from '../../providers/identityAuth.service';
     selector: 'app-product-order',
     templateUrl: './product.order.html',
     styleUrls: ['./product.order.scss'],
-    // encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 export class ProductOrderComponent implements OnInit {
     status: string;
