@@ -49,7 +49,7 @@ export class CarListComponent implements OnInit {
                     });
                     if (!this.carList.length) {
                         if(isDelete){
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/userIndex']);
                         }else{
                             this.router.navigate(['/carInfo']);
                         }

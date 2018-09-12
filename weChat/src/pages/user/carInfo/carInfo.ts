@@ -552,7 +552,7 @@ export class CarInfoComponent implements OnInit {
                         if(list.length > 1){
                             this.location.back();
                         }else{
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/userIndex']);
                         }
                     });
                     // this.carInfo = carList.data.member_car_list;
