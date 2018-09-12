@@ -23,7 +23,7 @@
             <div class="weui-flex__item" *ngFor="let item of categoryLists" [routerLink]="['/classifyList',  item.car_product_category_id,item.car_product_category_name]">
                 <div class="classify-content-box">
                     <img [src]="item.car_product_category_image.thumb">
-                    <span class="title">{{item.car_product_category_name}}1</span>
+                    <span class="title">{{item.car_product_category_name}}</span>
                 </div>
             </div>
             <!-- 单数服务情况，补一个 -->
