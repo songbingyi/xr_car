@@ -5,7 +5,7 @@ let production = environment.production || false;
 let config = {
     title    : '轩仁车务',
     subTitle : '轩仁车务',
-    version  : 'v1.0',
+    version  : 'v2.4.1',
     salt_key : 'xr_car_client_519fee838e0b5dec',
     appid    : 'wx09fff9f719ae398e',
     apiKey   : '472cc3036f625375b7bbbc47c13e4b81', // 地图的 key
@@ -20,7 +20,7 @@ if (production) {
     config = {
         title    : '轩仁车务',
         subTitle : '轩仁车务',
-        version  : 'v1.0',
+        version  : 'v2.4.1',
         salt_key : 'xr_car_client_519fee838e0b5dec',
         appid    : 'wx09fff9f719ae398e',
         apiKey   : '472cc3036f625375b7bbbc47c13e4b81', // 地图的 key
