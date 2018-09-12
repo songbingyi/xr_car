@@ -45,12 +45,7 @@
                         </div>
                         <div class="weui-cell__ft">{{detail?.car_product_count}}</div>
                     </div>
-                    <div class="weui-cell no-border weui-cell-small">
-                        <div class="weui-cell__bd">
-                            <p>上牌地区</p>
-                        </div>
-                        <div class="weui-cell__ft">{{detail?.cards_region_info?.region_name}}</div>
-                    </div>
+
                 </div>
 
                 <div class="customer-info" *ngIf="detail?.buyer_member_info">
@@ -71,6 +66,12 @@
                             <p>手机号码</p>
                         </div>
                         <div class="weui-cell__ft">{{detail?.buyer_member_info?.mobile}}</div>
+                    </div>
+                    <div class="weui-cell no-border weui-cell-small">
+                        <div class="weui-cell__bd">
+                            <p>上牌地区</p>
+                        </div>
+                        <div class="weui-cell__ft">{{detail?.cards_region_info?.region_name}}</div>
                     </div>
                 </div>
 
