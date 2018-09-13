@@ -98,6 +98,16 @@ export class ProductOrderComponent implements OnInit {
         '3':'办事处人员',
         '4':'经销商人员',
     };
+    memberRoles = {
+        '2':'getSalesCarProductOrderDashboard',
+        '3':'getOfficeCarProductOrderDashboard',
+        '4':'getDealerCarProductOrderDashboard'
+    };
+    dataNames = {
+        '2':'sales_car_product_order_dashboard_info',
+        '3':'office_car_product_order_dashboard_info',
+        '4':'dealer_car_product_order_dashboard_info'
+    };
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
@@ -107,7 +117,7 @@ export class ProductOrderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCarProductOrderDashboardInfo();
+
         this.subscribe = this.route.params.subscribe(params => {
             let activeIndex: string = params.status;
             let page: string = params.page;
@@ -123,6 +133,7 @@ export class ProductOrderComponent implements OnInit {
                 this.role = queryParams.role || '1';
                 this.getInitData();
                 this.isSeller();
+                this.getCarProductOrderDashboardInfo();
             });
 
         });
@@ -142,9 +153,22 @@ export class ProductOrderComponent implements OnInit {
                 error => this.errorMessage = <any>error
             );
     }*/
-
+    /**@name 进入列表页后，通过接口获取dashboard_info */
     getCarProductOrderDashboardInfo() {
-        this.car_product_order_dashboard_info = this.localStorage.getObject('car_product_order_dashboard_info');
+        // this.car_product_order_dashboard_info = this.localStorage.getObject('car_product_order_dashboard_info');
+        let path = this.memberRoles[this.role]
+
+        this.baseService.post(path, {
+        }).subscribe(orderDashboard => {
+                    if (orderDashboard.status.succeed === '1') {
+                        // this.dataItems['role' + role] = orderDashboard.data[this.dataNames[role]];
+                        this.car_product_order_dashboard_info = orderDashboard.data[this.dataNames[this.role]]
+                    } else {
+                        this.errorMessage = orderDashboard.status.error_desc;
+                    }
+                },
+                error => this.errorMessage = <any>error
+            );
     }
 
     isSeller(){

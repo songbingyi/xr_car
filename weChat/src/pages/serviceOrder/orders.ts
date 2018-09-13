@@ -87,7 +87,6 @@ export class OrdersComponent implements OnInit {
         this.getService_order_dashboard_info();
 
         this.subscribe = this.route.params.subscribe(params => {
-            // console.log(params);
             let activeIndex: string = params.status;
             let page: string = params.page;
             this.activeIndex = parseInt(activeIndex, 10);

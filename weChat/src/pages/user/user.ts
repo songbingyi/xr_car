@@ -62,6 +62,7 @@ export class UserComponent implements OnInit {
         this.baseService.post('getMemberDashboard', {})
             .subscribe(member => {
                     if (member.status.succeed === '1') {
+                        console.log('member.data',member.data)
                         this.member = member.data;
                         //this.member.is_has_sales_button = '1';
                         if(this.member.service_order_dashboard_info) {
@@ -125,6 +126,7 @@ export class UserComponent implements OnInit {
                         } else {
                             this.errorMessage = orderDashboard.status.error_desc;
                         }
+                        console.log('this.dataItems',this.dataItems)
                     },
                     error => this.errorMessage = <any>error
                 );
@@ -183,10 +185,10 @@ export class UserComponent implements OnInit {
     goToCarOrderList(status, page, query?, path?){
         path = '/' + (path || 'productOrder');
         query = query || {role: '1'};
-        let orderCont = this.dataItems['role' + query.role];
-        if(orderCont) {
-            this.localStorage.setObject('car_product_order_dashboard_info', orderCont);
-        }
+        // let orderCont = this.dataItems['role' + query.role];
+        // if(orderCont) {
+        //     this.localStorage.setObject('car_product_order_dashboard_info', orderCont);
+        // }
         this.router.navigate([path, status, page], {queryParams:query});
     }
 
