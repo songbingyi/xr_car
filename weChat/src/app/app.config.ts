@@ -15,7 +15,7 @@ let config = {
     identityAuth : true,
     production : production
 };
-
+ 
 if (production) {
     config = {
         title    : '轩仁车务',
