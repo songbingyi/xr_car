@@ -3,10 +3,10 @@
         <div class="user-bg">
             <img class="avatar" [src]="member.member_info?.icon_image?.thumb || '/assets/images/user/avatar.default.jpg'"/>
             <span class="username">{{member.member_info?.member_name}}</span>
-            <!--<a class="notification" [routerLink]="['/notify', 0, 1]">
+            <a class="notification" [routerLink]="['/notify', 0, 1]">
                 <img class="belle" src="/assets/images/icon/belle.png" />
                 <span class="weui-badge" *ngIf="member?.message_dashboard_info?.new_message_count!=='0'">{{member?.message_dashboard_info?.new_message_count}}</span>
-            </a>-->
+            </a>
         </div>
         <div class="information">
             <a class="personal" [routerLink]="['/userInfo']">个人信息</a><a class="car" (click)="goNext()">车辆信息</a>

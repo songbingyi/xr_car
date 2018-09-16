@@ -2,7 +2,8 @@
     <tabset (onSelect)="onTabSelect($event)">
         <tab [active]="activeIndex===0">
             <span *tabHeading class="tab-set-heading">
-                个人消息<q class="weui-badge" *ngIf="memberNotify.new_member_message_count>0">{{memberNotify.new_member_message_count}}</q>
+                <!-- 个人消息<q class="weui-badge" *ngIf="memberNotify.new_member_message_count>0">{{memberNotify.new_member_message_count}}</q> -->
+                个人消息<q class="weui-badge">2</q>
             </span>
             <div class="scroll-page">
 
@@ -19,7 +20,7 @@
                 </div>-->
 
                 <div *ngIf="personal.isLoaded && personal.lists.length">
-                    <div class="marked-as-read" (click)="markedAsRead('personal')">标记为全部已读</div>
+                    <div class="between-space"></div>
                     <div *ngFor="let item of personal.lists; let index = index">
                         <div class="weui-panel" [routerLink]="['/notifyDetail', item.member_message_id, 'personal']">
                             <div class="weui-panel__bd">
@@ -52,7 +53,7 @@
             </span>
             <div class="scroll-page">
                 <div *ngIf="system.isLoaded && system.lists.length">
-                    <div class="marked-as-read" (click)="markedAsRead('system')">标记为全部已读</div>
+                    <div class="between-space"></div>
                     <div *ngFor="let item of system.lists; let index = index">
                         <div class="weui-panel" [routerLink]="['/notifyDetail', item.system_message_id, 'system']">
                             <div class="weui-panel__bd">
