@@ -62,7 +62,21 @@
     }
     .weui-panel {
  
-        background-color: #fff
+        background-color: #fff;
+        .weui-badge {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top:50%;
+            transform: translateY(-50%)
+        }
+        border: none;
+        &::after {
+            border: none;
+        }
+        &::before {
+             border: none;
+        }
     }
     .weui-badge {
         height: 16px;
@@ -76,7 +90,9 @@
         }
     }
     .weui-media-box {
-        padding:0 15px;
+        padding:0 15px 0 0;
+        border-bottom: 1px #E5E5E5 solid;
+        margin: 0 0 0 20px;
     }
     .weui-media-box__title {
         color: #888888;
@@ -87,10 +103,14 @@
         .h4 {
             font-size: 18px;
             color: #000000;
-            width: 52%;
+            width: 58%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        .small {
+            max-width: 40%;
+            overflow: hidden;
         }
     }
     .weui-media-box__desc {

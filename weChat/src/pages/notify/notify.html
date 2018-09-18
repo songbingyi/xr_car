@@ -23,10 +23,11 @@
                     <div class="between-space"></div>
                     <div *ngFor="let item of personal.lists; let index = index">
                         <div class="weui-panel" [routerLink]="['/notifyDetail', item.member_message_id, 'personal']">
+                            <i class="weui-badge" [hidden]="item.is_read === '1'"></i>
                             <div class="weui-panel__bd">
                                 <div class="weui-media-box weui-media-box_text">
                                     <h4 class="weui-media-box__title">
-                                        <span class="left h4">{{item.member_message_title}}<i class="weui-badge" [hidden]="item.is_read === '1'"></i></span>
+                                        <span class="left h4">{{item.member_message_title}}</span>
                                         <span class="right small">{{item.member_message_date_format}}</span>
                                     </h4>
                                     <p class="weui-media-box__desc">{{item.member_message_content}}</p>
@@ -49,17 +50,19 @@
         </tab>
         <tab [active]="activeIndex===1">
             <span *tabHeading class="tab-set-heading">
-                系统消息<q class="weui-badge" *ngIf="memberNotify.new_system_message_count>0">{{memberNotify.new_system_message_count}}</q>
+                <!-- 系统消息<q class="weui-badge" *ngIf="memberNotify.new_system_message_count>0">{{memberNotify.new_system_message_count}}</q> -->
+                系统消息<q class="weui-badge">12</q>
             </span>
             <div class="scroll-page">
                 <div *ngIf="system.isLoaded && system.lists.length">
                     <div class="between-space"></div>
                     <div *ngFor="let item of system.lists; let index = index">
                         <div class="weui-panel" [routerLink]="['/notifyDetail', item.system_message_id, 'system']">
+                            <i class="weui-badge" [hidden]="item.is_read === '1'"></i>
                             <div class="weui-panel__bd">
                                 <div class="weui-media-box weui-media-box_text">
                                     <h4 class="weui-media-box__title">
-                                        <span class="left h4">{{item.system_message_title}}<i class="weui-badge" [hidden]="item.is_read === '1'"></i></span>
+                                        <span class="left h4">{{item.system_message_title}}</span>
                                         <span class="right small">{{item.system_message_date_format}}</span>
                                     </h4>
                                     <p class="weui-media-box__desc">{{item.system_message_content}}</p>
@@ -81,6 +84,7 @@
             </div>
         </tab>
     </tabset>
+    <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius">编辑</a>
 </div>
 <!--<div class="scroll-page">
     <div class="notify">
