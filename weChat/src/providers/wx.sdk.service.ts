@@ -70,8 +70,8 @@ export class WXSDKService {
                 })
                 .subscribe((response) => {
                     let wxConfig : any = response.data.signPackage;
-                    // console.log(response);
-                    // console.log(wxConfig);
+                    console.log('response',response);
+                    console.log('wxConfig',wxConfig);
                     wxConfig.jsApiList = [
                         // 所有要调用的 API 都要加到这个列表中
                         'chooseImage',

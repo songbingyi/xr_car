@@ -5,6 +5,7 @@ import { LocalStorage } from '../../providers/localStorage';
 import { AuthService } from '../../providers/auth.service';
 import { RefreshMemberInfoService } from '../../providers/refresh.member.info.service';
 import { ElementRef} from '@angular/core';
+import { WXSDKService } from '../../providers/wx.sdk.service';
 
 @Component({
   selector: 'app-buy-index',
@@ -38,7 +39,8 @@ export class BuyIndexComponent implements OnInit {
   wechatClientConfig: any;
   role_ids: any = [];
 
-  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService, private el: ElementRef ) {
+  constructor(private router: Router, private baseService: BaseProvider, private localStorage: LocalStorage, private authService: AuthService, private refreshMemberInfoService: RefreshMemberInfoService, private el: ElementRef, private wxService: WXSDKService) {
+    this.wxService.init()
     this.getWechatClientConfig()
     this.getMemberDetail()
   }

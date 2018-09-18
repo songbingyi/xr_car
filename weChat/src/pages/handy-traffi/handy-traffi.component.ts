@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Rx';
 import { MessageService } from '../../providers/messageService';
 import { PickerService } from 'ngx-weui/picker';
 import { IdentityAuthService } from '../../providers/identityAuth.service';
+import { WXSDKService } from '../../providers/wx.sdk.service';
 
 @Component({
   selector: 'app-handy-traffi',
@@ -38,7 +39,8 @@ export class HandyTraffiComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
 
-  constructor(private baseProvider: BaseProvider, private router: Router, private localStorage: LocalStorage, private message: MessageService,private identityAuthService: IdentityAuthService) {
+  constructor(private baseProvider: BaseProvider, private router: Router, private localStorage: LocalStorage, private message: MessageService,private identityAuthService: IdentityAuthService, private wxService: WXSDKService,) {
+    this.wxService.init()
     this.message.getMessage().subscribe(msg => {
       if (msg.type === 'refresh') {
         this.refresh();
