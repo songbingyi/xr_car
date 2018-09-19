@@ -5,6 +5,10 @@
         "error_desc": ""
     },
     "data"  : {
-        "" : ""
+        "message_dashboard_info" : {
+            "new_message_count": "20",
+            "new_member_message_count": "20",
+            "new_system_message_count": "8"
+        }
     }
 }

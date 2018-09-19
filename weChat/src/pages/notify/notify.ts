@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IdentityAuthService} from '../../providers/identityAuth.service';
-import {BaseProvider} from '../../providers/http/base.http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IdentityAuthService } from '../../providers/identityAuth.service';
+import { BaseProvider } from '../../providers/http/base.http';
+
+import { InfiniteLoaderComponent } from 'ngx-weui/infiniteloader';
 
 @Component({
     selector: 'app-notify',
@@ -9,14 +11,17 @@ import {BaseProvider} from '../../providers/http/base.http';
     styleUrls: ['./notify.scss']
 })
 export class NotifyComponent implements OnInit {
+    @ViewChild(InfiniteLoaderComponent) il;
+    comp: InfiniteLoaderComponent;
 
     isLoaded: boolean;
+    /**@name当前tab的列表内容 */
     key: string;
     errorMessage: any;
-    activeIndex = 0;
+
     notify_dashboard_info: any;
     subscribe: any;
-    memberNotify: any ={};
+    memberNotify: any = {};
 
     personal: any = {
         pagination: {
@@ -39,10 +44,7 @@ export class NotifyComponent implements OnInit {
         'personal': 'order_total_count',
         'system': 'order_obligation_count'
     };
-    paths: any = {
-        'personal': 'getMemberMessageList',
-        'system': 'getSystemMessageList'
-    };
+
     oPaths: any = {
         'personal': 'operatorMemberMessage',
         'system': 'operatorSystemMessage'
@@ -54,34 +56,127 @@ export class NotifyComponent implements OnInit {
     objName: any = ['个人消息', '系统消息'];
     objKey: any = ['personal', 'system'];
 
-    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider) {
-        this.identityAuthService.check();
-        this.getMemberDashboard();
+    /**@name 被选中的tab编号 */
+    currentTabId: string = '0';
+    /**@name 页数 */
+    pagination: any;
+    /**@name 进入页面默认的tabid */
+    defaultTabId: Number = 0;
+    /**@name 数据载入完成 */
+    isloaded:boolean = false
+    /**@name 消息内容列表 */
+    messageList: any[];
+    /**@name 请求listAPI的路径 */
+    paths: any = [
+        'getMemberMessageList',
+        'getSystemMessageList'
+    ];
+    /**@name 接口返回list的数组名称 */
+    listDataName: any = [
+        'member_message_list',
+        'system_message_list'
+    ];
+    /**@name badge数字 */
+    dashboardInfo:{};
+
+    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider, ) {
+        // this.identityAuthService.check();
+        // this.getMemberDashboard();
     }
+    //下拉刷新功能
+    // onRefresh(ptr: PTRComponent) {
+    //     setTimeout(() => {
+    //         console.log('刷新')
+    //         ptr.setFinished();
+    //     }, 500);
+
+    //   }
 
     ngOnInit() {
         this.subscribe = this.route.params.subscribe(params => {
-            let activeIndex: string = params.category;
-            let page: string = params.page;
-            this.activeIndex = parseInt(activeIndex, 10);
+            this.defaultTabId = params.category;//由路由确定默认进来是个人还是系统
+            console.log('this.activeTabId', this.defaultTabId)
+            // this.activeIndex = parseInt(activeIndex, 10);
             //this.order_type = this.activeIndex;
-            this.key = this.objKey[this.activeIndex];
-            this[this.key].pagination.page = parseInt(page, 10);
-
-            this.getInitData();
-
+            // this.key = this.objKey[this.activeIndex];
+            // this[this.key].pagination.page = parseInt(page, 10);
+            console.log('this[this.key]', this[this.key])
+            this.getInitData(this.defaultTabId);
         });
     }
 
-    getMemberDashboard(){
+    /**@name 选择个人消息或者系统消息 */
+    selectedTab(item) {
+        this.currentTabId = item;
+        console.log('被选中的tab编号:', this.currentTabId)
+        this.onSelectChanged()
+    }
+
+    /**@name 获取badge数字 */
+    getMessageDashboard(){
+        this.baseService.mockGet('getMemberMessageDashboard',{}).subscribe(d => {
+            if (d.status.succeed === '1') {
+              this.dashboardInfo = d.data.message_dashboard_info
+              console.log(d.data)
+
+            } else {
+                this.errorMessage = d.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
+    }
+
+    /**@name 首次进入页面获取消息list
+     * @name 获取个人还是系统 0：个人；1：系统
+     */
+    getInitData(id) {
+        this.baseService.mockGet(this.paths[id], {
+            'pagination': '1',//进入页面默认载入第一页
+            'message_status': '9'//全部（已读未读一起获取）
+        }).subscribe(lists => {
+
+            if (lists.status.succeed === '1') {
+                this.messageList = lists.data[this.listDataName[id]]
+                console.log('this.messageList',this.messageList)
+
+            } else {
+                this.errorMessage = lists.status.error_desc;
+            }
+            this.isloaded == true
+        }, error => this.errorMessage = <any>error);
+    }
+
+    onSelectChanged() {
+        // let selectedCarSeries = this.selectedCarSeries ;
+        // let selectedCarType = this.selectedCarType;
+        this.pagination = {
+            page: 1,
+            count: 10
+        };
+        // this.products = [];
+        // this.isLoaded = false;
+        // this.isLoading = true;
+        this.il.restart();
+        // this.loadProducts();
+        console.log('onSelectChanged')
+        /*if(selectedCarSeries && selectedCarType){
+            this.pagination = {
+                page : 1,
+                count: 10
+            };
+            this.products = [];
+            this.loadProducts();
+        }*/
+    }
+
+    getMemberDashboard() {
         this.baseService.post('getMemberDashboard', {})
             .subscribe(member => {
-                    if (member.status.succeed === '1') {
-                        this.memberNotify = member.data.message_dashboard_info || {};
-                    } else {
-                        this.errorMessage = member.status.error_desc;
-                    }
-                },
+                if (member.status.succeed === '1') {
+                    this.memberNotify = member.data.message_dashboard_info || {};
+                } else {
+                    this.errorMessage = member.status.error_desc;
+                }
+            },
                 error => this.errorMessage = <any>error
             );
     }
@@ -90,44 +185,27 @@ export class NotifyComponent implements OnInit {
         return this.notify_dashboard_info && this.notify_dashboard_info[key] !== '0' && this.notify_dashboard_info[key] !== 0;
     }
 
-    onTabSelect(event) {
+    // onTabSelect(event) {
 
-        //console.log(event);
-        //this.order_type = event;
-        this.key = this.objKey[event];
-        // this[this.key].pagination.page ++;
-        //this.getInitData();
-        this.activeIndex = event;
-        this.router.navigate(['/notify', event, this[this.key].pagination.page], {queryParams: {}});
-        // this.getInitData();
-    }
+    //     //console.log(event);
+    //     //this.order_type = event;
+    //     this.key = this.objKey[event];
+    //     // this[this.key].pagination.page ++;
+    //     //this.getInitData();
+    //     this.activeIndex = event;
+    //     this.router.navigate(['/notify', event, this[this.key].pagination.page], { queryParams: {} });
+    //     // this.getInitData();
+    // }
+    /**@name 获取消息列表 */
 
-    getInitData() {
-        this[this.key].isLoaded = false;
-        let path = this.paths[this.key];
-        this.baseService.mockGet(path, {
-            'pagination': this[this.key].pagination,
-            'message_status': '9'
-        }).subscribe(lists => {
-            if (lists.status.succeed === '1') {
-                let paginated = lists.paginated;
-                this[this.key].isLoaded = true;
-                this[this.key].lists = lists.data[this.data[this.key]];
-                //this.car_product_order_dashboard_info[this.maps[this.key]] = this[this.key].lists.length;
-                this[this.key].pagination.total = Math.ceil((paginated.total - 0) / paginated.count);
-            } else {
-                this.errorMessage = lists.status.error_desc;
-            }
-        }, error => this.errorMessage = <any>error);
-    }
 
-    change($event, type) {
-        this.key = this.objKey[type];
-        this[this.key].pagination.page = $event;
-        // this.getInitData();
-        this.router.navigate(['/notify', this.activeIndex, $event], {queryParams: {}});
-        // this.getInitData();
-    }
+    // change($event, type) {
+    //     this.key = this.objKey[type];
+    //     this[this.key].pagination.page = $event;
+    //     // this.getInitData();
+    //     this.router.navigate(['/notify', this.activeIndex, $event], { queryParams: {} });
+    //     // this.getInitData();
+    // }
 
     isShouldShowMarkedAsRead(category) {
         let lists = this[category].lists || [];
@@ -176,7 +254,7 @@ export class NotifyComponent implements OnInit {
                         'member_message_id': item.member_message_id,
                         'member_message_title': item.member_message_title
                     });
-                }else{
+                } else {
                     results.push({
                         'system_message_id': item.system_message_id,
                         'system_message_title': item.system_message_title
@@ -199,6 +277,22 @@ export class NotifyComponent implements OnInit {
     ngOnDestroy() {
         this.subscribe.unsubscribe();
         //this.roleSubscribe.unsubscribe();
+    }
+    onLoadMore(comp: InfiniteLoaderComponent) {
+        console.log('this.isLoading')
+        // console.log("this.isLoading:" + this.isLoading);
+        // if (this.isLoading) {
+        //     return;
+        // }
+        // this.isLoading = true;
+        // this.pagination.page++;
+        // this.comp = comp;
+        // this.loadProducts(() => {
+        //     comp.setFinished();
+        // }, () => {
+        //     comp.resolveLoading();
+        // });
+
     }
 
 }

@@ -1,232 +1,49 @@
-<div class="notify">
-    <tabset (onSelect)="onTabSelect($event)">
-        <tab [active]="activeIndex===0">
-            <span *tabHeading class="tab-set-heading">
-                <!-- 个人消息<q class="weui-badge" *ngIf="memberNotify.new_member_message_count>0">{{memberNotify.new_member_message_count}}</q> -->
-                个人消息<q class="weui-badge">2</q>
-            </span>
-            <div class="scroll-page">
-
-                <!--<div class="weui-panel" [routerLink]="['/notifyCat', 1]">
-                    <div class="weui-panel__bd">
-                        <div class="weui-media-box weui-media-box_text">
-                            <h4 class="weui-media-box__title">
-                                <span class="left h4">状态变更提醒<i class="weui-badge"></i></span>
-                                <span class="right small">今天10:00</span>
-                            </h4>
-                            <p class="weui-media-box__desc">您有一笔代付款订单！</p>
-                        </div>
-                    </div>
-                </div>-->
-
-                <div *ngIf="personal.isLoaded && personal.lists.length">
-                    <div class="between-space"></div>
-                    <div *ngFor="let item of personal.lists; let index = index">
-                        <div class="weui-panel" [routerLink]="['/notifyDetail', item.member_message_id, 'personal']">
-                            <i class="weui-badge" [hidden]="item.is_read === '1'"></i>
-                            <div class="weui-panel__bd">
-                                <div class="weui-media-box weui-media-box_text">
-                                    <h4 class="weui-media-box__title">
-                                        <span class="left h4">{{item.member_message_title}}</span>
-                                        <span class="right small">{{item.member_message_date_format}}</span>
-                                    </h4>
-                                    <p class="weui-media-box__desc">{{item.member_message_content}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="empty-container" *ngIf="personal.isLoaded && personal.lists.length===0">
-                    <div class="empty">
-                        <img src="/assets/images/empty.png"/>
-                        <p>没有消息通知</p>
-                    </div>
-                </div>
-
-                <weui-pagination [nextText]="'下一页'" [current]="personal.pagination.page" [total]="personal.pagination.total" (change)="change($event, 0)" *ngIf="personal.isLoaded && personal.lists.length"></weui-pagination>
-
-            </div>
-        </tab>
-        <tab [active]="activeIndex===1">
-            <span *tabHeading class="tab-set-heading">
-                <!-- 系统消息<q class="weui-badge" *ngIf="memberNotify.new_system_message_count>0">{{memberNotify.new_system_message_count}}</q> -->
-                系统消息<q class="weui-badge">12</q>
-            </span>
-            <div class="scroll-page">
-                <div *ngIf="system.isLoaded && system.lists.length">
-                    <div class="between-space"></div>
-                    <div *ngFor="let item of system.lists; let index = index">
-                        <div class="weui-panel" [routerLink]="['/notifyDetail', item.system_message_id, 'system']">
-                            <i class="weui-badge" [hidden]="item.is_read === '1'"></i>
-                            <div class="weui-panel__bd">
-                                <div class="weui-media-box weui-media-box_text">
-                                    <h4 class="weui-media-box__title">
-                                        <span class="left h4">{{item.system_message_title}}</span>
-                                        <span class="right small">{{item.system_message_date_format}}</span>
-                                    </h4>
-                                    <p class="weui-media-box__desc">{{item.system_message_content}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="empty-container" *ngIf="system.isLoaded && system.lists.length===0">
-                    <div class="empty">
-                        <img src="/assets/images/empty.png"/>
-                        <p>没有消息通知</p>
-                    </div>
-                </div>
-
-                <weui-pagination [nextText]="'下一页'" [current]="system.pagination.page" [total]="system.pagination.total" (change)="change($event, 1)" *ngIf="system.isLoaded && system.lists.length"></weui-pagination>
-
-            </div>
-        </tab>
-    </tabset>
-    <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius">编辑</a>
-</div>
-<!--<div class="scroll-page">
+<div class="notify-page">
+    <!-- 顶部切换按钮 -->
+    <div class="weui-flex">
+        <div class="weui-flex__item" (click)="selectedTab('0')">
+            <div class="placeholder" [class.active]="currentTabId == '0'">个人消息<q class="weui-badge">2</q></div>
+        </div>
+        <div class="weui-flex__item" (click)="selectedTab('1')">
+            <div class="placeholder" [class.active]="currentTabId == '1'">系统消息<q class="weui-badge">12</q></div>
+        </div>
+    </div>
+    <div class="between-space"></div>
+    <!-- 滚动部分内容 -->
     <div class="notify">
-        <div class="weui-panel" [routerLink]="['/notifyCat', 1]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">状态变更提醒</span>
-                        <span class="right small">今天10:00</span>
-                    </h4>
-                    <p class="weui-media-box__desc">您有一笔代付款订单！</p>
-                    <span class="weui-badge">8</span>
+        <div class="scroll-page">
+            <div *ngIf="isloaded == true && messageList.length" class='content-list'>
+                <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
+                    <!-- <weui-ptr (refresh)="onRefresh($event)"> -->
+
+                        <div *ngFor="let item of messageList; let index = index">
+                            <div class="weui-panel">
+                                <!-- <div class="weui-panel" [routerLink]="['/notifyDetail', item.member_message_id, 'personal']"> -->
+                                <i class="weui-badge" [hidden]="item.is_read === '1'"></i>
+                                <div class="weui-panel__bd">
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <h4 class="weui-media-box__title">
+                                            <span class="left h4">{{item.member_message_title}}</span>
+                                            <span class="right small">{{item.member_message_date_format}}</span>
+                                        </h4>
+                                        <p class="weui-media-box__desc">{{item.member_message_content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </weui-ptr> -->
+                </weui-infiniteloader>
+            </div>
+
+            <!-- <div class="empty-container" *ngIf="personal.isLoaded && personal.lists.length===0"> -->
+                <div class="empty-container" *ngIf="messageList.length == 0">
+                <div class="empty">
+                    <img src="/assets/images/empty.png" />
+                    <p>没有消息通知</p>
                 </div>
             </div>
+            <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius">编辑</a>
         </div>
 
-        <div class="weui-panel" [routerLink]="['/notifyCat', 2]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">审验时间提醒</span>
-                        <span class="right small">2017.10.15  21：45</span>
-                    </h4>
-                    <p class="weui-media-box__desc">您有一笔订单24小时后审验！</p>
-                    <span class="weui-badge">88</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="weui-panel" [routerLink]="['/notifyCat', 3]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">系统消息</span>
-                        <span class="right small">2017.10.15  21：45</span>
-                    </h4>
-                    <p class="weui-media-box__desc">有新的活动，快来参加吧~</p>
-                    <span class="weui-badge">888</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="weui-panel" [routerLink]="['/notifyCat', 1]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">状态变更提醒</span>
-                        <span class="right small"></span>
-                    </h4>
-                    <p class="weui-media-box__desc">暂无消息</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="weui-panel" [routerLink]="['/notifyCat', 2]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">审验时间提醒</span>
-                        <span class="right small"></span>
-                    </h4>
-                    <p class="weui-media-box__desc">暂无消息</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="weui-panel" [routerLink]="['/notifyCat', 3]">
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">
-                        <span class="left h4">系统消息</span>
-                        <span class="right small"></span>
-                    </h4>
-                    <p class="weui-media-box__desc">暂无消息</p>
-                </div>
-            </div>
-        </div>
-        &lt;!&ndash;<div class="weui-cell-special">
-            <div class="weui-cells__title">2017.10.15  21：45</div>
-            <div class="weui-cells">
-                <div class="weui-cell special-cell">
-                    <div class="weui-cell__bd">
-                        <p>状态变更提醒</p>
-                    </div>
-                    <div class="weui-cell__ft"><span></span></div>
-                </div>
-                <div class="weui-cell with-margin-top">
-                    <div class="weui-cell__bd">
-                        <p>订单编号：2354123141444</p>
-                    </div>
-                </div>
-                <div class="weui-cell no-border">
-                    <div class="weui-cell__bd">
-                        <p>下单时间：2017.10.15 12:34</p>
-                    </div>
-                </div>
-                <div class="weui-cell no-border">
-                    <div class="weui-cell__bd">
-                        <p>业务类型：驾照服务</p>
-                    </div>
-                </div>
-                <div class="weui-cell cell-operation">
-                    <div class="weui-cell__bd">
-                        <span>状态 :<strong class="text-warning">审核已通过</strong></span>
-                    </div>
-                </div>
-            </div>
-            <div class="weui-cells__title">2017.10.15  21：45</div>
-            <div class="weui-cells">
-                <div class="weui-cell special-cell">
-                    <div class="weui-cell__bd">
-                        <p>状态变更提醒</p>
-                    </div>
-                    <div class="weui-cell__ft"><span></span></div>
-                </div>
-                <div class="weui-cell with-margin-top">
-                    <div class="weui-cell__bd">
-                        <p>订单编号：2354123141444</p>
-                    </div>
-                </div>
-                <div class="weui-cell no-border">
-                    <div class="weui-cell__bd">
-                        <p>下单时间：2017.10.15 12:34</p>
-                    </div>
-                </div>
-                <div class="weui-cell no-border">
-                    <div class="weui-cell__bd">
-                        <p>业务类型：驾照服务</p>
-                    </div>
-                </div>
-                <div class="weui-cell cell-operation">
-                    <div class="weui-cell__bd">
-                        <span>审验时间：<strong class="text-warning">2017.10.18</strong></span>
-                    </div>
-                </div>
-            </div>
-        </div>&ndash;&gt;
     </div>
-    <div class="empty-container" *ngIf="isLoaded && notices.length===0">
-        <div class="empty">
-            <img src="/assets/images/empty.png" />
-            <p>没有消息通知</p>
-        </div>
-    </div>
-</div>-->
+</div>

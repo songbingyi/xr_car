@@ -36,9 +36,9 @@ let apiBase : IDictionary<string> = {
     'addCompany'                : 'company/company/addCompany',
     'getServiceProductSpecType' : 'base/service_product_spec_type/getServiceProductSpecType',
     'operatorServiceOrder'      : 'service_order/service_order/operatorServiceOrder',
-    /*'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',
-    'getMemberMessageList'      : 'message/member_message/getMemberMessageList',
-    'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail',
+    /*'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',//36
+    'getMemberMessageList'      : 'message/member_message/getMemberMessageList', //37
+    'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail', //38
     'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',*/
     'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity',
     'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
@@ -65,10 +65,10 @@ let apiBase : IDictionary<string> = {
     'getWechatClientConfig'   : 'base/client_config/getWechatClientConfig',
     'getMemberMessageList'    : 'message/member_message/getMemberMessageList',
     'getMemberMessageDetail'  : 'message/member_message/getMemberMessageDetail',
-    'getSystemMessageList'    : 'message/system_message/getSystemMessageList',
-    'getSystemMessageDetail'  : 'message/system_message/getSystemMessageDetail',
-    'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage',
-    'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage',
+    'getSystemMessageList'    : 'message/system_message/getSystemMessageList', //64
+    'getSystemMessageDetail'  : 'message/system_message/getSystemMessageDetail', //65
+    'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage', //66
+    'operatorSystemMessage'   : 'message/system_message/operatorSystemMessage', //67
     'getSalesYearTypeList'    : 'base/sales_year_type/getSalesYearTypeList',
     'getCarBrandList'         : 'base/car_brand/getCarBrandList',
     'getMemberAgencyInfo'     : 'member/member_agency/getMemberAgencyInfo',
