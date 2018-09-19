@@ -65,7 +65,7 @@ export class NotifyComponent implements OnInit {
     /**@name 数据载入完成 */
     isloaded:boolean = false
     /**@name 消息内容列表 */
-    messageList: any[];
+    messageList: any[] = [];
     /**@name 请求listAPI的路径 */
     paths: any = [
         'getMemberMessageList',
@@ -103,13 +103,17 @@ export class NotifyComponent implements OnInit {
             console.log('this[this.key]', this[this.key])
             this.getInitData(this.defaultTabId);
         });
+        this.getMessageDashboard()
     }
 
     /**@name 选择个人消息或者系统消息 */
     selectedTab(item) {
         this.currentTabId = item;
         console.log('被选中的tab编号:', this.currentTabId)
-        this.onSelectChanged()
+        // this.onSelectChanged()
+        this.il.restart()
+        console.log(this.il.restart)
+        this.getInitData(this.currentTabId);
     }
 
     /**@name 获取badge数字 */
@@ -117,8 +121,6 @@ export class NotifyComponent implements OnInit {
         this.baseService.mockGet('getMemberMessageDashboard',{}).subscribe(d => {
             if (d.status.succeed === '1') {
               this.dashboardInfo = d.data.message_dashboard_info
-              console.log(d.data)
-
             } else {
                 this.errorMessage = d.status.error_desc;
             }
@@ -129,6 +131,7 @@ export class NotifyComponent implements OnInit {
      * @name 获取个人还是系统 0：个人；1：系统
      */
     getInitData(id) {
+        this.isloaded = false
         this.baseService.mockGet(this.paths[id], {
             'pagination': '1',//进入页面默认载入第一页
             'message_status': '9'//全部（已读未读一起获取）
@@ -141,7 +144,8 @@ export class NotifyComponent implements OnInit {
             } else {
                 this.errorMessage = lists.status.error_desc;
             }
-            this.isloaded == true
+            this.isloaded = true
+            this.il.restart()
         }, error => this.errorMessage = <any>error);
     }
 
@@ -158,14 +162,6 @@ export class NotifyComponent implements OnInit {
         this.il.restart();
         // this.loadProducts();
         console.log('onSelectChanged')
-        /*if(selectedCarSeries && selectedCarType){
-            this.pagination = {
-                page : 1,
-                count: 10
-            };
-            this.products = [];
-            this.loadProducts();
-        }*/
     }
 
     getMemberDashboard() {

@@ -1,13 +1,13 @@
 {
     "status": {
-        "succeed"   : 1,
+        "succeed"   : "1",
         "error_code": "",
         "error_desc": ""
     },
     "data"  : {
         "message_dashboard_info" : {
             "new_message_count": "20",
-            "new_member_message_count": "20",
+            "new_member_message_count": "0",
             "new_system_message_count": "8"
         }
     }
