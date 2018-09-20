@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityAuthService } from '../../providers/identityAuth.service';
 import { BaseProvider } from '../../providers/http/base.http';
@@ -88,15 +88,14 @@ export class NotifyComponent implements OnInit {
     dashboardInfo:any= {}
     /**@name 滚动加载更多的配置项 */
     config: any = <any>{
-        percent: 90,
+        percent: 80,
         height: '85vh'
     }
     /**@name 编辑按钮是否隐藏 */
     hiddenEdit: boolean;
 
-    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider) {
+    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider, ) {
         // this.identityAuthService.check();
-        // this.getMemberDashboard();
     }
     // 下拉刷新功能
     // onRefresh(ptr: PTRComponent) {
@@ -116,11 +115,6 @@ export class NotifyComponent implements OnInit {
         this.subscribe = this.route.params.subscribe(params => {
             this.defaultTabId = params.category;//由路由确定默认进来是个人还是系统
             console.log('this.activeTabId', this.defaultTabId)
-            // this.activeIndex = parseInt(activeIndex, 10);
-            //this.order_type = this.activeIndex;
-            // this.key = this.objKey[this.activeIndex];
-            // this[this.key].pagination.page = parseInt(page, 10);
-            // this.getInitData(1);
             this.getInitData(this.defaultTabId);
         });
         this.getMessageDashboard()
@@ -129,11 +123,14 @@ export class NotifyComponent implements OnInit {
 
     /**@name 选择个人消息或者系统消息 */
     selectedTab(item) {
+        if(this.isLoading){
+            console.log('selected过于频繁，isloading:',this.isLoading)
+            return
+        }
         this.currentTabId = item;
 
         console.log('被选中的tab编号:', this.currentTabId)
         this.refresh()
-        // this.il.restart()
         this.getInitData(this.currentTabId);
         this.getMessageDashboard()
         // alert(item)
@@ -146,11 +143,10 @@ export class NotifyComponent implements OnInit {
         };
         this.messageList= [];
         this.isLoaded = true;
-        this.isLoading = false;
-        console.log('this.il.restart',this.il.restart)
+
         setTimeout(() => {
             this.il.restart();
-        }, 200);
+        }, 300);
         console.log('refresh')
     }
 
@@ -204,7 +200,10 @@ export class NotifyComponent implements OnInit {
 
         }, error => this.errorMessage = <any>error);
     }
+    /**@name 点击编辑按钮 */
+    clickEditBtn() {
 
+    }
     // onSelectChanged() {
     //     // let selectedCarSeries = this.selectedCarSeries ;
     //     // let selectedCarType = this.selectedCarType;
@@ -338,7 +337,6 @@ export class NotifyComponent implements OnInit {
         if (this.isLoading) {
             return;
         }
-        this.isLoading = true;
         this.pagination.page++;
         this.comp = comp;
         //参数1：当前tabid
