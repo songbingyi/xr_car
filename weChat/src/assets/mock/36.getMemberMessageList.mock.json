@@ -72,8 +72,8 @@
         ]
     },
     "paginated" : {
-        "total":"50",
-        "count":"10",
-        "more":"1"
+        "total":"10",
+        "count":"1",
+        "more":"0"
     }
 }

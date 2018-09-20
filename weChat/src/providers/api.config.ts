@@ -36,10 +36,10 @@ let apiBase : IDictionary<string> = {
     'addCompany'                : 'company/company/addCompany',
     'getServiceProductSpecType' : 'base/service_product_spec_type/getServiceProductSpecType',
     'operatorServiceOrder'      : 'service_order/service_order/operatorServiceOrder',
-    /*'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',//36
-    'getMemberMessageList'      : 'message/member_message/getMemberMessageList', //37
+    'getMemberMessageDashboard' : 'message/member_message/getMemberMessageDashboard',//36
+   'getMemberMessageList'      : 'message/member_message/getMemberMessageList', //37
     'getMemberMessageDetail'    : 'message/member_message/getMemberMessageDetail', //38
-    'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',*/
+    /* 'getMemberMessageTypeList'  : 'message/message_type/getMemberMessageTypeList',*/
     'checkRegionIsOtherCity'    : 'base/region/checkRegionIsOtherCity',
     'addWorkSheet'              : 'rescue/work_sheet/addWorkSheet',
     'getWorkSheetDetail'        : 'rescue/work_sheet/getWorkSheetDetail',
@@ -63,8 +63,8 @@ let apiBase : IDictionary<string> = {
     "getInstitutionDealerListByCarProductOrder" : 'institution_dealer/institution_dealer/getInstitutionDealerListByCarProductOrder',
     'getSalesMemberDashboard' : 'member/sales_member/getSalesMemberDashboard',
     'getWechatClientConfig'   : 'base/client_config/getWechatClientConfig',
-    'getMemberMessageList'    : 'message/member_message/getMemberMessageList',
-    'getMemberMessageDetail'  : 'message/member_message/getMemberMessageDetail',
+    // 'getMemberMessageList'    : 'message/member_message/getMemberMessageList',
+    // 'getMemberMessageDetail'  : 'message/member_message/getMemberMessageDetail',
     'getSystemMessageList'    : 'message/system_message/getSystemMessageList', //64
     'getSystemMessageDetail'  : 'message/system_message/getSystemMessageDetail', //65
     'operatorMemberMessage'   : 'message/member_message/operatorMemberMessage', //66

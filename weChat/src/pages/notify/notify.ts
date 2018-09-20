@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityAuthService } from '../../providers/identityAuth.service';
 import { BaseProvider } from '../../providers/http/base.http';
 
-import { InfiniteLoaderComponent } from 'ngx-weui/infiniteloader';
+import { InfiniteLoaderComponent, InfiniteLoaderConfig } from 'ngx-weui/infiniteloader';
+// import { PTRComponent } from 'ngx-weui';
 
 @Component({
     selector: 'app-notify',
@@ -14,9 +15,7 @@ export class NotifyComponent implements OnInit {
     @ViewChild(InfiniteLoaderComponent) il;
     comp: InfiniteLoaderComponent;
 
-    isLoaded: boolean;
-    /**@name当前tab的列表内容 */
-    key: string;
+
     errorMessage: any;
 
     notify_dashboard_info: any;
@@ -56,14 +55,23 @@ export class NotifyComponent implements OnInit {
     objName: any = ['个人消息', '系统消息'];
     objKey: any = ['personal', 'system'];
 
+    /**@name 读取是否完成 */
+    isLoaded: boolean;
+    /**@name 是否读取中 */
+    isLoading: boolean = false
+    /**@name当前tab的列表内容 */
+    key: string;
     /**@name 被选中的tab编号 */
     currentTabId: string = '0';
-    /**@name 页数 */
-    pagination: any;
+    /**@name 分页和每页数量 */
+    pagination = {
+        page: 1,
+        count: 10
+    };
     /**@name 进入页面默认的tabid */
     defaultTabId: Number = 0;
     /**@name 数据载入完成 */
-    isloaded:boolean = false
+    isloaded: boolean = false
     /**@name 消息内容列表 */
     messageList: any[] = [];
     /**@name 请求listAPI的路径 */
@@ -77,16 +85,28 @@ export class NotifyComponent implements OnInit {
         'system_message_list'
     ];
     /**@name badge数字 */
-    dashboardInfo:{};
+    dashboardInfo:any= {}
+    /**@name 滚动加载更多的配置项 */
+    config: any = <any>{
+        percent: 90,
+        height: '85vh'
+    }
+    /**@name 编辑按钮是否隐藏 */
+    hiddenEdit: boolean;
 
-    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider, ) {
+    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider) {
         // this.identityAuthService.check();
         // this.getMemberDashboard();
     }
-    //下拉刷新功能
+    // 下拉刷新功能
     // onRefresh(ptr: PTRComponent) {
     //     setTimeout(() => {
     //         console.log('刷新')
+    //         this.refresh()
+   
+    //         this.getInitData(this.currentTabId);
+    //         this.getMessageDashboard()
+    //         // this.il.restart()
     //         ptr.setFinished();
     //     }, 500);
 
@@ -100,27 +120,47 @@ export class NotifyComponent implements OnInit {
             //this.order_type = this.activeIndex;
             // this.key = this.objKey[this.activeIndex];
             // this[this.key].pagination.page = parseInt(page, 10);
-            console.log('this[this.key]', this[this.key])
+            // this.getInitData(1);
             this.getInitData(this.defaultTabId);
         });
         this.getMessageDashboard()
+        
     }
 
     /**@name 选择个人消息或者系统消息 */
     selectedTab(item) {
         this.currentTabId = item;
+
         console.log('被选中的tab编号:', this.currentTabId)
-        // this.onSelectChanged()
-        this.il.restart()
-        console.log(this.il.restart)
+        this.refresh()
+        // this.il.restart()
         this.getInitData(this.currentTabId);
+        this.getMessageDashboard()
+        // alert(item)
+    }
+    /**@name 页数归零，消息列表刷新，*/
+    refresh() {
+        this.pagination = {
+            page: 1,
+            count: 10
+        };
+        this.messageList= [];
+        this.isLoaded = true;
+        this.isLoading = false;
+        console.log('this.il.restart',this.il.restart)
+        setTimeout(() => {
+            this.il.restart();
+        }, 200);
+        console.log('refresh')
     }
 
     /**@name 获取badge数字 */
-    getMessageDashboard(){
-        this.baseService.mockGet('getMemberMessageDashboard',{}).subscribe(d => {
-            if (d.status.succeed === '1') {
-              this.dashboardInfo = d.data.message_dashboard_info
+    getMessageDashboard() {
+        this.baseService.post('getMemberMessageDashboard', {}).subscribe(d => {
+            if (d.status.succeed == '1') {
+                // this.dashboardInfo = d.data.message_dashboard_info
+                this.dashboardInfo = d.data.message_dashboard_info || {};
+                  console.log('getMemberMessageDashboard',this.dashboardInfo)
             } else {
                 this.errorMessage = d.status.error_desc;
             }
@@ -130,52 +170,69 @@ export class NotifyComponent implements OnInit {
     /**@name 首次进入页面获取消息list
      * @name 获取个人还是系统 0：个人；1：系统
      */
-    getInitData(id) {
+    getInitData(id,callbackDone?, callbackOnce?) {
         this.isloaded = false
-        this.baseService.mockGet(this.paths[id], {
-            'pagination': '1',//进入页面默认载入第一页
-            'message_status': '9'//全部（已读未读一起获取）
-        }).subscribe(lists => {
+        let info = {
+            pagination:this.pagination,
+            message_status:'9'
+        }
+        console.log('请求参数',info)
+        this.baseService.post(this.paths[id], info
+        ).subscribe(lists => {
 
             if (lists.status.succeed === '1') {
-                this.messageList = lists.data[this.listDataName[id]]
-                console.log('this.messageList',this.messageList)
+                this.messageList = this.messageList.concat(lists.data[this.listDataName[id]])
+                console.log('this.messageList', this.messageList)
+                console.log('lists.paginated.more',lists.paginated.more)
+                if(this.messageList.length == 0){
+                    this.hiddenEdit = true;
+                }
+                if ((lists.paginated.more === '0') && !!callbackDone) {
+                    return callbackDone();
+                }
+
+                if (callbackOnce) {
+                    callbackOnce();
+                }
+                this.isloaded = true;
+                this.isLoading = false;
 
             } else {
                 this.errorMessage = lists.status.error_desc;
             }
-            this.isloaded = true
-            this.il.restart()
+    
+
         }, error => this.errorMessage = <any>error);
     }
 
-    onSelectChanged() {
-        // let selectedCarSeries = this.selectedCarSeries ;
-        // let selectedCarType = this.selectedCarType;
-        this.pagination = {
-            page: 1,
-            count: 10
-        };
-        // this.products = [];
-        // this.isLoaded = false;
-        // this.isLoading = true;
-        this.il.restart();
-        // this.loadProducts();
-        console.log('onSelectChanged')
-    }
+    // onSelectChanged() {
+    //     // let selectedCarSeries = this.selectedCarSeries ;
+    //     // let selectedCarType = this.selectedCarType;
+    //     this.pagination = {
+    //         page: 1,
+    //         count: 10
+    //     };
+    //     this. = [];
+    //     // this.isLoaded = false;
+    //     // this.isLoading = true;
+    //     this.il.restart();
+    //     // this.loadProducts();
+    //     console.log('onSelectChanged')
+    // }
 
-    getMemberDashboard() {
-        this.baseService.post('getMemberDashboard', {})
-            .subscribe(member => {
-                if (member.status.succeed === '1') {
-                    this.memberNotify = member.data.message_dashboard_info || {};
-                } else {
-                    this.errorMessage = member.status.error_desc;
-                }
-            },
-                error => this.errorMessage = <any>error
-            );
-    }
+    // getMemberDashboard() {
+    //     this.baseService.post('getMemberMessageDashboard', {})
+    //         .subscribe(member => {
+    //             if (member.status.succeed === '1') {
+    //                 this.memberNotify = member.data.message_dashboard_info || {};
+    //                 console.log('getMemberMessageDashboard',this.memberNotify)
+    //             } else {
+    //                 this.errorMessage = member.status.error_desc;
+    //             }
+    //         },
+    //             error => this.errorMessage = <any>error
+    //         );
+    // }
 
     hasNotify(key, type) {
         return this.notify_dashboard_info && this.notify_dashboard_info[key] !== '0' && this.notify_dashboard_info[key] !== 0;
@@ -274,21 +331,42 @@ export class NotifyComponent implements OnInit {
         this.subscribe.unsubscribe();
         //this.roleSubscribe.unsubscribe();
     }
+    /**@name 加载更多 */
     onLoadMore(comp: InfiniteLoaderComponent) {
-        console.log('this.isLoading')
+        console.log('this.isLoading',this.isLoading)
         // console.log("this.isLoading:" + this.isLoading);
-        // if (this.isLoading) {
-        //     return;
-        // }
-        // this.isLoading = true;
-        // this.pagination.page++;
-        // this.comp = comp;
-        // this.loadProducts(() => {
-        //     comp.setFinished();
-        // }, () => {
-        //     comp.resolveLoading();
-        // });
+        if (this.isLoading) {
+            return;
+        }
+        this.isLoading = true;
+        this.pagination.page++;
+        this.comp = comp;
+        //参数1：当前tabid
+        this.getInitData(this.currentTabId,() => {
+            comp.setFinished();
+        }, () => {
+            comp.resolveLoading();
+        });
+    }
 
+    bindEvent() {
+        let $body = document.querySelector('body');
+        let height = $body.clientHeight || $body.offsetHeight;
+        setTimeout(() => {
+            let content = document.querySelector('.weui-infiniteloader__content');
+            console.log(content);
+            if (content) {
+                content.addEventListener('scroll', (event) => {
+                    let scrollTop = content.scrollTop;
+                    if (scrollTop > height) {
+                        // this.show = true;
+                    } else {
+                        // this.show = false;
+                    }
+                    // console.log(content.scrollTop);
+                });
+            }
+        }, 0)
     }
 
 }

@@ -55,12 +55,14 @@
 
 .classify {
     position: relative;
+    background-color: #fff;
     .weui-flex {
         display: flex;
         justify-content: space-around;
         -webkit-justify-content: space-around;
         padding: 0 1%;
         flex-wrap: wrap;
+        background-color: #fff;
         .weui-flex__item {
             flex: none;
             width: 47%;

@@ -5,7 +5,7 @@
             <div class="placeholder" [class.active]="currentTabId == '0'">个人消息<q class="weui-badge" *ngIf="dashboardInfo?.new_member_message_count >0">{{dashboardInfo?.new_member_message_count}}</q></div>
         </div>
         <div class="weui-flex__item" (click)="selectedTab('1')">
-            <div class="placeholder" [class.active]="currentTabId == '1'">系统消息<q class="weui-badge" *ngIf="dashboardInfo?.new_system_message_count >0">{{dashboardInfo?.new_system_message_count}}</q></div>
+            <div class="placeholder" [class.active]="currentTabId == '1'">系统消息<q class="weui-badge" *ngIf="dashboardInfo?.new_member_system_count >0">{{dashboardInfo?.new_member_system_count}}</q></div>
         </div>
     </div>
     <div class="between-space"></div>
@@ -13,7 +13,7 @@
     <div class="notify">
         <div class="scroll-page">
             <div *ngIf="messageList.length" class='content-list'>
-                <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
+                <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp [config]="config">
                     <!-- <weui-ptr (refresh)="onRefresh($event)"> -->
 
                     <div *ngFor="let item of messageList; let index = index">
@@ -42,7 +42,8 @@
                     <p>没有消息通知</p>
                 </div>
             </div>
-            <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" *ngIf="messageList.length !== 0" >编辑</a>
+            <!-- <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [hidden]="messageList.length == 0" >编辑</a> -->
+            <a class="order-now weui-btn weui-btn_primary full-width-btn with-no-radius" [hidden]="hiddenEdit" >编辑</a>
         </div>
 
     </div>

@@ -9,15 +9,18 @@
         color: #1970A6;
         text-align: center;
     }
+    .left {
+        float: left;
+    }
+    .right {
+        float: right;
+    }
 }
-.weui-flex {
-    line-height: 46px;
 
-    // margin-bottom: 14px;
+.weui-flex {
+    line-height: 46px; // margin-bottom: 14px;
     height: 46px;
     background-color: #FAFAFA;
-
-
     .weui-badge {
         position: absolute;
         quotes: none;
@@ -29,6 +32,11 @@
         vertical-align: baseline;
         line-height: 16px;
     }
+    @media screen and (max-width: 350px) {
+        .weui-badge {
+            right: 12px;
+        }
+    }
     .weui-flex__item {
         text-align: center;
         font-size: 14px;
@@ -37,7 +45,7 @@
         padding: 0 20px;
         .placeholder {
             position: relative;
-            height:46px;
+            height: 46px;
         }
     }
     .active {
@@ -56,14 +64,11 @@
     position: relative;
     height: 100%;
     padding-bottom: 50px;
-    
     .scroll-page {
         background: #EFEFF4;
-
         .content-list {
             height: 100%
         }
-
     }
     .weui-panel {
         background-color: #fff;
@@ -101,7 +106,7 @@
     .weui-media-box__title {
         color: #888888;
         font-size: 14px;
-        line-height: 26px;
+        line-height: 28px;
         padding: 9px 0 4px 0;
         margin-bottom: 0;
         .h4 {
@@ -121,7 +126,7 @@
         font-size: 13px;
         color: #9B9B9B;
         line-height: 20px;
-        padding-bottom: 9px;
+        padding-bottom: 10px;
         display: block;
         -webkit-box-orient: unset;
         white-space: nowrap;
