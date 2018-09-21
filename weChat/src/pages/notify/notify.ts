@@ -84,17 +84,42 @@ export class NotifyComponent implements OnInit {
         'member_message_list',
         'system_message_list'
     ];
+    /**@name 接口返回messageid的名称 */
+    messageIdName: any = [
+        'member_message_id',
+        'system_message_id'
+    ];
+    /**@name 操作接口的名称 */
+    operatorName: any = [
+        'operatorMemberMessage',
+        'operatorSystemMessage'
+    ]
     /**@name badge数字 */
-    dashboardInfo:any= {}
+    dashboardInfo: any = {}
     /**@name 滚动加载更多的配置项 */
-    config: any = <any>{
+    config: any = {
         percent: 80,
         height: '85vh'
     }
     /**@name 编辑按钮是否隐藏 */
     hiddenEdit: boolean;
+    /**@name 是否编辑状态 */
+    editStatus: boolean = false
+    /**@name 左上角全选按钮 */
+    leftTopBtn: any = {
+        status: true,
+        text: '全选'
+    }
+    /**@name 是否有选中的条目 */
+    haschosen: boolean = false;
+    /**@name 是否隐藏已读提示 */
+    hiddenReadedNotice: boolean = true;
+    /**@name 是否隐藏已读提示 */
+    hiddenDeleteNotice:boolean = true;
+    /** @name 被选中的条目list */
+    chosenMsg:any = [];
 
-    constructor(private route: ActivatedRoute, private router: Router, private identityAuthService: IdentityAuthService, private baseService: BaseProvider, ) {
+    constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, ) {
         // this.identityAuthService.check();
     }
     // 下拉刷新功能
@@ -102,7 +127,7 @@ export class NotifyComponent implements OnInit {
     //     setTimeout(() => {
     //         console.log('刷新')
     //         this.refresh()
-   
+
     //         this.getInitData(this.currentTabId);
     //         this.getMessageDashboard()
     //         // this.il.restart()
@@ -118,13 +143,13 @@ export class NotifyComponent implements OnInit {
             this.getInitData(this.defaultTabId);
         });
         this.getMessageDashboard()
-        
+
     }
 
     /**@name 选择个人消息或者系统消息 */
     selectedTab(item) {
-        if(this.isLoading){
-            console.log('selected过于频繁，isloading:',this.isLoading)
+        if (this.isLoading) {
+            console.log('selected过于频繁，isloading:', this.isLoading)
             return
         }
         this.currentTabId = item;
@@ -141,7 +166,7 @@ export class NotifyComponent implements OnInit {
             page: 1,
             count: 10
         };
-        this.messageList= [];
+        this.messageList = [];
         this.isLoaded = true;
 
         setTimeout(() => {
@@ -156,7 +181,7 @@ export class NotifyComponent implements OnInit {
             if (d.status.succeed == '1') {
                 // this.dashboardInfo = d.data.message_dashboard_info
                 this.dashboardInfo = d.data.message_dashboard_info || {};
-                  console.log('getMemberMessageDashboard',this.dashboardInfo)
+                console.log('getMemberMessageDashboard', this.dashboardInfo)
             } else {
                 this.errorMessage = d.status.error_desc;
             }
@@ -166,21 +191,21 @@ export class NotifyComponent implements OnInit {
     /**@name 首次进入页面获取消息list
      * @name 获取个人还是系统 0：个人；1：系统
      */
-    getInitData(id,callbackDone?, callbackOnce?) {
+    getInitData(id, callbackDone?, callbackOnce?) {
         this.isloaded = false
         let info = {
-            pagination:this.pagination,
-            message_status:'9'
+            pagination: this.pagination,
+            message_status: '9'
         }
-        console.log('请求参数',info)
+        console.log('请求参数', info)
         this.baseService.post(this.paths[id], info
         ).subscribe(lists => {
 
             if (lists.status.succeed === '1') {
                 this.messageList = this.messageList.concat(lists.data[this.listDataName[id]])
                 console.log('this.messageList', this.messageList)
-                console.log('lists.paginated.more',lists.paginated.more)
-                if(this.messageList.length == 0){
+                console.log('lists.paginated.more', lists.paginated.more)
+                if (this.messageList.length == 0) {
                     this.hiddenEdit = true;
                 }
                 if ((lists.paginated.more === '0') && !!callbackDone) {
@@ -196,13 +221,133 @@ export class NotifyComponent implements OnInit {
             } else {
                 this.errorMessage = lists.status.error_desc;
             }
-    
+
 
         }, error => this.errorMessage = <any>error);
     }
     /**@name 点击编辑按钮 */
     clickEditBtn() {
+        console.log('click', this.editStatus)
+        this.editStatus = !this.editStatus;
+        this.leftTopBtn = {//初始化全选状态
+            status: true,
+            text: '全选'
+        }
 
+        //点击编辑按钮之后，选择状态初始化为false
+        let omessageList = this.messageList,
+            l = omessageList.length;
+        for (var i = 0; i < l; i++) {
+            omessageList[i].chosen = false;
+        }
+        this.messageList = omessageList;
+    }
+    /**@name 点击左上角全选按钮 */
+    clickAll() {
+        this.leftTopBtn.status = !this.leftTopBtn.status;
+        this.leftTopBtn.text = this.leftTopBtn.status ? '全选' : '取消全选';
+        let l = this.messageList.length;
+
+        if (this.leftTopBtn.status) {
+            for (var i = 0; i < l; i++) {
+                this.messageList[i].chosen = false;
+            }
+        } else {
+            for (var i = 0; i < l; i++) {
+                this.messageList[i].chosen = true;
+            }
+
+        }
+        this.checkHasChosen()
+
+    }
+    /**@name 点击左下角全部已读按钮 */
+    clickReadedBtn() {
+        this.hiddenReadedNotice = false;
+
+    }
+    /**@name 点击删除按钮 */
+    clickDeleteBtn() {
+        this.hiddenDeleteNotice = false;
+        this.chosenMsg = [];
+        //拼装删除条目的参数
+        if(this.currentTabId == '1'){
+        let l = this.messageList.length;
+        for (let i = 0; i < l; i++) {
+            if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
+                let chosenItem = {
+                    system_message_id: this.messageList[i].system_message_id,
+                    system_title: this.messageList[i].system_message_title
+                }
+                this.chosenMsg.push(chosenItem)
+            } 
+        }
+        console.log('拼装的需要删除的条目this.chosenMsg',this.chosenMsg)
+}
+    }
+    /**@name 点击条目 */
+    chooseAnypanel(item) {
+        console.log(item)
+        let l = this.messageList.length;
+        for (var i = 0; i < l; i++) {
+            if (this.messageList[i][this.messageIdName[this.currentTabId]] == item[this.messageIdName[this.currentTabId]]) {//根据ID寻找选中的条目
+                this.messageList[i].chosen = !this.messageList[i].chosen //切换选中的条目的chosen值
+
+            }
+        }
+        this.checkHasChosen()
+
+    }
+    /**@name 检查是否有选中条目,删除按钮切换颜色 */
+    checkHasChosen() {
+        let l = this.messageList.length;
+        for (var i = 0; i < l; i++) {
+            if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
+                this.haschosen = true;
+                return;
+            } else {
+                this.haschosen = false
+            }
+        }
+    }
+    /**@name 点击完成按钮 */
+    clickFinish() {
+        this.editStatus = false;//关闭编辑状态
+
+    }
+    /**@name 点击关闭提示 */
+    cancleNotice() {
+        this.hiddenReadedNotice = true;//关闭已读提示
+        this.hiddenDeleteNotice = true;//关闭删除提示
+    }
+    /**@name 点击确认提示 */
+    sureNotice(id) {
+        this.editStatus = false;//关闭编辑状态
+        this.hiddenReadedNotice = true;//关闭已读提示
+        this.hiddenDeleteNotice = true;//关闭删除提示
+        let oid = id;
+        this.operaMsg(oid)
+    }
+    /**@name 操作消息 id：操作类型 */
+    operaMsg(id) {
+        this.baseService.post(this.operatorName[this.currentTabId], {
+            'operator_type': id,
+            'ext_data': {
+                'system_message_list':this.chosenMsg
+            }
+        }
+        ).subscribe(d => {
+
+            if (d.status.succeed === '1') {
+                console.log('操作成功，操作代号：',id)
+
+                this.selectedTab(this.currentTabId)
+
+
+            } else {
+                this.errorMessage = d.status.error_desc;
+            }
+        }, error => this.errorMessage = <any>error);
     }
     // onSelectChanged() {
     //     // let selectedCarSeries = this.selectedCarSeries ;
@@ -332,15 +477,17 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 加载更多 */
     onLoadMore(comp: InfiniteLoaderComponent) {
-        console.log('this.isLoading',this.isLoading)
+        console.log('this.isLoading', this.isLoading)
         // console.log("this.isLoading:" + this.isLoading);
-        if (this.isLoading) {
-            return;
-        }
         this.pagination.page++;
         this.comp = comp;
+        if (this.isLoading || this.editStatus) {//如果编辑状态，不加载更多
+            comp.resolveLoading();
+            return;
+        }
+
         //参数1：当前tabid
-        this.getInitData(this.currentTabId,() => {
+        this.getInitData(this.currentTabId, () => {
             comp.setFinished();
         }, () => {
             comp.resolveLoading();

@@ -72,12 +72,21 @@
     }
     .weui-panel {
         background-color: #fff;
+
+        .weui-icon-circle, .weui-icon-success {
+            position: absolute;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+        }
         .weui-badge {
             width: 10px;
             height: 10px;
             position: absolute;
             top: 50%;
-            transform: translateY(-50%)
+            transform: translateY(-50%);
+            margin-left: 8px;
         }
         border: none;
         &::after {
@@ -91,7 +100,7 @@
         height: 16px;
         width: 16px;
         display: inline-block;
-        margin-left: 5px;
+        // margin-left: 8px;
         vertical-align: baseline;
         line-height: 16px;
         &[hidden] {
@@ -160,4 +169,57 @@
         display: block;
         margin: 0 auto;
     }
+}
+.edit-page {
+ .notify {
+     .weui-panel {
+        padding-left: 30px;
+        .weui-icon-circle {
+            display: inline-block;
+        }
+        .weui-icon-success {
+         display: inline-block;
+         color:#1970A6;
+        }
+        .weui-panel__bd {
+            .left {
+                width: 52%;
+            }
+            .right {
+                max-width: 50%;
+            }
+        }
+
+     }
+ }
+ .weui-flex {
+     justify-content: space-between;
+     .active {
+         border: none;
+     }
+     .weui-flex__item {
+         flex: none;
+         .garry {
+            color:#9B9B9B;
+         }
+         .red {
+             color: #F43530;
+         }
+     }
+ }
+ .btn-bottom {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     height: 50px;
+     line-height: 50px;
+ }
+ .warning-box {
+    .weui-dialog__bd {
+        // text-align: left;
+        font-size:18px;
+        line-height:1.4;
+    }
+}
 }
