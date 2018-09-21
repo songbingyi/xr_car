@@ -118,7 +118,7 @@ const appRoutes: Routes = [
     {path : 'notify/:category', component : NotifyComponent, canActivate: [AuthGuard]},
     // {path : 'notifyCat/:category', component : CategoryComponent, canActivate: [AuthGuard]},
     // {path : 'notify/:category/:page', component : NotifyComponent, canActivate: [AuthGuard]},
-    {path : 'notifyDetail/:id/:category', component : NotifyDetailComponent, canActivate: [AuthGuard]},
+    {path : 'notifyDetail/:id', component : NotifyDetailComponent, canActivate: [AuthGuard]},
     {path : 'success', component : SuccessComponent, canActivate: [AuthGuard]},
     {path : 'duplicate', component : DuplicateComponent, canActivate: [AuthGuard]},
 

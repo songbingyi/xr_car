@@ -66,7 +66,7 @@
             <div class="btn-bottom">
                 <div class="weui-flex" *ngIf="editStatus">
                     <div class="weui-flex__item">
-                        <div class="placeholder active" (click)="clickReadedBtn()">全部已读</div>
+                        <div class="placeholder garry" [class.active]="dashboardInfo.new_message_count" (click)="clickReadedBtn()">全部已读</div>
                     </div>
                     <div class="weui-flex__item">
                         <div class="placeholder garry" [class.red]="haschosen" (click)="clickDeleteBtn()">删除</div>

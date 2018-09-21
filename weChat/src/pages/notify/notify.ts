@@ -115,9 +115,9 @@ export class NotifyComponent implements OnInit {
     /**@name 是否隐藏已读提示 */
     hiddenReadedNotice: boolean = true;
     /**@name 是否隐藏已读提示 */
-    hiddenDeleteNotice:boolean = true;
+    hiddenDeleteNotice: boolean = true;
     /** @name 被选中的条目list */
-    chosenMsg:any = [];
+    chosenMsg: any = [];
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, ) {
         // this.identityAuthService.check();
@@ -229,6 +229,7 @@ export class NotifyComponent implements OnInit {
     clickEditBtn() {
         console.log('click', this.editStatus)
         this.editStatus = !this.editStatus;
+        this.haschosen = false;
         this.leftTopBtn = {//初始化全选状态
             status: true,
             text: '全选'
@@ -268,26 +269,40 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击删除按钮 */
     clickDeleteBtn() {
+        if(!this.haschosen){
+            return;
+        }
         this.hiddenDeleteNotice = false;
         this.chosenMsg = [];
         //拼装删除条目的参数
-        if(this.currentTabId == '1'){
         let l = this.messageList.length;
-        for (let i = 0; i < l; i++) {
-            if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
-                let chosenItem = {
-                    system_message_id: this.messageList[i].system_message_id,
-                    system_title: this.messageList[i].system_message_title
+        if (this.currentTabId == '1') {//如果是系统消息
+            for (let i = 0; i < l; i++) {
+                if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
+                    let chosenItem = {
+                        system_message_id: this.messageList[i].system_message_id,
+                        system_title: this.messageList[i].system_message_title
+                    }
+                    this.chosenMsg.push(chosenItem)
                 }
-                this.chosenMsg.push(chosenItem)
-            } 
+            }
+            console.log('拼装的需要删除的系统消息this.chosenMsg', this.chosenMsg)
+        }else if(this.currentTabId == '0'){//如果是个人消息
+            for (let i = 0; i < l; i++) {
+                if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
+                    let chosenItem = {
+                        member_message_id: this.messageList[i].member_message_id,
+                        member_title: this.messageList[i].member_message_title
+                    }
+                    this.chosenMsg.push(chosenItem)
+                }
+            }
+            console.log('拼装的需要删除的个人消息this.chosenMsg', this.chosenMsg)
         }
-        console.log('拼装的需要删除的条目this.chosenMsg',this.chosenMsg)
-}
     }
     /**@name 点击条目 */
     chooseAnypanel(item) {
-        console.log(item)
+        if(this.editStatus){//如果是编辑状态，进行选中操作
         let l = this.messageList.length;
         for (var i = 0; i < l; i++) {
             if (this.messageList[i][this.messageIdName[this.currentTabId]] == item[this.messageIdName[this.currentTabId]]) {//根据ID寻找选中的条目
@@ -296,6 +311,9 @@ export class NotifyComponent implements OnInit {
             }
         }
         this.checkHasChosen()
+    }else {//如果是浏览状态,进入detail页面
+        this.router.navigate(['notifyDetail',item[this.messageIdName[this.currentTabId]]])
+    }
 
     }
     /**@name 检查是否有选中条目,删除按钮切换颜色 */
@@ -322,24 +340,29 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击确认提示 */
     sureNotice(id) {
+        if(!this.dashboardInfo.new_message_count){
+            return;
+        }
         this.editStatus = false;//关闭编辑状态
         this.hiddenReadedNotice = true;//关闭已读提示
         this.hiddenDeleteNotice = true;//关闭删除提示
         let oid = id;
         this.operaMsg(oid)
+        this.getMessageDashboard()
     }
     /**@name 操作消息 id：操作类型 */
     operaMsg(id) {
         this.baseService.post(this.operatorName[this.currentTabId], {
             'operator_type': id,
             'ext_data': {
-                'system_message_list':this.chosenMsg
+                'system_message_list': this.chosenMsg,
+                'member_message_list': this.chosenMsg
             }
         }
         ).subscribe(d => {
 
             if (d.status.succeed === '1') {
-                console.log('操作成功，操作代号：',id)
+                console.log('操作成功，操作代号：', id)
 
                 this.selectedTab(this.currentTabId)
 
