@@ -118,6 +118,8 @@ export class NotifyComponent implements OnInit {
     hiddenDeleteNotice: boolean = true;
     /** @name 被选中的条目list */
     chosenMsg: any = [];
+    /**@name 全部已读的颜色 */
+    allReadedColor: boolean = true;
 
     constructor(private route: ActivatedRoute, private router: Router, private baseService: BaseProvider, ) {
         // this.identityAuthService.check();
@@ -146,12 +148,13 @@ export class NotifyComponent implements OnInit {
 
     }
 
-    /**@name 选择个人消息或者系统消息 */
+    /**@name 选择个人消息或者系统消息,获取dashboard */
     selectedTab(item) {
         if (this.isLoading) {
             console.log('selected过于频繁，isloading:', this.isLoading)
             return
         }
+        this.isLoading = true;
         this.currentTabId = item;
 
         console.log('被选中的tab编号:', this.currentTabId)
@@ -169,10 +172,17 @@ export class NotifyComponent implements OnInit {
         this.messageList = [];
         this.isLoaded = true;
 
-        setTimeout(() => {
-            this.il.restart();
-        }, 300);
-        console.log('refresh')
+            setTimeout(() => {
+                if(this.il){
+                this.il.restart();
+                console.log('this.il.restar存在,已经执行')
+
+            }else{
+                console.log('this.il.restart不存在')
+            }
+            }, 300);
+        
+
     }
 
     /**@name 获取badge数字 */
@@ -182,6 +192,13 @@ export class NotifyComponent implements OnInit {
                 // this.dashboardInfo = d.data.message_dashboard_info
                 this.dashboardInfo = d.data.message_dashboard_info || {};
                 console.log('getMemberMessageDashboard', this.dashboardInfo)
+                // 如果个人消息下的未读数量大于1，全部已读颜色为蓝
+                if(this.currentTabId == '0'){
+                    this.allReadedColor = this.dashboardInfo.new_member_message_count > 0? true: false;
+                }
+                if(this.currentTabId == '1'){
+                    this.allReadedColor = this.dashboardInfo.new_member_system_count > 0? true: false;
+                }
             } else {
                 this.errorMessage = d.status.error_desc;
             }
@@ -264,12 +281,14 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击左下角全部已读按钮 */
     clickReadedBtn() {
-        this.hiddenReadedNotice = false;
+        if (this.allReadedColor) {
+            this.hiddenReadedNotice = false;
+        }
 
     }
     /**@name 点击删除按钮 */
     clickDeleteBtn() {
-        if(!this.haschosen){
+        if (!this.haschosen) {
             return;
         }
         this.hiddenDeleteNotice = false;
@@ -287,7 +306,7 @@ export class NotifyComponent implements OnInit {
                 }
             }
             console.log('拼装的需要删除的系统消息this.chosenMsg', this.chosenMsg)
-        }else if(this.currentTabId == '0'){//如果是个人消息
+        } else if (this.currentTabId == '0') {//如果是个人消息
             for (let i = 0; i < l; i++) {
                 if (this.messageList[i].chosen == true) {//根据ID寻找选中的条目
                     let chosenItem = {
@@ -302,18 +321,18 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击条目 */
     chooseAnypanel(item) {
-        if(this.editStatus){//如果是编辑状态，进行选中操作
-        let l = this.messageList.length;
-        for (var i = 0; i < l; i++) {
-            if (this.messageList[i][this.messageIdName[this.currentTabId]] == item[this.messageIdName[this.currentTabId]]) {//根据ID寻找选中的条目
-                this.messageList[i].chosen = !this.messageList[i].chosen //切换选中的条目的chosen值
+        if (this.editStatus) {//如果是编辑状态，进行选中操作
+            let l = this.messageList.length;
+            for (var i = 0; i < l; i++) {
+                if (this.messageList[i][this.messageIdName[this.currentTabId]] == item[this.messageIdName[this.currentTabId]]) {//根据ID寻找选中的条目
+                    this.messageList[i].chosen = !this.messageList[i].chosen //切换选中的条目的chosen值
 
+                }
             }
+            this.checkHasChosen()
+        } else {//如果是浏览状态,进入detail页面
+            this.router.navigate(['notifyDetail',this.currentTabId,item[this.messageIdName[this.currentTabId]]])
         }
-        this.checkHasChosen()
-    }else {//如果是浏览状态,进入detail页面
-        this.router.navigate(['notifyDetail',item[this.messageIdName[this.currentTabId]]])
-    }
 
     }
     /**@name 检查是否有选中条目,删除按钮切换颜色 */
@@ -330,6 +349,7 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击完成按钮 */
     clickFinish() {
+        this.selectedTab(this.currentTabId)
         this.editStatus = false;//关闭编辑状态
 
     }
@@ -340,15 +360,15 @@ export class NotifyComponent implements OnInit {
     }
     /**@name 点击确认提示 */
     sureNotice(id) {
-        if(!this.dashboardInfo.new_message_count){
-            return;
-        }
+        // if(!this.dashboardInfo.new_message_count){
+        //     return;
+        // }
         this.editStatus = false;//关闭编辑状态
         this.hiddenReadedNotice = true;//关闭已读提示
         this.hiddenDeleteNotice = true;//关闭删除提示
         let oid = id;
         this.operaMsg(oid)
-        this.getMessageDashboard()
+
     }
     /**@name 操作消息 id：操作类型 */
     operaMsg(id) {

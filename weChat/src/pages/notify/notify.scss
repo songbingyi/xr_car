@@ -194,9 +194,7 @@
  }
  .weui-flex {
      justify-content: space-between;
-     .active {
-         border: none;
-     }
+
      .weui-flex__item {
          flex: none;
          .garry {
@@ -205,6 +203,10 @@
          .red {
              color: #F43530;
          }
+         .active {
+            border: none;
+            color: #1970A6;
+        }
      }
  }
  .btn-bottom {

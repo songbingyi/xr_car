@@ -1,6 +1,7 @@
 .notify-detail {
     margin-top:15px;
     margin-bottom:20px;
+    background-color: #fff;
     .weui-article {
         padding: 20px 15px;
         font-size: 14px;
@@ -20,5 +21,11 @@
         line-height:44px;
         font-size : 15px;
         color:#000000;
+    }
+    .weui-media-box {
+        border-bottom: 1px solid #E5E5E5;
+        .weui-media-box__title {
+            white-space: warp;
+        }
     }
 }

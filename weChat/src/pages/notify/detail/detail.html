@@ -1,13 +1,9 @@
 <div class="notify-detail">
-    <div class="weui-cells">
+    <!-- <div class="weui-cells">
         <div class="weui-cell header-cell">
             <div class="weui-cell__bd">
                 <p>{{notify.system_message_title || notify.member_message_title}}</p>
             </div>
-        </div>
-    </div>
-    <div class="weui-cells">
-        <div class="weui-cell">
             <div class="weui-cell__bd">
                 <p>{{notify.system_message_date_format || notify.member_message_date_format}}</p>
             </div>
@@ -15,5 +11,18 @@
     </div>
     <article class="weui-article" (click)="redirectTo()">
         <section [innerHTML]="notify.system_message_detail || notify.member_message_detail"></section>
+    </article> -->
+
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h4 class="weui-media-box__title">{{notify.system_message_title || notify.member_message_title}}</h4>
+            <p class="weui-media-box__desc">{{notify.system_message_date_format || notify.member_message_date_format}}</p>
+        </div>
+    </div>
+
+    <article class="weui-article" (click)="redirectTo()">
+        <section [innerHTML]="notify.system_message_detail || notify.member_message_detail"></section>
     </article>
+
+
 </div>
