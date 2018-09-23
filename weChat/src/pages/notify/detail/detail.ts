@@ -64,6 +64,9 @@ export class NotifyDetailComponent implements OnInit {
                 //console.log(this.notify);
             } else {
                 this.errorMessage = notify.status.error_desc;
+                if(notify.status.error_code == 13002){
+                    this.router.navigate(['/notify','0'])
+                }
             }
         }, error => this.errorMessage = <any>error);
     }
