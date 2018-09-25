@@ -22,10 +22,12 @@
         font-size : 15px;
         color:#000000;
     }
-    .weui-media-box {
-        border-bottom: 1px solid #E5E5E5;
-        .weui-media-box__title {
-            white-space: warp;
+    .weui-panel__bd {
+        .weui-media-box_text {
+            border-bottom: 1px solid #E5E5E5;
+                .weui-media-box__title {
+                    white-space: normal;
+                }
         }
     }
 }
