@@ -85,7 +85,7 @@ export class CartComponent implements OnInit {
 
     constructor(private builder: FormBuilder, private baseService: BaseProvider, private route: ActivatedRoute, private router: Router, private baseProvider: BaseProvider, private identityAuthService: IdentityAuthService, private customValidators: CustomValidators, private wxService: WXSDKService) {
         this.identityAuthService.check();
-        this.wxs = this.wxService.init();
+        this.wxService.init();
     }
 
     ngOnInit() {
@@ -106,6 +106,7 @@ export class CartComponent implements OnInit {
         /*this.routes.paramMap.switchMap((params : ParamMap) => {
             console.log(params.get('id'));
         });*/
+        this.getLocation()
 
     }
 
@@ -117,15 +118,40 @@ export class CartComponent implements OnInit {
                 self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                 self.loadCurrentCity();
+                console.log('第一次执行getlocation成功')
+            },
+            fail: () =>{
+                setTimeout(() => {
+                    self.oGetLocation()
+                }, 400);
+              console.log('第一次执行getlocation失败')
+
             }
         });
     }
 
-    ngAfterContentInit() {
-        this.wxs.then(res => {
-            this.getLocation();
+    oGetLocation() {
+        let self = this;
+        this.wxService.onGetLocation({
+            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: (res) => {
+                self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                self.loadCurrentCity();
+                console.log('第二次执行getlocation成功')
+            },
+            fail: ()=>{
+                console.log('第二次执行getlocation失败')
+                
+            }
         });
     }
+
+    // ngAfterContentInit() {
+    //     this.wxs.then(res => {
+    //         this.getLocation();
+    //     });
+    // }
 
     // loadProduct(id) {//一进入就获取商品信息 暂时注掉
     //     this.baseProvider.post('getCarProductDetail', { 'product_id': id }).subscribe(product => {

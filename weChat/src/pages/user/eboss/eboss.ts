@@ -107,21 +107,21 @@ export class EbossComponent implements OnInit {
 
     constructor(private pickerService: PickerService, private wxService: WXSDKService, private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private customValidators: CustomValidators, private baseService: BaseProvider, private localStorage: LocalStorage, private dialogService: DialogService, private location: Location, private identityAuthService:IdentityAuthService) {
         this.identityAuthService.check();
-        this.wxs = this.wxService.init();
+        this.wxService.init();
         this.getCarBrandList();
         this.getSalesYearTypeList();
         this.getLocation();
     }
 
     ngOnInit() {
-
+        this.getLocation()
     }
 
-    ngAfterContentInit(){
-        this.wxs.then(res => {
-            this.getLocation();
-        });
-    }
+    // ngAfterContentInit(){
+    //     this.wxs.then(res => {
+    //         this.getLocation();
+    //     });
+    // }
 
     getLocation(callback?) {
         let self = this;
@@ -131,6 +131,29 @@ export class EbossComponent implements OnInit {
                 self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                 self.loadCurrentCity();
+            },
+            fail: () =>{
+                setTimeout(() => {
+                    self.oGetLocation()
+                }, 400);
+              console.log('第一次执行getlocation失败')
+
+            }
+        });
+    }
+    oGetLocation() {
+        let self = this;
+        this.wxService.onGetLocation({
+            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: (res) => {
+                self.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                self.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                self.loadCurrentCity();
+                console.log('第二次执行getlocation成功')
+            },
+            fail: ()=>{
+                console.log('第二次执行getlocation失败')
+                
             }
         });
     }
