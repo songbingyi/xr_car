@@ -110,7 +110,7 @@ export class EbossComponent implements OnInit {
         this.wxService.init();
         this.getCarBrandList();
         this.getSalesYearTypeList();
-        this.getLocation();
+        // this.getLocation();
     }
 
     ngOnInit() {
