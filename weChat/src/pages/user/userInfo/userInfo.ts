@@ -343,7 +343,7 @@ export class UserInfoComponent implements OnInit {
                     this.errorMessage = result.status.error_desc;
                 }
                 this.submitting = false;
-                this.router.navigate(['/success']);
+                // this.router.navigate(['/success']);
             }, error => this.errorMessage = <any>error);
     }
 
