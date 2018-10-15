@@ -57,6 +57,7 @@ export class WXSDKService {
             // console.log(url);
             // this.http.get('http://localhost:9020/api/wechatPay/accessToken?u=' + url)
             this.http.post(config.api, urlSearchParams, this.getHeader())
+            //this.http.post('http://api-client.xrtruck.com', urlSearchParams, this.getHeader())
                 .map(response => {
                     // console.log(response.json().data.signPackage);
                     // let a = response;

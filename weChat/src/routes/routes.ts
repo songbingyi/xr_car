@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -67,6 +66,7 @@ import { EbossComponent } from '../pages/user/eboss/eboss';
 import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 import { HandyTraffiComponent } from '../pages/handy-traffi/handy-traffi.component';
 import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
+import { FailureCheckComponent } from '../pages/failure-check/failure-check.component';
 
 
 const appRoutes: Routes = [
@@ -91,6 +91,7 @@ const appRoutes: Routes = [
     {path : 'maps', component : MapComponent},
     // {path : 'user', component : UserComponent, canActivate: [AuthGuard]},
     {path : 'user', component : UserComponent,},
+    {path : 'failureCheck', component : FailureCheckComponent,},
     {path : 'serviceOrder/:status/:page', component : OrdersComponent, canActivate: [AuthGuard]},
     {path : 'productOrder/:status/:page', component : ProductOrderComponent, canActivate: [AuthGuard]},
     {path : 'orderDetail/:id', component : OrderDetailComponent, canActivate: [AuthGuard]},

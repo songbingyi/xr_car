@@ -95,6 +95,7 @@ import {QrcodeInfoComponent} from '../pages/qrcode/info/info';
 import { HandyTraffiComponent } from '../pages/handy-traffi/handy-traffi.component';
 import { BuyIndexComponent } from '../pages/buy-index/buy-index.component';
 import { IntentionBuyComponent } from '../pages/buy-index/intention-buy/intention-buy.component';
+import { FailureCheckComponent } from '../pages/failure-check/failure-check.component';
 
 
 @NgModule({
@@ -163,6 +164,8 @@ import { IntentionBuyComponent } from '../pages/buy-index/intention-buy/intentio
         BuyIndexComponent,
 
         IntentionBuyComponent,
+
+        FailureCheckComponent,
 
     ],
     imports: [
